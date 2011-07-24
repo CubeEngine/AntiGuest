@@ -1,0 +1,6 @@
+name: AntiGuest
+main: de.codeinfection.quickwango.AntiGuest.AntiGuest
+version: "${project.version}"
+author: "Quick_Wango"
+depend:
+  - Permissions
