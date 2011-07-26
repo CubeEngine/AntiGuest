@@ -42,8 +42,8 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("pvp", false);
         this.messages.put("pvp", "&4You are not allowed to fight!");
 
-        this.actions.put("pickup", false);
-        this.messages.put("pickup", "&4You are not allowed to pickup items!");
+        //this.actions.put("pickup", false);
+        //this.messages.put("pickup", "&4You are not allowed to pickup items!");
     }
 
     public void onEnable()
@@ -75,10 +75,16 @@ public class AntiGuest extends JavaPlugin
         AntiGuestPlayerListener playerListener = new AntiGuestPlayerListener(this);
         AntiGuestEntityListener entityListener = new AntiGuestEntityListener(this);
         AntiGuestBlockListener blockListener = new AntiGuestBlockListener(this);
+        AntiGuestVehicleListener vehicleListener = new AntiGuestVehicleListener(this);
 
         if (this.actions.get("interact"))
         {
             this.pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Low, this);
+            this.pm.registerEvent(Type.ENTITY_INTERACT, entityListener, Priority.Low, this);
+            this.pm.registerEvent(Type.VEHICLE_DAMAGE, vehicleListener, Priority.Low, this);
+            this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Low, this);
+            this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Low, this);
+            this.pm.registerEvent(Type.VEHICLE_COLLISION_ENTITY, vehicleListener, Priority.Low, this);
         }
         if (this.actions.get("build"))
         {
@@ -86,15 +92,16 @@ public class AntiGuest extends JavaPlugin
             this.pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Low, this);
             this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Low, this);
             this.pm.registerEvent(Type.PAINTING_PLACE, entityListener, Priority.Low, this);
+            this.pm.registerEvent(Type.VEHICLE_DESTROY, vehicleListener, Priority.Low, this);
         }
         if (this.actions.get("pvp"))
         {
             this.pm.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Low, this);
         }
-        if (this.actions.get("pickup"))
-        {
-            this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Low, this);
-        }
+        //if (this.actions.get("pickup"))
+        //{
+        //    this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Low, this);
+        //}
 
         System.out.println(this.getDescription().getName() + " (v" + this.getDescription().getVersion() + ") enabled");
     }
@@ -117,8 +124,8 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("pvp", this.config.getBoolean("pvp.enable", this.actions.get("pvp")));
         this.messages.put("pvp", this.config.getString("pvp.message", this.messages.get("pvp")));
 
-        this.actions.put("pickup", this.config.getBoolean("pickup.enable", this.actions.get("pickup")));
-        this.messages.put("pickup", this.config.getString("pickup.message", this.messages.get("pickup")));
+        //this.actions.put("pickup", this.config.getBoolean("pickup.enable", this.actions.get("pickup")));
+        //this.messages.put("pickup", this.config.getString("pickup.message", this.messages.get("pickup")));
 
         for (Map.Entry<String, String> entry : this.messages.entrySet())
         {
@@ -128,8 +135,8 @@ public class AntiGuest extends JavaPlugin
 
     private void defaultConfig()
     {
-        this.config.setProperty("pickup.enable", this.actions.get("pickup"));
-        this.config.setProperty("pickup.message", this.messages.get("pickup"));
+        //this.config.setProperty("pickup.enable", this.actions.get("pickup"));
+        //this.config.setProperty("pickup.message", this.messages.get("pickup"));
 
         this.config.setProperty("pvp.enable", this.actions.get("pvp"));
         this.config.setProperty("pvp.message", this.messages.get("pvp"));

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.painting.PaintingBreakByEntityEvent;
 import org.bukkit.event.painting.PaintingBreakEvent;
@@ -49,6 +50,21 @@ public class AntiGuestEntityListener extends EntityListener
         {
             event.setCancelled(true);
             this.plugin.message(player, "pvp");
+        }
+    }
+
+    @Override
+    public void onEntityInteract(EntityInteractEvent event)
+    {
+        final Entity interactor = event.getEntity();
+        if (interactor instanceof Player)
+        {
+            Player player = (Player)interactor;
+            if (!this.plugin.can(player, "interact"))
+            {
+                this.plugin.message(player, "interact");
+                event.setCancelled(true);
+            }
         }
     }
 
