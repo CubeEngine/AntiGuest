@@ -1,6 +1,9 @@
 name: AntiGuest
 main: de.codeinfection.quickwango.AntiGuest.AntiGuest
 version: "${project.version}"
-author: "Quick_Wango"
+authors:
+  - "Quick_Wango"
+description: "Prevents guests from griefing."
+website: "http://parallel-universe.de"
 depend:
   - Permissions
