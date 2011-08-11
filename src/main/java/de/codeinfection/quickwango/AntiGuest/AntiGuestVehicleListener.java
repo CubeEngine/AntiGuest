@@ -45,9 +45,9 @@ public class AntiGuestVehicleListener extends VehicleListener
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!this.plugin.can(player, "interact"))
+            if (!this.plugin.can(player, "vehicle"))
             {
-                this.plugin.message(player, "interact");
+                this.plugin.message(player, "vehicle");
                 event.setCancelled(true);
             }
         }
@@ -60,9 +60,9 @@ public class AntiGuestVehicleListener extends VehicleListener
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!this.plugin.can(player, "interact"))
+            if (!this.plugin.can(player, "vehicle"))
             {
-                this.plugin.message(player, "interact");
+                this.plugin.message(player, "vehicle");
                 event.setCancelled(true);
             }
         }
@@ -90,7 +90,7 @@ public class AntiGuestVehicleListener extends VehicleListener
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!this.plugin.can(player, "interact"))
+            if (!this.plugin.can(player, "vehicle"))
             {
                 event.setCancelled(true);
                 event.setCollisionCancelled(true);

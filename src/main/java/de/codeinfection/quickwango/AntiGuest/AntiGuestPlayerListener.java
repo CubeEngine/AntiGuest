@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -43,5 +44,15 @@ public class AntiGuestPlayerListener extends PlayerListener
             event.setCancelled(true);
             //this.plugin.message(player, "pickup");
         }
+    }
+
+    @Override
+    public void onPlayerChat(PlayerChatEvent event)
+    {
+        /*
+         *
+         * if last message was to shortly -> deny
+         *
+         */
     }
 }

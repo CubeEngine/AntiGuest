@@ -28,3 +28,6 @@ permissions:
   AntiGuest.pickup:
     description: "Allows the player to pickup items"
     default: false
+  AntiGuest.vehicle:
+    description: "Allows the player to pickup items"
+    default: false

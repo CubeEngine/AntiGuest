@@ -44,6 +44,12 @@ public class AntiGuest extends JavaPlugin
 
         this.actions.put("pickup", false);
         //this.messages.put("pickup", "&4You are not allowed to pickup items!");
+
+        this.actions.put("vehicle", false);
+        this.messages.put("vehicle", "&4You are not allowed to use vehicles!");
+
+        this.actions.put("spam", false);
+        this.messages.put("spam", "&4Don't spam the chat!");
     }
 
     public void onEnable()
@@ -77,8 +83,6 @@ public class AntiGuest extends JavaPlugin
             this.pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.ENTITY_INTERACT, entityListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_DAMAGE, vehicleListener, Priority.Lowest, this);
-            this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Lowest, this);
-            this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_COLLISION_ENTITY, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.ENTITY_TARGET, entityListener, Priority.Lowest, this);
         }
@@ -97,6 +101,15 @@ public class AntiGuest extends JavaPlugin
         if (this.actions.get("pickup"))
         {
             this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Low, this);
+        }
+        if (this.actions.get("vehicle"))
+        {
+            this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Lowest, this);
+        }
+        if (this.actions.get("spam"))
+        {
+            this.pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
         }
 
         System.out.println(this.getDescription().getName() + " (v" + this.getDescription().getVersion() + ") enabled");
@@ -123,6 +136,12 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("pickup", this.config.getBoolean("pickup.enable", this.actions.get("pickup")));
         //this.messages.put("pickup", this.config.getString("pickup.message", this.messages.get("pickup")));
 
+        this.actions.put("vehicle", this.config.getBoolean("vehicle.enable", this.actions.get("vehicle")));
+        this.messages.put("vehicle", this.config.getString("vehicle.message", this.messages.get("vehicle")));
+
+        this.actions.put("spam", this.config.getBoolean("spam.enable", this.actions.get("spam")));
+        this.messages.put("spam", this.config.getString("spam.message", this.messages.get("spam")));
+
         for (Map.Entry<String, String> entry : this.messages.entrySet())
         {
             this.messages.put(entry.getKey(), entry.getValue().replaceAll("&([a-f0-9])", "\u00A7$1"));
@@ -131,6 +150,12 @@ public class AntiGuest extends JavaPlugin
 
     private void defaultConfig()
     {
+        this.config.setProperty("spam.enable", this.actions.get("spam"));
+        this.config.setProperty("spam.message", this.messages.get("spam"));
+        
+        this.config.setProperty("vehicle.enable", this.actions.get("vehicle"));
+        this.config.setProperty("vehicle.message", this.messages.get("vehicle"));
+
         this.config.setProperty("pickup.enable", this.actions.get("pickup"));
         //this.config.setProperty("pickup.message", this.messages.get("pickup"));
 
