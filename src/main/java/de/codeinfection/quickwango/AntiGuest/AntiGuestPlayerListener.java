@@ -41,7 +41,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         if (!this.plugin.can(player, "pickup"))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "pickup");
+            //this.plugin.message(player, "pickup");
         }
     }
 }

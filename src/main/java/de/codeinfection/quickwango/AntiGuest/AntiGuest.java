@@ -42,7 +42,7 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("pvp", false);
         this.messages.put("pvp", "&4You are not allowed to fight!");
 
-        //this.actions.put("pickup", false);
+        this.actions.put("pickup", false);
         //this.messages.put("pickup", "&4You are not allowed to pickup items!");
     }
 
@@ -94,10 +94,10 @@ public class AntiGuest extends JavaPlugin
         {
             this.pm.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Lowest, this);
         }
-        //if (this.actions.get("pickup"))
-        //{
-        //    this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Low, this);
-        //}
+        if (this.actions.get("pickup"))
+        {
+            this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Low, this);
+        }
 
         System.out.println(this.getDescription().getName() + " (v" + this.getDescription().getVersion() + ") enabled");
     }
@@ -120,7 +120,7 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("pvp", this.config.getBoolean("pvp.enable", this.actions.get("pvp")));
         this.messages.put("pvp", this.config.getString("pvp.message", this.messages.get("pvp")));
 
-        //this.actions.put("pickup", this.config.getBoolean("pickup.enable", this.actions.get("pickup")));
+        this.actions.put("pickup", this.config.getBoolean("pickup.enable", this.actions.get("pickup")));
         //this.messages.put("pickup", this.config.getString("pickup.message", this.messages.get("pickup")));
 
         for (Map.Entry<String, String> entry : this.messages.entrySet())
@@ -131,7 +131,7 @@ public class AntiGuest extends JavaPlugin
 
     private void defaultConfig()
     {
-        //this.config.setProperty("pickup.enable", this.actions.get("pickup"));
+        this.config.setProperty("pickup.enable", this.actions.get("pickup"));
         //this.config.setProperty("pickup.message", this.messages.get("pickup"));
 
         this.config.setProperty("pvp.enable", this.actions.get("pvp"));
