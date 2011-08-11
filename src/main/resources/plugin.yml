@@ -16,6 +16,8 @@ permissions:
       AntiGuest.interact: true
       AntiGuest.pvp: true
       AntiGuest.pickup: true
+      AntiGuest.vehicle: true
+      AntiGuest.spam: true
   AntiGuest.build:
     description: "Allows the player to build"
     default: false
