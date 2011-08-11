@@ -1,13 +1,19 @@
  Description
 =============
 
-AntiGuest prevents interaction, building and fighting for specific groups
+AntiGuest prevents guests from doing specific things like building and fighting, which can be used to grief.
 
 
  Features
 =============
 
-- prevent guests from interacting, building and/or fighting (configurable)
+- prevent guests from (configurable):
+    - interacting
+    - building
+    - fighting 
+    - picking up items
+    - using vehicles
+    - spamming the chat
 - all messages are configurable and support color codes
 
 
