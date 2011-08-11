@@ -33,7 +33,7 @@ public class AntiGuestBlockListener extends BlockListener
     public void onBlockPlace(BlockPlaceEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "pvp"))
+        if (!this.plugin.can(player, "build"))
         {
             event.setCancelled(true);
             this.plugin.message(player, "build");
