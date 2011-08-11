@@ -31,3 +31,6 @@ permissions:
   AntiGuest.vehicle:
     description: "Allows the player to pickup items"
     default: false
+  AntiGuest.spam:
+    description: "Allows the player to chat as fast as he wants"
+    default: false

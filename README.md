@@ -33,6 +33,9 @@ and restart/reload your server.
 Version 1.1.0
 
     Added SuperPerms support, Permissions is now optional
+    Split interaction into interaction and vehicles (minecarts, boats)
+    Added spam prevention
+    enabled pickup prevention again
 
 Version 1.0.0
 

@@ -43,7 +43,7 @@ public class AntiGuest extends JavaPlugin
         this.messages.put("pvp", "&4You are not allowed to fight!");
 
         this.actions.put("pickup", false);
-        //this.messages.put("pickup", "&4You are not allowed to pickup items!");
+        this.messages.put("pickup", "&4You are not allowed to pickup items!");
 
         this.actions.put("vehicle", false);
         this.messages.put("vehicle", "&4You are not allowed to use vehicles!");
@@ -134,7 +134,7 @@ public class AntiGuest extends JavaPlugin
         this.messages.put("pvp", this.config.getString("pvp.message", this.messages.get("pvp")));
 
         this.actions.put("pickup", this.config.getBoolean("pickup.enable", this.actions.get("pickup")));
-        //this.messages.put("pickup", this.config.getString("pickup.message", this.messages.get("pickup")));
+        this.messages.put("pickup", this.config.getString("pickup.message", this.messages.get("pickup")));
 
         this.actions.put("vehicle", this.config.getBoolean("vehicle.enable", this.actions.get("vehicle")));
         this.messages.put("vehicle", this.config.getString("vehicle.message", this.messages.get("vehicle")));
@@ -157,7 +157,7 @@ public class AntiGuest extends JavaPlugin
         this.config.setProperty("vehicle.message", this.messages.get("vehicle"));
 
         this.config.setProperty("pickup.enable", this.actions.get("pickup"));
-        //this.config.setProperty("pickup.message", this.messages.get("pickup"));
+        this.config.setProperty("pickup.message", this.messages.get("pickup"));
 
         this.config.setProperty("pvp.enable", this.actions.get("pvp"));
         this.config.setProperty("pvp.message", this.messages.get("pvp"));
