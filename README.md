@@ -39,6 +39,10 @@ Installation
   Changes
 =============
 
+Version 1.1.1
+
+    Fixed the painting break event not being registered when only the build prevention was enabled
+
 Version 1.1.0
 
     Added SuperPerms support, Permissions is now optional
