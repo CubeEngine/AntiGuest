@@ -90,9 +90,12 @@ public class AntiGuest extends JavaPlugin
         {
             this.pm.registerEvent(Type.BLOCK_DAMAGE, blockListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Lowest, this);
-            this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Lowest, this);
-            this.pm.registerEvent(Type.PAINTING_PLACE, entityListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_DESTROY, vehicleListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.PAINTING_PLACE, entityListener, Priority.Lowest, this);
+        }
+        if (this.actions.get("interact") || this.actions.get("build"))
+        {
+            this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Lowest, this);
         }
         if (this.actions.get("pvp"))
         {
