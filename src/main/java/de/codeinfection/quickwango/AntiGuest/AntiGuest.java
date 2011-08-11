@@ -100,7 +100,7 @@ public class AntiGuest extends JavaPlugin
         }
         if (this.actions.get("pickup"))
         {
-            this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Low, this);
+            this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Lowest, this);
         }
         if (this.actions.get("vehicle"))
         {
