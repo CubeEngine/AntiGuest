@@ -74,24 +74,24 @@ public class AntiGuest extends JavaPlugin
 
         if (this.actions.get("interact"))
         {
-            this.pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Low, this);
-            this.pm.registerEvent(Type.ENTITY_INTERACT, entityListener, Priority.Low, this);
-            this.pm.registerEvent(Type.VEHICLE_DAMAGE, vehicleListener, Priority.Low, this);
-            this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Low, this);
-            this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Low, this);
-            this.pm.registerEvent(Type.VEHICLE_COLLISION_ENTITY, vehicleListener, Priority.Low, this);
+            this.pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.ENTITY_INTERACT, entityListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.VEHICLE_DAMAGE, vehicleListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.VEHICLE_COLLISION_ENTITY, vehicleListener, Priority.Lowest, this);
         }
         if (this.actions.get("build"))
         {
-            this.pm.registerEvent(Type.BLOCK_DAMAGE, blockListener, Priority.Low, this);
-            this.pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Low, this);
-            this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Low, this);
-            this.pm.registerEvent(Type.PAINTING_PLACE, entityListener, Priority.Low, this);
-            this.pm.registerEvent(Type.VEHICLE_DESTROY, vehicleListener, Priority.Low, this);
+            this.pm.registerEvent(Type.BLOCK_DAMAGE, blockListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.PAINTING_PLACE, entityListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.VEHICLE_DESTROY, vehicleListener, Priority.Lowest, this);
         }
         if (this.actions.get("pvp"))
         {
-            this.pm.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Low, this);
+            this.pm.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Lowest, this);
         }
         //if (this.actions.get("pickup"))
         //{
