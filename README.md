@@ -30,10 +30,10 @@ Installation
 
 - AntiGuest.build - Allows the player to build
 - AntiGuest.interact - Allows the player to interact with the world
-- AntiGuest.fight - Allows the player to fight
+- AntiGuest.pvp - Allows the player to fight
 - AntiGuest.pickup - Allows the player to pickup items
 - AntiGuest.vehicle - Allows the player to use vehicles
-- AntiGuest.spam - Allows the player to chat as fast he wants
+- AntiGuest.spam - Allows the player to chat as fast as he wants
 
 
   Changes

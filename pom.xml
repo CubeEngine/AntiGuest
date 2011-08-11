@@ -7,7 +7,7 @@
     <name>AntiGuest</name>
     <url>http://code-infection.de</url>
     <packaging>jar</packaging>
-    <description></description>
+    <description>Prevents guests from griefing.</description>
 
     <scm>
         <connection>scm:git:git://github.com/quickwango/AntiGuest.git</connection>
