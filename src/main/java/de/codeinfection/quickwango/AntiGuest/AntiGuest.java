@@ -66,11 +66,6 @@ public class AntiGuest extends JavaPlugin
         {
             this.permissionHandler = permissions.getHandler();
         }
-        else
-        {
-            error("Failed to hook Permissions, staying in a zombi state...");
-            return;
-        }
 
         AntiGuestPlayerListener playerListener = new AntiGuestPlayerListener(this);
         AntiGuestEntityListener entityListener = new AntiGuestEntityListener(this);
@@ -176,7 +171,15 @@ public class AntiGuest extends JavaPlugin
 
     public boolean can(Player player, String type)
     {
-        return this.permissionHandler.permission(player, "AntiGuest." + type);
+        String permission = "AntiGuest." + type;
+        if (this.permissionHandler != null)
+        {
+            return this.permissionHandler.permission(player, permission);
+        }
+        else
+        {
+            return player.hasPermission(permission);
+        }
     }
 
     public void message(Player player, String type)

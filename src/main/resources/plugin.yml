@@ -5,5 +5,26 @@ authors:
   - "Quick_Wango"
 description: "Prevents guests from griefing."
 website: "http://parallel-universe.de"
-depend:
+softdepend:
   - Permissions
+permissions:
+  AntiGuest.*:
+    description: "Allows the player to do everything"
+    default: false
+    children:
+      AntiGuest.build: true
+      AntiGuest.interact: true
+      AntiGuest.pvp: true
+      AntiGuest.pickup: true
+  AntiGuest.build:
+    description: "Allows the player to build"
+    default: false
+  AntiGuest.interact:
+    description: "Allows the player to interact with the world"
+    default: false
+  AntiGuest.pvp:
+    description: "Allows the player to fight"
+    default: false
+  AntiGuest.pickup:
+    description: "Allows the player to pickup items"
+    default: false

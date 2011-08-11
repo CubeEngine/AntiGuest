@@ -30,6 +30,10 @@ and restart/reload your server.
   Changes
 =============
 
+Version 1.1.0
+
+    Added SuperPerms support, Permissions is now optional
+
 Version 1.0.0
 
     Initial release
