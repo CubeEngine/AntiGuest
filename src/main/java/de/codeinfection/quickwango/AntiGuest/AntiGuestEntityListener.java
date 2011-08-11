@@ -3,8 +3,8 @@ package de.codeinfection.quickwango.AntiGuest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityListener;
@@ -30,20 +30,20 @@ public class AntiGuestEntityListener extends EntityListener
     public void onEntityDamage(EntityDamageEvent event)
     {
         Player player = null;
-        if (event instanceof EntityDamageByProjectileEvent)
-        {
-            final LivingEntity shooter = ((EntityDamageByProjectileEvent)event).getProjectile().getShooter();
-            if (shooter instanceof Player)
-            {
-                player = (Player)shooter;
-            }
-        }
-        else if (event instanceof EntityDamageByEntityEvent)
+        if (event instanceof EntityDamageByEntityEvent)
         {
             final Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
             if (damager instanceof Player)
             {
                 player = (Player)damager;
+            }
+            else if (damager instanceof Projectile)
+            {
+                final LivingEntity shooter = ((Projectile)damager).getShooter();
+                if (shooter instanceof Player)
+                {
+                    player = (Player)shooter;
+                }
             }
         }
         
