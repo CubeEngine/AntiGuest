@@ -80,6 +80,7 @@ public class AntiGuest extends JavaPlugin
             this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_COLLISION_ENTITY, vehicleListener, Priority.Lowest, this);
+            this.pm.registerEvent(Type.ENTITY_TARGET, entityListener, Priority.Lowest, this);
         }
         if (this.actions.get("build"))
         {

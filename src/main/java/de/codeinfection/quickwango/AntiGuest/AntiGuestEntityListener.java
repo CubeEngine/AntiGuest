@@ -8,6 +8,7 @@ import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.painting.PaintingBreakByEntityEvent;
 import org.bukkit.event.painting.PaintingBreakEvent;
 import org.bukkit.event.painting.PaintingPlaceEvent;
@@ -93,6 +94,20 @@ public class AntiGuestEntityListener extends EntityListener
                     event.setCancelled(true);
                     this.plugin.message(player, "build");
                 }
+            }
+        }
+    }
+
+    @Override
+    public void onEntityTarget(EntityTargetEvent event)
+    {
+        Entity targetEntity = event.getTarget();
+        if (targetEntity != null && targetEntity instanceof Player)
+        {
+            final Player player = (Player)targetEntity;
+            if (!this.plugin.can(player, "interact"))
+            {
+                event.setCancelled(true);
             }
         }
     }
