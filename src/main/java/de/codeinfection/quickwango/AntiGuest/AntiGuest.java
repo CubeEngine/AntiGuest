@@ -200,6 +200,10 @@ public class AntiGuest extends JavaPlugin
 
     public boolean can(Player player, String type)
     {
+        if (player.isOp())
+        {
+            return true;
+        }
         String permission = "AntiGuest." + type;
         if (this.permissionHandler != null)
         {
