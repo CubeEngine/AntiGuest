@@ -39,6 +39,11 @@ Installation
   Changes
 =============
 
+Version 1.2.1
+
+    Fixed PAINTING_BREAK checking the wrong permission if only the interaction check was enabled
+    Made the chat lock for spamming configurable (in seconds)
+
 Version 1.2.0
 
     OPs can now always do everything
