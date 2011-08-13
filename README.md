@@ -39,6 +39,10 @@ Installation
   Changes
 =============
 
+Version 1.2.0
+
+    OPs can now always do everything
+
 Version 1.1.2
 
     fixed block place checking for the wrong permission
