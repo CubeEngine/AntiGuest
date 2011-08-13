@@ -46,7 +46,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         {
             Long lastTime = this.chatTimestamps.get(player);
             long currentTime = System.currentTimeMillis();
-            if (lastTime == null || lastTime + 5000 < currentTime)
+            if (lastTime == null || lastTime + (this.plugin.chatLockDuration * 1000) < currentTime)
             {
                 this.chatTimestamps.put(player, currentTime);
                 return true;

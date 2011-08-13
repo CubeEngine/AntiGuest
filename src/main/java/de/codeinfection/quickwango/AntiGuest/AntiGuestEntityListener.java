@@ -20,10 +20,12 @@ import org.bukkit.event.painting.PaintingPlaceEvent;
 public class AntiGuestEntityListener extends EntityListener
 {
     protected final AntiGuest plugin;
+    public String paintingBreakPermission;
 
     public AntiGuestEntityListener(AntiGuest plugin)
     {
         this.plugin = plugin;
+        this.paintingBreakPermission = "interact";
     }
 
     @Override
@@ -89,10 +91,10 @@ public class AntiGuestEntityListener extends EntityListener
             if (remover instanceof Player)
             {
                 final Player player = (Player)remover;
-                if (!this.plugin.can(player, "build"))
+                if (!this.plugin.can(player, this.paintingBreakPermission))
                 {
                     event.setCancelled(true);
-                    this.plugin.message(player, "build");
+                    this.plugin.message(player, this.paintingBreakPermission);
                 }
             }
         }

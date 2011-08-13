@@ -27,6 +27,7 @@ public class AntiGuest extends JavaPlugin
     protected PermissionHandler permissionHandler;
     protected HashMap<String, Boolean> actions;
     protected HashMap<String, String> messages;
+    public int chatLockDuration;
 
     public AntiGuest()
     {
@@ -50,6 +51,7 @@ public class AntiGuest extends JavaPlugin
 
         this.actions.put("spam", false);
         this.messages.put("spam", "&4Don't spam the chat!");
+        this.chatLockDuration = 2;
     }
 
     public void onEnable()
@@ -114,13 +116,17 @@ public class AntiGuest extends JavaPlugin
         {
             this.pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
         }
+        if (this.actions.get("build"))
+        {
+            entityListener.paintingBreakPermission = "build";
+        }
 
-        System.out.println(this.getDescription().getName() + " (v" + this.getDescription().getVersion() + ") enabled");
+        log("Version " + this.getDescription().getVersion() + " enabled");
     }
 
     public void onDisable()
     {
-        System.out.println(this.getDescription().getName() + " Disabled");
+        log(this.getDescription().getVersion() + " disabled");
     }
 
     private void loadConfig()
@@ -144,6 +150,7 @@ public class AntiGuest extends JavaPlugin
 
         this.actions.put("spam", this.config.getBoolean("spam.enable", this.actions.get("spam")));
         this.messages.put("spam", this.config.getString("spam.message", this.messages.get("spam")));
+        this.chatLockDuration = this.config.getInt("spam.lockDuration", this.chatLockDuration);
 
         for (Map.Entry<String, String> entry : this.messages.entrySet())
         {
@@ -155,6 +162,7 @@ public class AntiGuest extends JavaPlugin
     {
         this.config.setProperty("spam.enable", this.actions.get("spam"));
         this.config.setProperty("spam.message", this.messages.get("spam"));
+        this.config.setProperty("spam.lockDuration", this.chatLockDuration);
         
         this.config.setProperty("vehicle.enable", this.actions.get("vehicle"));
         this.config.setProperty("vehicle.message", this.messages.get("vehicle"));
