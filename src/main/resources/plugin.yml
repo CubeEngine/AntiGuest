@@ -10,7 +10,7 @@ softdepend:
 permissions:
   AntiGuest.*:
     description: "Allows the player to do everything"
-    default: false
+    default: op
     children:
       AntiGuest.build: true
       AntiGuest.interact: true
@@ -20,19 +20,19 @@ permissions:
       AntiGuest.spam: true
   AntiGuest.build:
     description: "Allows the player to build"
-    default: false
+    default: op
   AntiGuest.interact:
     description: "Allows the player to interact with the world"
-    default: false
+    default: op
   AntiGuest.pvp:
     description: "Allows the player to fight"
-    default: false
+    default: op
   AntiGuest.pickup:
     description: "Allows the player to pickup items"
-    default: false
+    default: op
   AntiGuest.vehicle:
     description: "Allows the player to pickup items"
-    default: false
+    default: op
   AntiGuest.spam:
     description: "Allows the player to chat as fast as he wants"
-    default: false
+    default: op
