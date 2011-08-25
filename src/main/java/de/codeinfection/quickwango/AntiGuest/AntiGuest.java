@@ -61,8 +61,8 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("bucket", true);
         this.messages.put("bucket", "&4You are not allowed to use buckets");
 
-        this.actions.put("placeblock", false);
-        this.messages.put("placeblock", "&4You are not allowed to place blocks!");
+        this.actions.put("placeblocks", false);
+        this.messages.put("placeblocks", "&4You are not allowed to place blocks!");
 
         this.actions.put("breakblocks", false);
         this.messages.put("breakblocks", "&4You are not allowed to break blocks!");
@@ -174,54 +174,54 @@ public class AntiGuest extends JavaPlugin
     {
         this.config.load();
 
-        this.actions.put("breakblocks", this.config.getBoolean("actions.breakblocks.enable", this.actions.get("breakblocks")));
-        this.messages.put("breakblocks", this.config.getString("actions.breakblocks.message", this.messages.get("breakblocks")));
+        this.actions.put("breakblocks", this.config.getBoolean("preventions.breakblocks.enable", this.actions.get("breakblocks")));
+        this.messages.put("breakblocks", this.config.getString("preventions.breakblocks.message", this.messages.get("breakblocks")));
 
-        this.actions.put("placeblocks", this.config.getBoolean("actions.placeblocks.enable", this.actions.get("placeblocks")));
-        this.messages.put("placeblocks", this.config.getString("actions.placeblocks.message", this.messages.get("placeblocks")));
+        this.actions.put("placeblocks", this.config.getBoolean("preventions.placeblocks.enable", this.actions.get("placeblocks")));
+        this.messages.put("placeblocks", this.config.getString("preventions.placeblocks.message", this.messages.get("placeblocks")));
 
-        this.actions.put("pvp", this.config.getBoolean("actions.pvp.enable", this.actions.get("pvp")));
-        this.messages.put("pvp", this.config.getString("actions.pvp.message", this.messages.get("pvp")));
+        this.actions.put("pvp", this.config.getBoolean("preventions.pvp.enable", this.actions.get("pvp")));
+        this.messages.put("pvp", this.config.getString("preventions.pvp.message", this.messages.get("pvp")));
 
-        this.actions.put("pickup", this.config.getBoolean("actions.pickup.enable", this.actions.get("pickup")));
-        this.messages.put("pickup", this.config.getString("actions.pickup.message", this.messages.get("pickup")));
+        this.actions.put("pickup", this.config.getBoolean("preventions.pickup.enable", this.actions.get("pickup")));
+        this.messages.put("pickup", this.config.getString("preventions.pickup.message", this.messages.get("pickup")));
 
-        this.actions.put("vehicle", this.config.getBoolean("actions.vehicle.enable", this.actions.get("vehicle")));
-        this.messages.put("vehicle", this.config.getString("actions.vehicle.message", this.messages.get("vehicle")));
+        this.actions.put("vehicle", this.config.getBoolean("preventions.vehicle.enable", this.actions.get("vehicle")));
+        this.messages.put("vehicle", this.config.getString("preventions.vehicle.message", this.messages.get("vehicle")));
 
-        this.actions.put("spam", this.config.getBoolean("actions.spam.enable", this.actions.get("spam")));
-        this.messages.put("spam", this.config.getString("actions.spam.message", this.messages.get("spam")));
-        this.chatLockDuration = this.config.getInt("actions.spam.lockDuration", this.chatLockDuration);
+        this.actions.put("spam", this.config.getBoolean("preventions.spam.enable", this.actions.get("spam")));
+        this.messages.put("spam", this.config.getString("preventions.spam.message", this.messages.get("spam")));
+        this.chatLockDuration = this.config.getInt("preventions.spam.lockDuration", this.chatLockDuration);
 
-        this.actions.put("monster", this.config.getBoolean("actions.monster.enable", this.actions.get("monster")));
-        this.messages.put("monster", this.config.getString("actions.monster.message", this.messages.get("monster")));
+        this.actions.put("monster", this.config.getBoolean("preventions.monster.enable", this.actions.get("monster")));
+        this.messages.put("monster", this.config.getString("preventions.monster.message", this.messages.get("monster")));
 
-        this.actions.put("lever", this.config.getBoolean("actions.lever.enable", this.actions.get("lever")));
-        this.messages.put("lever", this.config.getString("actions.lever.message", this.messages.get("lever")));
+        this.actions.put("lever", this.config.getBoolean("preventions.lever.enable", this.actions.get("lever")));
+        this.messages.put("lever", this.config.getString("preventions.lever.message", this.messages.get("lever")));
 
-        this.actions.put("button", this.config.getBoolean("actions.button.enable", this.actions.get("button")));
-        this.messages.put("button", this.config.getString("actions.button.message", this.messages.get("button")));
+        this.actions.put("button", this.config.getBoolean("preventions.button.enable", this.actions.get("button")));
+        this.messages.put("button", this.config.getString("preventions.button.message", this.messages.get("button")));
 
-        this.actions.put("pressureplate", this.config.getBoolean("actions.pressureplate.enable", this.actions.get("pressureplate")));
-        this.messages.put("pressureplate", this.config.getString("actions.pressureplate.message", this.messages.get("pressureplate")));
+        this.actions.put("pressureplate", this.config.getBoolean("preventions.pressureplate.enable", this.actions.get("pressureplate")));
+        this.messages.put("pressureplate", this.config.getString("preventions.pressureplate.message", this.messages.get("pressureplate")));
 
-        this.actions.put("chest", this.config.getBoolean("actions.chest.enable", this.actions.get("chest")));
-        this.messages.put("chest", this.config.getString("actions.chest.message", this.messages.get("chest")));
+        this.actions.put("chest", this.config.getBoolean("preventions.chest.enable", this.actions.get("chest")));
+        this.messages.put("chest", this.config.getString("preventions.chest.message", this.messages.get("chest")));
 
-        this.actions.put("furnace", this.config.getBoolean("actions.furnace.enable", this.actions.get("furnace")));
-        this.messages.put("furnace", this.config.getString("actions.furnace.message", this.messages.get("furnace")));
+        this.actions.put("furnace", this.config.getBoolean("preventions.furnace.enable", this.actions.get("furnace")));
+        this.messages.put("furnace", this.config.getString("preventions.furnace.message", this.messages.get("furnace")));
 
-        this.actions.put("bucket", this.config.getBoolean("actions.bucket.enable", this.actions.get("bucket")));
-        this.messages.put("bucket", this.config.getString("actions.bucket.message", this.messages.get("bucket")));
+        this.actions.put("bucket", this.config.getBoolean("preventions.bucket.enable", this.actions.get("bucket")));
+        this.messages.put("bucket", this.config.getString("preventions.bucket.message", this.messages.get("bucket")));
 
-        this.actions.put("inventory", this.config.getBoolean("actions.inventory.enable", this.actions.get("inventory")));
-        this.messages.put("inventory", this.config.getString("actions.inventory.message", this.messages.get("inventory")));
+        this.actions.put("inventory", this.config.getBoolean("preventions.inventory.enable", this.actions.get("inventory")));
+        this.messages.put("inventory", this.config.getString("preventions.inventory.message", this.messages.get("inventory")));
 
-        this.actions.put("workbench", this.config.getBoolean("actions.workbench.enable", this.actions.get("workbench")));
-        this.messages.put("workbench", this.config.getString("actions.workbench.message", this.messages.get("workbench")));
+        this.actions.put("workbench", this.config.getBoolean("preventions.workbench.enable", this.actions.get("workbench")));
+        this.messages.put("workbench", this.config.getString("preventions.workbench.message", this.messages.get("workbench")));
 
-        this.actions.put("door", this.config.getBoolean("actions.door.enable", this.actions.get("door")));
-        this.messages.put("door", this.config.getString("actions.door.message", this.messages.get("door")));
+        this.actions.put("door", this.config.getBoolean("preventions.door.enable", this.actions.get("door")));
+        this.messages.put("door", this.config.getString("preventions.door.message", this.messages.get("door")));
 
         for (Map.Entry<String, String> entry : this.messages.entrySet())
         {
@@ -231,54 +231,54 @@ public class AntiGuest extends JavaPlugin
 
     private void defaultConfig()
     {
-        this.config.setProperty("actions.spam.enable", this.actions.get("spam"));
-        this.config.setProperty("actions.spam.message", this.messages.get("spam"));
-        this.config.setProperty("actions.spam.lockDuration", this.chatLockDuration);
+        this.config.setProperty("preventions.spam.enable", this.actions.get("spam"));
+        this.config.setProperty("preventions.spam.message", this.messages.get("spam"));
+        this.config.setProperty("preventions.spam.lockDuration", this.chatLockDuration);
         
-        this.config.setProperty("actions.vehicle.enable", this.actions.get("vehicle"));
-        this.config.setProperty("actions.vehicle.message", this.messages.get("vehicle"));
+        this.config.setProperty("preventions.vehicle.enable", this.actions.get("vehicle"));
+        this.config.setProperty("preventions.vehicle.message", this.messages.get("vehicle"));
 
-        this.config.setProperty("actions.pickup.enable", this.actions.get("pickup"));
-        this.config.setProperty("actions.pickup.message", this.messages.get("pickup"));
+        this.config.setProperty("preventions.pickup.enable", this.actions.get("pickup"));
+        this.config.setProperty("preventions.pickup.message", this.messages.get("pickup"));
 
-        this.config.setProperty("actions.pvp.enable", this.actions.get("pvp"));
-        this.config.setProperty("actions.pvp.message", this.messages.get("pvp"));
+        this.config.setProperty("preventions.pvp.enable", this.actions.get("pvp"));
+        this.config.setProperty("preventions.pvp.message", this.messages.get("pvp"));
 
-        this.config.setProperty("actions.breakblocks.enable", this.actions.get("breakblocks"));
-        this.config.setProperty("actions.breakblocks.message", this.messages.get("breakblocks"));
+        this.config.setProperty("preventions.breakblocks.enable", this.actions.get("breakblocks"));
+        this.config.setProperty("preventions.breakblocks.message", this.messages.get("breakblocks"));
 
-        this.config.setProperty("actions.placeblocks.enable", this.actions.get("placeblocks"));
-        this.config.setProperty("actions.placeblocks.message", this.messages.get("placeblocks"));
+        this.config.setProperty("preventions.placeblocks.enable", this.actions.get("placeblocks"));
+        this.config.setProperty("preventions.placeblocks.message", this.messages.get("placeblocks"));
 
-        this.config.setProperty("actions.monster.enable", this.actions.get("monster"));
-        this.config.setProperty("actions.monster.message", this.messages.get("monster"));
+        this.config.setProperty("preventions.monster.enable", this.actions.get("monster"));
+        this.config.setProperty("preventions.monster.message", this.messages.get("monster"));
 
-        this.config.setProperty("actions.lever.enable", this.actions.get("lever"));
-        this.config.setProperty("actions.lever.message", this.messages.get("lever"));
+        this.config.setProperty("preventions.lever.enable", this.actions.get("lever"));
+        this.config.setProperty("preventions.lever.message", this.messages.get("lever"));
 
-        this.config.setProperty("actions.button.enable", this.actions.get("button"));
-        this.config.setProperty("actions.button.message", this.messages.get("button"));
+        this.config.setProperty("preventions.button.enable", this.actions.get("button"));
+        this.config.setProperty("preventions.button.message", this.messages.get("button"));
 
-        this.config.setProperty("actions.pressureplate.enable", this.actions.get("pressureplate"));
-        this.config.setProperty("actions.pressureplate.message", this.messages.get("pressureplate"));
+        this.config.setProperty("preventions.pressureplate.enable", this.actions.get("pressureplate"));
+        this.config.setProperty("preventions.pressureplate.message", this.messages.get("pressureplate"));
 
-        this.config.setProperty("actions.chest.enable", this.actions.get("chest"));
-        this.config.setProperty("actions.chest.message", this.messages.get("chest"));
+        this.config.setProperty("preventions.chest.enable", this.actions.get("chest"));
+        this.config.setProperty("preventions.chest.message", this.messages.get("chest"));
 
-        this.config.setProperty("actions.furnace.enable", this.actions.get("furnace"));
-        this.config.setProperty("actions.furnace.message", this.messages.get("furnace"));
+        this.config.setProperty("preventions.furnace.enable", this.actions.get("furnace"));
+        this.config.setProperty("preventions.furnace.message", this.messages.get("furnace"));
 
-        this.config.setProperty("actions.bucket.enable", this.actions.get("bucket"));
-        this.config.setProperty("actions.bucket.message", this.messages.get("bucket"));
+        this.config.setProperty("preventions.bucket.enable", this.actions.get("bucket"));
+        this.config.setProperty("preventions.bucket.message", this.messages.get("bucket"));
 
-        this.config.setProperty("actions.inventory.enable", this.actions.get("inventory"));
-        this.config.setProperty("actions.inventory.message", this.messages.get("inventory"));
+        this.config.setProperty("preventions.inventory.enable", this.actions.get("inventory"));
+        this.config.setProperty("preventions.inventory.message", this.messages.get("inventory"));
 
-        this.config.setProperty("actions.workbench.enable", this.actions.get("workbench"));
-        this.config.setProperty("actions.workbench.message", this.messages.get("workbench"));
+        this.config.setProperty("preventions.workbench.enable", this.actions.get("workbench"));
+        this.config.setProperty("preventions.workbench.message", this.messages.get("workbench"));
 
-        this.config.setProperty("actions.door.enable", this.actions.get("door"));
-        this.config.setProperty("actions.door.message", this.messages.get("door"));
+        this.config.setProperty("preventions.door.enable", this.actions.get("door"));
+        this.config.setProperty("preventions.door.message", this.messages.get("door"));
 
         
         this.config.save();
