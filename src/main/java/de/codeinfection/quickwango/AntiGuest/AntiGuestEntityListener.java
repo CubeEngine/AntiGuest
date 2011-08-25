@@ -20,12 +20,10 @@ import org.bukkit.event.painting.PaintingPlaceEvent;
 public class AntiGuestEntityListener extends EntityListener
 {
     protected final AntiGuest plugin;
-    public String paintingBreakPermission;
 
     public AntiGuestEntityListener(AntiGuest plugin)
     {
         this.plugin = plugin;
-        this.paintingBreakPermission = "interact";
     }
 
     @Override
@@ -60,9 +58,9 @@ public class AntiGuestEntityListener extends EntityListener
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "build"))
+        if (!this.plugin.can(player, "placeblocks"))
         {
-            this.plugin.message(player, "build");
+            this.plugin.message(player, "placeblocks");
             event.setCancelled(true);
         }
     }
@@ -76,10 +74,10 @@ public class AntiGuestEntityListener extends EntityListener
             if (remover instanceof Player)
             {
                 final Player player = (Player)remover;
-                if (!this.plugin.can(player, this.paintingBreakPermission))
+                if (!this.plugin.can(player, "breakblocks"))
                 {
                     event.setCancelled(true);
-                    this.plugin.message(player, this.paintingBreakPermission);
+                    this.plugin.message(player, "breakblocks");
                 }
             }
         }
@@ -92,9 +90,10 @@ public class AntiGuestEntityListener extends EntityListener
         if (event.getEntity() instanceof Monster && targetEntity != null && targetEntity instanceof Player)
         {
             final Player player = (Player)targetEntity;
-            if (!this.plugin.can(player, "interact"))
+            if (!this.plugin.can(player, "monster"))
             {
                 event.setCancelled(true);
+                this.plugin.message(player, "monster");
             }
         }
     }

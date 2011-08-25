@@ -61,8 +61,11 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("bucket", true);
         this.messages.put("bucket", "&4You are not allowed to use buckets");
 
-        this.actions.put("build", false);
-        this.messages.put("build", "&4You are not allowed to build!");
+        this.actions.put("placeblock", false);
+        this.messages.put("placeblock", "&4You are not allowed to place blocks!");
+
+        this.actions.put("breakblocks", false);
+        this.messages.put("breakblocks", "&4You are not allowed to break blocks!");
         
         this.actions.put("pvp", false);
         this.messages.put("pvp", "&4You are not allowed to fight!");
@@ -158,10 +161,6 @@ public class AntiGuest extends JavaPlugin
         {
             this.pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
         }
-        if (this.actions.get("build"))
-        {
-            entityListener.paintingBreakPermission = "build";
-        }
 
         log("Version " + this.getDescription().getVersion() + " enabled");
     }
@@ -175,8 +174,11 @@ public class AntiGuest extends JavaPlugin
     {
         this.config.load();
 
-        this.actions.put("build", this.config.getBoolean("actions.build.enable", this.actions.get("build")));
-        this.messages.put("build", this.config.getString("actions.build.message", this.messages.get("build")));
+        this.actions.put("breakblocks", this.config.getBoolean("actions.breakblocks.enable", this.actions.get("breakblocks")));
+        this.messages.put("breakblocks", this.config.getString("actions.breakblocks.message", this.messages.get("breakblocks")));
+
+        this.actions.put("placeblocks", this.config.getBoolean("actions.placeblocks.enable", this.actions.get("placeblocks")));
+        this.messages.put("placeblocks", this.config.getString("actions.placeblocks.message", this.messages.get("placeblocks")));
 
         this.actions.put("pvp", this.config.getBoolean("actions.pvp.enable", this.actions.get("pvp")));
         this.messages.put("pvp", this.config.getString("actions.pvp.message", this.messages.get("pvp")));
@@ -242,8 +244,11 @@ public class AntiGuest extends JavaPlugin
         this.config.setProperty("actions.pvp.enable", this.actions.get("pvp"));
         this.config.setProperty("actions.pvp.message", this.messages.get("pvp"));
 
-        this.config.setProperty("actions.build.enable", this.actions.get("build"));
-        this.config.setProperty("actions.build.message", this.messages.get("build"));
+        this.config.setProperty("actions.breakblocks.enable", this.actions.get("breakblocks"));
+        this.config.setProperty("actions.breakblocks.message", this.messages.get("breakblocks"));
+
+        this.config.setProperty("actions.placeblocks.enable", this.actions.get("placeblocks"));
+        this.config.setProperty("actions.placeblocks.message", this.messages.get("placeblocks"));
 
         this.config.setProperty("actions.monster.enable", this.actions.get("monster"));
         this.config.setProperty("actions.monster.message", this.messages.get("monster"));
