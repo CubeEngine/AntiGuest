@@ -1,8 +1,11 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -63,12 +66,74 @@ public class AntiGuestPlayerListener extends PlayerListener
     {
         final Player player = event.getPlayer();
         Action action = event.getAction();
-        if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK || action == Action.PHYSICAL)
+        Material material = event.getMaterial();
+        if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
         {
-            if (!this.plugin.can(player, "interact"))
+            if (this.plugin.actions.get("lever") && material == Material.LEVER) // lever
             {
-                event.setCancelled(true);
-                this.plugin.message(player, "interact");
+                if (!this.plugin.can(player, "lever"))
+                {
+                    this.plugin.message(player, "lever");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.plugin.actions.get("button") && material == Material.STONE_BUTTON) // buttons
+            {
+                if (!this.plugin.can(player, "button"))
+                {
+                    this.plugin.message(player, "button");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.plugin.actions.get("door") && (material == Material.WOODEN_DOOR || material == Material.IRON_DOOR || material == Material.TRAP_DOOR)) // doors
+            {
+                if (!this.plugin.can(player, "door"))
+                {
+                    this.plugin.message(player, "door");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.plugin.actions.get("chest") && material == Material.CHEST) // chests
+            {
+                if (!this.plugin.can(player, "chest"))
+                {
+                    this.plugin.message(player, "chest");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.plugin.actions.get("workbench") && material == Material.WORKBENCH) // workbenches
+            {
+                if (!this.plugin.can(player, "workbench"))
+                {
+                    this.plugin.message(player, "workbench");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.plugin.actions.get("furnace") && material == Material.FURNACE) // furnaces
+            {
+                if (!this.plugin.can(player, "furnace"))
+                {
+                    this.plugin.message(player, "furnace");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+        else if (this.plugin.actions.get("pressureplate") && action == Action.PHYSICAL)
+        {
+            if (material == Material.WOOD_PLATE || material == Material.STONE_PLATE) // pressure plates
+            {
+                if (!this.plugin.can(player, "pressureplate"))
+                {
+                    this.plugin.message(player, "pressureplate");
+                    event.setCancelled(true);
+                    return;
+                }
             }
         }
     }
@@ -92,6 +157,28 @@ public class AntiGuestPlayerListener extends PlayerListener
         {
             event.setCancelled(true);
             this.plugin.message(player, "spam");
+        }
+    }
+
+    @Override
+    public void onPlayerBucketFill(PlayerBucketFillEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!this.plugin.can(player, "bucket"))
+        {
+            event.setCancelled(true);
+            this.noPickupMessage(player);
+        }
+    }
+
+    @Override
+    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!this.plugin.can(player, "bucket"))
+        {
+            event.setCancelled(true);
+            this.noPickupMessage(player);
         }
     }
 }

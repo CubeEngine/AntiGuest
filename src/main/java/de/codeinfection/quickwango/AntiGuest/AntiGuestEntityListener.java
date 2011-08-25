@@ -2,11 +2,11 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.painting.PaintingBreakByEntityEvent;
@@ -57,21 +57,6 @@ public class AntiGuestEntityListener extends EntityListener
     }
 
     @Override
-    public void onEntityInteract(EntityInteractEvent event)
-    {
-        final Entity interactor = event.getEntity();
-        if (interactor instanceof Player)
-        {
-            Player player = (Player)interactor;
-            if (!this.plugin.can(player, "interact"))
-            {
-                this.plugin.message(player, "interact");
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    @Override
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
         final Player player = event.getPlayer();
@@ -104,7 +89,7 @@ public class AntiGuestEntityListener extends EntityListener
     public void onEntityTarget(EntityTargetEvent event)
     {
         Entity targetEntity = event.getTarget();
-        if (targetEntity != null && targetEntity instanceof Player)
+        if (event.getEntity() instanceof Monster && targetEntity != null && targetEntity instanceof Player)
         {
             final Player player = (Player)targetEntity;
             if (!this.plugin.can(player, "interact"))
