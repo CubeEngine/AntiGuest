@@ -37,10 +37,10 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("monster", true);
         this.messages.put("monster", "&4You are not allowed to get targeted by monsters!");
 
-        this.actions.put("lever", true);
+        this.actions.put("lever", false);
         this.messages.put("lever", "&4You are not allowed to use levers!");
 
-        this.actions.put("button", true);
+        this.actions.put("button", false);
         this.messages.put("button", "&4You are not allowed to use buttons!");
 
         this.actions.put("door", true);
@@ -49,34 +49,34 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("chest", true);
         this.messages.put("chest", "&4You are not allowed to use chests");
 
-        this.actions.put("workbench", true);
+        this.actions.put("workbench", false);
         this.messages.put("workbench", "&4You are not allowed to craft!");
 
-        this.actions.put("furnace", true);
+        this.actions.put("furnace", false);
         this.messages.put("furnace", "&4You are not allowed to cook!");
 
-        this.actions.put("pressureplate", true);
+        this.actions.put("pressureplate", false);
         this.messages.put("pressureplate", "&4You are not allowed to use pressure plates!");
 
         this.actions.put("bucket", true);
         this.messages.put("bucket", "&4You are not allowed to use buckets");
 
-        this.actions.put("placeblock", false);
+        this.actions.put("placeblock", true);
         this.messages.put("placeblock", "&4You are not allowed to place blocks!");
 
-        this.actions.put("breakblock", false);
+        this.actions.put("breakblock", true);
         this.messages.put("breakblock", "&4You are not allowed to break blocks!");
         
-        this.actions.put("pvp", false);
+        this.actions.put("pvp", true);
         this.messages.put("pvp", "&4You are not allowed to fight!");
 
-        this.actions.put("pickup", false);
+        this.actions.put("pickup", true);
         this.messages.put("pickup", "&4You are not allowed to pickup items!");
 
-        this.actions.put("vehicle", false);
+        this.actions.put("vehicle", true);
         this.messages.put("vehicle", "&4You are not allowed to use vehicles!");
 
-        this.actions.put("spam", false);
+        this.actions.put("spam", true);
         this.messages.put("spam", "&4Don't spam the chat!");
         this.chatLockDuration = 2;
 
