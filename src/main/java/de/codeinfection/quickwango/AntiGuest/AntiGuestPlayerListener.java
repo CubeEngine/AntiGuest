@@ -2,11 +2,15 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -20,12 +24,33 @@ public class AntiGuestPlayerListener extends PlayerListener
     protected final AntiGuest plugin;
     protected final HashMap<Player, Long> chatTimestamps;
     protected final HashMap<Player, Long> pickupTimestamps;
+    protected final HashMap<Player, Long> pressureTimestamps;
+
+    protected final boolean lever;
+    protected final boolean button;
+    protected final boolean door;
+    protected final boolean pressureplate;
+    protected final boolean chest;
+    protected final boolean workbench;
+    protected final boolean furnace;
+    protected final boolean placeblock;
+
 
     public AntiGuestPlayerListener(AntiGuest plugin)
     {
         this.plugin = plugin;
         this.chatTimestamps = new HashMap<Player, Long>();
         this.pickupTimestamps = new HashMap<Player, Long>();
+        this.pressureTimestamps = new HashMap<Player, Long>();
+
+        this.lever = this.plugin.actions.get("lever");
+        this.button = this.plugin.actions.get("button");
+        this.door = this.plugin.actions.get("door");
+        this.pressureplate = this.plugin.actions.get("pressureplate");
+        this.chest = this.plugin.actions.get("chest");
+        this.workbench = this.plugin.actions.get("workbench");
+        this.furnace = this.plugin.actions.get("furnace");
+        this.placeblock = this.plugin.actions.get("placeblock");
     }
 
     protected void noPickupMessage(Player player)
@@ -36,6 +61,17 @@ public class AntiGuestPlayerListener extends PlayerListener
         {
             this.plugin.message(player, "pickup");
             this.pickupTimestamps.put(player, currentTime);
+        }
+    }
+
+    protected void pressureMessage(Player player)
+    {
+        Long lastTime = this.pressureTimestamps.get(player);
+        long currentTime = System.currentTimeMillis();
+        if (lastTime == null || lastTime + 5000 < currentTime)
+        {
+            this.plugin.message(player, "pressureplate");
+            this.pressureTimestamps.put(player, currentTime);
         }
     }
 
@@ -66,28 +102,17 @@ public class AntiGuestPlayerListener extends PlayerListener
     {
         final Player player = event.getPlayer();
         Action action = event.getAction();
-        Material material = event.getMaterial();
+        Block block = event.getClickedBlock();
+        if (block == null)
+        {
+            return;
+        }
+        Material material = block.getType();
+        Material itemInHand = player.getItemInHand().getType();
+        AntiGuest.debug("Player interacted with " + material.toString());
         if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
         {
-            if (this.plugin.actions.get("lever") && material == Material.LEVER) // lever
-            {
-                if (!this.plugin.can(player, "lever"))
-                {
-                    this.plugin.message(player, "lever");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.plugin.actions.get("button") && material == Material.STONE_BUTTON) // buttons
-            {
-                if (!this.plugin.can(player, "button"))
-                {
-                    this.plugin.message(player, "button");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.plugin.actions.get("door") && (material == Material.WOODEN_DOOR || material == Material.IRON_DOOR || material == Material.TRAP_DOOR)) // doors
+            if (this.door && (material == Material.WOODEN_DOOR || material == Material.IRON_DOOR || material == Material.TRAP_DOOR)) // doors
             {
                 if (!this.plugin.can(player, "door"))
                 {
@@ -96,7 +121,28 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
-            else if (this.plugin.actions.get("chest") && material == Material.CHEST) // chests
+            else if (this.lever && material == Material.LEVER) // lever
+            {
+                if (!this.plugin.can(player, "lever"))
+                {
+                    this.plugin.message(player, "lever");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.button && material == Material.STONE_BUTTON) // buttons
+            {
+                if (!this.plugin.can(player, "button"))
+                {
+                    this.plugin.message(player, "button");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+        if (action == Action.RIGHT_CLICK_BLOCK)
+        {
+            if (this.chest && material == Material.CHEST) // chests
             {
                 if (!this.plugin.can(player, "chest"))
                 {
@@ -105,7 +151,7 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
-            else if (this.plugin.actions.get("workbench") && material == Material.WORKBENCH) // workbenches
+            else if (this.workbench && material == Material.WORKBENCH) // workbenches
             {
                 if (!this.plugin.can(player, "workbench"))
                 {
@@ -114,7 +160,7 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
-            else if (this.plugin.actions.get("furnace") && material == Material.FURNACE) // furnaces
+            else if (this.furnace && material == Material.FURNACE) // furnaces
             {
                 if (!this.plugin.can(player, "furnace"))
                 {
@@ -123,14 +169,33 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
+            if (this.placeblock)
+            {
+                boolean allowed = this.plugin.can(player, "placeblock");
+                if ((itemInHand == Material.MINECART || itemInHand == Material.STORAGE_MINECART))
+                {
+                    if ((material == Material.RAILS || material == Material.POWERED_RAIL || material == Material.DETECTOR_RAIL) && !allowed)
+                    {
+                        event.setCancelled(true);
+                        this.plugin.message(player, "placeblock");
+                        return;
+                    }
+                }
+                else if (itemInHand == Material.BOAT && !allowed)
+                {
+                    event.setCancelled(true);
+                    this.plugin.message(player, "placeblock");
+                    return;
+                }
+            }
         }
-        else if (this.plugin.actions.get("pressureplate") && action == Action.PHYSICAL)
+        else if (this.pressureplate && action == Action.PHYSICAL)
         {
             if (material == Material.WOOD_PLATE || material == Material.STONE_PLATE) // pressure plates
             {
                 if (!this.plugin.can(player, "pressureplate"))
                 {
-                    this.plugin.message(player, "pressureplate");
+                    this.pressureMessage(player);
                     event.setCancelled(true);
                     return;
                 }
@@ -163,22 +228,57 @@ public class AntiGuestPlayerListener extends PlayerListener
     @Override
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
+        AntiGuest.debug("PLAYER_BUCKET_FILL triggered!");
         final Player player = event.getPlayer();
         if (!this.plugin.can(player, "bucket"))
         {
             event.setCancelled(true);
-            this.noPickupMessage(player);
+            this.plugin.message(player, "bucket");
         }
     }
 
     @Override
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
     {
+        AntiGuest.debug("PLAYER_BUCKET_EMPTY triggered!");
         final Player player = event.getPlayer();
         if (!this.plugin.can(player, "bucket"))
         {
             event.setCancelled(true);
-            this.noPickupMessage(player);
+            this.plugin.message(player, "bucket");
+        }
+    }
+
+    @Override
+    public void onPlayerDropItem(PlayerDropItemEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!this.plugin.can(player, "drop"))
+        {
+            event.setCancelled(true);
+            this.plugin.message(player, "drop");
+        }
+    }
+
+    @Override
+    public void onPlayerBedEnter(PlayerBedEnterEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!this.plugin.can(player, "bed"))
+        {
+            event.setCancelled(true);
+            this.plugin.message(player, "bed");
+        }
+    }
+
+    @Override
+    public void onPlayerFish(PlayerFishEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!this.plugin.can(player, "fish"))
+        {
+            event.setCancelled(true);
+            this.plugin.message(player, "fish");
         }
     }
 }

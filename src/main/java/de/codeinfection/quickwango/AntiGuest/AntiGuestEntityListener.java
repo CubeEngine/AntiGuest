@@ -58,9 +58,9 @@ public class AntiGuestEntityListener extends EntityListener
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "placeblocks"))
+        if (!this.plugin.can(player, "placeblock"))
         {
-            this.plugin.message(player, "placeblocks");
+            this.plugin.message(player, "placeblock");
             event.setCancelled(true);
         }
     }
@@ -74,10 +74,10 @@ public class AntiGuestEntityListener extends EntityListener
             if (remover instanceof Player)
             {
                 final Player player = (Player)remover;
-                if (!this.plugin.can(player, "breakblocks"))
+                if (!this.plugin.can(player, "breakblock"))
                 {
                     event.setCancelled(true);
-                    this.plugin.message(player, "breakblocks");
+                    this.plugin.message(player, "breakblock");
                 }
             }
         }

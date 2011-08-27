@@ -14,16 +14,47 @@ permissions:
     children:
       AntiGuest.build: true
       AntiGuest.interact: true
-      AntiGuest.pvp: true
-      AntiGuest.pickup: true
+      AntiGuest.craft: true
+      AntiGuest.fight: true
+      AntiGuest.item: true
       AntiGuest.vehicle: true
       AntiGuest.spam: true
   AntiGuest.build:
     description: "Allows the player to build"
     default: op
+    children:
+      AntiGuest.placeblock: true
+      AntiGuest.breakblock: true
+  AntiGuest.craft:
+    description: "Allows the player to do crafting related things"
+    default: op
+    children:
+      AntiGuest.furnace: true
+      AntiGuest.workbench: true
+      AntiGuest.inventory: true
   AntiGuest.interact:
     description: "Allows the player to interact with the world"
     default: op
+    children:
+      AntiGuest.lever: true
+      AntiGuest.button: true
+      AntiGuest.door: true
+      AntiGuest.chest: true
+      AntiGuest.bed: true
+      AntiGuest.fish: true
+      AntiGuest.bucket: true
+  AntiGuest.item:
+    description: "Allows the player to do item related things"
+    default: op
+    children:
+      AntiGuest.pickup: true
+      AntiGuest.drop: true
+  AntiGuest.fight:
+    description: "Allows the player to fight"
+    default: op
+    children:
+      AntiGuest.pvp: true
+      AntoGuest.monster: true
   AntiGuest.pvp:
     description: "Allows the player to fight"
     default: op
@@ -35,4 +66,49 @@ permissions:
     default: op
   AntiGuest.spam:
     description: "Allows the player to chat as fast as he wants"
+    default: op
+  AntiGuest.lever:
+    description: "Allows the player to use levers"
+    default: op
+  AntiGuest.button:
+    description: "Allows the player to push buttons"
+    default: op
+  AntiGuest.chest:
+    description: "Allows the player to use chests"
+    default: op
+  AntiGuest.workbench:
+    description: "Allows the player to craft"
+    default: op
+  AntiGuest.furnace:
+    description: "Allows the player to furnace"
+    default: op
+  AntiGuest.inventory:
+    description: "Allows the player to open his inventory"
+    default: op
+  AntiGuest.door:
+    description: "Allows the player to open and close doors"
+    default: op
+  AntiGuest.pressureplate:
+    description: "Allows the player to trigger pressure plates"
+    default: op
+  AntiGuest.bed:
+    description: "Allows the player to sleep in beds"
+    default: op
+  AntiGuest.placeblock:
+    description: "Allows the player to place blocks"
+    default: op
+  AntiGuest.breakblock:
+    description: "Allows the player to break blocks"
+    default: op
+  AntiGuest.bucket:
+    description: "Allows the player to use buckets"
+    default: op
+  AntiGuest.monster:
+    description: "Allows the player to get targeted by monsters"
+    default: op
+  AntiGuest.drop:
+    description: "Allows the player to drop items"
+    default: op
+  AntiGuest.fish:
+    description: "Allows the player to fish"
     default: op

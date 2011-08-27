@@ -61,11 +61,11 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("bucket", true);
         this.messages.put("bucket", "&4You are not allowed to use buckets");
 
-        this.actions.put("placeblocks", false);
-        this.messages.put("placeblocks", "&4You are not allowed to place blocks!");
+        this.actions.put("placeblock", false);
+        this.messages.put("placeblock", "&4You are not allowed to place blocks!");
 
-        this.actions.put("breakblocks", false);
-        this.messages.put("breakblocks", "&4You are not allowed to break blocks!");
+        this.actions.put("breakblock", false);
+        this.messages.put("breakblock", "&4You are not allowed to break blocks!");
         
         this.actions.put("pvp", false);
         this.messages.put("pvp", "&4You are not allowed to fight!");
@@ -82,6 +82,15 @@ public class AntiGuest extends JavaPlugin
 
         this.actions.put("inventory", false);
         this.messages.put("inventory", "&4You are not allowed to use your inventory!");
+
+        this.actions.put("bed", false);
+        this.messages.put("bed", "&4You are not allowed to use beds!");
+
+        this.actions.put("drop", false);
+        this.messages.put("drop", "&4You are not allowed to drop items!");
+
+        this.actions.put("fish", false);
+        this.messages.put("fish", "&4You are not allowed to fish!");
     }
 
     public void onEnable()
@@ -109,7 +118,7 @@ public class AntiGuest extends JavaPlugin
         AntiGuestEntityListener entityListener = new AntiGuestEntityListener(this);
         AntiGuestBlockListener blockListener = new AntiGuestBlockListener(this);
         AntiGuestVehicleListener vehicleListener = new AntiGuestVehicleListener(this);
-
+        
         if (
             this.actions.get("lever") ||
             this.actions.get("button") ||
@@ -117,27 +126,33 @@ public class AntiGuest extends JavaPlugin
             this.actions.get("chest") ||
             this.actions.get("workbench") ||
             this.actions.get("furnace") ||
-            this.actions.get("pressureplate")
+            this.actions.get("pressureplate") ||
+            this.actions.get("placeblock")
         )
         {
+            debug("interaction preventions registered");
             this.pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Lowest, this);
         }
         if (this.actions.get("bucket"))
         {
+            debug("bucket prevention registered");
             this.pm.registerEvent(Type.PLAYER_BUCKET_EMPTY, playerListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.PLAYER_BUCKET_FILL, playerListener, Priority.Lowest, this);
         }
         if (this.actions.get("monster"))
         {
+            debug("monster prevention registered");
             this.pm.registerEvent(Type.ENTITY_TARGET, entityListener, Priority.Lowest, this);
         }
-        if (this.actions.get("placeblocks"))
+        if (this.actions.get("placeblock"))
         {
+            debug("place blocks prevention registered");
             this.pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.PAINTING_PLACE, entityListener, Priority.Lowest, this);
         }
-        if (this.actions.get("breakblocks"))
+        if (this.actions.get("breakblock"))
         {
+            debug("break block prevention registered");
             this.pm.registerEvent(Type.VEHICLE_DAMAGE, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_DESTROY, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.BLOCK_DAMAGE, blockListener, Priority.Lowest, this);
@@ -145,20 +160,39 @@ public class AntiGuest extends JavaPlugin
         }
         if (this.actions.get("pvp"))
         {
+            debug("pvp prevention registered");
             this.pm.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Lowest, this);
         }
         if (this.actions.get("pickup"))
         {
+            debug("pickup prevention registered");
             this.pm.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Lowest, this);
+        }
+        if (this.actions.get("drop"))
+        {
+            debug("drop prevention registered");
+            this.pm.registerEvent(Type.PLAYER_DROP_ITEM, playerListener, Priority.Lowest, this);
+        }
+        if (this.actions.get("fish"))
+        {
+            debug("fish prevention registered");
+            this.pm.registerEvent(Type.PLAYER_FISH, playerListener, Priority.Lowest, this);
+        }
+        if (this.actions.get("bed"))
+        {
+            debug("bed prevention registered");
+            this.pm.registerEvent(Type.PLAYER_BED_ENTER, playerListener, Priority.Lowest, this);
         }
         if (this.actions.get("vehicle"))
         {
+            debug("vehicle prevention registered");
             this.pm.registerEvent(Type.VEHICLE_COLLISION_ENTITY, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Lowest, this);
         }
         if (this.actions.get("spam"))
         {
+            debug("SPAM prevention registered");
             this.pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
         }
 
@@ -174,11 +208,13 @@ public class AntiGuest extends JavaPlugin
     {
         this.config.load();
 
-        this.actions.put("breakblocks", this.config.getBoolean("preventions.breakblocks.enable", this.actions.get("breakblocks")));
-        this.messages.put("breakblocks", this.config.getString("preventions.breakblocks.message", this.messages.get("breakblocks")));
+        debugMode = this.config.getBoolean("debug", debugMode);
 
-        this.actions.put("placeblocks", this.config.getBoolean("preventions.placeblocks.enable", this.actions.get("placeblocks")));
-        this.messages.put("placeblocks", this.config.getString("preventions.placeblocks.message", this.messages.get("placeblocks")));
+        this.actions.put("breakblock", this.config.getBoolean("preventions.breakblock.enable", this.actions.get("breakblock")));
+        this.messages.put("breakblock", this.config.getString("preventions.breakblock.message", this.messages.get("breakblock")));
+
+        this.actions.put("placeblock", this.config.getBoolean("preventions.placeblock.enable", this.actions.get("placeblock")));
+        this.messages.put("placeblock", this.config.getString("preventions.placeblock.message", this.messages.get("placeblock")));
 
         this.actions.put("pvp", this.config.getBoolean("preventions.pvp.enable", this.actions.get("pvp")));
         this.messages.put("pvp", this.config.getString("preventions.pvp.message", this.messages.get("pvp")));
@@ -223,9 +259,22 @@ public class AntiGuest extends JavaPlugin
         this.actions.put("door", this.config.getBoolean("preventions.door.enable", this.actions.get("door")));
         this.messages.put("door", this.config.getString("preventions.door.message", this.messages.get("door")));
 
+        this.actions.put("bed", this.config.getBoolean("preventions.bed.enable", this.actions.get("bed")));
+        this.messages.put("bed", this.config.getString("preventions.bed.message", this.messages.get("bed")));
+
+        this.actions.put("drop", this.config.getBoolean("preventions.drop.enable", this.actions.get("drop")));
+        this.messages.put("drop", this.config.getString("preventions.drop.message", this.messages.get("drop")));
+
+        this.actions.put("fish", this.config.getBoolean("preventions.fish.enable", this.actions.get("fish")));
+        this.messages.put("fish", this.config.getString("preventions.fish.message", this.messages.get("fish")));
+
         for (Map.Entry<String, String> entry : this.messages.entrySet())
         {
-            this.messages.put(entry.getKey(), entry.getValue().replaceAll("&([a-f0-9])", "\u00A7$1"));
+            String value = entry.getValue();
+            if (value != null)
+            {
+                this.messages.put(entry.getKey(), entry.getValue().replaceAll("&([a-f0-9])", "\u00A7$1"));
+            }
         }
     }
 
@@ -244,11 +293,11 @@ public class AntiGuest extends JavaPlugin
         this.config.setProperty("preventions.pvp.enable", this.actions.get("pvp"));
         this.config.setProperty("preventions.pvp.message", this.messages.get("pvp"));
 
-        this.config.setProperty("preventions.breakblocks.enable", this.actions.get("breakblocks"));
-        this.config.setProperty("preventions.breakblocks.message", this.messages.get("breakblocks"));
+        this.config.setProperty("preventions.breakblock.enable", this.actions.get("breakblock"));
+        this.config.setProperty("preventions.breakblock.message", this.messages.get("breakblock"));
 
-        this.config.setProperty("preventions.placeblocks.enable", this.actions.get("placeblocks"));
-        this.config.setProperty("preventions.placeblocks.message", this.messages.get("placeblocks"));
+        this.config.setProperty("preventions.placeblock.enable", this.actions.get("placeblock"));
+        this.config.setProperty("preventions.placeblock.message", this.messages.get("placeblock"));
 
         this.config.setProperty("preventions.monster.enable", this.actions.get("monster"));
         this.config.setProperty("preventions.monster.message", this.messages.get("monster"));
@@ -280,6 +329,16 @@ public class AntiGuest extends JavaPlugin
         this.config.setProperty("preventions.door.enable", this.actions.get("door"));
         this.config.setProperty("preventions.door.message", this.messages.get("door"));
 
+        this.config.setProperty("preventions.bed.enable", this.actions.get("bed"));
+        this.config.setProperty("preventions.bed.message", this.messages.get("bed"));
+
+        this.config.setProperty("preventions.drop.enable", this.actions.get("drop"));
+        this.config.setProperty("preventions.drop.message", this.messages.get("drop"));
+
+        this.config.setProperty("preventions.fish.enable", this.actions.get("fish"));
+        this.config.setProperty("preventions.fish.message", this.messages.get("fish"));
+
+        this.config.setProperty("debug", debugMode);
         
         this.config.save();
     }
@@ -309,19 +368,25 @@ public class AntiGuest extends JavaPlugin
 
     public boolean can(Player player, String type)
     {
+        boolean result = false;
         if (player.isOp())
         {
-            return true;
-        }
-        String permission = "AntiGuest." + type;
-        if (this.permissionHandler != null)
-        {
-            return this.permissionHandler.permission(player, permission);
+            result = true;
         }
         else
         {
-            return player.hasPermission(permission);
+            final String permission = "AntiGuest." + type;
+            if (this.permissionHandler != null)
+            {
+                result = this.permissionHandler.permission(player, permission);
+            }
+            else
+            {
+                result = player.hasPermission(permission);
+            }
         }
+        debug(player.getName() + " - " + type + " - " + String.valueOf(result));
+        return result;
     }
 
     public void message(Player player, String type)

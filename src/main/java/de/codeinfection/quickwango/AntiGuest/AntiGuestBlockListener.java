@@ -22,10 +22,10 @@ public class AntiGuestBlockListener extends BlockListener
     public void onBlockDamage(BlockDamageEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "breakblocks"))
+        if (!this.plugin.can(player, "breakblock"))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "breakblocks");
+            this.plugin.message(player, "breakblock");
         }
     }
 
@@ -33,10 +33,10 @@ public class AntiGuestBlockListener extends BlockListener
     public void onBlockPlace(BlockPlaceEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "placeblocks"))
+        if (!this.plugin.can(player, "placeblock"))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "placeblocks");
+            this.plugin.message(player, "placeblock");
         }
     }
 }
