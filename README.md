@@ -10,7 +10,7 @@ AntiGuest prevents guests from doing specific things like building and fighting,
 - prevent guests from (configurable):
     - using levers, buttons, doors and/or pressureplates
     - opening chests and/or doors
-    - crafting and cooking
+    - crafting, cooking and/or dispensing
     - fishing
     - sleeping in beds
     - using buckets
@@ -50,6 +50,7 @@ Installation
 - AntiGuest.craft - Allows the player to do crafting related things
     - AntiGuest.furnace - Allows the player to furnace
     - AntiGuest.workbench - Allows the player to craft
+    - AntiGuest.dispenser - Allows the player to dispense
     - AntiGuest.chest - Allows the player to use chests
     - AntiGuest.inventory - Allows the player to open his inventory
 - AntiGuest.fight - Allows the player to fight
@@ -64,6 +65,12 @@ Installation
 
   Changes
 =============
+
+Version 2.0.1
+
+    Added dispenser prevention
+    removed useless config entry of inventory prevention, because it's impossible
+    new preventions will be automaticly added to the config (no deleting needed)
 
 Version 2.0.0
 
