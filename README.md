@@ -73,7 +73,7 @@ Version 2.0.0
     Added bucket prevention
     Added fishing prevention
     Added a config entry to enable or disable the debug mode
-    Changed the configuratiuon file a bit (You should delete you old file)
+    Changed the configuratiuon file a bit (You should delete your old file)
 
 Version 1.2.1
 

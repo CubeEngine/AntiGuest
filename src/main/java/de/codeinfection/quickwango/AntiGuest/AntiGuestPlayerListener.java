@@ -33,6 +33,7 @@ public class AntiGuestPlayerListener extends PlayerListener
     protected final boolean chest;
     protected final boolean workbench;
     protected final boolean furnace;
+    protected final boolean dispenser;
     protected final boolean placeblock;
 
 
@@ -43,21 +44,22 @@ public class AntiGuestPlayerListener extends PlayerListener
         this.pickupTimestamps = new HashMap<Player, Long>();
         this.pressureTimestamps = new HashMap<Player, Long>();
 
-        this.lever = this.plugin.actions.get("lever");
-        this.button = this.plugin.actions.get("button");
-        this.door = this.plugin.actions.get("door");
-        this.pressureplate = this.plugin.actions.get("pressureplate");
-        this.chest = this.plugin.actions.get("chest");
-        this.workbench = this.plugin.actions.get("workbench");
-        this.furnace = this.plugin.actions.get("furnace");
-        this.placeblock = this.plugin.actions.get("placeblock");
+        this.lever = this.plugin.preventions.get("lever");
+        this.button = this.plugin.preventions.get("button");
+        this.door = this.plugin.preventions.get("door");
+        this.pressureplate = this.plugin.preventions.get("pressureplate");
+        this.chest = this.plugin.preventions.get("chest");
+        this.workbench = this.plugin.preventions.get("workbench");
+        this.furnace = this.plugin.preventions.get("furnace");
+        this.dispenser = this.plugin.preventions.get("dispenser");
+        this.placeblock = this.plugin.preventions.get("placeblock");
     }
 
     protected void noPickupMessage(Player player)
     {
         Long lastTime = this.pickupTimestamps.get(player);
         long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + 5000 < currentTime)
+        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
         {
             this.plugin.message(player, "pickup");
             this.pickupTimestamps.put(player, currentTime);
@@ -68,7 +70,7 @@ public class AntiGuestPlayerListener extends PlayerListener
     {
         Long lastTime = this.pressureTimestamps.get(player);
         long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + 5000 < currentTime)
+        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
         {
             this.plugin.message(player, "pressureplate");
             this.pressureTimestamps.put(player, currentTime);
@@ -165,6 +167,15 @@ public class AntiGuestPlayerListener extends PlayerListener
                 if (!this.plugin.can(player, "furnace"))
                 {
                     this.plugin.message(player, "furnace");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.dispenser && material == Material.DISPENSER) // dispencers
+            {
+                if (!this.plugin.can(player, "dispenser"))
+                {
+                    this.plugin.message(player, "dispenser");
                     event.setCancelled(true);
                     return;
                 }

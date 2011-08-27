@@ -1,5 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import java.util.HashMap;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
@@ -20,10 +21,23 @@ import org.bukkit.event.painting.PaintingPlaceEvent;
 public class AntiGuestEntityListener extends EntityListener
 {
     protected final AntiGuest plugin;
+    protected final HashMap<Player, Long> monsterTimestamps;
 
     public AntiGuestEntityListener(AntiGuest plugin)
     {
         this.plugin = plugin;
+        this.monsterTimestamps = new HashMap<Player, Long>();
+    }
+
+    protected void noMonsterTargetingMessage(Player player)
+    {
+        Long lastTime = this.monsterTimestamps.get(player);
+        long currentTime = System.currentTimeMillis();
+        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
+        {
+            this.plugin.message(player, "monster");
+            this.monsterTimestamps.put(player, currentTime);
+        }
     }
 
     @Override
@@ -93,7 +107,7 @@ public class AntiGuestEntityListener extends EntityListener
             if (!this.plugin.can(player, "monster"))
             {
                 event.setCancelled(true);
-                this.plugin.message(player, "monster");
+                this.noMonsterTargetingMessage(player);
             }
         }
     }

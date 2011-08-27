@@ -31,6 +31,7 @@ permissions:
     children:
       AntiGuest.furnace: true
       AntiGuest.workbench: true
+      AntiGuest.dispenser: true
       AntiGuest.chest: true
       AntiGuest.inventory: true
   AntiGuest.interact:
@@ -112,4 +113,7 @@ permissions:
     default: op
   AntiGuest.fish:
     description: "Allows the player to fish"
+    default: op
+  AntiGuest.dispenser:
+    description: "Allows the player to use dispensers"
     default: op
