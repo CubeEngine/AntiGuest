@@ -1,7 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
@@ -19,7 +19,7 @@ public class AntiGuestBlockListener extends BlockListener
     }
 
     @Override
-    public void onBlockDamage(BlockDamageEvent event)
+    public void onBlockBreak(BlockBreakEvent event)
     {
         final Player player = event.getPlayer();
         if (!this.plugin.can(player, "breakblock"))

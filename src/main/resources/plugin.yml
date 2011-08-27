@@ -31,6 +31,7 @@ permissions:
     children:
       AntiGuest.furnace: true
       AntiGuest.workbench: true
+      AntiGuest.chest: true
       AntiGuest.inventory: true
   AntiGuest.interact:
     description: "Allows the player to interact with the world"
@@ -39,7 +40,6 @@ permissions:
       AntiGuest.lever: true
       AntiGuest.button: true
       AntiGuest.door: true
-      AntiGuest.chest: true
       AntiGuest.bed: true
       AntiGuest.fish: true
       AntiGuest.bucket: true
