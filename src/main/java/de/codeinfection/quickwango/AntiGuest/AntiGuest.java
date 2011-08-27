@@ -18,7 +18,7 @@ import org.bukkit.event.Event.Type;
 public class AntiGuest extends JavaPlugin
 {
     protected static final Logger log = Logger.getLogger("Minecraft");
-    public static boolean debugMode = true;
+    public static boolean debugMode = false;
     
     protected Server server;
     protected PluginManager pm;
