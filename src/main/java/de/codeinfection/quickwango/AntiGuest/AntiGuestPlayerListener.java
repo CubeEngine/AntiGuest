@@ -228,7 +228,6 @@ public class AntiGuestPlayerListener extends PlayerListener
     @Override
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
-        AntiGuest.debug("PLAYER_BUCKET_FILL triggered!");
         final Player player = event.getPlayer();
         if (!this.plugin.can(player, "bucket"))
         {
@@ -240,7 +239,6 @@ public class AntiGuestPlayerListener extends PlayerListener
     @Override
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
     {
-        AntiGuest.debug("PLAYER_BUCKET_EMPTY triggered!");
         final Player player = event.getPlayer();
         if (!this.plugin.can(player, "bucket"))
         {
