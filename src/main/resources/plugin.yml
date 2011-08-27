@@ -43,6 +43,7 @@ permissions:
       AntiGuest.bed: true
       AntiGuest.fish: true
       AntiGuest.bucket: true
+      AntiGuest.pressureplate: true
   AntiGuest.item:
     description: "Allows the player to do item related things"
     default: op
