@@ -285,6 +285,8 @@ public class AntiGuest extends JavaPlugin
         this.preventions.put("dispenser", this.config.getBoolean("preventions.dispenser.enable", this.preventions.get("dispenser")));
         this.messages.put("dispenser", this.config.getString("preventions.dispenser.message", this.messages.get("dispenser")));
 
+        this.config.removeProperty("preventions");
+
         this.defaultConfig();
     }
 
