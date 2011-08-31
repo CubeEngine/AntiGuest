@@ -66,6 +66,10 @@ Installation
   Changes
 =============
 
+Version 2.0.3
+
+    Fixed breaking vehicles
+
 Version 2.0.2
 
     Fixed a typo in the permissions
