@@ -66,6 +66,10 @@ Installation
   Changes
 =============
 
+Version 2.0.2
+
+    Fixed a typo in the permissions
+
 Version 2.0.1
 
     Added dispenser prevention
