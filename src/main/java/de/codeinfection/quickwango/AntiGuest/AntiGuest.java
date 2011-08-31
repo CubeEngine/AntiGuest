@@ -167,7 +167,6 @@ public class AntiGuest extends JavaPlugin
         if (this.preventions.get("breakblock"))
         {
             debug("break block prevention registered");
-            this.pm.registerEvent(Type.VEHICLE_DAMAGE, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_DESTROY, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Lowest, this);

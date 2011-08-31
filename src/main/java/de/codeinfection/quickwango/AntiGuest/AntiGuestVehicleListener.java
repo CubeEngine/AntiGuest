@@ -24,21 +24,6 @@ public class AntiGuestVehicleListener extends VehicleListener
     }
 
     @Override
-    public void onVehicleDamage(VehicleDamageEvent event)
-    {
-        Entity entity = event.getAttacker();
-        if (entity instanceof Player)
-        {
-            Player player = (Player)entity;
-            if (!this.plugin.can(player, "breakblocks"))
-            {
-                this.plugin.message(player, "breakblocks");
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    @Override
     public void onVehicleEnter(VehicleEnterEvent event)
     {
         Entity entity = event.getEntered();
