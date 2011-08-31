@@ -56,7 +56,7 @@ permissions:
     default: op
     children:
       AntiGuest.pvp: true
-      AntoGuest.monster: true
+      AntiGuest.monster: true
   AntiGuest.pvp:
     description: "Allows the player to fight"
     default: op
