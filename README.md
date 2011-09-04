@@ -66,6 +66,11 @@ Installation
   Changes
 =============
 
+Version 2.1.0
+
+    Added complete chat prevention
+    Added cake prevention
+
 Version 2.0.3
 
     Fixed breaking vehicles
