@@ -77,11 +77,11 @@ public class AntiGuestPlayerListener extends PlayerListener
         }
     }
 
-    protected boolean canChat(Player player)
+    protected boolean isPlayerChatLocked(Player player)
     {
         if (this.plugin.can(player, "spam"))
         {
-            return true;
+            return false;
         }
         else
         {
@@ -90,11 +90,11 @@ public class AntiGuestPlayerListener extends PlayerListener
             if (lastTime == null || lastTime + (this.plugin.chatLockDuration * 1000) < currentTime)
             {
                 this.chatTimestamps.put(player, currentTime);
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
     }
@@ -229,7 +229,12 @@ public class AntiGuestPlayerListener extends PlayerListener
     public void onPlayerChat(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.canChat(player))
+        if (!this.plugin.can(player, "chat"))
+        {
+            event.setCancelled(true);
+            this.plugin.message(player, "chat");
+        }
+        else if (this.isPlayerChatLocked(player))
         {
             event.setCancelled(true);
             this.plugin.message(player, "spam");

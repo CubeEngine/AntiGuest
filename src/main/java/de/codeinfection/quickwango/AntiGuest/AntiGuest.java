@@ -95,6 +95,9 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("dispenser", false);
         this.messages.put("dispenser", "&4You are not allowed to dispense!");
+
+        this.preventions.put("chat", false);
+        this.messages.put("chat", "&4You are not allowed to chat!");
     }
 
     public void onEnable()
@@ -203,9 +206,9 @@ public class AntiGuest extends JavaPlugin
             this.pm.registerEvent(Type.VEHICLE_ENTER, vehicleListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.VEHICLE_EXIT, vehicleListener, Priority.Lowest, this);
         }
-        if (this.preventions.get("spam"))
+        if (this.preventions.get("spam") || this.preventions.get("chat"))
         {
-            debug("SPAM prevention registered");
+            debug("chat preventions registered");
             this.pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
         }
 
@@ -284,6 +287,9 @@ public class AntiGuest extends JavaPlugin
         this.preventions.put("dispenser", this.config.getBoolean("preventions.dispenser.enable", this.preventions.get("dispenser")));
         this.messages.put("dispenser", this.config.getString("preventions.dispenser.message", this.messages.get("dispenser")));
 
+        this.preventions.put("chat", this.config.getBoolean("preventions.chat.enable", this.preventions.get("chat")));
+        this.messages.put("chat", this.config.getString("preventions.chat.message", this.messages.get("chat")));
+
         this.config.removeProperty("preventions");
 
         this.defaultConfig();
@@ -351,6 +357,9 @@ public class AntiGuest extends JavaPlugin
 
         this.config.setProperty("preventions.dispenser.message", this.messages.get("dispenser"));
         this.config.setProperty("preventions.dispenser.enable", this.preventions.get("dispenser"));
+
+        this.config.setProperty("preventions.chat.message", this.messages.get("chat"));
+        this.config.setProperty("preventions.chat.enable", this.preventions.get("chat"));
 
         this.config.setProperty("debug", debugMode);
         

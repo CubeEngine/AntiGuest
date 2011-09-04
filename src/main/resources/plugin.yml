@@ -84,9 +84,6 @@ permissions:
   AntiGuest.furnace:
     description: "Allows the player to furnace"
     default: op
-  AntiGuest.inventory:
-    description: "Allows the player to open his inventory"
-    default: op
   AntiGuest.door:
     description: "Allows the player to open and close doors"
     default: op
@@ -116,4 +113,7 @@ permissions:
     default: op
   AntiGuest.dispenser:
     description: "Allows the player to use dispensers"
+    default: op
+  AntiGuest.chat:
+    description: "Allows the player to chat"
     default: op
