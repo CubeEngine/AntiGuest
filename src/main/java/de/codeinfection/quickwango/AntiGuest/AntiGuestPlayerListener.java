@@ -35,6 +35,7 @@ public class AntiGuestPlayerListener extends PlayerListener
     protected final boolean furnace;
     protected final boolean dispenser;
     protected final boolean placeblock;
+    protected final boolean cake;
 
 
     public AntiGuestPlayerListener(AntiGuest plugin)
@@ -53,6 +54,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         this.furnace = this.plugin.preventions.get("furnace");
         this.dispenser = this.plugin.preventions.get("dispenser");
         this.placeblock = this.plugin.preventions.get("placeblock");
+        this.cake = this.plugin.preventions.get("cake");
     }
 
     protected void noPickupMessage(Player player)
@@ -171,11 +173,20 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
-            else if (this.dispenser && material == Material.DISPENSER) // dispencers
+            else if (this.dispenser && material == Material.DISPENSER) // dispensers
             {
                 if (!this.plugin.can(player, "dispenser"))
                 {
                     this.plugin.message(player, "dispenser");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.cake && material == Material.CAKE_BLOCK) // cakes
+            {
+                if (!this.plugin.can(player, "cake"))
+                {
+                    this.plugin.message(player, "cake");
                     event.setCancelled(true);
                     return;
                 }

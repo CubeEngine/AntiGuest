@@ -98,6 +98,9 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("chat", false);
         this.messages.put("chat", "&4You are not allowed to chat!");
+
+        this.preventions.put("cake", false);
+        this.messages.put("cake", "&4The cake is a lie!!");
     }
 
     public void onEnable()
@@ -144,7 +147,8 @@ public class AntiGuest extends JavaPlugin
             this.preventions.get("furnace") ||
             this.preventions.get("dispenser") ||
             this.preventions.get("pressureplate") ||
-            this.preventions.get("placeblock")
+            this.preventions.get("placeblock") ||
+            this.preventions.get("cake")
         )
         {
             debug("interaction preventions registered");
@@ -290,6 +294,9 @@ public class AntiGuest extends JavaPlugin
         this.preventions.put("chat", this.config.getBoolean("preventions.chat.enable", this.preventions.get("chat")));
         this.messages.put("chat", this.config.getString("preventions.chat.message", this.messages.get("chat")));
 
+        this.preventions.put("cake", this.config.getBoolean("preventions.cake.enable", this.preventions.get("cake")));
+        this.messages.put("cake", this.config.getString("preventions.cake.message", this.messages.get("cake")));
+
         this.config.removeProperty("preventions");
 
         this.defaultConfig();
@@ -336,10 +343,7 @@ public class AntiGuest extends JavaPlugin
 
         this.config.setProperty("preventions.bucket.message", this.messages.get("bucket"));
         this.config.setProperty("preventions.bucket.enable", this.preventions.get("bucket"));
-
-        //this.config.setProperty("preventions.inventory.message", this.messages.get("inventory"));
-        //this.config.setProperty("preventions.inventory.enable", this.preventions.get("inventory"));
-
+        
         this.config.setProperty("preventions.workbench.message", this.messages.get("workbench"));
         this.config.setProperty("preventions.workbench.enable", this.preventions.get("workbench"));
 
@@ -360,6 +364,9 @@ public class AntiGuest extends JavaPlugin
 
         this.config.setProperty("preventions.chat.message", this.messages.get("chat"));
         this.config.setProperty("preventions.chat.enable", this.preventions.get("chat"));
+
+        this.config.setProperty("preventions.cake.message", this.messages.get("cake"));
+        this.config.setProperty("preventions.cake.enable", this.preventions.get("cake"));
 
         this.config.setProperty("debug", debugMode);
         

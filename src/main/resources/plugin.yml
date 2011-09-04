@@ -117,3 +117,6 @@ permissions:
   AntiGuest.chat:
     description: "Allows the player to chat"
     default: op
+  AntiGuest.cake:
+    description: "Allows the player to eat cake"
+    default: op
