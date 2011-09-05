@@ -198,7 +198,7 @@ public class AntiGuestPlayerListener extends PlayerListener
             if (this.placeblock)
             {
                 boolean allowed = this.plugin.can(player, "placeblock");
-                if ((itemInHand == Material.MINECART || itemInHand == Material.STORAGE_MINECART))
+                if ((itemInHand == Material.MINECART || itemInHand == Material.STORAGE_MINECART || itemInHand == Material.POWERED_MINECART))
                 {
                     if ((material == Material.RAILS || material == Material.POWERED_RAIL || material == Material.DETECTOR_RAIL) && !allowed)
                     {
