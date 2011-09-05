@@ -44,6 +44,7 @@ Installation
     - AntiGuest.fish - Allows the player to fish
     - AntiGuest.bucket - Allows the player to use buckets
     - AntiGuest.pressureplate - Allows the player to trigger pressure plates
+    - AntiGuest.cake - Allows the player to eat cake
 - AntiGuest.build - Allows the player to build
     - AntiGuest.placeblock - Allows the player to place blocks
     - AntiGuest.breakblock - Allows the player to break blocks
@@ -60,6 +61,7 @@ Installation
     - AntiGuest.pickup - Allows the player to pickup items
     - AntiGuest.drop - Allows the player to drop items
 - AntiGuest.vehicle - Allows the player to use vehicles
+- AntiGuest.chat - Allows the player to chat
 - AntiGuest.spam - Allows the player to chat as fast as he wants
 
 
