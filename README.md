@@ -11,16 +11,16 @@ AntiGuest prevents guests from doing specific things like building and fighting,
     - using levers, buttons, doors and/or pressureplates
     - opening chests and/or doors
     - crafting, cooking and/or dispensing
+    - eating cakes
     - fishing
     - sleeping in beds
     - using buckets
-    - opening his inventory (might not work)
     - building
     - fighting
     - getting targeted by monsters
     - picking up and/or dropping items
     - using vehicles
-    - spamming the chat
+    - spamming the chat or completely chatting
 - all messages are configurable and support color codes
 
 
