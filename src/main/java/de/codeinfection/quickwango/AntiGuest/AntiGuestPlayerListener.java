@@ -36,6 +36,8 @@ public class AntiGuestPlayerListener extends PlayerListener
     protected final boolean dispenser;
     protected final boolean placeblock;
     protected final boolean cake;
+    protected final boolean chat;
+    protected final boolean spam;
 
 
     public AntiGuestPlayerListener(AntiGuest plugin)
@@ -55,6 +57,8 @@ public class AntiGuestPlayerListener extends PlayerListener
         this.dispenser = this.plugin.preventions.get("dispenser");
         this.placeblock = this.plugin.preventions.get("placeblock");
         this.cake = this.plugin.preventions.get("cake");
+        this.chat = this.plugin.preventions.get("chat");
+        this.spam = this.plugin.preventions.get("spam");
     }
 
     protected void noPickupMessage(Player player)
@@ -240,12 +244,12 @@ public class AntiGuestPlayerListener extends PlayerListener
     public void onPlayerChat(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "chat"))
+        if (this.chat && !this.plugin.can(player, "chat"))
         {
             event.setCancelled(true);
             this.plugin.message(player, "chat");
         }
-        else if (this.isPlayerChatLocked(player))
+        else if (this.spam && this.isPlayerChatLocked(player))
         {
             event.setCancelled(true);
             this.plugin.message(player, "spam");
