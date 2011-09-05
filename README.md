@@ -70,6 +70,7 @@ Version 2.1.0
 
     Added complete chat prevention
     Added cake prevention
+    Fixed vehicle prevention to include powered minecarts
 
 Version 2.0.3
 
