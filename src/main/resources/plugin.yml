@@ -19,6 +19,7 @@ permissions:
       AntiGuest.item: true
       AntiGuest.vehicle: true
       AntiGuest.spam: true
+      AntiGuest.chat: true
   AntiGuest.build:
     description: "Allows the player to build"
     default: op
@@ -44,6 +45,7 @@ permissions:
       AntiGuest.bed: true
       AntiGuest.fish: true
       AntiGuest.bucket: true
+      AntiGuest.cake: true
       AntiGuest.pressureplate: true
   AntiGuest.item:
     description: "Allows the player to do item related things"
