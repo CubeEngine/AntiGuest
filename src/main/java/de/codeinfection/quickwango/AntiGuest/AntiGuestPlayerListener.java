@@ -120,7 +120,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         AntiGuest.debug("Player interacted with " + material.toString());
         if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
         {
-            if (this.door && (material == Material.WOODEN_DOOR || material == Material.IRON_DOOR || material == Material.TRAP_DOOR)) // doors
+            if (this.door && (material == Material.WOODEN_DOOR || material == Material.IRON_DOOR || material == Material.TRAP_DOOR || material == Material.FENCE_GATE)) // doors
             {
                 if (!this.plugin.can(player, "door"))
                 {
