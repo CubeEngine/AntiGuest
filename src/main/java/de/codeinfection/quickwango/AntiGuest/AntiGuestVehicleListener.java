@@ -60,9 +60,15 @@ public class AntiGuestVehicleListener extends VehicleListener
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!this.plugin.can(player, "breakblock"))
+            if (!this.plugin.vehiclesIgnoreBuildPermissions && !this.plugin.can(player, "breakblock"))
             {
                 this.plugin.message(player, "breakblock");
+                event.setCancelled(true);
+                return;
+            }
+            if (!this.plugin.can(player, "vehicle"))
+            {
+                this.plugin.message(player, "vehicle");
                 event.setCancelled(true);
             }
         }

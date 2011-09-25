@@ -29,6 +29,7 @@ public class AntiGuest extends JavaPlugin
     public final HashMap<String, Boolean> preventions;
     public final HashMap<String, String> messages;
     public int chatLockDuration;
+    public boolean vehiclesIgnoreBuildPermissions;
 
     public AntiGuest()
     {
@@ -76,6 +77,7 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("vehicle", true);
         this.messages.put("vehicle", "&4You are not allowed to use vehicles!");
+        this.vehiclesIgnoreBuildPermissions = false;
 
         this.preventions.put("spam", true);
         this.messages.put("spam", "&4Don't spam the chat!");
@@ -244,6 +246,7 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("vehicle", this.config.getBoolean("preventions.vehicle.enable", this.preventions.get("vehicle")));
         this.messages.put("vehicle", this.config.getString("preventions.vehicle.message", this.messages.get("vehicle")));
+        this.vehiclesIgnoreBuildPermissions = this.config.getBoolean("preventions.vehicle.ignoreBuildPermissions", this.vehiclesIgnoreBuildPermissions);
 
         this.preventions.put("spam", this.config.getBoolean("preventions.spam.enable", this.preventions.get("spam")));
         this.messages.put("spam", this.config.getString("preventions.spam.message", this.messages.get("spam")));
@@ -310,6 +313,7 @@ public class AntiGuest extends JavaPlugin
         
         this.config.setProperty("preventions.vehicle.message", this.messages.get("vehicle"));
         this.config.setProperty("preventions.vehicle.enable", this.preventions.get("vehicle"));
+        this.config.setProperty("preventions.vehicle.ignoreBuildPermissions", this.vehiclesIgnoreBuildPermissions);
 
         this.config.setProperty("preventions.pickup.message", this.messages.get("pickup"));
         this.config.setProperty("preventions.pickup.enable", this.preventions.get("pickup"));

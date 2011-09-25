@@ -197,21 +197,29 @@ public class AntiGuestPlayerListener extends PlayerListener
             }
             if (this.placeblock)
             {
-                boolean allowed = this.plugin.can(player, "placeblock");
-                if ((itemInHand == Material.MINECART || itemInHand == Material.STORAGE_MINECART || itemInHand == Material.POWERED_MINECART))
+                String message = "vehicle";
+                boolean allowed = true;
+                if (!this.plugin.vehiclesIgnoreBuildPermissions && !this.plugin.can(player, "placeblock"))
                 {
-                    if ((material == Material.RAILS || material == Material.POWERED_RAIL || material == Material.DETECTOR_RAIL) && !allowed)
+                    allowed = false;
+                    message = "placeblock";
+                }
+                allowed = (allowed ? this.plugin.can(player, "vehicle") : allowed);
+                if (!allowed)
+                {
+                    if ((itemInHand == Material.MINECART || itemInHand == Material.STORAGE_MINECART || itemInHand == Material.POWERED_MINECART))
+                    {
+                        if (material == Material.RAILS || material == Material.POWERED_RAIL || material == Material.DETECTOR_RAIL)
+                        {
+                            event.setCancelled(true);
+                            this.plugin.message(player, message);
+                        }
+                    }
+                    else if (itemInHand == Material.BOAT)
                     {
                         event.setCancelled(true);
-                        this.plugin.message(player, "placeblock");
-                        return;
+                        this.plugin.message(player, message);
                     }
-                }
-                else if (itemInHand == Material.BOAT && !allowed)
-                {
-                    event.setCancelled(true);
-                    this.plugin.message(player, "placeblock");
-                    return;
                 }
             }
         }
