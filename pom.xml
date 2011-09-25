@@ -3,7 +3,7 @@
 
     <groupId>de.codeinfection</groupId>
     <artifactId>AntiGuest</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
     <name>AntiGuest</name>
     <url>http://code-infection.de</url>
     <packaging>jar</packaging>

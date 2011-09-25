@@ -68,6 +68,11 @@ Installation
   Changes
 =============
 
+Version 2.2.0
+
+    Added the fence gate to the door prevention
+    Changed the vehicle prevention to check place-/breakblock and/or vehicle
+
 Version 2.1.0
 
     Added complete chat prevention
