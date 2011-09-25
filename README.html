@@ -13,200 +13,169 @@
         </style>
     </head>
     <body>
-        <h1>AntiGuest</h1>
-        
-        <h2>Description</h2>
-        <p>
-            AntiGuest prevents guests from doing specific things like building and fighting, which can be used to grief.
-        </p>
-        
-        <h2>Features</h2>
-        <p>
+<h1>AntiGuest</h1>
+
+<h2>Description</h2>
+<p>
+    AntiGuest prevents guests from doing specific things like building and fighting, which can be used to grief.
+</p>
+
+<h2>Features</h2>
+<p>
+    <ul>
+        <li>prevent guests from (configurable):<br>
             <ul>
-                <li>
-                    prevent guests from (configurable):<br>
+                <li>using levers, buttons, doors and/or pressureplates</li>
+                <li>opening chests and/or doors</li>
+                <li>crafting, cooking and/or dispensing</li>
+                <li>eating cakes</li>
+                <li>fishing</li>
+                <li>sleeping in beds</li>
+                <li>using buckets</li>
+                <li>building</li>
+                <li>fighting</li>
+                <li>getting targeted by monsters</li>
+                <li>picking up and/or dropping items</li>
+                <li>using vehicles</li>
+                <li>spamming the chat or completely chatting</li>
+            </ul>
+        </li>
+        <li>all messages are configurable and support color codes</li>
+    </ul>
+</p>
+
+<h2>Installation</h2>
+<p>
+    <ul>
+        <li>Just put the AntiGuest into you plugins folder</li>
+        <li>If you come from a version <strong>BEFORE</strong> 2.0.0: delete your old config.yml</li>
+        <li>restart/reload your server</li>
+        <li>The configuration file will be auto-generated on the first start</li>
+    </ul>
+</p>
+
+<h2>Permissions</h2>
+<p>
+    <ul>
+        <li><span class="alias">AntiGuest.*</span> - <span class="desc">Allows the player to do everything</span><br>
+            <ul>
+                <li><span class="alias">AntiGuest.interact</span> - <span class="desc">Allows the player to interact with the world</span><br>
                     <ul>
-                        <li>using levers, buttons, doors and/or pressureplates</li>
-                        <li>opening chests and/or doors</li>
-                        <li>crafting, cooking and/or dispensing</li>
-                        <li>eating cakes</li>
-                        <li>fishing</li>
-                        <li>sleeping in beds</li>
-                        <li>using buckets</li>
-                        <li>building</li>
-                        <li>fighting</li>
-                        <li>getting targeted by monsters</li>
-                        <li>picking up and/or dropping items</li>
-                        <li>using vehicles</li>
-                        <li>spamming the chat or completely chatting</li>
+                        <li><span>AntiGuest.lever</span> - <span class="desc">Allows the player to use levers</span></li>
+                        <li><span>AntiGuest.button</span> - <span class="desc">Allows the player to push buttons</span></li>
+                        <li><span>AntiGuest.door</span> - <span class="desc">Allows the player to open and close doors</span></li>
+                        <li><span>AntiGuest.bed</span> - <span class="desc">Allows the player to sleep in beds</span></li>
+                        <li><span>AntiGuest.fish</span> - <span class="desc">Allows the player to fish</span></li>
+                        <li><span>AntiGuest.bucket</span> - <span class="desc">Allows the player to use buckets</span></li>
+                        <li><span>AntiGuest.pressureplate</span> - <span class="desc">Allows the player to trigger pressure plates</span></li>
+                        <li><span>AntiGuest.cake</span> - <span class="desc">Allows the player to eat cake</span></li>
                     </ul>
                 </li>
-                <li>all messages are configurable and support color codes</li>
-            </ul>
-        </p>
-        
-        <h2>Installation</h2>
-        <p>
-            <ul>
-                <li>Just put the AntiGuest into you plugins folder</li>
-                <li>If you come from a version <strong>BEFORE</strong> 2.0.0: delete your old config.yml</li>
-                <li>restart/reload your server</li>
-                <li>The configuration file will be auto-generated on the first start</li>
-            </ul>
-        </p>
-        
-        <h2>Permissions</h2>
-        <p>
-            <ul>
-                <li>
-                    <span class="alias">AntiGuest.*</span> - <span class="desc">Allows the player to do everything</span><br>
+                <li><span class="alias">AntiGuest.build</span> - <span class="desc">Allows the player to build</span><br>
                     <ul>
-                        <li>
-                            <span class="alias">AntiGuest.interact</span> - <span class="desc">Allows the player to interact with the world</span><br>
-                            <ul>
-                                <li><span>AntiGuest.lever</span> - <span class="desc">Allows the player to use levers</span></li>
-                                <li><span>AntiGuest.button</span> - <span class="desc">Allows the player to push buttons</span></li>
-                                <li><span>AntiGuest.door</span> - <span class="desc">Allows the player to open and close doors</span></li>
-                                <li><span>AntiGuest.bed</span> - <span class="desc">Allows the player to sleep in beds</span></li>
-                                <li><span>AntiGuest.fish</span> - <span class="desc">Allows the player to fish</span></li>
-                                <li><span>AntiGuest.bucket</span> - <span class="desc">Allows the player to use buckets</span></li>
-                                <li><span>AntiGuest.pressureplate</span> - <span class="desc">Allows the player to trigger pressure plates</span></li>
-                                <li><span>AntiGuest.cake</span> - <span class="desc">Allows the player to eat cake</span></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="alias">AntiGuest.build</span> - <span class="desc">Allows the player to build</span><br>
-                            <ul>
-                                <li><span>AntiGuest.placeblock</span> - <span class="desc">Allows the player to place blocks</span></li>
-                                <li><span>AntiGuest.breakblock</span> - <span class="desc">Allows the player to break blocks</span></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="alias">AntiGuest.craft</span> - <span class="desc">Allows the player to do crafting related things</span><br>
-                            <ul>
-                                <li><span>AntiGuest.furnace</span> - <span class="desc">Allows the player to furnace</span></li>
-                                <li><span>AntiGuest.workbench</span> - <span class="desc">Allows the player to craft</span></li>
-                                <li><span>AntiGuest.dispenser</span> - <span class="desc">Allows the player to dispense</span></li>
-                                <li><span>AntiGuest.chest</span> - <span class="desc">Allows the player to use chests</span></li>
-                                <li><span>AntiGuest.inventory</span> - <span class="desc">Allows the player to open his inventory</span></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="alias">AntiGuest.fight</span> - <span class="desc">Allows the player to fight</span><br>
-                            <ul>
-                                <li><span>AntiGuest.pvp</span> - <span class="desc">Allows the player to fight</span></li>
-                                <li><span>AntiGuest.monster</span> - <span class="desc">Allows the player to get targeted by monsters</span></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="alias">AntiGuest.item</span> - <span class="desc">Allows the player to do item related things</span><br>
-                            <ul>
-                                <li><span>AntiGuest.pickup</span> - <span class="desc">Allows the player to pickup items</span></li>
-                                <li><span>AntiGuest.drop</span> - <span class="desc">Allows the player to drop items</span></li>
-                            </ul>
-                        </li>
-                        <li>AntiGuest.vehicle - <span class="desc">Allows the player to use vehicles</span></li>
-                        <li>AntiGuest.chat - <span class="desc">Allows the player to chat</span></li>
-                        <li>AntiGuest.spam - <span class="desc">Allows the player to chat as fast as he wants</span></li>
+                        <li><span>AntiGuest.placeblock</span> - <span class="desc">Allows the player to place blocks</span></li>
+                        <li><span>AntiGuest.breakblock</span> - <span class="desc">Allows the player to break blocks</span></li>
                     </ul>
                 </li>
+                <li><span class="alias">AntiGuest.craft</span> - <span class="desc">Allows the player to do crafting related things</span><br>
+                    <ul>
+                        <li><span>AntiGuest.furnace</span> - <span class="desc">Allows the player to furnace</span></li>
+                        <li><span>AntiGuest.workbench</span> - <span class="desc">Allows the player to craft</span></li>
+                        <li><span>AntiGuest.dispenser</span> - <span class="desc">Allows the player to dispense</span></li>
+                        <li><span>AntiGuest.chest</span> - <span class="desc">Allows the player to use chests</span></li>
+                        <li><span>AntiGuest.inventory</span> - <span class="desc">Allows the player to open his inventory</span></li>
+                    </ul>
+                </li>
+                <li><span class="alias">AntiGuest.fight</span> - <span class="desc">Allows the player to fight</span><br>
+                    <ul>
+                        <li><span>AntiGuest.pvp</span> - <span class="desc">Allows the player to fight</span></li>
+                        <li><span>AntiGuest.monster</span> - <span class="desc">Allows the player to get targeted by monsters</span></li>
+                    </ul>
+                </li>
+                <li><span class="alias">AntiGuest.item</span> - <span class="desc">Allows the player to do item related things</span><br>
+                    <ul>
+                        <li><span>AntiGuest.pickup</span> - <span class="desc">Allows the player to pickup items</span></li>
+                        <li><span>AntiGuest.drop</span> - <span class="desc">Allows the player to drop items</span></li>
+                    </ul>
+                </li>
+                <li>AntiGuest.vehicle - <span class="desc">Allows the player to use vehicles</span></li>
+                <li>AntiGuest.chat - <span class="desc">Allows the player to chat</span></li>
+                <li>AntiGuest.spam - <span class="desc">Allows the player to chat as fast as he wants</span></li>
             </ul>
-        </p>
-        
-        <h2>Changes</h2>
-        <p>
-            <h4>Version 2.2.0</h4>
-            <p>
-                <ul>
-                    <li>Added the fence gate to the door prevention</li>
-                    <li>Changed the vehicle prevention to check place-/breakblock and/or vehicle</li>
-                </ul>
-            </p>
-            <h4>Version 2.1.0</h4>
-            <p>
-                <ul>
-                    <li>Added complete chat prevention</li>
-                    <li>Added cake prevention</li>
-                    <li>Fixed vehicle prevention to include powered minecarts</li>
-                </ul>
-            </p>
-            <h4>Version 2.0.3</h4>
-            <p>
-                <ul>
-                    <li>Fixed breaking vehicles</li>
-                </ul>
-            </p>
-            <h4>Version 2.0.2</h4>
-            <p>
-                <ul>
-                    <li>Fixed a typo in the permissions</li>
-                </ul>
-            </p>
-            <h4>Version 2.0.1</h4>
-            <p>
-                <ul>
-                    <li>Added dispenser prevention</li>
-                    <li>removed useless config entry of inventory prevention, because it's impossible</li>
-                    <li>new preventions will be automaticly added to the config (no deleting needed)</li>
-                </ul>
-            </p>
-            <h4>Version 2.0.0</h4>
-            <p>
-                <ul>
-                    <li>Splitted the interact prevention into lever, button, pressureplate, door (including trap doors), chest, workbench, furnace and monster</li>
-                    <li>Added bed prevention</li>
-                    <li>Added item drop prevention</li>
-                    <li>Added bucket prevention</li>
-                    <li>Added fishing prevention</li>
-                    <li>Added a config entry to enable or disable the debug mode</li>
-                    <li>Changed the configuratiuon file a bit (You should delete your old file)</li>
-                </ul>
-            </p>
-            <h4>Version 1.2.1</h4>
-            <p>
-                <ul>
-                    <li>Fixed PAINTING_BREAK checking the wrong permission if only the interaction check was enabled</li>
-                    <li>Made the chat lock for spamming configurable (in seconds)</li>
-                </ul>
-            </p>
-            <h4>Version 1.2.0</h4>
-            <p>
-                <ul>
-                    <li>OPs can now always do everything</li>
-                </ul>
-            </p>
-            <h4>Version 1.1.2</h4>
-            <p>
-                <ul>
-                    <li>fixed block place checking for the wrong permission</li>
-                </ul>
-            </p>
-            <h4>Version 1.1.1</h4>
-            <p>
-                <ul>
-                    <li>Fixed the painting break event not being registered when only the build prevention was enabled</li>
-                </ul>
-            </p>
-            <h4>Version 1.1.0</h4>
-            <p>
-                <ul>
-                    <li>Added SuperPerms support, Permissions is now optional</li>
-                    <li>Split interaction into interaction and vehicles (minecarts, boats)</li>
-                    <li>interaction also prevents mobs from targeting guests</li>
-                    <li>Added spam prevention</li>
-                    <li>enabled pickup prevention again</li>
-                </ul>
-            </p>
-            <h4>Version 1.0.0</h4>
-            <p>
-                <ul>
-                    <li>Initial release</li>
-                </ul>
-            </p>
-        </p>
-        <p>
-            Plugin developed by Quick_Wango<br>
-            <a href="http://forum.mc-portal.de">Parallel Universe</a>
-        </p>
+        </li>
+    </ul>
+</p>
+
+<h2>Changes</h2>
+<p>
+    <h3>Version 2.2.0</h3>
+    <ul>
+        <li>Added the fence gate to the door prevention</li>
+        <li>Changed the vehicle prevention to check place-/breakblock and/or vehicle</li>
+    </ul>
+    <h3>Version 2.1.0</h3>
+    <ul>
+        <li>Added complete chat prevention</li>
+        <li>Added cake prevention</li>
+        <li>Fixed vehicle prevention to include powered minecarts</li>
+    </ul>
+    <h3>Version 2.0.3</h3>
+    <ul>
+        <li>Fixed breaking vehicles</li>
+    </ul>
+    <h3>Version 2.0.2</h3>
+    <ul>
+        <li>Fixed a typo in the permissions</li>
+    </ul>
+    <h3>Version 2.0.1</h3>
+    <ul>
+        <li>Added dispenser prevention</li>
+        <li>removed useless config entry of inventory prevention, because it's impossible</li>
+        <li>new preventions will be automaticly added to the config (no deleting needed)</li>
+    </ul>
+    <h3>Version 2.0.0</h3>
+    <ul>
+        <li>Splitted the interact prevention into lever, button, pressureplate, door (including trap doors), chest, workbench, furnace and monster</li>
+        <li>Added bed prevention</li>
+        <li>Added item drop prevention</li>
+        <li>Added bucket prevention</li>
+        <li>Added fishing prevention</li>
+        <li>Added a config entry to enable or disable the debug mode</li>
+        <li>Changed the configuratiuon file a bit (You should delete your old file)</li>
+    </ul>
+    <h3>Version 1.2.1</h3>
+    <ul>
+        <li>Fixed PAINTING_BREAK checking the wrong permission if only the interaction check was enabled</li>
+        <li>Made the chat lock for spamming configurable (in seconds)</li>
+    </ul>
+    <h3>Version 1.2.0</h3>
+    <ul>
+        <li>OPs can now always do everything</li>
+    </ul>
+    <h3>Version 1.1.2</h3>
+    <ul>
+        <li>fixed block place checking for the wrong permission</li>
+    </ul>
+    <h3>Version 1.1.1</h3>
+    <ul>
+        <li>Fixed the painting break event not being registered when only the build prevention was enabled</li>
+    </ul>
+    <h3>Version 1.1.0</h3>
+    <ul>
+        <li>Added SuperPerms support, Permissions is now optional</li>
+        <li>Split interaction into interaction and vehicles (minecarts, boats)</li>
+        <li>interaction also prevents mobs from targeting guests</li>
+        <li>Added spam prevention</li>
+        <li>enabled pickup prevention again</li>
+    </ul>
+    <h3>Version 1.0.0</h3>
+    <ul>
+        <li>Initial release</li>
+    </ul>
+</p>
+<p>
+    Plugin developed by Quick_Wango<br>
+    <a href="http://forum.mc-portal.de">Parallel Universe</a>
+</p>
     </body>
 </html>
