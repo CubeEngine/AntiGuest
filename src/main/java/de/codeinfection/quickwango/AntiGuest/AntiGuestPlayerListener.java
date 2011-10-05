@@ -168,7 +168,7 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
-            else if (this.furnace && material == Material.FURNACE) // furnaces
+            else if (this.furnace && (material == Material.FURNACE || material == Material.BURNING_FURNACE)) // furnaces
             {
                 if (!this.plugin.can(player, "furnace"))
                 {
