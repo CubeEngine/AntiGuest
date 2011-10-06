@@ -59,6 +59,13 @@ permissions:
     children:
       AntiGuest.pvp: true
       AntiGuest.monster: true
+  AntiGuest.movement:
+    description: "Allows the player to move as he wants"
+    default: op
+    children:
+      AntiGuest.sneak: true
+      AntiGuest.sprint: true
+      AntiGuest.move: true
   AntiGuest.pvp:
     description: "Allows the player to fight"
     default: op
@@ -121,4 +128,16 @@ permissions:
     default: op
   AntiGuest.cake:
     description: "Allows the player to eat cake"
+    default: op
+  AntiGuest.hunger:
+    description: "Allows the player to die by hunger"
+    default: op
+  AntiGuest.sprint:
+    description: "Allows the player to sprint"
+    default: op
+  AntiGuest.sneak:
+    description: "Allows the player to sneak"
+    default: op
+  AntiGuest.move:
+    description: "Allows the player to move"
     default: op
