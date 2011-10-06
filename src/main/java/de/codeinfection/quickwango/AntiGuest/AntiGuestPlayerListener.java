@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
@@ -346,6 +347,17 @@ public class AntiGuestPlayerListener extends PlayerListener
                 event.setCancelled(true);
                 this.plugin.message(player, "sprint");
             }
+        }
+    }
+
+    @Override
+    public void onPlayerMove(PlayerMoveEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (this.plugin.can(player, "move"))
+        {
+            event.setCancelled(true);
+            this.plugin.message(player, "move");
         }
     }
 }

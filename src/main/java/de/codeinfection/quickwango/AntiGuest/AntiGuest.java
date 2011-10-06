@@ -109,6 +109,9 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("sneak", false);
         this.messages.put("sneak", "&4You are not allowed to sneak!");
+
+        this.preventions.put("move", false);
+        this.messages.put("move", "&4You are not allowed to move!");
     }
 
     public void onEnable()
@@ -233,6 +236,11 @@ public class AntiGuest extends JavaPlugin
             debug("sneak prevention registered");
             this.pm.registerEvent(Type.PLAYER_TOGGLE_SNEAK, playerListener, Priority.Lowest, this);
         }
+        if (this.preventions.get("move"))
+        {
+            debug("move prevention registered");
+            this.pm.registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Lowest, this);
+        }
 
         log("Version " + this.getDescription().getVersion() + " enabled");
     }
@@ -322,6 +330,9 @@ public class AntiGuest extends JavaPlugin
         this.preventions.put("sneak", this.config.getBoolean("preventions.sneak.enable", this.preventions.get("sneak")));
         this.messages.put("sneak", this.config.getString("preventions.sneak.message", this.messages.get("sneak")));
 
+        this.preventions.put("move", this.config.getBoolean("preventions.move.enable", this.preventions.get("move")));
+        this.messages.put("move", this.config.getString("preventions.move.message", this.messages.get("move")));
+
         this.config.removeProperty("preventions");
 
         this.defaultConfig();
@@ -402,6 +413,9 @@ public class AntiGuest extends JavaPlugin
 
         this.config.setProperty("preventions.sneak.message", this.messages.get("sneak"));
         this.config.setProperty("preventions.sneak.enable", this.preventions.get("sneak"));
+
+        this.config.setProperty("preventions.move.message", this.messages.get("move"));
+        this.config.setProperty("preventions.move.enable", this.preventions.get("move"));
 
         this.config.setProperty("debug", debugMode);
         
