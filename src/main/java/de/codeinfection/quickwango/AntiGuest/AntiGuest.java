@@ -83,9 +83,6 @@ public class AntiGuest extends JavaPlugin
         this.messages.put("spam", "&4Don't spam the chat!");
         this.chatLockDuration = 2;
 
-        //this.preventions.put("inventory", false);
-        //this.messages.put("inventory", "&4You are not allowed to use your inventory!");
-
         this.preventions.put("bed", false);
         this.messages.put("bed", "&4You are not allowed to sleep!");
 
@@ -103,6 +100,15 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("cake", false);
         this.messages.put("cake", "&4The cake is a lie!!");
+
+        this.preventions.put("hunger", false);
+        this.messages.put("hanger", "&4You are not allowed to die the starvation death!");
+
+        this.preventions.put("sprint", false);
+        this.messages.put("sprint", "&4You are not allowed to sprint!");
+
+        this.preventions.put("sneak", false);
+        this.messages.put("sneak", "&4You are not allowed to sneak!");
     }
 
     public void onEnable()
@@ -180,9 +186,9 @@ public class AntiGuest extends JavaPlugin
             this.pm.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Lowest, this);
             this.pm.registerEvent(Type.PAINTING_BREAK, entityListener, Priority.Lowest, this);
         }
-        if (this.preventions.get("pvp"))
+        if (this.preventions.get("pvp") || this.preventions.get("hunger"))
         {
-            debug("pvp prevention registered");
+            debug("damage preventions registered");
             this.pm.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Lowest, this);
         }
         if (this.preventions.get("pickup"))
@@ -216,6 +222,16 @@ public class AntiGuest extends JavaPlugin
         {
             debug("chat preventions registered");
             this.pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
+        }
+        if (this.preventions.get("sprint"))
+        {
+            debug("sprint prevention registered");
+            this.pm.registerEvent(Type.PLAYER_TOGGLE_SPRINT, playerListener, Priority.Lowest, this);
+        }
+        if (this.preventions.get("sneak"))
+        {
+            debug("sneak prevention registered");
+            this.pm.registerEvent(Type.PLAYER_TOGGLE_SNEAK, playerListener, Priority.Lowest, this);
         }
 
         log("Version " + this.getDescription().getVersion() + " enabled");
@@ -273,9 +289,6 @@ public class AntiGuest extends JavaPlugin
         this.preventions.put("bucket", this.config.getBoolean("preventions.bucket.enable", this.preventions.get("bucket")));
         this.messages.put("bucket", this.config.getString("preventions.bucket.message", this.messages.get("bucket")));
 
-        //this.preventions.put("inventory", this.config.getBoolean("preventions.inventory.enable", this.preventions.get("inventory")));
-        //this.messages.put("inventory", this.config.getString("preventions.inventory.message", this.messages.get("inventory")));
-
         this.preventions.put("workbench", this.config.getBoolean("preventions.workbench.enable", this.preventions.get("workbench")));
         this.messages.put("workbench", this.config.getString("preventions.workbench.message", this.messages.get("workbench")));
 
@@ -299,6 +312,15 @@ public class AntiGuest extends JavaPlugin
 
         this.preventions.put("cake", this.config.getBoolean("preventions.cake.enable", this.preventions.get("cake")));
         this.messages.put("cake", this.config.getString("preventions.cake.message", this.messages.get("cake")));
+
+        this.preventions.put("hunger", this.config.getBoolean("preventions.hunger.enable", this.preventions.get("hunger")));
+        this.messages.put("hunger", this.config.getString("preventions.hunger.message", this.messages.get("hunger")));
+
+        this.preventions.put("sprint", this.config.getBoolean("preventions.sprint.enable", this.preventions.get("sprint")));
+        this.messages.put("sprint", this.config.getString("preventions.sprint.message", this.messages.get("sprint")));
+
+        this.preventions.put("sneak", this.config.getBoolean("preventions.sneak.enable", this.preventions.get("sneak")));
+        this.messages.put("sneak", this.config.getString("preventions.sneak.message", this.messages.get("sneak")));
 
         this.config.removeProperty("preventions");
 
@@ -371,6 +393,15 @@ public class AntiGuest extends JavaPlugin
 
         this.config.setProperty("preventions.cake.message", this.messages.get("cake"));
         this.config.setProperty("preventions.cake.enable", this.preventions.get("cake"));
+
+        this.config.setProperty("preventions.hunger.message", this.messages.get("hunger"));
+        this.config.setProperty("preventions.hunger.enable", this.preventions.get("hunger"));
+
+        this.config.setProperty("preventions.sprint.message", this.messages.get("sprint"));
+        this.config.setProperty("preventions.sprint.enable", this.preventions.get("sprint"));
+
+        this.config.setProperty("preventions.sneak.message", this.messages.get("sneak"));
+        this.config.setProperty("preventions.sneak.enable", this.preventions.get("sneak"));
 
         this.config.setProperty("debug", debugMode);
         

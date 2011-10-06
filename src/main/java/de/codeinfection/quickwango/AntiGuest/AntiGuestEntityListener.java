@@ -44,6 +44,20 @@ public class AntiGuestEntityListener extends EntityListener
     public void onEntityDamage(EntityDamageEvent event)
     {
         Player player = null;
+        if (event.getCause() == EntityDamageEvent.DamageCause.STARVATION)
+        {
+            Entity entity = event.getEntity();
+            if (entity instanceof Player)
+            {
+                player = (Player)entity;
+                if (!this.plugin.can(player, "hunger"))
+                {
+                    event.setCancelled(true);
+                    this.plugin.message(player, "hunger");
+                }
+            }
+            return;
+        }
         if (event instanceof EntityDamageByEntityEvent)
         {
             final Entity damager = ((EntityDamageByEntityEvent)event).getDamager();

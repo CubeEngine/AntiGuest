@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 /**
  *
@@ -316,6 +318,34 @@ public class AntiGuestPlayerListener extends PlayerListener
         {
             event.setCancelled(true);
             this.plugin.message(player, "fish");
+        }
+    }
+
+    @Override
+    public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!event.isSneaking())
+        {
+            if (!this.plugin.can(player, "sneak"))
+            {
+                event.setCancelled(true);
+                this.plugin.message(player, "sneak");
+            }
+        }
+    }
+
+    @Override
+    public void onPlayerToggleSprint(PlayerToggleSprintEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!event.isSprinting())
+        {
+            if (!this.plugin.can(player, "sprint"))
+            {
+                event.setCancelled(true);
+                this.plugin.message(player, "sprint");
+            }
         }
     }
 }
