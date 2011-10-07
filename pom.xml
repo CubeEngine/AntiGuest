@@ -24,10 +24,6 @@
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/artifactory/repo</url>
         </repository>
-        <repository>
-            <id>nexisonline-repo</id>
-            <url>http://ci.nexisonline.net:8080/nexus/content/groups/public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -35,11 +31,6 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.nijikokun.bukkit</groupId>
-            <artifactId>Permissions</artifactId>
-            <version>3.1.6</version>
         </dependency>
     </dependencies>
 

@@ -1,7 +1,5 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +23,6 @@ public class AntiGuest extends JavaPlugin
     protected PluginManager pm;
     protected Configuration config;
     protected File dataFolder;
-    protected PermissionHandler permissionHandler;
     public final HashMap<String, Boolean> preventions;
     public final HashMap<String, String> messages;
     public int chatLockDuration;
@@ -136,12 +133,6 @@ public class AntiGuest extends JavaPlugin
             {
                 this.messages.put(entry.getKey(), message.replaceAll("&([a-f0-9])", "\u00A7$1"));
             }
-        }
-
-        Permissions permissions = (Permissions)this.pm.getPlugin("Permissions");
-        if (permissions != null)
-        {
-            this.permissionHandler = permissions.getHandler();
         }
 
         AntiGuestPlayerListener playerListener = new AntiGuestPlayerListener(this);
@@ -447,25 +438,8 @@ public class AntiGuest extends JavaPlugin
 
     public boolean can(Player player, String type)
     {
-        boolean result = false;
-        if (player.isOp())
-        {
-            result = true;
-        }
-        else
-        {
-            final String permission = "AntiGuest." + type;
-            if (this.permissionHandler != null)
-            {
-                result = this.permissionHandler.permission(player, permission);
-            }
-            else
-            {
-                result = player.hasPermission(permission);
-            }
-        }
-        debug(player.getName() + " - " + type + " - " + String.valueOf(result));
-        return result;
+        final String permission = "AntiGuest." + type;
+        return player.hasPermission(permission);
     }
 
     public void message(Player player, String type)
