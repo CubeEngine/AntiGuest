@@ -119,11 +119,6 @@ public class AntiGuest extends JavaPlugin
         this.dataFolder = this.getDataFolder();
 
         this.dataFolder.mkdirs();
-        // Create default config if it doesn't exist.
-        if (!(new File(this.dataFolder, "config.yml")).exists())
-        {
-            this.defaultConfig();
-        }
         this.loadConfig();
 
         for (Map.Entry<String, String> entry : this.messages.entrySet())
@@ -326,10 +321,10 @@ public class AntiGuest extends JavaPlugin
 
         this.config.removeProperty("preventions");
 
-        this.defaultConfig();
+        this.saveConfig();
     }
 
-    private void defaultConfig()
+    private void saveConfig()
     {
         this.config.setProperty("preventions.spam.message", this.messages.get("spam"));
         this.config.setProperty("preventions.spam.lockDuration", this.chatLockDuration);
