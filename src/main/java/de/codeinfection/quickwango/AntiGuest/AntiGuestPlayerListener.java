@@ -354,7 +354,7 @@ public class AntiGuestPlayerListener extends PlayerListener
     public void onPlayerMove(PlayerMoveEvent event)
     {
         final Player player = event.getPlayer();
-        if (this.plugin.can(player, "move"))
+        if (!this.plugin.can(player, "move"))
         {
             event.setCancelled(true);
             this.plugin.message(player, "move");

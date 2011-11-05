@@ -324,7 +324,8 @@ public class AntiGuest extends JavaPlugin
         this.saveConfig();
     }
 
-    private void saveConfig()
+    @Override
+    public void saveConfig()
     {
         this.config.setProperty("preventions.spam.message", this.messages.get("spam"));
         this.config.setProperty("preventions.spam.lockDuration", this.chatLockDuration);
@@ -434,7 +435,11 @@ public class AntiGuest extends JavaPlugin
     public boolean can(Player player, String type)
     {
         final String permission = "AntiGuest." + type;
-        return player.hasPermission(permission);
+        boolean allowed =  player.hasPermission(permission);
+
+        debug("Player: " + player.getName() + " - Permission: " + type + " - Allowed: " + (allowed ? "Yes" : "No"));
+
+        return allowed;
     }
 
     public void message(Player player, String type)
