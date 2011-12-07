@@ -83,3 +83,6 @@ preventions:
     enchant:
         message: '&4You are not allowed to enchant!'
         enable: false
+    repeater:
+        message: '&4You are not allowed to change repeater delays!'
+        enable: true

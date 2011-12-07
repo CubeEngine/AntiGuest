@@ -49,6 +49,7 @@ permissions:
       AntiGuest.bucket: true
       AntiGuest.cake: true
       AntiGuest.pressureplate: true
+      AntiGuest.repeater: true
   AntiGuest.item:
     description: "Allows the player to do item related things"
     default: op
@@ -148,4 +149,7 @@ permissions:
     default: op
   AntiGuest.enchant:
     description: "Allows the player to enchant"
+    default: op
+  AntiGuest.repeater:
+    description: "Allows the player to change repeater delays"
     default: op

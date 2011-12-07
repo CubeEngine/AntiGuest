@@ -43,6 +43,7 @@ public class AntiGuestPlayerListener extends PlayerListener
     private final boolean spam;
     private final boolean brew;
     private final boolean enchant;
+    private final boolean repeater;
 
 
     public AntiGuestPlayerListener(AntiGuest plugin)
@@ -66,6 +67,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         this.spam           = this.plugin.preventions.get("spam");
         this.brew           = this.plugin.preventions.get("brew");
         this.enchant        = this.plugin.preventions.get("enchant");
+        this.repeater       = this.plugin.preventions.get("repeater");
     }
 
     private void noPickupMessage(Player player)
@@ -204,7 +206,6 @@ public class AntiGuestPlayerListener extends PlayerListener
             }
             else if (this.brew && (material == Material.BREWING_STAND || material == Material.CAULDRON)) // brewing
             {
-                AntiGuest.debug("brweing stuff!!!!!!");
                 if (!this.plugin.can(player, "brew"))
                 {
                     this.plugin.message(player, "brew");
@@ -214,10 +215,18 @@ public class AntiGuestPlayerListener extends PlayerListener
             }
             else if (this.enchant && material == Material.ENCHANTMENT_TABLE) // enchanting
             {
-                AntiGuest.debug("enchantment table!!!");
                 if (!this.plugin.can(player, "enchant"))
                 {
                     this.plugin.message(player, "enchant");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.repeater && (material == Material.DIODE_BLOCK_ON || material == Material.DIODE_BLOCK_OFF)) // repeater
+            {
+                if (!this.plugin.can(player, "repeater"))
+                {
+                    this.plugin.message(player, "repeater");
                     event.setCancelled(true);
                     return;
                 }
