@@ -35,6 +35,8 @@ permissions:
       AntiGuest.dispenser: true
       AntiGuest.chest: true
       AntiGuest.inventory: true
+      AntiGuest.brew: true
+      AntiGuest.enchant: true
   AntiGuest.interact:
     description: "Allows the player to interact with the world"
     default: op
@@ -140,4 +142,10 @@ permissions:
     default: op
   AntiGuest.move:
     description: "Allows the player to move"
+    default: op
+  AntiGuest.brew:
+    description: "Allows the player to brew"
+    default: op
+  AntiGuest.enchant:
+    description: "Allows the player to enchant"
     default: op

@@ -1,0 +1,85 @@
+debug: false
+preventions:
+    drop:
+        message: '&4You are not allowed to drop items!'
+        enable: false
+    fish:
+        message: '&4You are not allowed to fish!'
+        enable: false
+    bucket:
+        message: '&4You are not allowed to use buckets'
+        enable: true
+    vehicle:
+        message: '&4You are not allowed to use vehicles!'
+        ignoreBuildPermissions: false
+        enable: true
+    chest:
+        message: '&4You are not allowed to use chests'
+        enable: true
+    door:
+        message: '&4You are not allowed to interact with doors!'
+        enable: true
+    chat:
+        message: '&4You are not allowed to chat!'
+        enable: false
+    button:
+        message: '&4You are not allowed to push buttons!'
+        enable: false
+    furnace:
+        message: '&4You are not allowed to cook!'
+        enable: false
+    dispenser:
+        message: '&4You are not allowed to dispense!'
+        enable: false
+    workbench:
+        message: '&4You are not allowed to craft!'
+        enable: false
+    sprint:
+        message: '&4You are not allowed to sprint!'
+        enable: false
+    breakblock:
+        message: '&4You are not allowed to break blocks!'
+        enable: true
+    lever:
+        message: '&4You are not allowed to use levers!'
+        enable: false
+    move:
+        message: '&4You are not allowed to move!'
+        enable: false
+    placeblock:
+        message: '&4You are not allowed to place blocks!'
+        enable: true
+    cake:
+        message: '&4The cake is a lie!!'
+        enable: false
+    monster:
+        message: '&4You are not allowed to get targeted by monsters!'
+        enable: true
+    pvp:
+        message: '&4You are not allowed to fight!'
+        enable: true
+    pickup:
+        message: '&4You are not allowed to pickup items!'
+        enable: true
+    bed:
+        message: '&4You are not allowed to sleep!'
+        enable: false
+    pressureplate:
+        message: '&4You are not allowed to pressure the plate!'
+        enable: false
+    hunger:
+        message:
+        enable: false
+    spam:
+        message: '&4Don''t spam the chat!'
+        enable: true
+        lockDuration: 2
+    sneak:
+        message: '&4You are not allowed to sneak!'
+        enable: false
+    brew:
+        message: '&4You are not allowed to brew!'
+        enable: false
+    enchant:
+        message: '&4You are not allowed to enchant!'
+        enable: false

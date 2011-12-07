@@ -24,23 +24,25 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
  */
 public class AntiGuestPlayerListener extends PlayerListener
 {
-    protected final AntiGuest plugin;
-    protected final HashMap<Player, Long> chatTimestamps;
-    protected final HashMap<Player, Long> pickupTimestamps;
-    protected final HashMap<Player, Long> pressureTimestamps;
+    private final AntiGuest plugin;
+    private final HashMap<Player, Long> chatTimestamps;
+    private final HashMap<Player, Long> pickupTimestamps;
+    private final HashMap<Player, Long> pressureTimestamps;
 
-    protected final boolean lever;
-    protected final boolean button;
-    protected final boolean door;
-    protected final boolean pressureplate;
-    protected final boolean chest;
-    protected final boolean workbench;
-    protected final boolean furnace;
-    protected final boolean dispenser;
-    protected final boolean placeblock;
-    protected final boolean cake;
-    protected final boolean chat;
-    protected final boolean spam;
+    private final boolean lever;
+    private final boolean button;
+    private final boolean door;
+    private final boolean pressureplate;
+    private final boolean chest;
+    private final boolean workbench;
+    private final boolean furnace;
+    private final boolean dispenser;
+    private final boolean placeblock;
+    private final boolean cake;
+    private final boolean chat;
+    private final boolean spam;
+    private final boolean brew;
+    private final boolean enchant;
 
 
     public AntiGuestPlayerListener(AntiGuest plugin)
@@ -50,21 +52,23 @@ public class AntiGuestPlayerListener extends PlayerListener
         this.pickupTimestamps = new HashMap<Player, Long>();
         this.pressureTimestamps = new HashMap<Player, Long>();
 
-        this.lever = this.plugin.preventions.get("lever");
-        this.button = this.plugin.preventions.get("button");
-        this.door = this.plugin.preventions.get("door");
-        this.pressureplate = this.plugin.preventions.get("pressureplate");
-        this.chest = this.plugin.preventions.get("chest");
-        this.workbench = this.plugin.preventions.get("workbench");
-        this.furnace = this.plugin.preventions.get("furnace");
-        this.dispenser = this.plugin.preventions.get("dispenser");
-        this.placeblock = this.plugin.preventions.get("placeblock");
-        this.cake = this.plugin.preventions.get("cake");
-        this.chat = this.plugin.preventions.get("chat");
-        this.spam = this.plugin.preventions.get("spam");
+        this.lever          = this.plugin.preventions.get("lever");
+        this.button         = this.plugin.preventions.get("button");
+        this.door           = this.plugin.preventions.get("door");
+        this.pressureplate  = this.plugin.preventions.get("pressureplate");
+        this.chest          = this.plugin.preventions.get("chest");
+        this.workbench      = this.plugin.preventions.get("workbench");
+        this.furnace        = this.plugin.preventions.get("furnace");
+        this.dispenser      = this.plugin.preventions.get("dispenser");
+        this.placeblock     = this.plugin.preventions.get("placeblock");
+        this.cake           = this.plugin.preventions.get("cake");
+        this.chat           = this.plugin.preventions.get("chat");
+        this.spam           = this.plugin.preventions.get("spam");
+        this.brew           = this.plugin.preventions.get("brew");
+        this.enchant        = this.plugin.preventions.get("enchant");
     }
 
-    protected void noPickupMessage(Player player)
+    private void noPickupMessage(Player player)
     {
         Long lastTime = this.pickupTimestamps.get(player);
         long currentTime = System.currentTimeMillis();
@@ -75,7 +79,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         }
     }
 
-    protected void pressureMessage(Player player)
+    private void pressureMessage(Player player)
     {
         Long lastTime = this.pressureTimestamps.get(player);
         long currentTime = System.currentTimeMillis();
@@ -86,7 +90,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         }
     }
 
-    protected boolean isPlayerChatLocked(Player player)
+    private boolean isPlayerChatLocked(Player player)
     {
         if (this.plugin.can(player, "spam"))
         {
@@ -194,6 +198,26 @@ public class AntiGuestPlayerListener extends PlayerListener
                 if (!this.plugin.can(player, "cake"))
                 {
                     this.plugin.message(player, "cake");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.brew && (material == Material.BREWING_STAND || material == Material.CAULDRON)) // brewing
+            {
+                AntiGuest.debug("brweing stuff!!!!!!");
+                if (!this.plugin.can(player, "brew"))
+                {
+                    this.plugin.message(player, "brew");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.enchant && material == Material.ENCHANTMENT_TABLE) // enchanting
+            {
+                AntiGuest.debug("enchantment table!!!");
+                if (!this.plugin.can(player, "enchant"))
+                {
+                    this.plugin.message(player, "enchant");
                     event.setCancelled(true);
                     return;
                 }
