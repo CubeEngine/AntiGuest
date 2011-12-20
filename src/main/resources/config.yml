@@ -6,8 +6,11 @@ preventions:
     fish:
         message: '&4You are not allowed to fish!'
         enable: false
-    bucket:
-        message: '&4You are not allowed to use buckets'
+    lavabucket:
+        message: '&4You are not allowed to use lava buckets'
+        enable: true
+    waterbucket:
+        message: '&4You are not allowed to use water buckets'
         enable: true
     vehicle:
         message: '&4You are not allowed to use vehicles!'

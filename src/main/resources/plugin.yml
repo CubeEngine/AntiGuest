@@ -114,6 +114,15 @@ permissions:
   AntiGuest.bucket:
     description: "Allows the player to use buckets"
     default: op
+    children:
+      AntiGuest.lavabucket: true
+      AntiGuest.waterbucket: true
+  AntiGuest.lavabucket:
+    description: "Allows the player to use lava buckets"
+    default: op
+  AntiGuest.waterbucket:
+    description: "Allows the player to use water buckets"
+    default: op
   AntiGuest.monster:
     description: "Allows the player to get targeted by monsters"
     default: op

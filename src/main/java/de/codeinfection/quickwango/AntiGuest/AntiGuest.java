@@ -81,7 +81,7 @@ public class AntiGuest extends JavaPlugin
             debug("interaction preventions registered");
             this.pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Lowest, this);
         }
-        if (this.preventions.get("bucket"))
+        if (this.preventions.get("lavabucket") || this.preventions.get("waterbucket"))
         {
             debug("bucket prevention registered");
             this.pm.registerEvent(Type.PLAYER_BUCKET_EMPTY, playerListener, Priority.Lowest, this);

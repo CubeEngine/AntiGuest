@@ -304,10 +304,22 @@ public class AntiGuestPlayerListener extends PlayerListener
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "bucket"))
+        final Material bucket = event.getBucket();
+        if (bucket == Material.LAVA_BUCKET)
         {
-            event.setCancelled(true);
-            this.plugin.message(player, "bucket");
+            if (!this.plugin.can(player, "lavabucket"))
+            {
+                event.setCancelled(true);
+                this.plugin.message(player, "lavabucket");
+            }
+        }
+        else if (bucket == Material.WATER_BUCKET)
+        {
+            if (!this.plugin.can(player, "waterbucket"))
+            {
+                event.setCancelled(true);
+                this.plugin.message(player, "waterbucket");
+            }
         }
     }
 
@@ -315,10 +327,22 @@ public class AntiGuestPlayerListener extends PlayerListener
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
     {
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "bucket"))
+        final Material bucket = event.getBucket();
+        if (bucket == Material.LAVA_BUCKET)
         {
-            event.setCancelled(true);
-            this.plugin.message(player, "bucket");
+            if (!this.plugin.can(player, "lavabucket"))
+            {
+                event.setCancelled(true);
+                this.plugin.message(player, "lavabucket");
+            }
+        }
+        else if (bucket == Material.WATER_BUCKET)
+        {
+            if (!this.plugin.can(player, "waterbucket"))
+            {
+                event.setCancelled(true);
+                this.plugin.message(player, "waterbucket");
+            }
         }
     }
 

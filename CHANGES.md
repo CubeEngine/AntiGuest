@@ -1,6 +1,10 @@
 Changes
 =======
 
+Version 2.5.0
+-------------
+- split bukkit into waterbucket and lavabucket
+
 Version 2.4.0
 -------------
 - fixed JDK 1.5 compatibility
