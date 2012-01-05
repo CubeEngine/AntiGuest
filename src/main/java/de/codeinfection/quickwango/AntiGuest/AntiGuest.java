@@ -57,25 +57,24 @@ public class AntiGuest extends JavaPlugin
             }
         }
 
-        AntiGuestPlayerListener playerListener = new AntiGuestPlayerListener(this);
-        AntiGuestEntityListener entityListener = new AntiGuestEntityListener(this);
-        AntiGuestBlockListener blockListener = new AntiGuestBlockListener(this);
-        AntiGuestVehicleListener vehicleListener = new AntiGuestVehicleListener(this);
+        final AntiGuestPlayerListener  playerListener  = new AntiGuestPlayerListener(this);
+        final AntiGuestEntityListener  entityListener  = new AntiGuestEntityListener(this);
+        final AntiGuestBlockListener   blockListener   = new AntiGuestBlockListener(this);
+        final AntiGuestVehicleListener vehicleListener = new AntiGuestVehicleListener(this);
         
         if (
-            this.preventions.get("lever") ||
-            this.preventions.get("button") ||
-            this.preventions.get("door") ||
-            this.preventions.get("chest") ||
-            this.preventions.get("workbench") ||
-            this.preventions.get("furnace") ||
-            this.preventions.get("dispenser") ||
-            this.preventions.get("pressureplate") ||
-            this.preventions.get("placeblock") ||
-            this.preventions.get("cake") ||
-            this.preventions.get("brew") ||
-            this.preventions.get("enchant")
-
+            this.preventions.get("lever"            ) ||
+            this.preventions.get("button"           ) ||
+            this.preventions.get("door"             ) ||
+            this.preventions.get("chest"            ) ||
+            this.preventions.get("workbench"        ) ||
+            this.preventions.get("furnace"          ) ||
+            this.preventions.get("dispenser"        ) ||
+            this.preventions.get("pressureplate"    ) ||
+            this.preventions.get("placeblock"       ) ||
+            this.preventions.get("cake"             ) ||
+            this.preventions.get("brew"             ) ||
+            this.preventions.get("enchant"          )
         )
         {
             debug("interaction preventions registered");
@@ -185,14 +184,6 @@ public class AntiGuest extends JavaPlugin
         //special values
         this.vehiclesIgnoreBuildPermissions = this.config.getBoolean("preventions.vehicle.ignoreBuildPermissions");
         this.chatLockDuration               = this.config.getInt("preventions.spam.lockDuration");
-
-        debug("## Preventions:");
-        for (Map.Entry<String, Boolean> entry : this.preventions.entrySet())
-        {
-            debug("\tName: " + entry.getKey());
-            debug("\t\tenabled: " + (entry.getValue() ? "True" : "False"));
-            debug("\t\tmessage: " + this.messages.get(entry.getKey()));
-        }
     }
 
     public static void log(String msg)
@@ -221,7 +212,11 @@ public class AntiGuest extends JavaPlugin
     public boolean can(Player player, String type)
     {
         final String permission = "AntiGuest." + type;
-        boolean allowed =  player.hasPermission(permission);
+        boolean allowed = player.hasPermission(permission);
+        if (!allowed)
+        {
+            allowed = player.hasPermission(permission.toLowerCase());
+        }
 
         debug("Player: " + player.getName() + " - Permission: " + type + " - Allowed: " + (allowed ? "Yes" : "No"));
 
