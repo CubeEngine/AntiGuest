@@ -8,23 +8,26 @@ AntiGuest prevents guests from doing specific things like building and fighting,
 Features:
 ---------
 - prevent guests from (configurable):
-    - using levers, buttons, doors and/or pressureplates</li>
-    - opening chests and/or doors</li>
-    - crafting, cooking, dispensing, enchanting and/or brewing</li>
-    - eating cakes</li>
-    - fishing</li>
-    - sleeping in beds</li>
-    - using buckets</li>
-    - building</li>
-    - fighting</li>
-    - getting targeted by monsters</li>
-    - picking up and/or dropping items</li>
-    - using vehicles</li>
-    - spamming the chat or completely chatting</li>
-    - starvation</li>
-    - sprinting and/or sneaking</li>
-    - moving</li>
-    - changing repeater delays</li>
+    - using levers, buttons, doors and/or pressureplates
+    - opening chests and/or doors
+    - crafting, cooking, dispensing, enchanting and/or brewing
+    - eating cakes
+    - fishing
+    - sleeping in beds
+    - using buckets
+    - building
+    - fighting
+    - getting targeted by monsters
+    - picking up and/or dropping items
+    - using vehicles
+    - spamming the chat or completely chatting
+    - starvation
+    - sprinting
+    - sneaking (currently disabled)
+    - moving (currently disabled)
+    - changing repeater delays
+    - changing or playing noteblocks
+    - playing records in jukeboxes
 - all messages are configurable and support color codes
 
 Installation:
@@ -69,6 +72,9 @@ Permissions:
         - AntiGuest.move - *Allows the player to move*
         - AntiGuest.sneak - *Allows the player to sneak*
         - AntiGuest.sprint - *Allows the player to sprint*
+    - AntiGuest.music - *Allows the player to do music related things*
+        - AntiGuest.noteblock - *Allows the player to make music*
+        - AntiGuest.jukebox - *Allows the player to play music*
     - AntiGuest.vehicle - *Allows the player to use vehicles*
     - AntiGuest.chat - *Allows the player to chat*
     - AntiGuest.hunger - *Allows the player to die by hunger*

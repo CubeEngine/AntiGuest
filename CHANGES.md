@@ -4,6 +4,11 @@ Changes
 Version 2.5.0
 -------------
 - split bukkit into waterbucket and lavabucket
+- added additional lowercase permission check
+- added noteblock prevention
+- added jukebox prevention
+- disabled move prevention (buggy)
+- disabled sneak prevention (buggy, seems to be a CraftBukkit bug)
 
 Version 2.4.0
 -------------
