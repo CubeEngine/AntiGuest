@@ -20,6 +20,7 @@ permissions:
       AntiGuest.vehicle: true
       AntiGuest.spam: true
       AntiGuest.chat: true
+      AntiGuest.music: true
   AntiGuest.build:
     description: "Allows the player to build"
     default: op
@@ -69,6 +70,12 @@ permissions:
       AntiGuest.sneak: true
       AntiGuest.sprint: true
       AntiGuest.move: true
+  AntiGuest.music:
+    description: "Allows the player to do music related things"
+    default: op
+    children:
+      AntiGuest.noteblock: true
+      AntiGuest.jukebox: true
   AntiGuest.pvp:
     description: "Allows the player to fight"
     default: op
@@ -161,4 +168,10 @@ permissions:
     default: op
   AntiGuest.repeater:
     description: "Allows the player to change repeater delays"
+    default: op
+  AntiGuest.noteblock:
+    description: "Allows the player to make music"
+    default: op
+  AntiGuest.jukebox:
+    description: "Allows the player to play music"
     default: op

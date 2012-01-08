@@ -74,7 +74,9 @@ public class AntiGuest extends JavaPlugin
             this.preventions.get("placeblock"       ) ||
             this.preventions.get("cake"             ) ||
             this.preventions.get("brew"             ) ||
-            this.preventions.get("enchant"          )
+            this.preventions.get("enchant"          ) ||
+            this.preventions.get("noteblock"        ) ||
+            this.preventions.get("jukebox"          )
         )
         {
             debug("interaction preventions registered");

@@ -89,3 +89,9 @@ preventions:
     repeater:
         message: '&4You are not allowed to change repeater delays!'
         enable: true
+    noteblock:
+        message: '&4You are not allowed to make music!'
+        enable: false
+    jukebox:
+        message: '&4You are not allowed to play music!'
+        enable: false

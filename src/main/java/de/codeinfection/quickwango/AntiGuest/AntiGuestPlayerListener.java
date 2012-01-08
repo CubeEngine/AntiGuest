@@ -44,6 +44,8 @@ public class AntiGuestPlayerListener extends PlayerListener
     private final boolean brew;
     private final boolean enchant;
     private final boolean repeater;
+    private final boolean noteblock;
+    private final boolean jukebox;
 
 
     public AntiGuestPlayerListener(AntiGuest plugin)
@@ -68,6 +70,8 @@ public class AntiGuestPlayerListener extends PlayerListener
         this.brew           = this.plugin.preventions.get("brew");
         this.enchant        = this.plugin.preventions.get("enchant");
         this.repeater       = this.plugin.preventions.get("repeater");
+        this.noteblock      = this.plugin.preventions.get("noteblock");
+        this.jukebox        = this.plugin.preventions.get("jukebox");
     }
 
     private void noPickupMessage(Player player)
@@ -156,6 +160,15 @@ public class AntiGuestPlayerListener extends PlayerListener
                     return;
                 }
             }
+            else if (this.noteblock && material == Material.NOTE_BLOCK) // noteblocks
+            {
+                if (!this.plugin.can(player, "noteblock"))
+                {
+                    this.plugin.message(player, "noteblock");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
         }
         if (action == Action.RIGHT_CLICK_BLOCK)
         {
@@ -227,6 +240,15 @@ public class AntiGuestPlayerListener extends PlayerListener
                 if (!this.plugin.can(player, "repeater"))
                 {
                     this.plugin.message(player, "repeater");
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            else if (this.jukebox && material == Material.JUKEBOX) // jukeboxes
+            {
+                if (!this.plugin.can(player, "jukebox"))
+                {
+                    this.plugin.message(player, "jukebox");
                     event.setCancelled(true);
                     return;
                 }
