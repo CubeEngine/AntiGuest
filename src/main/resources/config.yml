@@ -46,9 +46,9 @@ preventions:
     lever:
         message: '&4You are not allowed to use levers!'
         enable: false
-    move:
-        message: '&4You are not allowed to move!'
-        enable: false
+    #move:
+    #    message: '&4You are not allowed to move!'
+    #    enable: false
     placeblock:
         message: '&4You are not allowed to place blocks!'
         enable: true
@@ -77,9 +77,9 @@ preventions:
         message: '&4Don''t spam the chat!'
         enable: true
         lockDuration: 2
-    sneak:
-        message: '&4You are not allowed to sneak!'
-        enable: false
+    #sneak:
+    #    message: '&4You are not allowed to sneak!'
+    #    enable: false
     brew:
         message: '&4You are not allowed to brew!'
         enable: false

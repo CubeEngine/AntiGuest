@@ -148,16 +148,16 @@ public class AntiGuest extends JavaPlugin
             debug("sprint prevention registered");
             this.pm.registerEvent(Type.PLAYER_TOGGLE_SPRINT, playerListener, Priority.Lowest, this);
         }
-        if (this.preventions.get("sneak"))
-        {
-            debug("sneak prevention registered");
-            this.pm.registerEvent(Type.PLAYER_TOGGLE_SNEAK, playerListener, Priority.Lowest, this);
-        }
-        if (this.preventions.get("move"))
-        {
-            debug("move prevention registered");
-            this.pm.registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Lowest, this);
-        }
+        //if (this.preventions.get("sneak"))
+        //{
+        //    debug("sneak prevention registered");
+        //    this.pm.registerEvent(Type.PLAYER_TOGGLE_SNEAK, playerListener, Priority.Lowest, this);
+        //}
+        //if (this.preventions.get("move"))
+        //{
+        //    debug("move prevention registered");
+        //    this.pm.registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Lowest, this);
+        //}
 
         log("Version " + this.getDescription().getVersion() + " enabled");
     }
