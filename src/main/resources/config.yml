@@ -77,9 +77,9 @@ preventions:
         message: '&4Don''t spam the chat!'
         enable: true
         lockDuration: 2
-    #sneak:
-    #    message: '&4You are not allowed to sneak!'
-    #    enable: false
+    sneak:
+        message: '&4You are not allowed to sneak!'
+        enable: false
     brew:
         message: '&4You are not allowed to brew!'
         enable: false

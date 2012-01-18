@@ -2,76 +2,56 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.player.*;
 
 /**
  *
  * @author CodeInfection
  */
-public class AntiGuestPlayerListener extends PlayerListener
+public class AntiGuestPlayerListener extends AbstractAntiGuestListener implements Listener
 {
-    private final AntiGuest plugin;
-    private final HashMap<Player, Long> chatTimestamps;
-    private final HashMap<Player, Long> pickupTimestamps;
-    private final HashMap<Player, Long> pressureTimestamps;
+    private static final HashMap<Player, Long> chatTimestamps    = new HashMap<Player, Long>();
+    private static final HashMap<Player, Long> pickupTimestamps  = new HashMap<Player, Long>();
+    private static final HashMap<Player, Long> monsterTimestamps = new HashMap<Player, Long>();
 
-    private final boolean lever;
-    private final boolean button;
-    private final boolean door;
-    private final boolean pressureplate;
-    private final boolean chest;
-    private final boolean workbench;
-    private final boolean furnace;
-    private final boolean dispenser;
-    private final boolean placeblock;
-    private final boolean cake;
-    private final boolean chat;
-    private final boolean spam;
-    private final boolean brew;
-    private final boolean enchant;
-    private final boolean repeater;
-    private final boolean noteblock;
-    private final boolean jukebox;
+
+    private final static Prevention monsterPrev     = AntiGuest.preventions.get("monster");
+    private final static Prevention chatPrev        = AntiGuest.preventions.get("chat");
+    private final static Prevention spamPrev        = AntiGuest.preventions.get("spam");
+    private final static Prevention movePrev        = AntiGuest.preventions.get("move");
+    private final static Prevention sneakPrev       = AntiGuest.preventions.get("sneak");
+    private final static Prevention sprintPrev      = AntiGuest.preventions.get("sprint");
+    private final static Prevention fishPrev        = AntiGuest.preventions.get("fish");
+    private final static Prevention pickupPrev      = AntiGuest.preventions.get("pickup");
+    private final static Prevention dropPrev        = AntiGuest.preventions.get("drop");
+    private final static Prevention lavabucketPrev  = AntiGuest.preventions.get("lavabucket");
+    private final static Prevention waterbucketPrev = AntiGuest.preventions.get("waterbucket");
+    private final static Prevention bedPrev         = AntiGuest.preventions.get("bed");
+    private final static Prevention pvpPrev         = AntiGuest.preventions.get("pvp");
+    private final static Prevention hungerPrev      = AntiGuest.preventions.get("hunger");
 
 
     public AntiGuestPlayerListener(AntiGuest plugin)
     {
-        this.plugin = plugin;
-        this.chatTimestamps = new HashMap<Player, Long>();
-        this.pickupTimestamps = new HashMap<Player, Long>();
-        this.pressureTimestamps = new HashMap<Player, Long>();
+        super(plugin);
+    }
 
-        this.lever          = this.plugin.preventions.get("lever");
-        this.button         = this.plugin.preventions.get("button");
-        this.door           = this.plugin.preventions.get("door");
-        this.pressureplate  = this.plugin.preventions.get("pressureplate");
-        this.chest          = this.plugin.preventions.get("chest");
-        this.workbench      = this.plugin.preventions.get("workbench");
-        this.furnace        = this.plugin.preventions.get("furnace");
-        this.dispenser      = this.plugin.preventions.get("dispenser");
-        this.placeblock     = this.plugin.preventions.get("placeblock");
-        this.cake           = this.plugin.preventions.get("cake");
-        this.chat           = this.plugin.preventions.get("chat");
-        this.spam           = this.plugin.preventions.get("spam");
-        this.brew           = this.plugin.preventions.get("brew");
-        this.enchant        = this.plugin.preventions.get("enchant");
-        this.repeater       = this.plugin.preventions.get("repeater");
-        this.noteblock      = this.plugin.preventions.get("noteblock");
-        this.jukebox        = this.plugin.preventions.get("jukebox");
+    protected void noMonsterTargetingMessage(Player player)
+    {
+        Long lastTime = monsterTimestamps.get(player);
+        long currentTime = System.currentTimeMillis();
+        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
+        {
+            sendMessage(player, monsterPrev);
+            monsterTimestamps.put(player, currentTime);
+        }
     }
 
     private void noPickupMessage(Player player)
@@ -80,25 +60,14 @@ public class AntiGuestPlayerListener extends PlayerListener
         long currentTime = System.currentTimeMillis();
         if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
         {
-            this.plugin.message(player, "pickup");
+            sendMessage(player, pickupPrev);
             this.pickupTimestamps.put(player, currentTime);
-        }
-    }
-
-    private void pressureMessage(Player player)
-    {
-        Long lastTime = this.pressureTimestamps.get(player);
-        long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-        {
-            this.plugin.message(player, "pressureplate");
-            this.pressureTimestamps.put(player, currentTime);
         }
     }
 
     private boolean isPlayerChatLocked(Player player)
     {
-        if (this.plugin.can(player, "spam"))
+        if (can(player, spamPrev))
         {
             return false;
         }
@@ -106,7 +75,7 @@ public class AntiGuestPlayerListener extends PlayerListener
         {
             Long lastTime = this.chatTimestamps.get(player);
             long currentTime = System.currentTimeMillis();
-            if (lastTime == null || lastTime + (this.plugin.chatLockDuration * 1000) < currentTime)
+            if (lastTime == null || lastTime + (getPlugin().chatLockDuration * 1000) < currentTime)
             {
                 this.chatTimestamps.put(player, currentTime);
                 return false;
@@ -118,325 +87,238 @@ public class AntiGuestPlayerListener extends PlayerListener
         }
     }
 
-    @Override
-    public void onPlayerInteract(PlayerInteractEvent event)
-    {
-        final Player player = event.getPlayer();
-        Action action = event.getAction();
-        Block block = event.getClickedBlock();
-        if (block == null)
-        {
-            return;
-        }
-        Material material = block.getType();
-        Material itemInHand = player.getItemInHand().getType();
-        AntiGuest.debug("Player interacted with " + material.toString());
-        if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
-        {
-            if (this.door && (material == Material.WOODEN_DOOR || material == Material.IRON_DOOR || material == Material.TRAP_DOOR || material == Material.FENCE_GATE)) // doors
-            {
-                if (!this.plugin.can(player, "door"))
-                {
-                    this.plugin.message(player, "door");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.lever && material == Material.LEVER) // lever
-            {
-                if (!this.plugin.can(player, "lever"))
-                {
-                    this.plugin.message(player, "lever");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.button && material == Material.STONE_BUTTON) // buttons
-            {
-                if (!this.plugin.can(player, "button"))
-                {
-                    this.plugin.message(player, "button");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.noteblock && material == Material.NOTE_BLOCK) // noteblocks
-            {
-                if (!this.plugin.can(player, "noteblock"))
-                {
-                    this.plugin.message(player, "noteblock");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-        }
-        if (action == Action.RIGHT_CLICK_BLOCK)
-        {
-            if (this.chest && material == Material.CHEST) // chests
-            {
-                if (!this.plugin.can(player, "chest"))
-                {
-                    this.plugin.message(player, "chest");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.workbench && material == Material.WORKBENCH) // workbenches
-            {
-                if (!this.plugin.can(player, "workbench"))
-                {
-                    this.plugin.message(player, "workbench");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.furnace && (material == Material.FURNACE || material == Material.BURNING_FURNACE)) // furnaces
-            {
-                if (!this.plugin.can(player, "furnace"))
-                {
-                    this.plugin.message(player, "furnace");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.dispenser && material == Material.DISPENSER) // dispensers
-            {
-                if (!this.plugin.can(player, "dispenser"))
-                {
-                    this.plugin.message(player, "dispenser");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.cake && material == Material.CAKE_BLOCK) // cakes
-            {
-                if (!this.plugin.can(player, "cake"))
-                {
-                    this.plugin.message(player, "cake");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.brew && (material == Material.BREWING_STAND || material == Material.CAULDRON)) // brewing
-            {
-                if (!this.plugin.can(player, "brew"))
-                {
-                    this.plugin.message(player, "brew");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.enchant && material == Material.ENCHANTMENT_TABLE) // enchanting
-            {
-                if (!this.plugin.can(player, "enchant"))
-                {
-                    this.plugin.message(player, "enchant");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.repeater && (material == Material.DIODE_BLOCK_ON || material == Material.DIODE_BLOCK_OFF)) // repeater
-            {
-                if (!this.plugin.can(player, "repeater"))
-                {
-                    this.plugin.message(player, "repeater");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            else if (this.jukebox && material == Material.JUKEBOX) // jukeboxes
-            {
-                if (!this.plugin.can(player, "jukebox"))
-                {
-                    this.plugin.message(player, "jukebox");
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-            if (this.placeblock)
-            {
-                String message = "vehicle";
-                boolean allowed = true;
-                if (!this.plugin.vehiclesIgnoreBuildPermissions && !this.plugin.can(player, "placeblock"))
-                {
-                    allowed = false;
-                    message = "placeblock";
-                }
-                allowed = (allowed ? this.plugin.can(player, "vehicle") : allowed);
-                if (!allowed)
-                {
-                    if ((itemInHand == Material.MINECART || itemInHand == Material.STORAGE_MINECART || itemInHand == Material.POWERED_MINECART))
-                    {
-                        if (material == Material.RAILS || material == Material.POWERED_RAIL || material == Material.DETECTOR_RAIL)
-                        {
-                            event.setCancelled(true);
-                            this.plugin.message(player, message);
-                        }
-                    }
-                    else if (itemInHand == Material.BOAT)
-                    {
-                        event.setCancelled(true);
-                        this.plugin.message(player, message);
-                    }
-                }
-            }
-        }
-        else if (this.pressureplate && action == Action.PHYSICAL)
-        {
-            if (material == Material.WOOD_PLATE || material == Material.STONE_PLATE) // pressure plates
-            {
-                if (!this.plugin.can(player, "pressureplate"))
-                {
-                    this.pressureMessage(player);
-                    event.setCancelled(true);
-                    return;
-                }
-            }
-        }
-    }
-
-    @Override
+    @EventHandler( event=PlayerPickupItemEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerPickupItem(PlayerPickupItemEvent event)
     {
+        if (pickupPrev == null) return;
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "pickup"))
+        if (!can(player, pickupPrev))
         {
             event.setCancelled(true);
             this.noPickupMessage(player);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerChatEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerChat(PlayerChatEvent event)
     {
+        if (chatPrev == null) return;
         final Player player = event.getPlayer();
-        if (this.chat && !this.plugin.can(player, "chat"))
+        if (!can(player, chatPrev))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "chat");
-        }
-        else if (this.spam && this.isPlayerChatLocked(player))
-        {
-            event.setCancelled(true);
-            this.plugin.message(player, "spam");
+            sendMessage(player, chatPrev);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerChatEvent.class, priority=EventPriority.LOWEST )
+    public void onPlayerSpam(PlayerChatEvent event)
+    {
+        if (spamPrev == null) return;
+        final Player player = event.getPlayer();
+        if (this.isPlayerChatLocked(player))
+        {
+            event.setCancelled(true);
+            sendMessage(player, spamPrev);
+        }
+    }
+
+    @EventHandler( event=PlayerBucketFillEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
         final Player player = event.getPlayer();
         final Material bucket = event.getBucket();
-        if (bucket == Material.LAVA_BUCKET)
+        Prevention prevention;
+
+        switch (bucket)
         {
-            if (!this.plugin.can(player, "lavabucket"))
-            {
-                event.setCancelled(true);
-                this.plugin.message(player, "lavabucket");
-            }
+            case LAVA_BUCKET:
+                prevention = lavabucketPrev;
+                break;
+            case WATER_BUCKET:
+                prevention = waterbucketPrev;
+                break;
+            default:
+                getPlugin().log("Unknown bucket given to PlayerBucketFillEvent:" + bucket.toString());
+                return;
         }
-        else if (bucket == Material.WATER_BUCKET)
+
+        if (prevention == null) return;
+        if (!can(player, prevention))
         {
-            if (!this.plugin.can(player, "waterbucket"))
-            {
-                event.setCancelled(true);
-                this.plugin.message(player, "waterbucket");
-            }
+            event.setCancelled(true);
+            sendMessage(player, prevention);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerBucketEmptyEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
     {
         final Player player = event.getPlayer();
         final Material bucket = event.getBucket();
-        if (bucket == Material.LAVA_BUCKET)
+        Prevention prevention;
+
+        switch (bucket)
         {
-            if (!this.plugin.can(player, "lavabucket"))
-            {
-                event.setCancelled(true);
-                this.plugin.message(player, "lavabucket");
-            }
+            case LAVA_BUCKET:
+                prevention = lavabucketPrev;
+                break;
+            case WATER_BUCKET:
+                prevention = waterbucketPrev;
+                break;
+            default:
+                getPlugin().log("Unknown bucket given to PlayerBucketEmptyEvent:" + bucket.toString());
+                return;
         }
-        else if (bucket == Material.WATER_BUCKET)
+
+        if (prevention == null) return;
+        if (!can(player, prevention))
         {
-            if (!this.plugin.can(player, "waterbucket"))
-            {
-                event.setCancelled(true);
-                this.plugin.message(player, "waterbucket");
-            }
+            event.setCancelled(true);
+            sendMessage(player, prevention);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerDropItemEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerDropItem(PlayerDropItemEvent event)
     {
+        if (dropPrev == null) return;
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "drop"))
+        if (!can(player, dropPrev))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "drop");
+            sendMessage(player, dropPrev);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerBedEnterEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerBedEnter(PlayerBedEnterEvent event)
     {
+        if (bedPrev == null) return;
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "bed"))
+        if (!can(player, bedPrev))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "bed");
+            sendMessage(player, bedPrev);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerFishEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerFish(PlayerFishEvent event)
     {
+        if (fishPrev == null) return;
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "fish"))
+        if (!can(player, fishPrev))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "fish");
+            sendMessage(player, fishPrev);
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerToggleSneakEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
     {
+        if (sneakPrev == null) return;
         final Player player = event.getPlayer();
         if (!event.isSneaking())
         {
-            if (!this.plugin.can(player, "sneak"))
+            if (!can(player, sneakPrev))
             {
+                getPlugin().debug("SneakEvent triggered!");
+                for (StackTraceElement elem : Thread.currentThread().getStackTrace())
+                {
+                    getPlugin().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
+                }
                 event.setCancelled(true);
-                this.plugin.message(player, "sneak");
+                sendMessage(player, sneakPrev);
             }
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerToggleSprintEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerToggleSprint(PlayerToggleSprintEvent event)
     {
+        if (sprintPrev == null) return;
         final Player player = event.getPlayer();
         if (!event.isSprinting())
         {
-            if (!this.plugin.can(player, "sprint"))
+            if (!can(player, sprintPrev))
             {
+                getPlugin().debug("SprintEvent triggered!");
+                for (StackTraceElement elem : Thread.currentThread().getStackTrace())
+                {
+                    getPlugin().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
+                }
                 event.setCancelled(true);
-                this.plugin.message(player, "sprint");
+                sendMessage(player, sprintPrev);
             }
         }
     }
 
-    @Override
+    @EventHandler( event=PlayerMoveEvent.class, priority=EventPriority.LOWEST )
     public void onPlayerMove(PlayerMoveEvent event)
     {
+        if (movePrev == null) return;
         final Player player = event.getPlayer();
-        if (!this.plugin.can(player, "move"))
+        if (!can(player, movePrev))
         {
             event.setCancelled(true);
-            this.plugin.message(player, "move");
+            sendMessage(player, movePrev);
+        }
+    }
+
+    @EventHandler( event=EntityDamageEvent.class, priority=EventPriority.LOWEST )
+    public void onEntityDamage(EntityDamageEvent event)
+    {
+        Prevention prevention = null;
+        Player player = null;
+        if (event.getCause() == EntityDamageEvent.DamageCause.STARVATION)
+        {
+            Entity entity = event.getEntity();
+            if (entity instanceof Player)
+            {
+                player = (Player)entity;
+                prevention = hungerPrev;
+            }
+        }
+        if (event instanceof EntityDamageByEntityEvent)
+        {
+            final Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
+            prevention = pvpPrev;
+            if (damager instanceof Player)
+            {
+                player = (Player)damager;
+            }
+            else if (damager instanceof Projectile)
+            {
+                final LivingEntity shooter = ((Projectile)damager).getShooter();
+                if (shooter instanceof Player)
+                {
+                    player = (Player)shooter;
+                }
+            }
+        }
+        
+        if (prevention != null && player != null && !can(player, prevention))
+        {
+            event.setCancelled(true);
+            sendMessage(player, prevention);
+        }
+    }
+
+    @EventHandler( event=EntityTargetEvent.class, priority=EventPriority.LOWEST )
+    public void onEntityTarget(EntityTargetEvent event)
+    {
+        if (monsterPrev == null) return;
+        Entity targetEntity = event.getTarget();
+        if (event.getEntity() instanceof Monster && targetEntity != null && targetEntity instanceof Player)
+        {
+            final Player player = (Player)targetEntity;
+            if (!can(player, monsterPrev))
+            {
+                event.setCancelled(true);
+                this.noMonsterTargetingMessage(player);
+            }
         }
     }
 }

@@ -3,84 +3,80 @@ package de.codeinfection.quickwango.AntiGuest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.event.vehicle.VehicleListener;
 
 /**
  *
  * @author CodeInfection
  */
-public class AntiGuestVehicleListener extends VehicleListener
+public class AntiGuestVehicleListener extends AbstractAntiGuestListener implements Listener
 {
-    protected final AntiGuest plugin;
-
+    private final static Prevention vehiclePrev = AntiGuest.preventions.get("vehicle");
+    
     public AntiGuestVehicleListener(AntiGuest plugin)
     {
-        this.plugin = plugin;
+        super(plugin);
     }
 
-    @Override
+    @EventHandler( event=VehicleEnterEvent.class, priority=EventPriority.LOWEST )
     public void onVehicleEnter(VehicleEnterEvent event)
     {
         Entity entity = event.getEntered();
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!this.plugin.can(player, "vehicle"))
+            if (!can(player, vehiclePrev))
             {
-                this.plugin.message(player, "vehicle");
+                sendMessage(player, vehiclePrev);
                 event.setCancelled(true);
             }
         }
     }
 
-    @Override
+    @EventHandler( event=VehicleExitEvent.class, priority=EventPriority.LOWEST )
     public void onVehicleExit(VehicleExitEvent event)
     {
         LivingEntity entity = event.getExited();
         if (entity instanceof Player)
         {
-            Player player = (Player)entity;
-            if (!this.plugin.can(player, "vehicle"))
+            final Player player = (Player)entity;
+            if (!can(player, vehiclePrev))
             {
-                this.plugin.message(player, "vehicle");
+                sendMessage(player, vehiclePrev);
                 event.setCancelled(true);
             }
         }
     }
 
-    @Override
+    @EventHandler( event=VehicleDestroyEvent.class, priority=EventPriority.LOWEST )
     public void onVehicleDestroy(VehicleDestroyEvent event)
     {
         Entity entity = event.getAttacker();
         if (entity instanceof Player)
         {
-            Player player = (Player)entity;
-            if (!this.plugin.vehiclesIgnoreBuildPermissions && !this.plugin.can(player, "breakblock"))
+            final Player player = (Player)entity;
+            if (!can(player, vehiclePrev))
             {
-                this.plugin.message(player, "breakblock");
-                event.setCancelled(true);
-                return;
-            }
-            if (!this.plugin.can(player, "vehicle"))
-            {
-                this.plugin.message(player, "vehicle");
+                sendMessage(player, vehiclePrev);
                 event.setCancelled(true);
             }
         }
     }
 
-    @Override
+    @EventHandler( event=VehicleEntityCollisionEvent.class, priority=EventPriority.LOWEST)
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event)
     {
         Entity entity = event.getEntity();
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!this.plugin.can(player, "vehicle"))
+            if (!can(player, vehiclePrev))
             {
                 event.setCancelled(true);
                 event.setCollisionCancelled(true);
