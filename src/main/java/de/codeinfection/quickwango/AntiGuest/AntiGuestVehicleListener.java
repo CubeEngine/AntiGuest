@@ -15,68 +15,63 @@ import org.bukkit.event.vehicle.VehicleExitEvent;
  *
  * @author CodeInfection
  */
-public class AntiGuestVehicleListener extends AbstractAntiGuestListener implements Listener
+public class AntiGuestVehicleListener implements Listener
 {
     private final static Prevention vehiclePrev = AntiGuest.preventions.get("vehicle");
-    
-    public AntiGuestVehicleListener(AntiGuest plugin)
-    {
-        super(plugin);
-    }
 
-    @EventHandler( event=VehicleEnterEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleEnter(VehicleEnterEvent event)
     {
         Entity entity = event.getEntered();
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!can(player, vehiclePrev))
+            if (!vehiclePrev.can(player))
             {
-                sendMessage(player, vehiclePrev);
+                vehiclePrev.sendMessage(player);
                 event.setCancelled(true);
             }
         }
     }
 
-    @EventHandler( event=VehicleExitEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleExit(VehicleExitEvent event)
     {
         LivingEntity entity = event.getExited();
         if (entity instanceof Player)
         {
             final Player player = (Player)entity;
-            if (!can(player, vehiclePrev))
+            if (!vehiclePrev.can(player))
             {
-                sendMessage(player, vehiclePrev);
+                vehiclePrev.sendMessage(player);
                 event.setCancelled(true);
             }
         }
     }
 
-    @EventHandler( event=VehicleDestroyEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleDestroy(VehicleDestroyEvent event)
     {
         Entity entity = event.getAttacker();
         if (entity instanceof Player)
         {
             final Player player = (Player)entity;
-            if (!can(player, vehiclePrev))
+            if (!vehiclePrev.can(player))
             {
-                sendMessage(player, vehiclePrev);
+                vehiclePrev.sendMessage(player);
                 event.setCancelled(true);
             }
         }
     }
 
-    @EventHandler( event=VehicleEntityCollisionEvent.class, priority=EventPriority.LOWEST)
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event)
     {
         Entity entity = event.getEntity();
         if (entity instanceof Player)
         {
             Player player = (Player)entity;
-            if (!can(player, vehiclePrev))
+            if (!vehiclePrev.can(player))
             {
                 event.setCancelled(true);
                 event.setCollisionCancelled(true);

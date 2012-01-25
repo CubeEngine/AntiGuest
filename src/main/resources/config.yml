@@ -14,7 +14,6 @@ preventions:
         enable: true
     vehicle:
         message: '&4You are not allowed to use vehicles!'
-        ignoreBuildPermissions: false
         enable: true
     chest:
         message: '&4You are not allowed to use chests'
@@ -57,18 +56,21 @@ preventions:
         enable: false
     monster:
         message: '&4You are not allowed to get targeted by monsters!'
+        messageDelay: 3
         enable: true
     pvp:
         message: '&4You are not allowed to fight!'
         enable: true
     pickup:
         message: '&4You are not allowed to pickup items!'
+        messageDelay: 3
         enable: true
     bed:
         message: '&4You are not allowed to sleep!'
         enable: false
     pressureplate:
         message: '&4You are not allowed to pressure the plate!'
+        messageDelay: 3
         enable: false
     hunger:
         message:

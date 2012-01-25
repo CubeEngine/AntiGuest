@@ -12,6 +12,18 @@ permissions:
     description: "Allows the player to do everything"
     default: op
     children:
+      AntiGuest.preventions.*: true
+      AntiGuest.commands.*: true
+  AntiGuest.preventions.*:
+    description: "Allows the player to pass every prevention"
+    default: op
+    children:
+      AntiGuest.preventions.actions.*: true
+      AntiGuest.preventions.items.*: true
+  AntiGuest.preventions.actions.*:
+    description: "Allows the player to do all prevented actions"
+    default: op
+    children:
       AntiGuest.build: true
       AntiGuest.interact: true
       AntiGuest.craft: true
@@ -21,6 +33,9 @@ permissions:
       AntiGuest.spam: true
       AntiGuest.chat: true
       AntiGuest.music: true
+  AntiGuest.preventions.items.*:
+    description: "Allows the player to use all items"
+    default: op
   AntiGuest.build:
     description: "Allows the player to build"
     default: op
@@ -76,102 +91,9 @@ permissions:
     children:
       AntiGuest.noteblock: true
       AntiGuest.jukebox: true
-  AntiGuest.pvp:
-    description: "Allows the player to fight"
-    default: op
-  AntiGuest.pickup:
-    description: "Allows the player to pickup items"
-    default: op
-  AntiGuest.vehicle:
-    description: "Allows the player to pickup items"
-    default: op
-  AntiGuest.spam:
-    description: "Allows the player to chat as fast as he wants"
-    default: op
-  AntiGuest.lever:
-    description: "Allows the player to use levers"
-    default: op
-  AntiGuest.button:
-    description: "Allows the player to push buttons"
-    default: op
-  AntiGuest.chest:
-    description: "Allows the player to use chests"
-    default: op
-  AntiGuest.workbench:
-    description: "Allows the player to craft"
-    default: op
-  AntiGuest.furnace:
-    description: "Allows the player to furnace"
-    default: op
-  AntiGuest.door:
-    description: "Allows the player to open and close doors"
-    default: op
-  AntiGuest.pressureplate:
-    description: "Allows the player to trigger pressure plates"
-    default: op
-  AntiGuest.bed:
-    description: "Allows the player to sleep in beds"
-    default: op
-  AntiGuest.placeblock:
-    description: "Allows the player to place blocks"
-    default: op
-  AntiGuest.breakblock:
-    description: "Allows the player to break blocks"
-    default: op
   AntiGuest.bucket:
     description: "Allows the player to use buckets"
     default: op
     children:
       AntiGuest.lavabucket: true
       AntiGuest.waterbucket: true
-  AntiGuest.lavabucket:
-    description: "Allows the player to use lava buckets"
-    default: op
-  AntiGuest.waterbucket:
-    description: "Allows the player to use water buckets"
-    default: op
-  AntiGuest.monster:
-    description: "Allows the player to get targeted by monsters"
-    default: op
-  AntiGuest.drop:
-    description: "Allows the player to drop items"
-    default: op
-  AntiGuest.fish:
-    description: "Allows the player to fish"
-    default: op
-  AntiGuest.dispenser:
-    description: "Allows the player to use dispensers"
-    default: op
-  AntiGuest.chat:
-    description: "Allows the player to chat"
-    default: op
-  AntiGuest.cake:
-    description: "Allows the player to eat cake"
-    default: op
-  AntiGuest.hunger:
-    description: "Allows the player to die by hunger"
-    default: op
-  AntiGuest.sprint:
-    description: "Allows the player to sprint"
-    default: op
-  AntiGuest.sneak:
-    description: "Allows the player to sneak"
-    default: op
-  AntiGuest.move:
-    description: "Allows the player to move"
-    default: op
-  AntiGuest.brew:
-    description: "Allows the player to brew"
-    default: op
-  AntiGuest.enchant:
-    description: "Allows the player to enchant"
-    default: op
-  AntiGuest.repeater:
-    description: "Allows the player to change repeater delays"
-    default: op
-  AntiGuest.noteblock:
-    description: "Allows the player to make music"
-    default: op
-  AntiGuest.jukebox:
-    description: "Allows the player to play music"
-    default: op

@@ -4,32 +4,43 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Server;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AntiGuest extends JavaPlugin
 {
+    private static AntiGuest instance = null;
     public static final HashMap<String, Prevention> preventions = new HashMap<String, Prevention>();
 
-    protected Logger logger = null;
-    public static boolean debugMode = false;
-    public final static int messageWaitTime = 3000;
+    private Logger logger = null;
+    public boolean debugMode = false;
+//    public final static int messageWaitTime = 3000;
     
-    protected Server server;
-    protected PluginManager pm;
+    private PluginManager pm;
     protected Configuration config;
     protected File dataFolder;
     public int chatLockDuration;
     public boolean vehiclesIgnoreBuildPermissions;
 
+    public AntiGuest()
+    {
+        instance = this;
+    }
+
+    public static AntiGuest getInstance()
+    {
+        return instance;
+    }
+
     public void onEnable()
     {
-        logger = this.getLogger();
-        this.server = this.getServer();
-        this.pm = this.server.getPluginManager();
+        this.logger = this.getLogger();
+        this.pm = this.getServer().getPluginManager();
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
         this.config = this.getConfig();
@@ -39,10 +50,10 @@ public class AntiGuest extends JavaPlugin
 
         this.saveConfig();
 
-        this.pm.registerEvents(new AntiGuestInteractionListener(this), this);
-        this.pm.registerEvents(new AntiGuestBlockListener(this), this);
-        this.pm.registerEvents(new AntiGuestPlayerListener(this), this);
-        this.pm.registerEvents(new AntiGuestVehicleListener(this), this);
+        this.pm.registerEvents(new AntiGuestInteractionListener(), this);
+        this.pm.registerEvents(new AntiGuestBlockListener(), this);
+        this.pm.registerEvents(new AntiGuestPlayerListener(), this);
+        this.pm.registerEvents(new AntiGuestVehicleListener(), this);
 
         log("Version " + this.getDescription().getVersion() + " enabled");
     }
@@ -60,20 +71,24 @@ public class AntiGuest extends JavaPlugin
         if (preventionsSection != null)
         {
             Prevention prevention;
+            String message;
+            Integer messageDelay;
             for (String key : preventionsSection.getKeys(false))
             {
                 ConfigurationSection preventionSection = preventionsSection.getConfigurationSection(key);
 
                 if (preventionSection.getBoolean("enable"))
                 {
-                    prevention = new Prevention(key, preventionSection.getString("message").replaceAll("&([a-f0-9])", "\u00A7$1"));
-                    this.preventions.put(prevention.name, prevention);
+                    messageDelay = preventionSection.getInt("messageDelay", -1);
+                    message = preventionSection.getString("message", "").replaceAll("&([a-f0-9])", "\u00A7$1");
+                    prevention = new Prevention(key, key, message, messageDelay);
+                    this.pm.addPermission(new Permission(prevention.getPermission(), PermissionDefault.OP));
+                    this.preventions.put(prevention.getName(), prevention);
                 }
             }
         }
 
         //special values
-        this.vehiclesIgnoreBuildPermissions = this.config.getBoolean("preventions.vehicle.ignoreBuildPermissions");
         this.chatLockDuration               = this.config.getInt("preventions.spam.lockDuration");
     }
 
@@ -94,7 +109,7 @@ public class AntiGuest extends JavaPlugin
 
     public void debug(String msg)
     {
-        if (debugMode)
+        if (this.debugMode)
         {
             this.log("[debug] " + msg);
         }

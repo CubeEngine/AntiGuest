@@ -1,7 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
-import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,11 +14,11 @@ import org.bukkit.event.player.*;
  *
  * @author CodeInfection
  */
-public class AntiGuestPlayerListener extends AbstractAntiGuestListener implements Listener
+public class AntiGuestPlayerListener implements Listener
 {
     private static final HashMap<Player, Long> chatTimestamps    = new HashMap<Player, Long>();
-    private static final HashMap<Player, Long> pickupTimestamps  = new HashMap<Player, Long>();
-    private static final HashMap<Player, Long> monsterTimestamps = new HashMap<Player, Long>();
+//    private static final HashMap<Player, Long> pickupTimestamps  = new HashMap<Player, Long>();
+//    private static final HashMap<Player, Long> monsterTimestamps = new HashMap<Player, Long>();
 
 
     private final static Prevention monsterPrev     = AntiGuest.preventions.get("monster");
@@ -38,36 +37,31 @@ public class AntiGuestPlayerListener extends AbstractAntiGuestListener implement
     private final static Prevention hungerPrev      = AntiGuest.preventions.get("hunger");
 
 
-    public AntiGuestPlayerListener(AntiGuest plugin)
-    {
-        super(plugin);
-    }
+//    protected void noMonsterTargetingMessage(Player player)
+//    {
+//        Long lastTime = monsterTimestamps.get(player);
+//        long currentTime = System.currentTimeMillis();
+//        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
+//        {
+//            monsterPrev.sendMessage(player);
+//            monsterTimestamps.put(player, currentTime);
+//        }
+//    }
 
-    protected void noMonsterTargetingMessage(Player player)
-    {
-        Long lastTime = monsterTimestamps.get(player);
-        long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-        {
-            sendMessage(player, monsterPrev);
-            monsterTimestamps.put(player, currentTime);
-        }
-    }
-
-    private void noPickupMessage(Player player)
-    {
-        Long lastTime = this.pickupTimestamps.get(player);
-        long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-        {
-            sendMessage(player, pickupPrev);
-            this.pickupTimestamps.put(player, currentTime);
-        }
-    }
+//    private void noPickupMessage(Player player)
+//    {
+//        Long lastTime = this.pickupTimestamps.get(player);
+//        long currentTime = System.currentTimeMillis();
+//        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
+//        {
+//            pickupPrev.sendMessage(player);
+//            this.pickupTimestamps.put(player, currentTime);
+//        }
+//    }
 
     private boolean isPlayerChatLocked(Player player)
     {
-        if (can(player, spamPrev))
+        if (spamPrev.can(player))
         {
             return false;
         }
@@ -75,7 +69,7 @@ public class AntiGuestPlayerListener extends AbstractAntiGuestListener implement
         {
             Long lastTime = this.chatTimestamps.get(player);
             long currentTime = System.currentTimeMillis();
-            if (lastTime == null || lastTime + (getPlugin().chatLockDuration * 1000) < currentTime)
+            if (lastTime == null || lastTime + (AntiGuest.getInstance().chatLockDuration * 1000) < currentTime)
             {
                 this.chatTimestamps.put(player, currentTime);
                 return false;
@@ -87,31 +81,32 @@ public class AntiGuestPlayerListener extends AbstractAntiGuestListener implement
         }
     }
 
-    @EventHandler( event=PlayerPickupItemEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerPickupItem(PlayerPickupItemEvent event)
     {
         if (pickupPrev == null) return;
+        
         final Player player = event.getPlayer();
-        if (!can(player, pickupPrev))
+        if (!pickupPrev.can(player))
         {
             event.setCancelled(true);
-            this.noPickupMessage(player);
+            pickupPrev.sendThrottledMessage(player);
         }
     }
 
-    @EventHandler( event=PlayerChatEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerChat(PlayerChatEvent event)
     {
         if (chatPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, chatPrev))
+        if (!chatPrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, chatPrev);
+            chatPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=PlayerChatEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerSpam(PlayerChatEvent event)
     {
         if (spamPrev == null) return;
@@ -119,155 +114,137 @@ public class AntiGuestPlayerListener extends AbstractAntiGuestListener implement
         if (this.isPlayerChatLocked(player))
         {
             event.setCancelled(true);
-            sendMessage(player, spamPrev);
+            spamPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=PlayerBucketFillEvent.class, priority=EventPriority.LOWEST )
+    private void handleBucketEvent(final PlayerBucketEvent event)
+    {
+        Prevention prevention;
+        switch (event.getBucket())
+        {
+            case LAVA_BUCKET:
+                prevention = lavabucketPrev;
+                break;
+            case WATER_BUCKET:
+                prevention = waterbucketPrev;
+                break;
+            default:
+                AntiGuest.getInstance().log("Unknown bucket!");
+                return;
+        }
+
+        if (prevention == null) return;
+
+        final Player player = event.getPlayer();
+        if (!prevention.can(player))
+        {
+            event.setCancelled(true);
+            prevention.sendMessage(player);
+        }
+    }
+
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
-        final Player player = event.getPlayer();
-        final Material bucket = event.getBucket();
-        Prevention prevention;
-
-        switch (bucket)
-        {
-            case LAVA_BUCKET:
-                prevention = lavabucketPrev;
-                break;
-            case WATER_BUCKET:
-                prevention = waterbucketPrev;
-                break;
-            default:
-                getPlugin().log("Unknown bucket given to PlayerBucketFillEvent:" + bucket.toString());
-                return;
-        }
-
-        if (prevention == null) return;
-        if (!can(player, prevention))
-        {
-            event.setCancelled(true);
-            sendMessage(player, prevention);
-        }
+        this.handleBucketEvent(event);
     }
 
-    @EventHandler( event=PlayerBucketEmptyEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
     {
-        final Player player = event.getPlayer();
-        final Material bucket = event.getBucket();
-        Prevention prevention;
-
-        switch (bucket)
-        {
-            case LAVA_BUCKET:
-                prevention = lavabucketPrev;
-                break;
-            case WATER_BUCKET:
-                prevention = waterbucketPrev;
-                break;
-            default:
-                getPlugin().log("Unknown bucket given to PlayerBucketEmptyEvent:" + bucket.toString());
-                return;
-        }
-
-        if (prevention == null) return;
-        if (!can(player, prevention))
-        {
-            event.setCancelled(true);
-            sendMessage(player, prevention);
-        }
+        this.handleBucketEvent(event);
     }
 
-    @EventHandler( event=PlayerDropItemEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerDropItem(PlayerDropItemEvent event)
     {
         if (dropPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, dropPrev))
+        if (!dropPrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, dropPrev);
+            dropPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=PlayerBedEnterEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerBedEnter(PlayerBedEnterEvent event)
     {
         if (bedPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, bedPrev))
+        if (bedPrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, bedPrev);
+            bedPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=PlayerFishEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerFish(PlayerFishEvent event)
     {
         if (fishPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, fishPrev))
+        if (!fishPrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, fishPrev);
+            fishPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=PlayerToggleSneakEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
     {
         if (sneakPrev == null) return;
         final Player player = event.getPlayer();
         if (!event.isSneaking())
         {
-            if (!can(player, sneakPrev))
+            if (!sneakPrev.can(player))
             {
-                getPlugin().debug("SneakEvent triggered!");
+                AntiGuest.getInstance().debug("SneakEvent triggered!");
                 for (StackTraceElement elem : Thread.currentThread().getStackTrace())
                 {
-                    getPlugin().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
+                    AntiGuest.getInstance().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
                 }
                 event.setCancelled(true);
-                sendMessage(player, sneakPrev);
+                sneakPrev.sendMessage(player);
             }
         }
     }
 
-    @EventHandler( event=PlayerToggleSprintEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerToggleSprint(PlayerToggleSprintEvent event)
     {
         if (sprintPrev == null) return;
         final Player player = event.getPlayer();
         if (!event.isSprinting())
         {
-            if (!can(player, sprintPrev))
+            if (!sprintPrev.can(player))
             {
-                getPlugin().debug("SprintEvent triggered!");
+                AntiGuest.getInstance().debug("SprintEvent triggered!");
                 for (StackTraceElement elem : Thread.currentThread().getStackTrace())
                 {
-                    getPlugin().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
+                    AntiGuest.getInstance().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
                 }
                 event.setCancelled(true);
-                sendMessage(player, sprintPrev);
+                sprintPrev.sendMessage(player);
             }
         }
     }
 
-    @EventHandler( event=PlayerMoveEvent.class, priority=EventPriority.LOWEST )
+    //@EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerMove(PlayerMoveEvent event)
     {
         if (movePrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, movePrev))
+        if (!movePrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, movePrev);
+            movePrev.sendThrottledMessage(player);
         }
     }
 
-    @EventHandler( event=EntityDamageEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onEntityDamage(EntityDamageEvent event)
     {
         Prevention prevention = null;
@@ -299,14 +276,14 @@ public class AntiGuestPlayerListener extends AbstractAntiGuestListener implement
             }
         }
         
-        if (prevention != null && player != null && !can(player, prevention))
+        if (prevention != null && player != null && !prevention.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, prevention);
+            prevention.sendMessage(player);
         }
     }
 
-    @EventHandler( event=EntityTargetEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onEntityTarget(EntityTargetEvent event)
     {
         if (monsterPrev == null) return;
@@ -314,10 +291,10 @@ public class AntiGuestPlayerListener extends AbstractAntiGuestListener implement
         if (event.getEntity() instanceof Monster && targetEntity != null && targetEntity instanceof Player)
         {
             final Player player = (Player)targetEntity;
-            if (!can(player, monsterPrev))
+            if (!monsterPrev.can(player))
             {
                 event.setCancelled(true);
-                this.noMonsterTargetingMessage(player);
+                monsterPrev.sendThrottledMessage(player);
             }
         }
     }

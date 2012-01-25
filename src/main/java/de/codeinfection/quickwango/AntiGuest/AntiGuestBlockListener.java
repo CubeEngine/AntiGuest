@@ -15,53 +15,48 @@ import org.bukkit.event.painting.PaintingPlaceEvent;
  *
  * @author CodeInfection
  */
-public class AntiGuestBlockListener extends AbstractAntiGuestListener implements Listener
+public class AntiGuestBlockListener implements Listener
 {
     private final static Prevention placeblockPrev = AntiGuest.preventions.get("placeblock");
     private final static Prevention breakblockPrev = AntiGuest.preventions.get("breakblock");
 
-    public AntiGuestBlockListener(AntiGuest plugin)
-    {
-        super(plugin);
-    }
-
-    @EventHandler( event=BlockPlaceEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onBlockPlace(BlockPlaceEvent event)
     {
         if (placeblockPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, placeblockPrev))
+        if (!placeblockPrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, placeblockPrev);
+            placeblockPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=BlockBreakEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onBlockBreak(BlockBreakEvent event)
     {
         if (breakblockPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, breakblockPrev))
+        if (!breakblockPrev.can(player))
         {
             event.setCancelled(true);
-            sendMessage(player, breakblockPrev);
+            breakblockPrev.sendMessage(player);
         }
     }
 
-    @EventHandler( event=PaintingPlaceEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
         if (placeblockPrev == null) return;
         final Player player = event.getPlayer();
-        if (!can(player, placeblockPrev))
+        if (!placeblockPrev.can(player))
         {
-            sendMessage(player, placeblockPrev);
+            placeblockPrev.sendMessage(player);
             event.setCancelled(true);
         }
     }
 
-    @EventHandler( event=PaintingBreakEvent.class, priority=EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void onPaintingBreak(PaintingBreakEvent event)
     {
         if (breakblockPrev == null) return;
@@ -71,10 +66,10 @@ public class AntiGuestBlockListener extends AbstractAntiGuestListener implements
             if (remover instanceof Player)
             {
                 final Player player = (Player)remover;
-                if (!can(player, breakblockPrev))
+                if (!breakblockPrev.can(player))
                 {
                     event.setCancelled(true);
-                    sendMessage(player, breakblockPrev);
+                    breakblockPrev.sendMessage(player);
                 }
             }
         }

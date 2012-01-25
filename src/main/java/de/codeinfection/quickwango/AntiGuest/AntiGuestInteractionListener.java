@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -14,27 +14,22 @@ import org.bukkit.event.player.PlayerInteractEvent;
  *
  * @author CodeInfection
  */
-public class AntiGuestInteractionListener extends AbstractAntiGuestListener implements Listener
+public class AntiGuestInteractionListener implements Listener
 {
-    private static final HashMap<Player, Long> pressureTimestamps = new HashMap<Player, Long>();
+//    private static final HashMap<Player, Long> pressureTimestamps = new HashMap<Player, Long>();
 
-    public AntiGuestInteractionListener(AntiGuest plugin)
-    {
-        super(plugin);
-    }
-
-    private void pressureMessage(Player player)
-    {
-        Long lastTime = pressureTimestamps.get(player);
-        long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-        {
-            sendMessage(player, "pressureplate");
-            pressureTimestamps.put(player, currentTime);
-        }
-    }
+//    private void pressureMessage(Player player)
+//    {
+//        Long lastTime = pressureTimestamps.get(player);
+//        long currentTime = System.currentTimeMillis();
+//        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
+//        {
+//            sendMessage(player, "pressureplate");
+//            pressureTimestamps.put(player, currentTime);
+//        }
+//    }
     
-    private String handleRightOrLeftClick(final Player player, final Material interacted, final Material inHand, final PlayerInteractEvent event)
+    private String handleRightOrLeftClick(final Material interacted, final Material inHand)
     {
         switch (interacted)
         {
@@ -58,7 +53,7 @@ public class AntiGuestInteractionListener extends AbstractAntiGuestListener impl
         }
     }
 
-    private String handleRightClick(final Player player, final Material interacted, final Material inHand, final PlayerInteractEvent event)
+    private String handleRightClick(final Material interacted, final Material inHand)
     {
         switch (interacted)
         {
@@ -122,7 +117,7 @@ public class AntiGuestInteractionListener extends AbstractAntiGuestListener impl
         }
     }
 
-    private String handlePhysical(final Player player, final Material interacted, final Material inHand, final PlayerInteractEvent event)
+    private String handlePhysical(final Material interacted, final Material inHand)
     {
         switch (interacted)
         {
@@ -135,7 +130,7 @@ public class AntiGuestInteractionListener extends AbstractAntiGuestListener impl
         }
     }
 
-    @EventHandler( event=PlayerInteractEvent.class, priority= EventPriority.LOWEST )
+    @EventHandler( priority=EventPriority.LOWEST )
     public void handleInteraction(PlayerInteractEvent event)
     {
         final Player player = event.getPlayer();
@@ -149,28 +144,34 @@ public class AntiGuestInteractionListener extends AbstractAntiGuestListener impl
         Material itemInHand = player.getItemInHand().getType();
         String prevName = null;
 
-        getPlugin().debug("Player interacted with " + material.toString());
-
+        AntiGuest.getInstance().debug("Player interacted with " + material.toString() + " holding a " + String.valueOf(itemInHand));
         if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
         {
-            prevName = this.handleRightOrLeftClick(player, itemInHand, itemInHand, event);
+            prevName = this.handleRightOrLeftClick(itemInHand, itemInHand);
         }
         else if (action == Action.RIGHT_CLICK_BLOCK)
         {
-            prevName = this.handleRightClick(player, material, itemInHand, event);
+            prevName = this.handleRightClick(material, itemInHand);
         }
         else if (action == Action.PHYSICAL)
         {
-            prevName = this.handlePhysical(player, material, itemInHand, event);
+            prevName = this.handlePhysical(material, itemInHand);
         }
 
 
         Prevention prev = AntiGuest.preventions.get(prevName);
         if (prev != null)
         {
-            if (!can(player, prev))
+            if (!prev.can(player))
             {
-                sendMessage(player, prev);
+                if (prev.getMessageDelay() > 0)
+                {
+                    prev.sendThrottledMessage(player);
+                }
+                else
+                {
+                    prev.sendMessage(player);
+                }
                 event.setCancelled(true);
             }
         }
