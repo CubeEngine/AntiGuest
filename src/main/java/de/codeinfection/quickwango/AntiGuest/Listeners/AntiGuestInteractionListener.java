@@ -1,6 +1,9 @@
-package de.codeinfection.quickwango.AntiGuest;
+package de.codeinfection.quickwango.AntiGuest.Listeners;
 
 //import java.util.HashMap;
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.Preventions.ItemPrevention;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -16,25 +19,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class AntiGuestInteractionListener implements Listener
 {
-//    private static final HashMap<Player, Long> pressureTimestamps = new HashMap<Player, Long>();
-
-//    private void pressureMessage(Player player)
-//    {
-//        Long lastTime = pressureTimestamps.get(player);
-//        long currentTime = System.currentTimeMillis();
-//        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-//        {
-//            sendMessage(player, "pressureplate");
-//            pressureTimestamps.put(player, currentTime);
-//        }
-//    }
-    
     private String handleRightOrLeftClick(final Material interacted, final Material inHand)
     {
         switch (interacted)
         {
             case WOODEN_DOOR:
             case IRON_DOOR:
+            case IRON_DOOR_BLOCK:
             case TRAP_DOOR:
             case FENCE_GATE:
                 return "door";
@@ -133,35 +124,53 @@ public class AntiGuestInteractionListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void handleInteraction(PlayerInteractEvent event)
     {
+        if (event.isCancelled()) return;
+
         final Player player = event.getPlayer();
         Action action = event.getAction();
+        Material itemInHand = player.getItemInHand().getType();
+
+        if (itemInHand != Material.AIR && action != Action.PHYSICAL)
+        {
+            ItemPrevention itemPrev = (ItemPrevention)AntiGuest.preventions.get("itemusage");
+            if (itemPrev != null && !itemPrev.canUse(player, itemInHand))
+            {
+                itemPrev.sendMessage(player);
+                event.setCancelled(true);
+                return;
+            }
+        }
+
         Block block = event.getClickedBlock();
         if (block == null)
         {
             return;
         }
-        Material material = block.getType();
-        Material itemInHand = player.getItemInHand().getType();
+        Material interacted = block.getType();
         String prevName = null;
 
-        AntiGuest.getInstance().debug("Player interacted with " + material.toString() + " holding a " + String.valueOf(itemInHand));
+        AntiGuest.getInstance().debug("Player interacted with " + interacted.toString() + " holding a " + String.valueOf(itemInHand));
         if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
         {
-            prevName = this.handleRightOrLeftClick(itemInHand, itemInHand);
+            prevName = this.handleRightOrLeftClick(interacted, itemInHand);
         }
-        else if (action == Action.RIGHT_CLICK_BLOCK)
+        
+        if (prevName == null && action == Action.RIGHT_CLICK_BLOCK)
         {
-            prevName = this.handleRightClick(material, itemInHand);
+            prevName = this.handleRightClick(interacted, itemInHand);
         }
-        else if (action == Action.PHYSICAL)
+        
+        if (prevName == null && action == Action.PHYSICAL)
         {
-            prevName = this.handlePhysical(material, itemInHand);
+            prevName = this.handlePhysical(interacted, itemInHand);
         }
 
 
         Prevention prev = AntiGuest.preventions.get(prevName);
+        AntiGuest.getInstance().debug("Selected prevention: " + String.valueOf(prev));
         if (prev != null)
         {
+            AntiGuest.getInstance().debug("Player " + player.getName() + " is " + (prev.can(player) ? "" : "not") + " allowed to " + prev.getName());
             if (!prev.can(player))
             {
                 if (prev.getMessageDelay() > 0)

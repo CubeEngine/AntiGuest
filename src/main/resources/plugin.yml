@@ -4,96 +4,94 @@ version: "${project.version}"
 authors:
   - "Quick_Wango"
 description: "Prevents guests from griefing."
-website: "http://mc-portal.de"
-softdepend:
-  - Permissions
+website: "http://parallel-universe.de"
 permissions:
-  AntiGuest.*:
+  antiguest.*:
     description: "Allows the player to do everything"
     default: op
     children:
-      AntiGuest.preventions.*: true
-      AntiGuest.commands.*: true
-  AntiGuest.preventions.*:
+      antiguest.preventions.*: true
+      antiguest.commands.*: true
+  antiguest.preventions.*:
     description: "Allows the player to pass every prevention"
     default: op
     children:
-      AntiGuest.preventions.actions.*: true
-      AntiGuest.preventions.items.*: true
-  AntiGuest.preventions.actions.*:
+      antiguest.preventions.actions.*: true
+      antiguest.preventions.items.*: true
+  antiguest.preventions.actions.*:
     description: "Allows the player to do all prevented actions"
     default: op
     children:
-      AntiGuest.build: true
-      AntiGuest.interact: true
-      AntiGuest.craft: true
-      AntiGuest.fight: true
-      AntiGuest.item: true
-      AntiGuest.vehicle: true
-      AntiGuest.spam: true
-      AntiGuest.chat: true
-      AntiGuest.music: true
-  AntiGuest.preventions.items.*:
+      antiguest.preventions.actions.build: true
+      antiguest.preventions.actions.interact: true
+      antiguest.preventions.actions.craft: true
+      antiguest.preventions.actions.fight: true
+      antiguest.preventions.actions.item: true
+      antiguest.preventions.actions.vehicle: true
+      antiguest.preventions.actions.spam: true
+      antiguest.preventions.actions.chat: true
+      antiguest.preventions.actions.music: true
+  antiguest.preventions.items.*:
     description: "Allows the player to use all items"
     default: op
-  AntiGuest.build:
+  antiguest.preventions.actions.build:
     description: "Allows the player to build"
     default: op
     children:
-      AntiGuest.placeblock: true
-      AntiGuest.breakblock: true
-  AntiGuest.craft:
+      antiguest.preventions.actions.placeblock: true
+      antiguest.preventions.actions.breakblock: true
+  antiguest.preventions.actions.craft:
     description: "Allows the player to do crafting related things"
     default: op
     children:
-      AntiGuest.furnace: true
-      AntiGuest.workbench: true
-      AntiGuest.dispenser: true
-      AntiGuest.chest: true
-      AntiGuest.inventory: true
-      AntiGuest.brew: true
-      AntiGuest.enchant: true
-  AntiGuest.interact:
+      antiguest.preventions.actions.furnace: true
+      antiguest.preventions.actions.workbench: true
+      antiguest.preventions.actions.dispenser: true
+      antiguest.preventions.actions.chest: true
+      antiguest.preventions.actions.inventory: true
+      antiguest.preventions.actions.brew: true
+      antiguest.preventions.actions.enchant: true
+  antiguest.interact:
     description: "Allows the player to interact with the world"
     default: op
     children:
-      AntiGuest.lever: true
-      AntiGuest.button: true
-      AntiGuest.door: true
-      AntiGuest.bed: true
-      AntiGuest.fish: true
-      AntiGuest.bucket: true
-      AntiGuest.cake: true
-      AntiGuest.pressureplate: true
-      AntiGuest.repeater: true
-  AntiGuest.item:
+      antiguest.preventions.actions.lever: true
+      antiguest.preventions.actions.button: true
+      antiguest.preventions.actions.door: true
+      antiguest.preventions.actions.bed: true
+      antiguest.preventions.actions.fish: true
+      antiguest.preventions.actions.bucket: true
+      antiguest.preventions.actions.cake: true
+      antiguest.preventions.actions.pressureplate: true
+      antiguest.preventions.actions.repeater: true
+  antiguest.preventions.actions.item:
     description: "Allows the player to do item related things"
     default: op
     children:
-      AntiGuest.pickup: true
-      AntiGuest.drop: true
-  AntiGuest.fight:
+      antiguest.preventions.actions.pickup: true
+      antiguest.preventions.actions.drop: true
+  antiguest.preventions.actions.fight:
     description: "Allows the player to fight"
     default: op
     children:
-      AntiGuest.pvp: true
-      AntiGuest.monster: true
-  AntiGuest.movement:
+      antiguest.pvp: true
+      antiguest.monster: true
+  antiguest.preventions.actions.movement:
     description: "Allows the player to move as he wants"
     default: op
     children:
-      AntiGuest.sneak: true
-      AntiGuest.sprint: true
-      AntiGuest.move: true
-  AntiGuest.music:
+      antiguest.preventions.actions.sneak: true
+      antiguest.preventions.actions.sprint: true
+      antiguest.preventions.actions.move: true
+  antiguest.preventions.actions.music:
     description: "Allows the player to do music related things"
     default: op
     children:
-      AntiGuest.noteblock: true
-      AntiGuest.jukebox: true
-  AntiGuest.bucket:
+      antiguest.preventions.actions.noteblock: true
+      antiguest.preventions.actions.jukebox: true
+  antiguest.bucket:
     description: "Allows the player to use buckets"
     default: op
     children:
-      AntiGuest.lavabucket: true
-      AntiGuest.waterbucket: true
+      antiguest.preventions.actions.lavabucket: true
+      antiguest.preventions.actions.waterbucket: true

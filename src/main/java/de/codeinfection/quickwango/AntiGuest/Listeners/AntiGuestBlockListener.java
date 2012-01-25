@@ -1,5 +1,7 @@
-package de.codeinfection.quickwango.AntiGuest;
+package de.codeinfection.quickwango.AntiGuest.Listeners;
 
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,7 +25,8 @@ public class AntiGuestBlockListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onBlockPlace(BlockPlaceEvent event)
     {
-        if (placeblockPrev == null) return;
+        if (event.isCancelled() || placeblockPrev == null) return;
+        
         final Player player = event.getPlayer();
         if (!placeblockPrev.can(player))
         {
@@ -35,7 +38,8 @@ public class AntiGuestBlockListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onBlockBreak(BlockBreakEvent event)
     {
-        if (breakblockPrev == null) return;
+        if (event.isCancelled() || breakblockPrev == null) return;
+
         final Player player = event.getPlayer();
         if (!breakblockPrev.can(player))
         {
@@ -47,7 +51,8 @@ public class AntiGuestBlockListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
-        if (placeblockPrev == null) return;
+        if (event.isCancelled() || placeblockPrev == null) return;
+
         final Player player = event.getPlayer();
         if (!placeblockPrev.can(player))
         {
@@ -59,7 +64,8 @@ public class AntiGuestBlockListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPaintingBreak(PaintingBreakEvent event)
     {
-        if (breakblockPrev == null) return;
+        if (event.isCancelled() || breakblockPrev == null) return;
+
         if (event instanceof PaintingBreakByEntityEvent)
         {
             final Entity remover = ((PaintingBreakByEntityEvent)event).getRemover();

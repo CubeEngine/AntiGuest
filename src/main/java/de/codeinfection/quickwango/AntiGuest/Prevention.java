@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
  *
  * @author CodeInfection
  */
-public class Prevention
+public abstract class Prevention
 {
     private final String name;
     private final String permission;
@@ -16,28 +16,13 @@ public class Prevention
 
     private final HashMap<Player, Long> throttleTimestamps;
 
-    public Prevention(final String name, final String message)
-    {
-        this(name, name, message);
-    }
-
-    public Prevention(final String name, final String message, final int messageDelay)
-    {
-        this(name, "antiguest.preventions." + name.toLowerCase(), message, messageDelay);
-    }
-
-    public Prevention(final String name, final String permission, final String message)
-    {
-        this(name, name, message, -1);
-    }
-
     public Prevention(final String name, final String permission, final String message, final int messageDelay)
     {
         this.name = name;
         this.permission = permission;
         this.message = message;
-        this.throttleTimestamps = new HashMap<Player, Long>();
         this.messageDelay = messageDelay;
+        this.throttleTimestamps = new HashMap<Player, Long>(0);
     }
 
     public String getName()
@@ -73,12 +58,19 @@ public class Prevention
     public void sendThrottledMessage(final Player player, final int delay)
     {
         Long last = this.throttleTimestamps.get(player);
-        long current = System.currentTimeMillis();
+        last = (last == null ? 0 : last);
+        final long current = System.currentTimeMillis();
         
-        if (last == null || last + (delay * 1000) < current)
+        if (last + delay < current)
         {
             this.sendMessage(player);
             this.throttleTimestamps.put(player, current);
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
     }
 }

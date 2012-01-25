@@ -1,5 +1,7 @@
-package de.codeinfection.quickwango.AntiGuest;
+package de.codeinfection.quickwango.AntiGuest.Listeners;
 
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -22,6 +24,8 @@ public class AntiGuestVehicleListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleEnter(VehicleEnterEvent event)
     {
+        if (event.isCancelled() || vehiclePrev != null) return;
+
         Entity entity = event.getEntered();
         if (entity instanceof Player)
         {
@@ -37,6 +41,8 @@ public class AntiGuestVehicleListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleExit(VehicleExitEvent event)
     {
+        if (event.isCancelled() || vehiclePrev != null) return;
+
         LivingEntity entity = event.getExited();
         if (entity instanceof Player)
         {
@@ -52,6 +58,8 @@ public class AntiGuestVehicleListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleDestroy(VehicleDestroyEvent event)
     {
+        if (event.isCancelled() || vehiclePrev != null) return;
+
         Entity entity = event.getAttacker();
         if (entity instanceof Player)
         {
@@ -67,6 +75,8 @@ public class AntiGuestVehicleListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event)
     {
+        if (event.isCancelled() || vehiclePrev != null) return;
+        
         Entity entity = event.getEntity();
         if (entity instanceof Player)
         {

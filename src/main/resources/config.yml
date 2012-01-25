@@ -1,99 +1,106 @@
 debug: false
 preventions:
-    drop:
-        message: '&4You are not allowed to drop items!'
-        enable: false
-    fish:
-        message: '&4You are not allowed to fish!'
-        enable: false
-    lavabucket:
-        message: '&4You are not allowed to use lava buckets'
-        enable: true
-    waterbucket:
-        message: '&4You are not allowed to use water buckets'
-        enable: true
-    vehicle:
-        message: '&4You are not allowed to use vehicles!'
-        enable: true
-    chest:
-        message: '&4You are not allowed to use chests'
-        enable: true
-    door:
-        message: '&4You are not allowed to interact with doors!'
-        enable: true
-    chat:
-        message: '&4You are not allowed to chat!'
-        enable: false
-    button:
-        message: '&4You are not allowed to push buttons!'
-        enable: false
-    furnace:
-        message: '&4You are not allowed to cook!'
-        enable: false
-    dispenser:
-        message: '&4You are not allowed to dispense!'
-        enable: false
-    workbench:
-        message: '&4You are not allowed to craft!'
-        enable: false
-    sprint:
-        message: '&4You are not allowed to sprint!'
-        enable: false
-    breakblock:
-        message: '&4You are not allowed to break blocks!'
-        enable: true
-    lever:
-        message: '&4You are not allowed to use levers!'
-        enable: false
-    #move:
-    #    message: '&4You are not allowed to move!'
-    #    enable: false
-    placeblock:
-        message: '&4You are not allowed to place blocks!'
-        enable: true
-    cake:
-        message: '&4The cake is a lie!!'
-        enable: false
-    monster:
-        message: '&4You are not allowed to get targeted by monsters!'
-        messageDelay: 3
-        enable: true
-    pvp:
-        message: '&4You are not allowed to fight!'
-        enable: true
-    pickup:
-        message: '&4You are not allowed to pickup items!'
-        messageDelay: 3
-        enable: true
-    bed:
-        message: '&4You are not allowed to sleep!'
-        enable: false
-    pressureplate:
-        message: '&4You are not allowed to pressure the plate!'
-        messageDelay: 3
-        enable: false
-    hunger:
-        message:
-        enable: false
-    spam:
-        message: '&4Don''t spam the chat!'
-        enable: true
-        lockDuration: 2
-    sneak:
-        message: '&4You are not allowed to sneak!'
-        enable: false
-    brew:
-        message: '&4You are not allowed to brew!'
-        enable: false
-    enchant:
-        message: '&4You are not allowed to enchant!'
-        enable: false
-    repeater:
-        message: '&4You are not allowed to change repeater delays!'
-        enable: true
-    noteblock:
-        message: '&4You are not allowed to make music!'
-        enable: false
-    jukebox:
-        message: '&4You are not allowed to play music!'
-        enable: false
+    actions:
+        drop:
+            message: '&4You are not allowed to drop items!'
+            enable: false
+        fish:
+            message: '&4You are not allowed to fish!'
+            enable: false
+        lavabucket:
+            message: '&4You are not allowed to use lava buckets'
+            enable: true
+        waterbucket:
+            message: '&4You are not allowed to use water buckets'
+            enable: true
+        vehicle:
+            message: '&4You are not allowed to use vehicles!'
+            enable: true
+        chest:
+            message: '&4You are not allowed to use chests'
+            enable: true
+        door:
+            message: '&4You are not allowed to interact with doors!'
+            enable: true
+        chat:
+            message: '&4You are not allowed to chat!'
+            enable: false
+        button:
+            message: '&4You are not allowed to push buttons!'
+            enable: false
+        furnace:
+            message: '&4You are not allowed to cook!'
+            enable: false
+        dispenser:
+            message: '&4You are not allowed to dispense!'
+            enable: false
+        workbench:
+            message: '&4You are not allowed to craft!'
+            enable: false
+        sprint:
+            message: '&4You are not allowed to sprint!'
+            enable: false
+        breakblock:
+            message: '&4You are not allowed to break blocks!'
+            enable: true
+        lever:
+            message: '&4You are not allowed to use levers!'
+            enable: false
+        move:
+            message: '&4You are not allowed to move!'
+            enable: false
+            radius: 5
+        placeblock:
+            message: '&4You are not allowed to place blocks!'
+            enable: true
+        cake:
+            message: '&4The cake is a lie!!'
+            enable: false
+        monster:
+            message: '&4You are not allowed to get targeted by monsters!'
+            messageDelay: 3
+            enable: true
+        pvp:
+            message: '&4You are not allowed to fight!'
+            enable: true
+        pickup:
+            message: '&4You are not allowed to pickup items!'
+            messageDelay: 3
+            enable: true
+        bed:
+            message: '&4You are not allowed to sleep!'
+            enable: false
+        pressureplate:
+            message: '&4You are not allowed to pressure the plate!'
+            messageDelay: 3
+            enable: false
+        hunger:
+            message:
+            enable: false
+        spam:
+            message: '&4Don''t spam the chat!'
+            enable: true
+            lockDuration: 2
+        sneak:
+            message: '&4You are not allowed to sneak!'
+            enable: false
+        brew:
+            message: '&4You are not allowed to brew!'
+            enable: false
+        enchant:
+            message: '&4You are not allowed to enchant!'
+            enable: false
+        repeater:
+            message: '&4You are not allowed to change repeater delays!'
+            enable: true
+        noteblock:
+            message: '&4You are not allowed to make music!'
+            enable: false
+        jukebox:
+            message: '&4You are not allowed to play music!'
+            enable: false
+    items:
+        enabled: false
+        message: '&4You are not allowed to use this item!'
+        items:
+          - "diamond sword"

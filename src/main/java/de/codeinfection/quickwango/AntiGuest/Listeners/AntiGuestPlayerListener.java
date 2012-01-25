@@ -1,5 +1,7 @@
-package de.codeinfection.quickwango.AntiGuest;
+package de.codeinfection.quickwango.AntiGuest.Listeners;
 
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.Prevention;
 import java.util.HashMap;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -17,16 +19,11 @@ import org.bukkit.event.player.*;
 public class AntiGuestPlayerListener implements Listener
 {
     private static final HashMap<Player, Long> chatTimestamps    = new HashMap<Player, Long>();
-//    private static final HashMap<Player, Long> pickupTimestamps  = new HashMap<Player, Long>();
-//    private static final HashMap<Player, Long> monsterTimestamps = new HashMap<Player, Long>();
 
 
     private final static Prevention monsterPrev     = AntiGuest.preventions.get("monster");
     private final static Prevention chatPrev        = AntiGuest.preventions.get("chat");
     private final static Prevention spamPrev        = AntiGuest.preventions.get("spam");
-    private final static Prevention movePrev        = AntiGuest.preventions.get("move");
-    private final static Prevention sneakPrev       = AntiGuest.preventions.get("sneak");
-    private final static Prevention sprintPrev      = AntiGuest.preventions.get("sprint");
     private final static Prevention fishPrev        = AntiGuest.preventions.get("fish");
     private final static Prevention pickupPrev      = AntiGuest.preventions.get("pickup");
     private final static Prevention dropPrev        = AntiGuest.preventions.get("drop");
@@ -35,29 +32,6 @@ public class AntiGuestPlayerListener implements Listener
     private final static Prevention bedPrev         = AntiGuest.preventions.get("bed");
     private final static Prevention pvpPrev         = AntiGuest.preventions.get("pvp");
     private final static Prevention hungerPrev      = AntiGuest.preventions.get("hunger");
-
-
-//    protected void noMonsterTargetingMessage(Player player)
-//    {
-//        Long lastTime = monsterTimestamps.get(player);
-//        long currentTime = System.currentTimeMillis();
-//        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-//        {
-//            monsterPrev.sendMessage(player);
-//            monsterTimestamps.put(player, currentTime);
-//        }
-//    }
-
-//    private void noPickupMessage(Player player)
-//    {
-//        Long lastTime = this.pickupTimestamps.get(player);
-//        long currentTime = System.currentTimeMillis();
-//        if (lastTime == null || lastTime + AntiGuest.messageWaitTime < currentTime)
-//        {
-//            pickupPrev.sendMessage(player);
-//            this.pickupTimestamps.put(player, currentTime);
-//        }
-//    }
 
     private boolean isPlayerChatLocked(Player player)
     {
@@ -84,7 +58,7 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerPickupItem(PlayerPickupItemEvent event)
     {
-        if (pickupPrev == null) return;
+        if (event.isCancelled() || pickupPrev == null) return;
         
         final Player player = event.getPlayer();
         if (!pickupPrev.can(player))
@@ -97,7 +71,8 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerChat(PlayerChatEvent event)
     {
-        if (chatPrev == null) return;
+        if (event.isCancelled() || chatPrev == null) return;
+
         final Player player = event.getPlayer();
         if (!chatPrev.can(player))
         {
@@ -109,7 +84,8 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerSpam(PlayerChatEvent event)
     {
-        if (spamPrev == null) return;
+        if (event.isCancelled() || spamPrev == null) return;
+
         final Player player = event.getPlayer();
         if (this.isPlayerChatLocked(player))
         {
@@ -120,6 +96,8 @@ public class AntiGuestPlayerListener implements Listener
 
     private void handleBucketEvent(final PlayerBucketEvent event)
     {
+        if (event.isCancelled()) return;
+
         Prevention prevention;
         switch (event.getBucket())
         {
@@ -159,7 +137,8 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerDropItem(PlayerDropItemEvent event)
     {
-        if (dropPrev == null) return;
+        if (event.isCancelled() || dropPrev == null) return;
+
         final Player player = event.getPlayer();
         if (!dropPrev.can(player))
         {
@@ -171,7 +150,8 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerBedEnter(PlayerBedEnterEvent event)
     {
-        if (bedPrev == null) return;
+        if (event.isCancelled() || bedPrev == null) return;
+
         final Player player = event.getPlayer();
         if (bedPrev.can(player))
         {
@@ -183,7 +163,8 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerFish(PlayerFishEvent event)
     {
-        if (fishPrev == null) return;
+        if (event.isCancelled() || fishPrev == null) return;
+
         final Player player = event.getPlayer();
         if (!fishPrev.can(player))
         {
@@ -193,60 +174,10 @@ public class AntiGuestPlayerListener implements Listener
     }
 
     @EventHandler( priority=EventPriority.LOWEST )
-    public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
-    {
-        if (sneakPrev == null) return;
-        final Player player = event.getPlayer();
-        if (!event.isSneaking())
-        {
-            if (!sneakPrev.can(player))
-            {
-                AntiGuest.getInstance().debug("SneakEvent triggered!");
-                for (StackTraceElement elem : Thread.currentThread().getStackTrace())
-                {
-                    AntiGuest.getInstance().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
-                }
-                event.setCancelled(true);
-                sneakPrev.sendMessage(player);
-            }
-        }
-    }
-
-    @EventHandler( priority=EventPriority.LOWEST )
-    public void onPlayerToggleSprint(PlayerToggleSprintEvent event)
-    {
-        if (sprintPrev == null) return;
-        final Player player = event.getPlayer();
-        if (!event.isSprinting())
-        {
-            if (!sprintPrev.can(player))
-            {
-                AntiGuest.getInstance().debug("SprintEvent triggered!");
-                for (StackTraceElement elem : Thread.currentThread().getStackTrace())
-                {
-                    AntiGuest.getInstance().debug("\t" + elem.getClassName() + "." + elem.getMethodName() + "() [" + elem.getFileName() + ":" + elem.getLineNumber() + "]");
-                }
-                event.setCancelled(true);
-                sprintPrev.sendMessage(player);
-            }
-        }
-    }
-
-    //@EventHandler( priority=EventPriority.LOWEST )
-    public void onPlayerMove(PlayerMoveEvent event)
-    {
-        if (movePrev == null) return;
-        final Player player = event.getPlayer();
-        if (!movePrev.can(player))
-        {
-            event.setCancelled(true);
-            movePrev.sendThrottledMessage(player);
-        }
-    }
-
-    @EventHandler( priority=EventPriority.LOWEST )
     public void onEntityDamage(EntityDamageEvent event)
     {
+        if (event.isCancelled()) return;
+        
         Prevention prevention = null;
         Player player = null;
         if (event.getCause() == EntityDamageEvent.DamageCause.STARVATION)
@@ -286,15 +217,16 @@ public class AntiGuestPlayerListener implements Listener
     @EventHandler( priority=EventPriority.LOWEST )
     public void onEntityTarget(EntityTargetEvent event)
     {
-        if (monsterPrev == null) return;
+        if (event.isCancelled() || monsterPrev == null) return;
+        
         Entity targetEntity = event.getTarget();
         if (event.getEntity() instanceof Monster && targetEntity != null && targetEntity instanceof Player)
         {
             final Player player = (Player)targetEntity;
             if (!monsterPrev.can(player))
             {
-                event.setCancelled(true);
                 monsterPrev.sendThrottledMessage(player);
+                event.setCancelled(true);
             }
         }
     }
