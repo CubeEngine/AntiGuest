@@ -49,6 +49,7 @@ preventions:
         move:
             message: '&4You are not allowed to move!'
             enable: false
+            messageDelay: 3
             radius: 5
         placeblock:
             message: '&4You are not allowed to place blocks!'
