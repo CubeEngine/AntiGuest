@@ -96,7 +96,7 @@ public class AntiGuest extends JavaPlugin
                     messageDelay = section.getInt("messageDelay", 0) * 1000;
                     message = parseChatColors(section.getString("message", ""));
                     prevention = new ActionPrevention(key, message, messageDelay, section);
-                    this.preventions.put(prevention.getName(), prevention);
+                    preventions.put(prevention.getName(), prevention);
                     debug("Loaded prevention: " + prevention.getName());
                     try
                     {
