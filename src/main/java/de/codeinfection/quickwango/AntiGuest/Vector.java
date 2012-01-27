@@ -7,16 +7,19 @@ package de.codeinfection.quickwango.AntiGuest;
 public class Vector
 {
     private final double[] coords;
+    private final short dimension;
 
     public Vector(double... coords)
     {
         this.coords = coords;
+        this.dimension = (short)coords.length;
     }
 
     public Vector(int... coords)
     {
-        this.coords = new double[coords.length];
-        for (int i = 0; i < coords.length; ++i)
+        this.dimension = (short)coords.length;
+        this.coords = new double[this.dimension];
+        for (short i = 0; i < this.dimension; ++i)
         {
             this.coords[i] = (double)coords[i];
         }
@@ -32,12 +35,12 @@ public class Vector
     
     public boolean isCompatible(Vector other)
     {
-        return (this.getDimension() == other.getDimension());
+        return (this.dimension == other.getDimension());
     }
     
-    public int getDimension()
+    public short getDimension()
     {
-        return this.coords.length;
+        return this.dimension;
     }
     
     public double get(int i)
@@ -47,14 +50,14 @@ public class Vector
 
     public boolean isOrthogonal(Vector other)
     {
-        return (this.scalarProduct(other) == 0);
+        return (this.dotProduct(other) == 0);
     }
 
     public boolean isParallel(Vector other)
     {
         validate(other);
         double quotient = this.coords[0] / other.coords[0];
-        for (int i = 1; i < this.getDimension(); ++i)
+        for (int i = 1; i < this.dimension; ++i)
         {
             if (quotient != (this.coords[i] / other.coords[i]))
             {
@@ -64,11 +67,11 @@ public class Vector
         return true;
     }
 
-    public double scalarProduct(Vector other)
+    public double dotProduct(Vector other)
     {
         validate(other);
         double sum = 0.0;
-        for (int i = 0; i < this.getDimension(); ++i)
+        for (short i = 0; i < this.dimension; ++i)
         {
             sum += this.get(i) * other.get(i);
         }
@@ -78,8 +81,8 @@ public class Vector
     public Vector add(Vector other)
     {
         validate(other);
-        double[] newCoords = new double[this.getDimension()];
-        for (int i = 0; i < this.getDimension(); ++i)
+        double[] newCoords = new double[this.dimension];
+        for (short i = 0; i < this.dimension; ++i)
         {
             newCoords[i] = this.get(i) + other.get(i);
         }
@@ -89,8 +92,8 @@ public class Vector
     public Vector substract(Vector other)
     {
         validate(other);
-        double[] newCoords = new double[this.getDimension()];
-        for (int i = 0; i < this.getDimension(); ++i)
+        double[] newCoords = new double[this.dimension];
+        for (short i = 0; i < this.dimension; ++i)
         {
             newCoords[i] = this.get(i) - other.get(i);
         }
@@ -104,8 +107,8 @@ public class Vector
     
     public Vector multiply(double n)
     {
-        double[] newCoords = new double[this.getDimension()];
-        for (int i = 0; i < this.getDimension(); ++i)
+        double[] newCoords = new double[this.dimension];
+        for (short i = 0; i < this.dimension; ++i)
         {
             newCoords[i] = this.get(i) * n;
         }
@@ -119,8 +122,8 @@ public class Vector
 
     public Vector divide(double n)
     {
-        double[] newCoords = new double[this.getDimension()];
-        for (int i = 0; i < this.getDimension(); ++i)
+        double[] newCoords = new double[this.dimension];
+        for (short i = 0; i < this.dimension; ++i)
         {
             newCoords[i] = this.get(i) / n;
         }
@@ -130,7 +133,7 @@ public class Vector
     public double squaredLength()
     {
         double sum = 0;
-        for (int i = 0; i < this.getDimension(); ++i)
+        for (short i = 0; i < this.dimension; ++i)
         {
             sum += Math.pow(this.get(i), 2);
         }
@@ -164,7 +167,7 @@ public class Vector
 
     public double crossAngle(Vector other, boolean degree)
     {
-        double result = Math.acos(this.scalarProduct(other) / (this.length() * other.length()));
+        double result = Math.acos(this.dotProduct(other) / (this.length() * other.length()));
         if (degree)
         {
             result *= 180 / Math.PI;
@@ -177,15 +180,65 @@ public class Vector
         return this.divide(this.length());
     }
     
+    public Vector midpoint(Vector other)
+    {
+        return this.add(other.substract(this).divide(2));
+    }
+    
     @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder("(");
         sb.append(this.get(0));
-        for (int i = 1; i < this.getDimension(); ++i)
+        for (int i = 1; i < this.dimension; ++i)
         {
             sb.append("|").append(this.get(i));
         }
         return sb.append(")").toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        
+        for (short i = 0; i < this.dimension; ++i)
+        {
+            hash = 79 * hash + (int)(Double.doubleToLongBits(this.coords[i]) ^ (Double.doubleToLongBits(this.coords[i]) >>> 32));
+        }
+        
+        return hash;
+    }
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        if (this == other)
+        {
+            return true;
+        }
+        if (other == null)
+        {
+            return false;
+        }
+        if (this.getClass() != other.getClass())
+        {
+            return false;
+        }
+        
+        Vector otherVec = (Vector)other;
+        if (!otherVec.isCompatible(this))
+        {
+            return false;
+        }
+        
+        for (short i = 0; i < this.dimension; ++i)
+        {
+            if (this.get(i) != otherVec.get(i))
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }
