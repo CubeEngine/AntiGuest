@@ -3,6 +3,7 @@ package de.codeinfection.quickwango.AntiGuest;
 import com.sk89q.wepif.PermissionsResolverManager;
 import de.codeinfection.quickwango.AntiGuest.Command.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Command.Commands.CanCommand;
+import de.codeinfection.quickwango.AntiGuest.Command.Commands.DebugCommand;
 import de.codeinfection.quickwango.AntiGuest.Command.Commands.HelpCommand;
 import de.codeinfection.quickwango.AntiGuest.Command.Commands.ListCommand;
 import de.codeinfection.quickwango.AntiGuest.Listeners.*;
@@ -33,7 +34,7 @@ public class AntiGuest extends JavaPlugin
     private PermSolver permSolver = null;
 
     private Logger logger = null;
-    public boolean debugMode = false;
+    public static boolean debugMode = false;
     
     private PluginManager pm;
     private Configuration config;
@@ -60,9 +61,6 @@ public class AntiGuest extends JavaPlugin
         this.config.options().copyDefaults(true);
         this.saveConfig();
 
-        this.loadConfig();
-
-
         Plugin we = this.pm.getPlugin("WorldEdit");
         if (we != null)
         {
@@ -83,11 +81,14 @@ public class AntiGuest extends JavaPlugin
             return;
         }
 
+        this.loadConfig();
+
         BaseCommand baseCommand = new BaseCommand();
         baseCommand.registerSubCommand(new ListCommand(baseCommand))
-            .registerSubCommand(new CanCommand(baseCommand))
-            .registerSubCommand(new HelpCommand(baseCommand))
-            .setDefaultCommand("help");
+                   .registerSubCommand(new CanCommand(baseCommand))
+                   .registerSubCommand(new DebugCommand(baseCommand))
+                   .registerSubCommand(new HelpCommand(baseCommand))
+                   .setDefaultCommand("help");
         
         this.getCommand("antiguest").setExecutor(baseCommand);
 
@@ -222,7 +223,7 @@ public class AntiGuest extends JavaPlugin
 
     public void debug(String msg)
     {
-        if (this.debugMode)
+        if (debugMode)
         {
             this.log("[debug] " + msg);
         }

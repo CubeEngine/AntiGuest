@@ -1,6 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest.Listeners;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.PlayerState;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
 import java.util.HashMap;
@@ -77,6 +78,14 @@ public class AntiGuestPlayerListener implements Listener
         if (event.isCancelled() || chatPrev == null) return;
 
         final Player player = event.getPlayer();
+
+        if (!PlayerState.has(player, PlayerState.CHATTED))
+        {
+            AntiGuest.getInstance().debug("Ignoring the first chat event after connect");
+            PlayerState.set(player, PlayerState.CHATTED);
+            return;
+        }
+
         if (!chatPrev.can(player))
         {
             event.setCancelled(true);
@@ -233,5 +242,11 @@ public class AntiGuestPlayerListener implements Listener
                 event.setCancelled(true);
             }
         }
+    }
+
+    @EventHandler()
+    public void onPlayerQuit(PlayerQuitEvent event)
+    {
+        PlayerState.removePlayer(event.getPlayer());
     }
 }

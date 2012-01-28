@@ -149,7 +149,6 @@ public class AntiGuestInteractionListener implements Listener
         Material interacted = block.getType();
         String prevName = null;
 
-        AntiGuest.getInstance().debug("Player interacted with " + interacted.toString() + " holding a " + String.valueOf(itemInHand));
         if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)
         {
             prevName = this.handleRightOrLeftClick(interacted, itemInHand);
@@ -167,10 +166,9 @@ public class AntiGuestInteractionListener implements Listener
 
 
         Prevention prev = AntiGuest.preventions.get(prevName);
-        AntiGuest.getInstance().debug("Selected prevention: " + String.valueOf(prev));
+        AntiGuest.getInstance().debug("Selected interaction prevention: " + String.valueOf(prev));
         if (prev != null)
         {
-            AntiGuest.getInstance().debug("Player " + player.getName() + " is " + (prev.can(player) ? "" : "not") + " allowed to " + prev.getName());
             if (!prev.can(player))
             {
                 if (prev.getMessageDelay() > 0)

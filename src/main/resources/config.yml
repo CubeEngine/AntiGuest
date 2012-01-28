@@ -97,9 +97,6 @@ preventions:
         jukebox:
             message: '&4You are not allowed to play music!'
             enable: false
-        teleport:
-            message: '&You are not allowed to teleport!'
-            enable: true
     items:
         enable: false
         message: '&4You are not allowed to use this item!'

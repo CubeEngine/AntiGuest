@@ -39,6 +39,7 @@ permissions:
       antiguest.preventions.actions.spam: true
       antiguest.preventions.actions.chat: true
       antiguest.preventions.actions.music: true
+      antiguest.preventions.actions.movement: true
   antiguest.preventions.items.*:
     description: "Allows the player to use all items"
     default: op
@@ -59,7 +60,7 @@ permissions:
       antiguest.preventions.actions.inventory: true
       antiguest.preventions.actions.brew: true
       antiguest.preventions.actions.enchant: true
-  antiguest.interact:
+  antiguest.preventions.actions.interact:
     description: "Allows the player to interact with the world"
     default: op
     children:
@@ -82,14 +83,13 @@ permissions:
     description: "Allows the player to fight"
     default: op
     children:
-      antiguest.pvp: true
-      antiguest.monster: true
+      antiguest.preventions.actions.pvp: true
+      antiguest.preventions.actions.monster: true
   antiguest.preventions.actions.movement:
     description: "Allows the player to move as he wants"
     default: op
     children:
       antiguest.preventions.actions.sneak: true
-      antiguest.preventions.actions.sprint: true
       antiguest.preventions.actions.move: true
   antiguest.preventions.actions.music:
     description: "Allows the player to do music related things"
@@ -97,7 +97,7 @@ permissions:
     children:
       antiguest.preventions.actions.noteblock: true
       antiguest.preventions.actions.jukebox: true
-  antiguest.bucket:
+  antiguest.preventions.actions.bucket:
     description: "Allows the player to use buckets"
     default: op
     children:

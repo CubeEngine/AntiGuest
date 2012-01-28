@@ -23,8 +23,8 @@ public class CanCommand extends AbstractCommand
     @Override
     public boolean execute(CommandSender sender, String[] args)
     {
-        Player player = null;
-        Prevention prevention = null;
+        Player player;
+        Prevention prevention;
         if (args.length == 1 && (sender instanceof Player))
         {
             player = (Player)sender;

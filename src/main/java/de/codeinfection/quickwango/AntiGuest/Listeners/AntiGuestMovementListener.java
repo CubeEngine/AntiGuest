@@ -1,10 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest.Listeners;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
-import de.codeinfection.quickwango.AntiGuest.Convert;
-import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.*;
 import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
-import de.codeinfection.quickwango.AntiGuest.Vector;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -52,19 +49,6 @@ public class AntiGuestMovementListener implements Listener
                 }
                 event.setCancelled(true);
             }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerTeleport(PlayerTeleportEvent event)
-    {
-        if (event.isCancelled() || teleportPrev == null) return;
-
-        final Player player = event.getPlayer();
-        if (teleportPrev.can(player))
-        {
-            teleportPrev.sendMessage(player);
-            event.setCancelled(true);
         }
     }
 
