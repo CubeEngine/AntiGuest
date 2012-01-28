@@ -21,7 +21,7 @@ public class AntiGuestVehicleListener implements Listener
 {
     private final static Prevention vehiclePrev = AntiGuest.preventions.get("vehicle");
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onVehicleEnter(VehicleEnterEvent event)
     {
         if (event.isCancelled() || vehiclePrev != null) return;
@@ -38,7 +38,7 @@ public class AntiGuestVehicleListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onVehicleExit(VehicleExitEvent event)
     {
         if (event.isCancelled() || vehiclePrev != null) return;
@@ -55,7 +55,7 @@ public class AntiGuestVehicleListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onVehicleDestroy(VehicleDestroyEvent event)
     {
         if (event.isCancelled() || vehiclePrev != null) return;
@@ -72,7 +72,7 @@ public class AntiGuestVehicleListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event)
     {
         if (event.isCancelled() || vehiclePrev != null) return;

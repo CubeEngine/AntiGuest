@@ -26,9 +26,17 @@ public class AntiGuestMovementListener implements Listener
     private final static Prevention sneakPrev  = AntiGuest.preventions.get("sneak");
     private final static Prevention teleportPrev = AntiGuest.preventions.get("teleport");
 
-    private final static int radius = Math.max(movePrev.getConfig().getInt("radius", Bukkit.getSpawnRadius()), 3);
+    private int radius = 3;
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    public AntiGuestMovementListener()
+    {
+        if (movePrev != null)
+        {
+            radius = Math.max(movePrev.getConfig().getInt("radius", Bukkit.getSpawnRadius()), this.radius);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
     {
         if (event.isCancelled() || sneakPrev == null) return;
@@ -47,7 +55,7 @@ public class AntiGuestMovementListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerTeleport(PlayerTeleportEvent event)
     {
         if (event.isCancelled() || teleportPrev == null) return;
@@ -65,7 +73,7 @@ public class AntiGuestMovementListener implements Listener
      *
      * @param event
      */
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerMove(PlayerMoveEvent event)
     {
         if (event.isCancelled() || movePrev == null) return;
@@ -78,14 +86,14 @@ public class AntiGuestMovementListener implements Listener
             final Vector to = Convert.toVector2D(toLocation);
             final Vector spawn = Convert.toVector2D(spawnLocation);
 
-            if (radius / spawn.distance(to) < 1)
+            if (this.radius / spawn.distance(to) < 1)
             {
                 movePrev.sendThrottledMessage(player);
                 event.setCancelled(true);
                 
                 final Vector from = Convert.toVector2D(player.getLocation());
                 // i bit less then 1 because of in inaccurate from location
-                if (radius / spawn.distance(from) <= 0.98)
+                if (this.radius / spawn.distance(from) <= 0.98)
                 {
                     // teleportation scheduled for the next tick to prevent kick (moved too fast)
                     Bukkit.getScheduler().scheduleSyncDelayedTask(AntiGuest.getInstance(), new Runnable() {

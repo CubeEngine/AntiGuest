@@ -22,7 +22,7 @@ public class AntiGuestBlockListener implements Listener
     private final static Prevention placeblockPrev = AntiGuest.preventions.get("placeblock");
     private final static Prevention breakblockPrev = AntiGuest.preventions.get("breakblock");
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPlace(BlockPlaceEvent event)
     {
         if (event.isCancelled() || placeblockPrev == null) return;
@@ -35,7 +35,7 @@ public class AntiGuestBlockListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(BlockBreakEvent event)
     {
         if (event.isCancelled() || breakblockPrev == null) return;
@@ -48,7 +48,7 @@ public class AntiGuestBlockListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
         if (event.isCancelled() || placeblockPrev == null) return;
@@ -61,7 +61,7 @@ public class AntiGuestBlockListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPaintingBreak(PaintingBreakEvent event)
     {
         if (event.isCancelled() || breakblockPrev == null) return;

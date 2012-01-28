@@ -56,8 +56,15 @@ public class AntiGuest extends JavaPlugin
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
 
-        Plugin plugin = this.pm.getPlugin("WorldEdit");
-        if (plugin != null)
+        this.config = this.getConfig();
+        this.config.options().copyDefaults(true);
+        this.saveConfig();
+
+        this.loadConfig();
+
+
+        Plugin we = this.pm.getPlugin("WorldEdit");
+        if (we != null)
         {
             log("WEPIF will be used to solve permissions");
             PermissionsResolverManager.initialize(this);
@@ -69,25 +76,40 @@ public class AntiGuest extends JavaPlugin
             this.permSolver = new DefaultPermSolver();
         }
 
-        BaseCommand base = new BaseCommand();
-        base.registerSubCommand(new ListCommand(base))
-            .registerSubCommand(new CanCommand(base))
-            .registerSubCommand(new HelpCommand(base))
+        if (this.permSolver == null)
+        {
+            error("Failed to initialize a permission resolver!");
+            this.pm.disablePlugin(this);
+            return;
+        }
+
+        BaseCommand baseCommand = new BaseCommand();
+        baseCommand.registerSubCommand(new ListCommand(baseCommand))
+            .registerSubCommand(new CanCommand(baseCommand))
+            .registerSubCommand(new HelpCommand(baseCommand))
             .setDefaultCommand("help");
-        this.getCommand("antiguest").setExecutor(base);
+        
+        this.getCommand("antiguest").setExecutor(baseCommand);
 
-        this.config = this.getConfig();
-        this.config.options().copyDefaults(true);
-
-        this.loadConfig();
-
-        this.saveConfig();
-
-        this.pm.registerEvents(new AntiGuestBlockListener(), this);
-        this.pm.registerEvents(new AntiGuestPlayerListener(), this);
-        this.pm.registerEvents(new AntiGuestVehicleListener(), this);
-        this.pm.registerEvents(new AntiGuestMovementListener(), this);
-        this.pm.registerEvents(new AntiGuestInteractionListener(), this);
+        try
+        {
+            this.pm.registerEvents(new AntiGuestBlockListener(), this);
+            debug("block listener registered!");
+            this.pm.registerEvents(new AntiGuestPlayerListener(), this);
+            debug("player listener registered!");
+            this.pm.registerEvents(new AntiGuestVehicleListener(), this);
+            debug("vehicle listener registered!");
+            this.pm.registerEvents(new AntiGuestMovementListener(), this);
+            debug("movement listener registered!");
+            this.pm.registerEvents(new AntiGuestInteractionListener(), this);
+            debug("interaction listener registered!");
+        }
+        catch (Throwable t)
+        {
+            error("Caught an exception while registering events:");
+            error(t.getLocalizedMessage(), t);
+            return;
+        }
 
         log("Version " + this.getDescription().getVersion() + " enabled");
     }

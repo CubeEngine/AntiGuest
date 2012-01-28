@@ -33,13 +33,21 @@ public class AntiGuestPlayerListener implements Listener
 
     
     private static final HashMap<Player, Long> chatTimestamps = new HashMap<Player, Long>();
-    private final static int spamLockDuration = ((ActionPrevention)spamPrev).getConfig().getInt("lockDuration") * 1000;
+    private int spamLockDuration = 0;
+
+    public AntiGuestPlayerListener()
+    {
+        if (spamPrev != null)
+        {
+            this.spamLockDuration = ((ActionPrevention)spamPrev).getConfig().getInt("lockDuration") * 1000;
+        }
+    }
 
     private boolean isPlayerChatLocked(Player player)
     {
         Long lastTime = this.chatTimestamps.get(player);
         long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + spamLockDuration < currentTime)
+        if (lastTime == null || lastTime + this.spamLockDuration < currentTime)
         {
             this.chatTimestamps.put(player, currentTime);
             return false;
@@ -50,7 +58,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerPickupItem(PlayerPickupItemEvent event)
     {
         if (event.isCancelled() || pickupPrev == null) return;
@@ -63,7 +71,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(PlayerChatEvent event)
     {
         if (event.isCancelled() || chatPrev == null) return;
@@ -76,7 +84,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerSpam(PlayerChatEvent event)
     {
         if (event.isCancelled() || spamPrev == null) return;
@@ -118,19 +126,19 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
         this.handleBucketEvent(event);
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event)
     {
         this.handleBucketEvent(event);
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDropItem(PlayerDropItemEvent event)
     {
         if (event.isCancelled() || dropPrev == null) return;
@@ -143,7 +151,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBedEnter(PlayerBedEnterEvent event)
     {
         if (event.isCancelled() || bedPrev == null) return;
@@ -156,7 +164,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerFish(PlayerFishEvent event)
     {
         if (event.isCancelled() || fishPrev == null) return;
@@ -169,7 +177,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageEvent event)
     {
         if (event.isCancelled()) return;
@@ -210,7 +218,7 @@ public class AntiGuestPlayerListener implements Listener
         }
     }
 
-    @EventHandler( priority=EventPriority.LOWEST )
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityTarget(EntityTargetEvent event)
     {
         if (event.isCancelled() || monsterPrev == null) return;
