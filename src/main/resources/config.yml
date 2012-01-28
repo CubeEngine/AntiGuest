@@ -37,9 +37,6 @@ preventions:
         workbench:
             message: '&4You are not allowed to craft!'
             enable: false
-        sprint:
-            message: '&4You are not allowed to sprint!'
-            enable: false
         breakblock:
             message: '&4You are not allowed to break blocks!'
             enable: true
@@ -47,7 +44,7 @@ preventions:
             message: '&4You are not allowed to use levers!'
             enable: false
         move:
-            message: '&4You are not allowed to move!'
+            message: '&4You are not allowed to move any further!'
             enable: false
             messageDelay: 3
             radius: 5
@@ -100,8 +97,11 @@ preventions:
         jukebox:
             message: '&4You are not allowed to play music!'
             enable: false
+        teleport:
+            message: '&You are not allowed to teleport!'
+            enable: true
     items:
-        enabled: false
+        enable: false
         message: '&4You are not allowed to use this item!'
         items:
           - "diamond sword"

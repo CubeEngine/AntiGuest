@@ -1,6 +1,13 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import com.sk89q.wepif.PermissionsResolverManager;
+import de.codeinfection.quickwango.AntiGuest.Command.BaseCommand;
+import de.codeinfection.quickwango.AntiGuest.Command.Commands.CanCommand;
+import de.codeinfection.quickwango.AntiGuest.Command.Commands.HelpCommand;
+import de.codeinfection.quickwango.AntiGuest.Command.Commands.ListCommand;
 import de.codeinfection.quickwango.AntiGuest.Listeners.*;
+import de.codeinfection.quickwango.AntiGuest.PermSolvers.DefaultPermSolver;
+import de.codeinfection.quickwango.AntiGuest.PermSolvers.WEPIFPermSolver;
 import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
 import de.codeinfection.quickwango.AntiGuest.Preventions.ItemPrevention;
 import java.io.File;
@@ -15,6 +22,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,15 +30,14 @@ public class AntiGuest extends JavaPlugin
 {
     private static AntiGuest instance = null;
     public static final Map<String, Prevention> preventions = new HashMap<String, Prevention>();
+    private PermSolver permSolver = null;
 
     private Logger logger = null;
     public boolean debugMode = false;
     
     private PluginManager pm;
-    protected Configuration config;
-    protected File dataFolder;
-    public int chatLockDuration;
-    public boolean vehiclesIgnoreBuildPermissions;
+    private Configuration config;
+    private File dataFolder;
 
     public AntiGuest()
     {
@@ -48,6 +55,27 @@ public class AntiGuest extends JavaPlugin
         this.pm = this.getServer().getPluginManager();
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
+
+        Plugin plugin = this.pm.getPlugin("WorldEdit");
+        if (plugin != null)
+        {
+            log("WEPIF will be used to solve permissions");
+            PermissionsResolverManager.initialize(this);
+            this.permSolver = new WEPIFPermSolver();
+        }
+        else
+        {
+            log("SuperPerms will be used to solve permissions");
+            this.permSolver = new DefaultPermSolver();
+        }
+
+        BaseCommand base = new BaseCommand();
+        base.registerSubCommand(new ListCommand(base))
+            .registerSubCommand(new CanCommand(base))
+            .registerSubCommand(new HelpCommand(base))
+            .setDefaultCommand("help");
+        this.getCommand("antiguest").setExecutor(base);
+
         this.config = this.getConfig();
         this.config.options().copyDefaults(true);
 
@@ -75,9 +103,6 @@ public class AntiGuest extends JavaPlugin
 
         this.loadActionPreventions(this.config.getConfigurationSection("preventions.actions"));
         this.loadItemPrevention(this.config.getConfigurationSection("preventions.items"));
-
-        //special values
-        this.chatLockDuration = this.config.getInt("preventions.spam.lockDuration");
     }
 
     private void loadActionPreventions(ConfigurationSection config)
@@ -113,7 +138,7 @@ public class AntiGuest extends JavaPlugin
     {
         if (config != null)
         {
-            if (config.getBoolean("enabled"))
+            if (config.getBoolean("enable"))
             {
                 String message = parseChatColors(config.getString("message"));
                 List<String> items = config.getStringList("items");
@@ -127,6 +152,7 @@ public class AntiGuest extends JavaPlugin
                         if (itemType != null)
                         {
                             types.add(itemType);
+                            debug("Added " + itemType.toString() + " to the prevented items");
                             try
                             {
                                 this.pm.addPermission(new Permission(ItemPrevention.PERMISSION_BASE + String.valueOf(itemType.getId()), PermissionDefault.OP));
@@ -150,6 +176,11 @@ public class AntiGuest extends JavaPlugin
             string = string.replaceAll("&([a-f0-9])", "\u00A7$1");
         }
         return string;
+    }
+
+    public PermSolver getPermSolver()
+    {
+        return this.permSolver;
     }
 
     public void log(String msg)

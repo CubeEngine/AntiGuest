@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Listeners;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
 import java.util.HashMap;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -18,9 +19,6 @@ import org.bukkit.event.player.*;
  */
 public class AntiGuestPlayerListener implements Listener
 {
-    private static final HashMap<Player, Long> chatTimestamps    = new HashMap<Player, Long>();
-
-
     private final static Prevention monsterPrev     = AntiGuest.preventions.get("monster");
     private final static Prevention chatPrev        = AntiGuest.preventions.get("chat");
     private final static Prevention spamPrev        = AntiGuest.preventions.get("spam");
@@ -33,25 +31,22 @@ public class AntiGuestPlayerListener implements Listener
     private final static Prevention pvpPrev         = AntiGuest.preventions.get("pvp");
     private final static Prevention hungerPrev      = AntiGuest.preventions.get("hunger");
 
+    
+    private static final HashMap<Player, Long> chatTimestamps = new HashMap<Player, Long>();
+    private final static int spamLockDuration = ((ActionPrevention)spamPrev).getConfig().getInt("lockDuration") * 1000;
+
     private boolean isPlayerChatLocked(Player player)
     {
-        if (spamPrev.can(player))
+        Long lastTime = this.chatTimestamps.get(player);
+        long currentTime = System.currentTimeMillis();
+        if (lastTime == null || lastTime + spamLockDuration < currentTime)
         {
+            this.chatTimestamps.put(player, currentTime);
             return false;
         }
         else
         {
-            Long lastTime = this.chatTimestamps.get(player);
-            long currentTime = System.currentTimeMillis();
-            if (lastTime == null || lastTime + (AntiGuest.getInstance().chatLockDuration * 1000) < currentTime)
-            {
-                this.chatTimestamps.put(player, currentTime);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return true;
         }
     }
 
@@ -85,8 +80,9 @@ public class AntiGuestPlayerListener implements Listener
     public void onPlayerSpam(PlayerChatEvent event)
     {
         if (event.isCancelled() || spamPrev == null) return;
-
         final Player player = event.getPlayer();
+        if (chatPrev != null && !chatPrev.can(player)) return;
+            
         if (this.isPlayerChatLocked(player))
         {
             event.setCancelled(true);

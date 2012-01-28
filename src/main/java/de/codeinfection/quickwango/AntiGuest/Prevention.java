@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
  */
 public abstract class Prevention
 {
+    public final PermSolver permSolver;
     private final String name;
     private final String permission;
     private final String message;
@@ -23,6 +24,8 @@ public abstract class Prevention
         this.message = message;
         this.messageDelay = messageDelay;
         this.throttleTimestamps = new HashMap<Player, Long>(0);
+
+        this.permSolver = AntiGuest.getInstance().getPermSolver();
     }
 
     public String getName()
@@ -42,7 +45,7 @@ public abstract class Prevention
 
     public boolean can(final Player player)
     {
-        return player.hasPermission(this.permission);
+        return this.permSolver.hasPermission(player, this.permission);
     }
 
     public void sendMessage(final Player player)

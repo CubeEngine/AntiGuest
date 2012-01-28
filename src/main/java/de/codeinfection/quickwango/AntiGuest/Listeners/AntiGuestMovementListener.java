@@ -5,14 +5,16 @@ import de.codeinfection.quickwango.AntiGuest.Convert;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
 import de.codeinfection.quickwango.AntiGuest.Vector;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 /**
  *
@@ -22,7 +24,9 @@ public class AntiGuestMovementListener implements Listener
 {
     private final static ActionPrevention movePrev   = (ActionPrevention)AntiGuest.preventions.get("move");
     private final static Prevention sneakPrev  = AntiGuest.preventions.get("sneak");
-    private final static Prevention sprintPrev = AntiGuest.preventions.get("sprint");
+    private final static Prevention teleportPrev = AntiGuest.preventions.get("teleport");
+
+    private final static int radius = Math.max(movePrev.getConfig().getInt("radius", Bukkit.getSpawnRadius()), 3);
 
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
@@ -34,28 +38,33 @@ public class AntiGuestMovementListener implements Listener
         {
             if (!sneakPrev.can(player))
             {
-                sneakPrev.sendMessage(player);
+                if (!player.getGameMode().equals(GameMode.CREATIVE))
+                {
+                    sneakPrev.sendMessage(player);
+                }
                 event.setCancelled(true);
             }
         }
     }
 
     @EventHandler( priority=EventPriority.LOWEST )
-    public void onPlayerToggleSprint(PlayerToggleSprintEvent event)
+    public void onPlayerTeleport(PlayerTeleportEvent event)
     {
-        if (event.isCancelled() || sprintPrev == null) return;
+        if (event.isCancelled() || teleportPrev == null) return;
 
         final Player player = event.getPlayer();
-        if (event.isSprinting())
+        if (teleportPrev.can(player))
         {
-            if (!sprintPrev.can(player))
-            {
-                sprintPrev.sendMessage(player);
-                event.setCancelled(true);
-            }
+            teleportPrev.sendMessage(player);
+            event.setCancelled(true);
         }
     }
 
+    /**
+     * This one is hacky and glitchy
+     *
+     * @param event
+     */
     @EventHandler( priority=EventPriority.LOWEST )
     public void onPlayerMove(PlayerMoveEvent event)
     {
@@ -64,17 +73,26 @@ public class AntiGuestMovementListener implements Listener
         final Player player = event.getPlayer();
         if (!movePrev.can(player))
         {
-            final Location to = event.getTo();
-            if (to != null)
-            {
-                final int radius = Math.max(movePrev.getConfig().getInt("radius", 3), 3);
-                final Vector target = Convert.toVector(to);
-                final Vector spawn = Convert.toVector(to.getWorld().getSpawnLocation());
+            final Location toLocation = event.getTo();
+            final Location spawnLocation = toLocation.getWorld().getSpawnLocation();
+            final Vector to = Convert.toVector2D(toLocation);
+            final Vector spawn = Convert.toVector2D(spawnLocation);
 
-                if (radius / spawn.distance(target) < 1)
+            if (radius / spawn.distance(to) < 1)
+            {
+                movePrev.sendThrottledMessage(player);
+                event.setCancelled(true);
+                
+                final Vector from = Convert.toVector2D(player.getLocation());
+                // i bit less then 1 because of in inaccurate from location
+                if (radius / spawn.distance(from) <= 0.98)
                 {
-                    movePrev.sendThrottledMessage(player);
-                    event.setCancelled(true);
+                    // teleportation scheduled for the next tick to prevent kick (moved too fast)
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(AntiGuest.getInstance(), new Runnable() {
+                        public void run() {
+                            player.teleport(spawnLocation, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                        }
+                    });
                 }
             }
         }

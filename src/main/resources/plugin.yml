@@ -3,8 +3,16 @@ main: de.codeinfection.quickwango.AntiGuest.AntiGuest
 version: "${project.version}"
 authors:
   - "Quick_Wango"
+softdepend:
+  - "WorldEdit"
 description: "Prevents guests from griefing."
 website: "http://parallel-universe.de"
+commands:
+  antiguest:
+    usage: "/<command> <subcommand> [arguments...]"
+    description: "This is the base command for all AntiGuest commands"
+    aliases:
+      - ag
 permissions:
   antiguest.*:
     description: "Allows the player to do everything"
