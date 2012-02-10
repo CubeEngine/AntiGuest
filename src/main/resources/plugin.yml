@@ -3,8 +3,6 @@ main: de.codeinfection.quickwango.AntiGuest.AntiGuest
 version: "${project.version}"
 authors:
   - "Quick_Wango"
-softdepend:
-  - "WorldEdit"
 description: "Prevents guests from griefing."
 website: "http://parallel-universe.de"
 commands:

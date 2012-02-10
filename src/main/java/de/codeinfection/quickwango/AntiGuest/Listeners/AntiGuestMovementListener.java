@@ -1,7 +1,10 @@
 package de.codeinfection.quickwango.AntiGuest.Listeners;
 
-import de.codeinfection.quickwango.AntiGuest.*;
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.Convert;
+import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
+import de.codeinfection.quickwango.AntiGuest.Vector;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

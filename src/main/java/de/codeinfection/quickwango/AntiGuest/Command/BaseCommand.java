@@ -1,13 +1,11 @@
 package de.codeinfection.quickwango.AntiGuest.Command;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
-import de.codeinfection.quickwango.AntiGuest.PermSolver;
 import java.util.Collection;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permissible;
 
 /**
  *
@@ -19,14 +17,12 @@ public class BaseCommand implements CommandExecutor
 
     private String defaultCommand;
     private HashMap<String, AbstractCommand> subCommands;
-    private final PermSolver permSolver;
 
     private String label;
 
     public BaseCommand()
     {
         this.defaultCommand = null;
-        this.permSolver = AntiGuest.getInstance().getPermSolver();
         this.subCommands = new HashMap<String, AbstractCommand>();
     }
 
@@ -58,11 +54,11 @@ public class BaseCommand implements CommandExecutor
 
     private boolean executeSub(CommandSender sender, AbstractCommand command, String[] args)
     {
-        if (sender instanceof Player)
+        if (sender instanceof Permissible)
         {
-            Player player = (Player)sender;
-            if (!this.permSolver.hasPermission(player, PERMISSONS_BASE + "*") &&
-                !this.permSolver.hasPermission(player, PERMISSONS_BASE + command.getLabel()))
+            Permissible permissible = (Permissible)sender;
+            if (!permissible.hasPermission(PERMISSONS_BASE + "*") &&
+                !permissible.hasPermission(PERMISSONS_BASE + command.getLabel()))
             {
                 sender.sendMessage(ChatColor.RED + "Permisssion denied!");
                 return true;
@@ -112,11 +108,6 @@ public class BaseCommand implements CommandExecutor
     public Collection<AbstractCommand> getRegisteredCommands()
     {
         return this.subCommands.values();
-    }
-
-    public PermSolver getPermSolver()
-    {
-        return this.permSolver;
     }
 
     public String getLabel()
