@@ -78,6 +78,11 @@ public class Vector
         return sum;
     }
 
+    public Vector crossProduct(Vector other)
+    {
+        throw new UnsupportedOperationException("Not supported yet!");
+    }
+
     public Vector add(Vector other)
     {
         validate(other);
