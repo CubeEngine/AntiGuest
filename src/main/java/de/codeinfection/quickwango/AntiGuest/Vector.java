@@ -190,6 +190,43 @@ public class Vector
         return this.add(other.substract(this).divide(2));
     }
     
+    public Vector projectTo(short dimension)
+    {
+        double[] newCoords = new double[dimension];
+        
+        short i = 0;
+        for (; i < this.dimension && i < dimension; ++i)
+        {
+            newCoords[i] = this.coords[i];
+        }
+        
+        for (; i < this.dimension; ++i)
+        {
+            newCoords[i] = 0;
+        }
+        
+        return new Vector(coords);
+    }
+    
+    /*
+     * 
+     * 2    2
+     * 2    2
+     * 2    2
+     *      0
+     * 
+     */
+    
+    /**
+     * @todo rename and implement
+     * @param dimensions
+     * @return 
+     */
+    public Vector spurVector(int... dimensions)
+    {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public String toString()
     {
