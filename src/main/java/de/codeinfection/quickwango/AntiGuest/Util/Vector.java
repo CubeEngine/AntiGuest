@@ -1,4 +1,4 @@
-package de.codeinfection.quickwango.AntiGuest;
+package de.codeinfection.quickwango.AntiGuest.Util;
 
 /**
  *

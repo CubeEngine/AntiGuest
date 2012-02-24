@@ -1,29 +1,18 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import de.codeinfection.quickwango.AntiGuest.Command.BaseCommand;
-import de.codeinfection.quickwango.AntiGuest.Command.Commands.CanCommand;
-import de.codeinfection.quickwango.AntiGuest.Command.Commands.DebugCommand;
-import de.codeinfection.quickwango.AntiGuest.Command.Commands.HelpCommand;
-import de.codeinfection.quickwango.AntiGuest.Command.Commands.ListCommand;
-import de.codeinfection.quickwango.AntiGuest.Listeners.AntiGuestBlockListener;
-import de.codeinfection.quickwango.AntiGuest.Listeners.AntiGuestInteractionListener;
-import de.codeinfection.quickwango.AntiGuest.Listeners.AntiGuestMovementListener;
-import de.codeinfection.quickwango.AntiGuest.Listeners.AntiGuestPlayerListener;
-import de.codeinfection.quickwango.AntiGuest.Listeners.AntiGuestVehicleListener;
-import de.codeinfection.quickwango.AntiGuest.Preventions.ActionPrevention;
-import de.codeinfection.quickwango.AntiGuest.Preventions.ItemPrevention;
+import de.codeinfection.quickwango.AntiGuest.Commands.CanCommand;
+import de.codeinfection.quickwango.AntiGuest.Commands.DebugCommand;
+import de.codeinfection.quickwango.AntiGuest.Commands.HelpCommand;
+import de.codeinfection.quickwango.AntiGuest.Commands.ListCommand;
+import de.codeinfection.quickwango.AntiGuest.Preventions.*;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,9 +21,10 @@ public class AntiGuest extends JavaPlugin
     private static AntiGuest instance = null;
     public static final Map<String, Prevention> preventions = new HashMap<String, Prevention>();
 
-    private Logger logger = null;
+    private static Logger logger = null;
     public static boolean debugMode = false;
     
+    private Server server;
     private PluginManager pm;
     private Configuration config;
     private File dataFolder;
@@ -48,11 +38,51 @@ public class AntiGuest extends JavaPlugin
     {
         return instance;
     }
+    
+    @Override
+    public void onLoad()
+    {
+        PreventionManager.getInstance()
+            .registerPrevention(new BedPrevention())
+            .registerPrevention(new BreakblockPrevention())
+            .registerPrevention(new PlaceblockPrevention())
+            .registerPrevention(new BrewPrevention())
+            .registerPrevention(new ButtonPrevention())
+            .registerPrevention(new CakePrevention())
+            .registerPrevention(new ChatPrevention())
+            .registerPrevention(new ChestPrevention())
+            .registerPrevention(new CommandPrevention())
+            .registerPrevention(new DispenserPrevention())
+            .registerPrevention(new DoorPrevention())
+            .registerPrevention(new DropPrevention())
+            .registerPrevention(new EnchantPrevention())
+            .registerPrevention(new FishPrevention())
+            .registerPrevention(new FurnacePrevention())
+            .registerPrevention(new HungerPrevention())
+            .registerPrevention(new ItemPrevention())
+            .registerPrevention(new JukeboxPrevention())
+            .registerPrevention(new LavabucketPrevention())
+            .registerPrevention(new LeverPrevention())
+            .registerPrevention(new MonsterPrevention())
+            .registerPrevention(new MovePrevention())
+            .registerPrevention(new NoteblockPrevention())
+            .registerPrevention(new PickupPrevention())
+            .registerPrevention(new PressureplatePrevention())
+            .registerPrevention(new PvpPrevention())
+            .registerPrevention(new RepeaterPrevention())
+            .registerPrevention(new SneakPrevention())
+            .registerPrevention(new SpamPrevention())
+            .registerPrevention(new VehiclePrevention())
+            .registerPrevention(new WaterbucketPrevention())
+            .registerPrevention(new WorkbenchPrevention());
+    }
 
+    @Override
     public void onEnable()
     {
-        this.logger = this.getLogger();
-        this.pm = this.getServer().getPluginManager();
+        logger = this.getLogger();
+        this.server = this.getServer();
+        this.pm = this.server.getPluginManager();
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
 
@@ -60,7 +90,7 @@ public class AntiGuest extends JavaPlugin
         this.config.options().copyDefaults(true);
         this.saveConfig();
 
-        this.loadConfig();
+        this.loadPreventions();
 
         BaseCommand baseCommand = new BaseCommand();
         baseCommand.registerSubCommand(new ListCommand(baseCommand))
@@ -71,135 +101,55 @@ public class AntiGuest extends JavaPlugin
         
         this.getCommand("antiguest").setExecutor(baseCommand);
 
-        try
-        {
-            this.pm.registerEvents(new AntiGuestBlockListener(), this);
-            debug("block listener registered!");
-            this.pm.registerEvents(new AntiGuestPlayerListener(), this);
-            debug("player listener registered!");
-            this.pm.registerEvents(new AntiGuestVehicleListener(), this);
-            debug("vehicle listener registered!");
-            this.pm.registerEvents(new AntiGuestMovementListener(), this);
-            debug("movement listener registered!");
-            this.pm.registerEvents(new AntiGuestInteractionListener(), this);
-            debug("interaction listener registered!");
-        }
-        catch (Throwable t)
-        {
-            error("Caught an exception while registering events:");
-            error(t.getLocalizedMessage(), t);
-            return;
-        }
-
         log("Version " + this.getDescription().getVersion() + " enabled");
     }
 
+    @Override
     public void onDisable()
     {
         log(this.getDescription().getVersion() + " disabled");
     }
 
-    private void loadConfig()
+    private void loadPreventions()
     {
         debugMode = this.config.getBoolean("debug");
 
-        this.loadActionPreventions(this.config.getConfigurationSection("preventions.actions"));
-        this.loadItemPrevention(this.config.getConfigurationSection("preventions.items"));
-    }
-
-    private void loadActionPreventions(ConfigurationSection config)
-    {
-        if (config != null)
+        ConfigurationSection preventionsSection = this.config.getConfigurationSection("preventions.actions");
+        if (preventionsSection != null)
         {
-            ActionPrevention prevention;
-            String message;
-            Integer messageDelay;
-            for (String key : config.getKeys(false))
+            final PreventionManager prevMgr = PreventionManager.getInstance();
+            ConfigurationSection currentSection;
+            for (String prevention : preventionsSection.getKeys(false))
             {
-                ConfigurationSection section = config.getConfigurationSection(key);
-
-                if (section.getBoolean("enable", false))
+                currentSection = preventionsSection.getConfigurationSection(prevention);
+                if (currentSection.getBoolean("enable", false))
                 {
-                    messageDelay = section.getInt("messageDelay", 0) * 1000;
-                    message = parseChatColors(section.getString("message", ""));
-                    prevention = new ActionPrevention(key, message, messageDelay, section);
-                    preventions.put(prevention.getName(), prevention);
-                    debug("Loaded prevention: " + prevention.getName());
-                    try
-                    {
-                        this.pm.addPermission(new Permission(prevention.getPermission(), PermissionDefault.OP));
-                    }
-                    catch (IllegalArgumentException e)
-                    {}
+                    prevMgr.initializePrevention(prevention, this.server, currentSection);
                 }
             }
         }
     }
 
-    private void loadItemPrevention(ConfigurationSection config)
-    {
-        if (config != null)
-        {
-            if (config.getBoolean("enable"))
-            {
-                String message = parseChatColors(config.getString("message"));
-                List<String> items = config.getStringList("items");
-                List<Material> types = new ArrayList<Material>(items.size());
-                if (items != null)
-                {
-                    Material itemType;
-                    for (String itemName : items)
-                    {
-                        itemType = Material.matchMaterial(itemName);
-                        if (itemType != null)
-                        {
-                            types.add(itemType);
-                            debug("Added " + itemType.toString() + " to the prevented items");
-                            try
-                            {
-                                this.pm.addPermission(new Permission(ItemPrevention.PERMISSION_BASE + String.valueOf(itemType.getId()), PermissionDefault.OP));
-                            }
-                            catch (IllegalArgumentException e)
-                            {}
-                        }
-                    }
-
-                    ItemPrevention prevention = new ItemPrevention(message, types);
-                    preventions.put(prevention.getName(), prevention);
-                }
-            }
-        }
-    }
-
-    private static String parseChatColors(String string)
-    {
-        if (string != null)
-        {
-            string = string.replaceAll("&([a-f0-9])", "\u00A7$1");
-        }
-        return string;
-    }
-
-    public void log(String msg)
+    public static void log(String msg)
     {
         logger.log(Level.INFO, msg);
     }
 
-    public void error(String msg)
+    public static void error(String msg)
     {
         logger.log(Level.SEVERE, msg);
     }
 
-    public void error(String msg, Throwable t)
+    public static void error(String msg, Throwable t)
     {
         logger.log(Level.SEVERE, msg, t);
     }
 
-    public void debug(String msg)
+    public static void debug(String msg)
     {
         if (debugMode)
         {
-            this.log("[debug] " + msg);
+            log("[debug] " + msg);
         }
     }
 }

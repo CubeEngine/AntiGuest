@@ -1,8 +1,8 @@
-package de.codeinfection.quickwango.AntiGuest.Command.Commands;
+package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
-import de.codeinfection.quickwango.AntiGuest.Command.AbstractCommand;
-import de.codeinfection.quickwango.AntiGuest.Command.BaseCommand;
+import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,4 +1,4 @@
-package de.codeinfection.quickwango.AntiGuest.Command;
+package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.Collection;
 import java.util.HashMap;

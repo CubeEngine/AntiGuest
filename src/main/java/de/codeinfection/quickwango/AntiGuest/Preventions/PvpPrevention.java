@@ -1,0 +1,42 @@
+package de.codeinfection.quickwango.AntiGuest.Preventions;
+
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+/**
+ *
+ * @author Phillip
+ */
+public class PvpPrevention extends Prevention
+{
+
+    public PvpPrevention()
+    {
+        super("pvp", AntiGuest.getInstance());
+    }
+    
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void handle(EntityDamageByEntityEvent event)
+    {
+        final Entity damager = event.getDamager();
+        if (damager instanceof Player)
+        {
+            prevent(event, (Player)damager);
+        }
+        else if (damager instanceof Projectile)
+        {
+            final LivingEntity shooter = ((Projectile)damager).getShooter();
+            if (shooter instanceof Player)
+            {
+                prevent(event, (Player)shooter);
+            }
+        }
+    }
+}
