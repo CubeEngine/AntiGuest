@@ -1,6 +1,5 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import com.google.common.util.concurrent.MoreExecutors;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -24,6 +23,7 @@ public abstract class Prevention implements Listener
     private String message;
     private int messageDelay;
     private final Plugin plugin;
+    private boolean initialized;
 
     private final HashMap<Player, Long> throttleTimestamps;
     
@@ -37,11 +37,10 @@ public abstract class Prevention implements Listener
         this.name = name;
         this.permission = new Permission(permission, PermissionDefault.OP);
         this.throttleTimestamps = new HashMap<Player, Long>(0);
-        
         this.message = null;
         this.messageDelay = 0;
-        
         this.plugin = plugin;
+        this.initialized = false;
     }
 
     public ConfigurationSection getDefaultConfig()
@@ -69,6 +68,12 @@ public abstract class Prevention implements Listener
                 this.message = this.message.replaceAll("&([a-f0-9])", ChatColor.COLOR_CHAR + "$1");
             }
         }
+        this.initialized = true;
+    }
+
+    public final boolean isInitialized()
+    {
+        return this.initialized;
     }
 
     public String getName()

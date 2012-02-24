@@ -5,7 +5,9 @@ import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permissible;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.Plugin;
 
 /**
  *
@@ -13,17 +15,21 @@ import org.bukkit.permissions.Permissible;
  */
 public class BaseCommand implements CommandExecutor
 {
-    private static final String PERMISSONS_BASE = "antiguest.commands.";
+    public final String permissinBase;
+    private final Plugin plugin;
+    private final HashMap<String, AbstractCommand> subCommands;
+    private final Permission parentPermission;
 
     private String defaultCommand;
-    private HashMap<String, AbstractCommand> subCommands;
-
     private String label;
 
-    public BaseCommand()
+    public BaseCommand(Plugin plugin)
     {
+        this.plugin = plugin;
+        this.permissinBase = this.plugin.getDescription().getName().toLowerCase() + ".commands.";
         this.defaultCommand = null;
         this.subCommands = new HashMap<String, AbstractCommand>();
+        this.parentPermission = new Permission(permissinBase, PermissionDefault.OP);
     }
 
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args)
@@ -54,15 +60,10 @@ public class BaseCommand implements CommandExecutor
 
     private boolean executeSub(CommandSender sender, AbstractCommand command, String[] args)
     {
-        if (sender instanceof Permissible)
+        if (!sender.hasPermission(command.getPermission()))
         {
-            Permissible permissible = (Permissible)sender;
-            if (!permissible.hasPermission(PERMISSONS_BASE + "*") &&
-                !permissible.hasPermission(PERMISSONS_BASE + command.getLabel()))
-            {
-                sender.sendMessage(ChatColor.RED + "Permisssion denied!");
-                return true;
-            }
+            sender.sendMessage(ChatColor.RED + "Permisssion denied!");
+            return true;
         }
 
         int argc = (args.length < 1 ? 0 : args.length - 1);
@@ -77,6 +78,7 @@ public class BaseCommand implements CommandExecutor
     public BaseCommand registerSubCommand(AbstractCommand command)
     {
         this.subCommands.put(command.getLabel(), command);
+        command.getPermission().addParent(this.parentPermission, true);
         return this;
     }
 
@@ -113,5 +115,10 @@ public class BaseCommand implements CommandExecutor
     public String getLabel()
     {
         return this.label;
+    }
+
+    public Plugin getPlugin()
+    {
+        return this.plugin;
     }
 }

@@ -1,7 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

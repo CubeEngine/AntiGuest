@@ -4,22 +4,19 @@ import de.codeinfection.quickwango.AntiGuest.Commands.CanCommand;
 import de.codeinfection.quickwango.AntiGuest.Commands.DebugCommand;
 import de.codeinfection.quickwango.AntiGuest.Commands.HelpCommand;
 import de.codeinfection.quickwango.AntiGuest.Commands.ListCommand;
+import de.codeinfection.quickwango.AntiGuest.Commands.ReloadCommand;
 import de.codeinfection.quickwango.AntiGuest.Preventions.*;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AntiGuest extends JavaPlugin
 {
     private static AntiGuest instance = null;
-    public static final Map<String, Prevention> preventions = new HashMap<String, Prevention>();
 
     private static Logger logger = null;
     public static boolean debugMode = false;
@@ -87,17 +84,17 @@ public class AntiGuest extends JavaPlugin
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
 
-        this.config = this.getConfig();
-        this.config.options().copyDefaults(true);
+        debugMode = this.getConfig().getBoolean("debug");
         this.saveConfig();
 
-        this.loadPreventions();
+        PreventionManager.getInstance().loadPreventions();
 
-        BaseCommand baseCommand = new BaseCommand();
+        BaseCommand baseCommand = new BaseCommand(this);
         baseCommand.registerSubCommand(new ListCommand(baseCommand))
                    .registerSubCommand(new CanCommand(baseCommand))
                    .registerSubCommand(new DebugCommand(baseCommand))
                    .registerSubCommand(new HelpCommand(baseCommand))
+                   .registerSubCommand(new ReloadCommand(baseCommand))
                    .setDefaultCommand("help");
         
         this.getCommand("antiguest").setExecutor(baseCommand);
@@ -109,26 +106,6 @@ public class AntiGuest extends JavaPlugin
     public void onDisable()
     {
         log(this.getDescription().getVersion() + " disabled");
-    }
-
-    private void loadPreventions()
-    {
-        debugMode = this.config.getBoolean("debug");
-
-        ConfigurationSection preventionsSection = this.config.getConfigurationSection("preventions.actions");
-        if (preventionsSection != null)
-        {
-            final PreventionManager prevMgr = PreventionManager.getInstance();
-            ConfigurationSection currentSection;
-            for (String prevention : preventionsSection.getKeys(false))
-            {
-                currentSection = preventionsSection.getConfigurationSection(prevention);
-                if (currentSection.getBoolean("enable", false))
-                {
-                    prevMgr.initializePrevention(prevention, this.server, currentSection);
-                }
-            }
-        }
     }
 
     public static void log(String msg)

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
  *
  * @author CodeInfection
  */
-public class Convert
+public final class Convert
 {
     private Convert()
     {}
@@ -33,9 +33,9 @@ public class Convert
 
     public static Location toLocation(World world, Vector vector)
     {
-        if (vector.getDimension() != 3)
+        if (vector.getDimension() >= 3)
         {
-            throw new IllegalArgumentException("The vector must be of the third dimension!");
+            throw new IllegalArgumentException("The vector must have at least 3 dimensions!");
         }
         return new Location(world, vector.get(0), vector.get(1), vector.get(2));
     }

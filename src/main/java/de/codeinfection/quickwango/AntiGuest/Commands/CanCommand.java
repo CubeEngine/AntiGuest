@@ -1,9 +1,9 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.PreventionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -28,12 +28,12 @@ public class CanCommand extends AbstractCommand
         if (args.length == 1 && (sender instanceof Player))
         {
             player = (Player)sender;
-            prevention = AntiGuest.preventions.get(args[0]);
+            prevention = PreventionManager.getInstance().getPrevention(args[0]);
         }
         else if (args.length > 1)
         {
             player = Bukkit.getPlayer(args[0]);
-            prevention = AntiGuest.preventions.get(args[1]);
+            prevention = PreventionManager.getInstance().getPrevention(args[1]);
         }
         else
         {

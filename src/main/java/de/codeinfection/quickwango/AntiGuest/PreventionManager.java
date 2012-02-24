@@ -1,8 +1,11 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -21,8 +24,9 @@ public class PreventionManager
 
     private Server server;
     private PluginManager pm;
+    private Configuration config;
     private ConfigurationSection defaultConfigSection;
-    private Permission basePermission;
+    private Permission parentPermission;
     
     private PreventionManager()
     {
@@ -30,7 +34,7 @@ public class PreventionManager
         this.server = null;
         this.pm = null;
         this.defaultConfigSection = null;
-        this.basePermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
+        this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
     }
     
@@ -50,11 +54,23 @@ public class PreventionManager
             this.plugin = plugin;
             this.server = plugin.getServer();
             this.pm = this.server.getPluginManager();
-            this.defaultConfigSection = plugin.getConfig().getConfigurationSection("preventions").getDefaultSection();
+            this.config = plugin.getConfig();
+            this.config.options().copyDefaults(true);
+            this.defaultConfigSection = this.config.getConfigurationSection("preventions").getDefaultSection();
 
-            this.pm.addPermission(this.basePermission);
+            this.pm.addPermission(this.parentPermission);
         }
         return this;
+    }
+
+    public Prevention getPrevention(String name)
+    {
+        return this.preventions.get(name);
+    }
+
+    public Collection<Prevention> getPreventions()
+    {
+        return new ArrayList<Prevention>(this.preventions.values());
     }
     
     public PreventionManager registerPrevention(Prevention prevention)
@@ -68,7 +84,8 @@ public class PreventionManager
             throw new IllegalStateException("the preventionmanager has not been initialized!");
         }
         this.preventions.put(prevention.getName(), prevention);
-        this.defaultConfigSection.addDefault(prevention.getName(), prevention.getDefaultConfig());
+        prevention.getPermission().addParent(this.parentPermission, true);
+        this.defaultConfigSection.set(prevention.getName(), prevention.getDefaultConfig());
         
         return this;
     }
@@ -90,10 +107,28 @@ public class PreventionManager
 
             
             this.pm.addPermission(prevention.getPermission());
-            this.basePermission.getChildren().put(prevention.getPermission().getName(), true);
 
             return true;
         }
         return false;
+    }
+
+    public PreventionManager loadPreventions()
+    {
+        ConfigurationSection preventionsSection = this.config.getConfigurationSection("preventions");
+        if (preventionsSection != null)
+        {
+            ConfigurationSection currentSection;
+            for (String prevention : preventionsSection.getKeys(false))
+            {
+                currentSection = preventionsSection.getConfigurationSection(prevention);
+                if (currentSection.getBoolean("enable", false))
+                {
+                    this.initializePrevention(prevention, this.server, currentSection);
+                }
+            }
+        }
+
+        return this;
     }
 }
