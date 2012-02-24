@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,16 @@ public class HungerPrevention extends Prevention
     public HungerPrevention()
     {
         super("hunger", AntiGuest.getInstance());
+    }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "");
+
+        return config;
     }
     
     @EventHandler(priority = EventPriority.LOWEST)

@@ -43,6 +43,7 @@ public class AntiGuest extends JavaPlugin
     public void onLoad()
     {
         PreventionManager.getInstance()
+            .initialize(this)
             .registerPrevention(new BedPrevention())
             .registerPrevention(new BreakblockPrevention())
             .registerPrevention(new PlaceblockPrevention())

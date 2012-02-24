@@ -3,6 +3,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -18,6 +19,16 @@ public class CakePrevention extends Prevention
     public CakePrevention()
     {
         super("cake", AntiGuest.getInstance());
+    }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "&4The cake is a lie!!");
+
+        return config;
     }
     
     @EventHandler(priority = EventPriority.LOWEST)

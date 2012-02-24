@@ -3,6 +3,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -25,6 +26,16 @@ public class VehiclePrevention extends Prevention
     public VehiclePrevention()
     {
         super("vehicle", AntiGuest.getInstance());
+    }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "&4You are not allowed to use vehicles!");
+
+        return config;
     }
     
     @EventHandler(priority = EventPriority.LOWEST)

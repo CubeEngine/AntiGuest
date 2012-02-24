@@ -23,6 +23,17 @@ public class SpamPrevention extends Prevention
     {
         super("spam", AntiGuest.getInstance());
     }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "&4Don't spam the chat!");
+        config.addDefault("lockDuration", 2);
+
+        return config;
+    }
     
     @Override
     public void initialize(Server server, ConfigurationSection config)

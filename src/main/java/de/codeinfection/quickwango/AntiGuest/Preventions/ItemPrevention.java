@@ -30,6 +30,17 @@ public class ItemPrevention extends Prevention
         super("item", AntiGuest.getInstance());
         this.types = new ArrayList<Material>();
     }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "&4You are not allowed to use this item!");
+        config.addDefault("items", new String[] {"diamond sword"});
+
+        return config;
+    }
     
     @Override
     public void initialize(final Server server, final ConfigurationSection config)

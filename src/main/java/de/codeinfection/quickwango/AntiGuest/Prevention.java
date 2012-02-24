@@ -1,12 +1,16 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import com.google.common.util.concurrent.MoreExecutors;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -16,7 +20,7 @@ import org.bukkit.plugin.Plugin;
 public abstract class Prevention implements Listener
 {
     private final String name;
-    private final String permission;
+    private final Permission permission;
     private String message;
     private int messageDelay;
     private final Plugin plugin;
@@ -31,13 +35,23 @@ public abstract class Prevention implements Listener
     public Prevention(final String name, final String permission, final Plugin plugin)
     {
         this.name = name;
-        this.permission = permission;
+        this.permission = new Permission(permission, PermissionDefault.OP);
         this.throttleTimestamps = new HashMap<Player, Long>(0);
         
         this.message = null;
         this.messageDelay = 0;
         
         this.plugin = plugin;
+    }
+
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection defaultConfig = new MemoryConfiguration();
+
+        defaultConfig.addDefault("enable", false);
+        defaultConfig.addDefault("message", "&4You are not allowed to do this.");
+
+        return defaultConfig;
     }
     
     public void initialize(final Server server, final ConfigurationSection config)
@@ -62,7 +76,7 @@ public abstract class Prevention implements Listener
         return this.name;
     }
 
-    public String getPermission()
+    public Permission getPermission()
     {
         return this.permission;
     }

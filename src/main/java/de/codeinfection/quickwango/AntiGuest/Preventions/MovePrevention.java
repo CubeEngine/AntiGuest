@@ -26,6 +26,18 @@ public class MovePrevention extends Prevention
     {
         super("move", AntiGuest.getInstance());
     }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "&4You are not allowed to move any further!");
+        config.addDefault("messageDelay", 3);
+        config.addDefault("radius", 5);
+
+        return config;
+    }
     
     @Override
     public void initialize(Server server, ConfigurationSection config)

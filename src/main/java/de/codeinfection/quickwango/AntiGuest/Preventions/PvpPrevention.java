@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -16,10 +17,19 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
  */
 public class PvpPrevention extends Prevention
 {
-
     public PvpPrevention()
     {
         super("pvp", AntiGuest.getInstance());
+    }
+
+    @Override
+    public ConfigurationSection getDefaultConfig()
+    {
+        ConfigurationSection config = super.getDefaultConfig();
+
+        config.addDefault("message", "&4You are not allowed to fight!");
+
+        return config;
     }
     
     @EventHandler(priority = EventPriority.LOWEST)
