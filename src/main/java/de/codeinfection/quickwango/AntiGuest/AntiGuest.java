@@ -71,6 +71,7 @@ public class AntiGuest extends JavaPlugin
             .registerPrevention(new RepeaterPrevention())
             .registerPrevention(new SneakPrevention())
             .registerPrevention(new SpamPrevention())
+            .registerPrevention(new TamePrevention())
             .registerPrevention(new VehiclePrevention())
             .registerPrevention(new WaterbucketPrevention())
             .registerPrevention(new WorkbenchPrevention());
