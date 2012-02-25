@@ -42,6 +42,7 @@ public class AntiGuest extends JavaPlugin
         PreventionManager.getInstance()
             .initialize(this)
             .registerPrevention(new BedPrevention())
+            .registerPrevention(new BowPrevention())
             .registerPrevention(new BreakblockPrevention())
             .registerPrevention(new PlaceblockPrevention())
             .registerPrevention(new BrewPrevention())
