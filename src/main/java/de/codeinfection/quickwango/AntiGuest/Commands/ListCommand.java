@@ -21,13 +21,25 @@ public class ListCommand extends AbstractCommand
 
     public boolean execute(CommandSender sender, String[] args)
     {
-        sender.sendMessage("The following preventions are active:");
-        sender.sendMessage("");
-        for (Prevention prevention : PreventionManager.getInstance().getPreventions())
+        if (args.length > 0 && (args[0].equalsIgnoreCase("all") ||args[0].equals("*")))
         {
-            if (prevention.isInitialized())
+            sender.sendMessage("The following preventions are registered:");
+            sender.sendMessage("");
+            for (Prevention prevention : PreventionManager.getInstance().getPreventions())
             {
                 sender.sendMessage(" - " + prevention.getName());
+            }
+        }
+        else
+        {
+            sender.sendMessage("The following preventions are active:");
+            sender.sendMessage("");
+            for (Prevention prevention : PreventionManager.getInstance().getPreventions())
+            {
+                if (prevention.isInitialized())
+                {
+                    sender.sendMessage(" - " + prevention.getName());
+                }
             }
         }
 
@@ -37,6 +49,12 @@ public class ListCommand extends AbstractCommand
     @Override
     public String getDescription()
     {
-        return "Lists all active preventions.";
+        return "Lists all active or registered preventions.";
+    }
+
+    @Override
+    public String getUsage()
+    {
+        return super.getUsage() + " [all|*]";
     }
 }
