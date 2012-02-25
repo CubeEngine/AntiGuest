@@ -68,7 +68,6 @@ public class AntiGuest extends JavaPlugin
             .registerPrevention(new NoteblockPrevention())
             .registerPrevention(new PickupPrevention())
             .registerPrevention(new PressureplatePrevention())
-            .registerPrevention(new PushPrevention())
             .registerPrevention(new PvpPrevention())
             .registerPrevention(new RepeaterPrevention())
             .registerPrevention(new ShearPrevention())
