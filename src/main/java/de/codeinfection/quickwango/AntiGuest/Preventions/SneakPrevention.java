@@ -2,7 +2,9 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -31,6 +33,17 @@ public class SneakPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST)
     public void handle(PlayerToggleSneakEvent event)
     {
-        prevent(event, event.getPlayer());
+        final Player player = event.getPlayer();
+        if (event.isSneaking())
+        {
+            if (!can(player))
+            {
+                if (!player.getGameMode().equals(GameMode.CREATIVE))
+                {
+                    sendMessage(player);
+                }
+                event.setCancelled(true);
+            }
+        }
     }
 }
