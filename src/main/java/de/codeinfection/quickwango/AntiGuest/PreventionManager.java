@@ -109,6 +109,8 @@ public class PreventionManager
             catch (IllegalArgumentException e)
             {}
 
+            prevention.setEnabled(true);
+
             return true;
         }
         return false;
@@ -134,9 +136,16 @@ public class PreventionManager
         return this;
     }
 
-    public PreventionManager clearPreventions()
+    public PreventionManager disablePreventions()
     {
-        this.preventions.clear();
+        for (Prevention prevention : this.preventions.values())
+        {
+            if (prevention.isEnabled())
+            {
+                prevention.disable();
+                prevention.setEnabled(false);
+            }
+        }
         return this;
     }
 }

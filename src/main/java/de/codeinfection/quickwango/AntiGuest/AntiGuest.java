@@ -42,6 +42,7 @@ public class AntiGuest extends JavaPlugin
     {
         PreventionManager.getInstance()
             .initialize(this)
+            .registerPrevention(new AfkPrevention())
             .registerPrevention(new BedPrevention())
             .registerPrevention(new BowPrevention())
             .registerPrevention(new BreakblockPrevention())
@@ -131,6 +132,7 @@ public class AntiGuest extends JavaPlugin
     @Override
     public void onDisable()
     {
+        PreventionManager.getInstance().disablePreventions();
         log(this.getDescription().getVersion() + " disabled");
     }
 

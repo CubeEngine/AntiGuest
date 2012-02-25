@@ -23,7 +23,7 @@ public abstract class Prevention implements Listener
     private String message;
     private int messageDelay;
     private final Plugin plugin;
-    private boolean initialized;
+    private boolean enabled;
 
     private final HashMap<Player, Long> throttleTimestamps;
     
@@ -40,7 +40,7 @@ public abstract class Prevention implements Listener
         this.message = null;
         this.messageDelay = 0;
         this.plugin = plugin;
-        this.initialized = false;
+        this.enabled = false;
     }
 
     public ConfigurationSection getDefaultConfig()
@@ -68,12 +68,21 @@ public abstract class Prevention implements Listener
                 this.message = this.message.replaceAll("&([a-f0-9])", ChatColor.COLOR_CHAR + "$1");
             }
         }
-        this.initialized = true;
     }
 
-    public final boolean isInitialized()
+    public void disable()
     {
-        return this.initialized;
+        this.throttleTimestamps.clear();
+    }
+
+    public final boolean isEnabled()
+    {
+        return this.enabled;
+    }
+
+    public final void setEnabled(boolean enable)
+    {
+        this.enabled = enable;
     }
 
     public String getName()
@@ -84,6 +93,11 @@ public abstract class Prevention implements Listener
     public Permission getPermission()
     {
         return this.permission;
+    }
+
+    public String getMessage()
+    {
+        return this.message;
     }
     
     public Plugin getPlugin()
