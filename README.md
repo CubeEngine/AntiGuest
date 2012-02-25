@@ -45,6 +45,7 @@ Preventions:
 - **spam** -- prevents from spam
 - **sneak** -- prevents from sneaking (the player will still duck, but the name above him stays visible)
 - **enchant** -- prevents from enchanting specific items
+- **afk** -- prevents from idling players by kicking them after a configured time
 
 Commands:
 ---------
