@@ -1,19 +1,18 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
-import de.codeinfection.quickwango.AntiGuest.Prevention;
-import org.bukkit.Material;
+import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 
 /**
  *
  * @author Phillip
  */
-public class EnchantPrevention extends Prevention
+public class EnchantPrevention extends FilteredItemPrevention
 {
 
     public EnchantPrevention()
@@ -30,16 +29,16 @@ public class EnchantPrevention extends Prevention
 
         return config;
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST)
-    public void handle(PlayerInteractEvent event)
+    public void handle(PrepareItemEnchantEvent event)
     {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
-            if (event.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
-            {
-                prevent(event, event.getPlayer());
-            }
-        }
+        prevent(event, event.getEnchanter(), event.getItem().getType());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void handle(EnchantItemEvent event)
+    {
+        prevent(event, event.getEnchanter(), event.getItem().getType());
     }
 }
