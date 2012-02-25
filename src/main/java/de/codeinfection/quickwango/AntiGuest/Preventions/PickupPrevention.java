@@ -23,7 +23,7 @@ public class PickupPrevention extends FilteredItemPrevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.set("message", "&4You are not allowed to pickup items!");
+        config.set("message", "&4You are not allowed to pickup this item!");
         config.set("messageDelay", 3);
 
         return config;
