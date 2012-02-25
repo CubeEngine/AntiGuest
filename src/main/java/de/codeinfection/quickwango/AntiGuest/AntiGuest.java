@@ -131,7 +131,6 @@ public class AntiGuest extends JavaPlugin
     @Override
     public void onDisable()
     {
-        PreventionManager.getInstance().clearPreventions();
         log(this.getDescription().getVersion() + " disabled");
     }
 
