@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -36,7 +37,11 @@ public class ItemPrevention extends FilteredItemPrevention
     {
         if (event.getAction() != Action.PHYSICAL)
         {
-            this.prevent(event, event.getPlayer(), event.getItem().getType());
+            final ItemStack itemInHand = event.getItem();
+            if (itemInHand != null)
+            {
+                this.prevent(event, event.getPlayer(), event.getItem().getType());
+            }
         }
     }
 }
