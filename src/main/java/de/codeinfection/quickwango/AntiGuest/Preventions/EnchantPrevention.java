@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,7 +26,8 @@ public class EnchantPrevention extends FilteredItemPrevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.set("message", "&4You are not allowed to enchant!");
+        config.set("message", "&4You are not allowed to enchant this item!");
+        config.set("list", new String[] {Material.DIAMOND_SWORD.toString().toLowerCase().replace('_', ' ')});
 
         return config;
     }

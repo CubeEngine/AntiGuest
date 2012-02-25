@@ -27,7 +27,7 @@ public class ItemPrevention extends FilteredItemPrevention
         ConfigurationSection config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to use this item!");
-        config.set("list", new String[] {Material.DIAMOND_SWORD.toString().toLowerCase()});
+        config.set("list", new String[] {Material.DIAMOND_SWORD.toString().toLowerCase().replace('_', ' ')});
 
         return config;
     }
