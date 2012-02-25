@@ -1,8 +1,8 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
-import de.codeinfection.quickwango.AntiGuest.Util.Convert;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.Util.Convert;
 import de.codeinfection.quickwango.AntiGuest.Util.Vector;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
