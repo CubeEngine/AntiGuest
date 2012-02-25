@@ -98,7 +98,7 @@ public abstract class Prevention implements Listener
 
     public boolean can(final Player player)
     {
-        AntiGuest.debug("Checking permission: " + this.permission);
+        AntiGuest.debug("Checking permission: " + this.permission.getName());
         return player.hasPermission(this.permission);
     }
 

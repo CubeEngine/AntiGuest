@@ -92,6 +92,11 @@ public class AntiGuest extends JavaPlugin
 
         PreventionManager.getInstance().loadPreventions(this.config);
 
+        if (!this.config.getValues(false).isEmpty())
+        {
+            this.saveConfig();
+        }
+
         BaseCommand baseCommand = new BaseCommand(this);
         baseCommand.registerSubCommand(new ListCommand(baseCommand))
                    .registerSubCommand(new CanCommand(baseCommand))

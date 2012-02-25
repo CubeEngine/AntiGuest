@@ -1,7 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
-import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,9 +11,8 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
  *
  * @author Phillip
  */
-public class PickupPrevention extends Prevention
+public class PickupPrevention extends FilteredItemPrevention
 {
-
     public PickupPrevention()
     {
         super("pickup", AntiGuest.getInstance());
@@ -33,6 +32,6 @@ public class PickupPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST)
     public void handle(PlayerPickupItemEvent event)
     {
-        preventThrottled(event, event.getPlayer());
+        preventThrottled(event, event.getPlayer(), event.getItem().getItemStack().getType());
     }
 }

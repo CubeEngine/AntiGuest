@@ -100,7 +100,7 @@ public class PreventionManager
         if (prevention != null)
         {
             prevention.initialize(server, config);
-            server.getPluginManager().registerEvents(prevention, prevention.getPlugin());
+            this.pm.registerEvents(prevention, prevention.getPlugin());
 
             try
             {
