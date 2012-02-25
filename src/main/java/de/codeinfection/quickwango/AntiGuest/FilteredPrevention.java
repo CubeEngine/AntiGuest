@@ -58,6 +58,8 @@ public abstract class FilteredPrevention extends Prevention
 
             switch (this.mode)
             {
+                case NONE:
+                    return false;
                 case WHITELIST:
                     return isListed;
                 case BLACKLIST:
@@ -92,6 +94,7 @@ public abstract class FilteredPrevention extends Prevention
 
     public enum Mode
     {
+        NONE("-1", "none", "nolist", "all"),
         WHITELIST("0", "white", "whitelist", "positivlist"),
         BLACKLIST("1", "black", "blacklist", "negativlist");
 
