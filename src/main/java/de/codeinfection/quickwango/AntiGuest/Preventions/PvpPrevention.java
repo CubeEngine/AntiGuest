@@ -31,8 +31,8 @@ public class PvpPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EntityDamageByEntityEvent event)
     {
         final Entity damager = event.getDamager();

@@ -28,14 +28,14 @@ public class PlaceblockPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(BlockPlaceEvent event)
     {
         prevent(event, event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PaintingPlaceEvent event)
     {
         prevent(event, event.getPlayer());

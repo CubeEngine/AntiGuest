@@ -30,8 +30,8 @@ public class PressureplatePrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerInteractEvent event)
     {
         if (event.getAction() == Action.PHYSICAL)

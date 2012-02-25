@@ -30,14 +30,14 @@ public class BreakblockPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(BlockBreakEvent event)
     {
         prevent(event, event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PaintingBreakByEntityEvent event)
     {
         final Entity remover = event.getRemover();

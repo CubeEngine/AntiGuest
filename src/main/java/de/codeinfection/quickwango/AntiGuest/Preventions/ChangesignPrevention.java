@@ -28,8 +28,8 @@ public class ChangesignPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(SignChangeEvent event)
     {
         prevent(event, event.getPlayer());

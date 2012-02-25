@@ -28,8 +28,8 @@ public class ShearPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerShearEntityEvent event)
     {
         prevent(event, event.getPlayer());

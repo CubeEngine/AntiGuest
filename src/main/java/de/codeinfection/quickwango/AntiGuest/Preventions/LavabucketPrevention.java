@@ -30,14 +30,14 @@ public class LavabucketPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void empty(PlayerBucketEmptyEvent event)
     {
         handle(event);
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fill(PlayerBucketFillEvent event)
     {
         handle(event);

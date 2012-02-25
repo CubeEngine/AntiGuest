@@ -133,4 +133,10 @@ public class PreventionManager
 
         return this;
     }
+
+    public PreventionManager clearPreventions()
+    {
+        this.preventions.clear();
+        return this;
+    }
 }

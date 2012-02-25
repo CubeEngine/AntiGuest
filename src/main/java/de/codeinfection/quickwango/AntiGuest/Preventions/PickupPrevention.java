@@ -28,8 +28,8 @@ public class PickupPrevention extends FilteredItemPrevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerPickupItemEvent event)
     {
         preventThrottled(event, event.getPlayer(), event.getItem().getItemStack().getType());

@@ -30,8 +30,8 @@ public class BowPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EntityShootBowEvent event)
     {
         final Entity shooter = event.getEntity();

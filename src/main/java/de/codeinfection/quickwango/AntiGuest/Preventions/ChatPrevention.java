@@ -28,8 +28,8 @@ public class ChatPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerChatEvent event)
     {
         prevent(event, event.getPlayer());

@@ -45,8 +45,8 @@ public class MovePrevention extends Prevention
         super.initialize(server, config);
         this.radius = config.getInt("radius");
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerMoveEvent event)
     {
         final Player player = event.getPlayer();

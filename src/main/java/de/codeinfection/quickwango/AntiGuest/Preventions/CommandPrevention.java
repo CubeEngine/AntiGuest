@@ -49,8 +49,8 @@ public class CommandPrevention extends FilteredPrevention
         }
         this.filterItems = newItems;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerCommandPreprocessEvent event)
     {
         String message = event.getMessage();

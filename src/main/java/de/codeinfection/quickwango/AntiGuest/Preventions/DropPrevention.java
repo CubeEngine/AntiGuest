@@ -28,7 +28,7 @@ public class DropPrevention extends FilteredItemPrevention
         return config;
     }
     
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerDropItemEvent event)
     {
         prevent(event, event.getPlayer(), event.getItemDrop().getItemStack().getType());

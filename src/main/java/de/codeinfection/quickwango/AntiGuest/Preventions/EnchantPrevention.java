@@ -32,13 +32,13 @@ public class EnchantPrevention extends FilteredItemPrevention
         return config;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PrepareItemEnchantEvent event)
     {
         prevent(event, event.getEnchanter(), event.getItem().getType());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EnchantItemEvent event)
     {
         prevent(event, event.getEnchanter(), event.getItem().getType());

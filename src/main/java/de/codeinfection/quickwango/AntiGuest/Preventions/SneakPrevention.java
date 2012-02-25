@@ -29,8 +29,8 @@ public class SneakPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerToggleSneakEvent event)
     {
         final Player player = event.getPlayer();

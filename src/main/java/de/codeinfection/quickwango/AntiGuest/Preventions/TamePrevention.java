@@ -31,7 +31,7 @@ public class TamePrevention extends Prevention
         return config;
     }
     
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EntityTameEvent event)
     {
         final AnimalTamer tamer = event.getOwner();

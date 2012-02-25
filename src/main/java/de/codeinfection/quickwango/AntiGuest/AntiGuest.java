@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -94,9 +95,22 @@ public class AntiGuest extends JavaPlugin
         this.config.options().copyDefaults(true);
         debugMode = this.config.getBoolean("debug");
 
+        try
+        {
+            EventHandler.class.getMethod("ignoreCancelled");
+        }
+        catch (NoSuchMethodException e)
+        {
+            AntiGuest.error("AntiGuest detected that your CraftBukkit version is too old.");
+            AntiGuest.error("You should at least use CraftBukkit 1.1-R4 !");
+            AntiGuest.error("I will now disable my self!");
+            this.pm.disablePlugin(this);
+            return;
+        }
+
         PreventionManager.getInstance().loadPreventions(this.config);
 
-        if (!this.config.getValues(false).isEmpty())
+        if (!this.config.getKeys(false).isEmpty())
         {
             this.saveConfig();
         }
@@ -117,6 +131,7 @@ public class AntiGuest extends JavaPlugin
     @Override
     public void onDisable()
     {
+        PreventionManager.getInstance().clearPreventions();
         log(this.getDescription().getVersion() + " disabled");
     }
 

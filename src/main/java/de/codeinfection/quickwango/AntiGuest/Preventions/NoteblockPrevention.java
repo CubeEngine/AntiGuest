@@ -30,8 +30,8 @@ public class NoteblockPrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerInteractEvent event)
     {
         final Action action = event.getAction();

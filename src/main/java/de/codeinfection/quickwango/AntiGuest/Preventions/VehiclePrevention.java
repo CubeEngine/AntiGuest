@@ -37,8 +37,8 @@ public class VehiclePrevention extends Prevention
 
         return config;
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(VehicleEnterEvent event)
     {
         final Entity entered = event.getEntered();
@@ -47,8 +47,8 @@ public class VehiclePrevention extends Prevention
             prevent(event, (Player)entered);
         }
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(VehicleDestroyEvent event)
     {
         final Entity attacker = event.getAttacker();
@@ -67,8 +67,8 @@ public class VehiclePrevention extends Prevention
             prevent(event, (Player)entered);
         }
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(VehicleEntityCollisionEvent event)
     {
         final Entity collider = event.getEntity();
@@ -81,7 +81,7 @@ public class VehiclePrevention extends Prevention
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerInteractEvent event)
     {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)

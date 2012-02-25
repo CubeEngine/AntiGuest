@@ -42,8 +42,8 @@ public class SpamPrevention extends Prevention
         this.spamLockDuration = config.getInt("lockDuration");
         this.chatTimestamps = new HashMap<Player, Long>();
     }
-    
-    @EventHandler(priority = EventPriority.LOW)
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void handle(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
