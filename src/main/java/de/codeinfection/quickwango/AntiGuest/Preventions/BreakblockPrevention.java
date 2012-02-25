@@ -3,9 +3,12 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.painting.PaintingBreakByEntityEvent;
 
 /**
  *
@@ -32,5 +35,15 @@ public class BreakblockPrevention extends Prevention
     public void handle(BlockBreakEvent event)
     {
         prevent(event, event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void handle(PaintingBreakByEntityEvent event)
+    {
+        final Entity remover = event.getRemover();
+        if (remover instanceof Player)
+        {
+            prevent(event, (Player)remover);
+        }
     }
 }

@@ -6,6 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.painting.PaintingPlaceEvent;
 
 /**
  *
@@ -30,6 +31,12 @@ public class PlaceblockPrevention extends Prevention
     
     @EventHandler(priority = EventPriority.LOWEST)
     public void handle(BlockPlaceEvent event)
+    {
+        prevent(event, event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void handle(PaintingPlaceEvent event)
     {
         prevent(event, event.getPlayer());
     }
