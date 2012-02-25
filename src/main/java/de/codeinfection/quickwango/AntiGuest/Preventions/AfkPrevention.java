@@ -57,6 +57,7 @@ public class AfkPrevention extends Prevention
         {
             tracker.cancel();
         }
+        this.trackerMap.clear();
     }
 
     public void updateTracker(final Player player)
@@ -102,7 +103,7 @@ public class AfkPrevention extends Prevention
 
     private class PlayerAfkTracker implements Runnable
     {
-        private final static int UPDATE_DELAY = 500;
+        private final static int UPDATE_DELAY = 250;
         private final Player player;
         private int taskId;
         private long nextUpdate;
