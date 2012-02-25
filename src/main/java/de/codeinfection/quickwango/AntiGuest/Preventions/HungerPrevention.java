@@ -7,8 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 /**
  *
@@ -33,15 +32,12 @@ public class HungerPrevention extends Prevention
     }
     
     @EventHandler(priority = EventPriority.LOWEST)
-    public void handle(EntityDamageEvent event)
+    public void handle(FoodLevelChangeEvent event)
     {
-        if (event.getCause() == DamageCause.STARVATION)
+        final Entity entity = event.getEntity();
+        if (entity instanceof Player)
         {
-            final Entity entity = event.getEntity();
-            if (entity instanceof Player)
-            {
-                prevent(event, (Player)entity);
-            }
+            prevent(event, (Player)entity);
         }
     }
 }
