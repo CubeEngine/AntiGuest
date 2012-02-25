@@ -3,82 +3,73 @@ AntiGuest
 
 Description:
 ------------
-AntiGuest prevents guests from doing specific things like building and fighting, which can be used to grief.
+AntiGuest prevents players from doing specific things like building and fighting, which can be used to grief.
 
-Features:
+Every prevention has its own configurable message which will be printed to the player. This message supports color codes (&0, &1, ..., &e, &f, &k)
+
+Preventions:
 ---------
-- prevent guests from (configurable):
-    - using levers, buttons, doors and/or pressureplates
-    - opening chests and/or doors
-    - crafting, cooking, dispensing, enchanting and/or brewing
-    - eating cakes
-    - fishing
-    - sleeping in beds
-    - using buckets
-    - building
-    - fighting
-    - getting targeted by monsters
-    - picking up and/or dropping items
-    - using vehicles
-    - spamming the chat or completely chatting
-    - starvation
-    - sprinting
-    - sneaking (currently disabled)
-    - moving (currently disabled)
-    - changing repeater delays
-    - changing or playing noteblocks
-    - playing records in jukeboxes
-- all messages are configurable and support color codes
+- **drop** -- prevents from dropping specific items
+- **fish** -- prevents from fishing
+- **vehicle** -- prevents from using vehicles (entering, placing, destroying, pushing)
+- **door** -- prevents from opening or closing doors (including fence gates)
+- **chest** -- prevents from accessing chests
+- **chat** -- prevents from chatting
+- **changesign** -- prevents from changing signs
+- **jukebox** -- prevents from using jukeboxes
+- **repeater** -- prevents from changing the repeater delays
+- **button** --  prevents from pushing buttons
+- **brew** -- prevents from brewing
+- **command** -- prevents from using specific commands
+- **furnace** -- prevents from accessing furnaces
+- **dispenser** -- prevents from accessing dispensers
+- **workbench** -- prevents from accessing workbenches
+- **breakblock** -- prevents from breaking blocks
+- **lever** -- prevents from using levers
+- **waterbucket** -- prevents from using water buckets
+- **move** -- prevents from moving too far
+- **placeblock** -- prevents from placing blocks
+- **lavabucket** -- prevents from using lava buckets
+- **cake** -- prevents from eating cakes
+- **pvp** -- prevents from damaging other players
+- **monster** -- prevents from getting targeted by mosters
+- **pickup** -- prevents from picking up specific items
+- **bed** -- prevents from sleeping
+- **pressureplate** -- prevents from triggering pressure plates
+- **tame** -- prevents from taming animals
+- **hunger** -- prevents from starvation
+- **noteblock** -- prevents from using noteblocks
+- **item** -- prevents from using specific items
+- **shear** -- prevents from shearing animals
+- **bow** -- prevents from shooting bows
+- **spam** -- prevents from spam
+- **sneak** -- prevents from sneaking (the player will still duck, but the name above him stays visible)
+- **enchant** -- prevents from enchanting specific items
+
+Commands:
+---------
+General syntax: **/antiguest <command\>** or **/ag <command\>**
+
+- **help** -- prints a help text
+- **can [player] <preventionname\>** -- checks whether the player (or another player) passes a prevention
+- **list [all|*]** -- lists the active or all registered preventions
+- **reload** -- reloads the plugin
+- **debug** -- toggles the debug mode
 
 Installation:
 -------------
 - Just put the AntiGuest into you plugins folder
-- If you come from a version **BEFORE** 2.0.0: delete your old config.yml
+- If your upgrading from an older version you might remove you config to get a fresh one
 - restart/reload your server
-- The configuration file will be auto-generated on the first start
+- The configuration file will be generated/updated as soon as the plugin gets enabled
 
 Permissions:
 ------------
-- AntiGuest.\* - *Allows the player to do everything*
-    - AntiGuest.interact - Allows the player to interact with the world
-        - AntiGuest.lever - *Allows the player to use levers*
-        - AntiGuest.button - *Allows the player to push buttons*
-        - AntiGuest.door - *Allows the player to open and close doors*
-        - AntiGuest.bed - *Allows the player to sleep in beds*
-        - AntiGuest.fish - *Allows the player to fish*
-            - AntiGuest.lavabucket - *Allows the player to use lava buckets*
-            - AntiGuest.waterbucket - *Allows the player to use water buckets*
-        - AntiGuest.bucket - *Allows the player to use buckets*
-        - AntiGuest.pressureplate - *Allows the player to trigger pressure plates*
-        - AntiGuest.cake - *Allows the player to eat cake*
-        - AntiGuest.repeater - *Allows the player to change repeater delays*
-    - AntiGuest.build - *Allows the player to build*
-        - AntiGuest.placeblock - *Allows the player to place blocks*
-        - AntiGuest.breakblock - *Allows the player to break blocks*
-    - AntiGuest.craft - *Allows the player to do crafting related things*
-        - AntiGuest.furnace - *Allows the player to furnace*
-        - AntiGuest.workbench - *Allows the player to craft*
-        - AntiGuest.dispenser - *Allows the player to dispense*
-        - AntiGuest.chest - *Allows the player to use chests*
-        - AntiGuest.enchant - *Allows the player to enchant*
-        - AntiGuest.brew - *Allows the player to brew*
-    - AntiGuest.fight - *Allows the player to fight*
-        - AntiGuest.monster - *Allows the player to get targeted by monsters*
-        - AntiGuest.pvp - *Allows the player to fight*
-    - AntiGuest.item - *Allows the player to do item related things*
-        - AntiGuest.drop - *Allows the player to drop items*
-        - AntiGuest.pickup - *Allows the player to pickup items*
-    - AntiGuest.movement - *Allows the player to move as he wants*
-        - AntiGuest.move - *Allows the player to move*
-        - AntiGuest.sneak - *Allows the player to sneak*
-        - AntiGuest.sprint - *Allows the player to sprint*
-    - AntiGuest.music - *Allows the player to do music related things*
-        - AntiGuest.noteblock - *Allows the player to make music*
-        - AntiGuest.jukebox - *Allows the player to play music*
-    - AntiGuest.vehicle - *Allows the player to use vehicles*
-    - AntiGuest.chat - *Allows the player to chat*
-    - AntiGuest.hunger - *Allows the player to die by hunger*
-    - AntiGuest.spam - *Allows the player to chat as fast as he wants*
+- **antiguest.\*** -- Allows the player to do everything
+    - **antiguest.commands.\*** -- Allows the player to run all commands
+        - ** antiguest.commands.<command\>** -- Allows the player to run the specific command
+    - **antiguest.preventions.\*** -- Allows the player to pass all preventions
+        - **antiguest.preventions.<preventionname\>** -- Allows the player to pass the specific prevention
 
 Configuration:
 --------------

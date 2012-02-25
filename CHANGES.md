@@ -1,6 +1,28 @@
 Changes
 =======
 
+Version 3.0.0-SNAPSHOT
+-------------
+- completely rewritten
+- depends now on Bukkit 1.1-R4 !
+- fully compatible with Bukkit 1.1-R5 !
+- dynamic default configuration generation
+- permissions reworked
+    - dynamic permission registration
+    - permissions are all lowercased
+    - prevention permissions are: antiguest.preventions.<preventionname\>
+    - command permissions are: antiguest.commands.<command\>
+- added a API for other plugins (currently undocumented)
+- plugin is reloadable now
+- added filtered preventions (item, pickup, drop and enchant)
+- added a bow prevention (shooting the bow)
+- added a tame prevention
+- added a changesign prevention
+- added a shear prevention
+- changed the hungerprevention to prevent the hunger value from changing
+- added commands /antiguest <command> (alias: /ag <command>)
+- commands: help, list, can, reload, debug
+
 Version 2.5.0
 -------------
 - split bukkit into waterbucket and lavabucket
