@@ -23,7 +23,7 @@ public class BreakblockPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to break blocks!");
+        config.set("message", "&4You are not allowed to break blocks!");
 
         return config;
     }

@@ -26,8 +26,8 @@ public class MonsterPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "");
-        config.addDefault("messageDelay", 3);
+        config.set("message", "");
+        config.set("messageDelay", 3);
 
         return config;
     }

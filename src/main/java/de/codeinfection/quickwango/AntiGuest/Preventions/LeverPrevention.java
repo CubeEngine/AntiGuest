@@ -25,7 +25,7 @@ public class LeverPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to use levers!");
+        config.set("message", "&4You are not allowed to use levers!");
 
         return config;
     }

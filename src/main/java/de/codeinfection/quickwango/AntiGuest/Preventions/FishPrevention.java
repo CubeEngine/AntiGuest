@@ -24,7 +24,7 @@ public class FishPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to fish!");
+        config.set("message", "&4You are not allowed to fish!");
 
         return config;
     }

@@ -26,7 +26,7 @@ public class CakePrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4The cake is a lie!!");
+        config.set("message", "&4The cake is a lie!!");
 
         return config;
     }

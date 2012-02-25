@@ -26,7 +26,7 @@ public class DoorPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to interact with doors!");
+        config.set("message", "&4You are not allowed to interact with doors!");
 
         return config;
     }

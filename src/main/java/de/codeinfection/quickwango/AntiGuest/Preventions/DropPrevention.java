@@ -24,7 +24,7 @@ public class DropPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to drop items!");
+        config.set("message", "&4You are not allowed to drop items!");
 
         return config;
     }

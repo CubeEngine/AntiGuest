@@ -26,7 +26,7 @@ public class EnchantPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to enchant!");
+        config.set("message", "&4You are not allowed to enchant!");
 
         return config;
     }

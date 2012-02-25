@@ -27,7 +27,7 @@ public class PvpPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to fight!");
+        config.set("message", "&4You are not allowed to fight!");
 
         return config;
     }

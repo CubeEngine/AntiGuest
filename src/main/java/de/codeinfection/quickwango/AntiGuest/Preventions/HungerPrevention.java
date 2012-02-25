@@ -27,7 +27,7 @@ public class HungerPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "");
+        config.set("message", "");
 
         return config;
     }

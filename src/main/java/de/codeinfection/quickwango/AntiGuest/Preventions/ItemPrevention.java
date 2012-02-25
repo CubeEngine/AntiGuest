@@ -36,8 +36,8 @@ public class ItemPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to use this item!");
-        config.addDefault("items", new String[] {"diamond sword"});
+        config.set("message", "&4You are not allowed to use this item!");
+        config.set("items", new String[] {"diamond sword"});
 
         return config;
     }

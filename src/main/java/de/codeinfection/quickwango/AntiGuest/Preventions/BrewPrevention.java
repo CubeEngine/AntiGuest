@@ -26,7 +26,7 @@ public class BrewPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to brew!");
+        config.set("message", "&4You are not allowed to brew!");
 
         return config;
     }

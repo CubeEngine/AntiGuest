@@ -24,7 +24,7 @@ public class ChatPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to chat!");
+        config.set("message", "&4You are not allowed to chat!");
 
         return config;
     }

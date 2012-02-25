@@ -32,9 +32,9 @@ public class MovePrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to move any further!");
-        config.addDefault("messageDelay", 3);
-        config.addDefault("radius", 5);
+        config.set("message", "&4You are not allowed to move any further!");
+        config.set("messageDelay", 3);
+        config.set("radius", 5);
 
         return config;
     }

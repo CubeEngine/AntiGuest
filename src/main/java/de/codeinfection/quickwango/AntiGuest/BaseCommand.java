@@ -78,7 +78,14 @@ public class BaseCommand implements CommandExecutor
     public BaseCommand registerSubCommand(AbstractCommand command)
     {
         this.subCommands.put(command.getLabel(), command);
-        command.getPermission().addParent(this.parentPermission, true);
+        final Permission perm = command.getPermission();
+        try
+        {
+            this.plugin.getServer().getPluginManager().addPermission(perm);
+        }
+        catch (IllegalArgumentException e)
+        {}
+        perm.addParent(this.parentPermission, true);
         return this;
     }
 

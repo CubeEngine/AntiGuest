@@ -47,8 +47,8 @@ public abstract class Prevention implements Listener
     {
         ConfigurationSection defaultConfig = new MemoryConfiguration();
 
-        defaultConfig.addDefault("enable", false);
-        defaultConfig.addDefault("message", "&4You are not allowed to do this.");
+        defaultConfig.set("enable", false);
+        defaultConfig.set("message", "&4You are not allowed to do this.");
 
         return defaultConfig;
     }

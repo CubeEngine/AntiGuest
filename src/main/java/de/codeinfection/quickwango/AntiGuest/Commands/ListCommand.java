@@ -25,8 +25,10 @@ public class ListCommand extends AbstractCommand
         sender.sendMessage("");
         for (Prevention prevention : PreventionManager.getInstance().getPreventions())
         {
-            sender.sendMessage(" - " + prevention.getName());
-            sender.sendMessage("    Active: " + (prevention.isInitialized() ? "Yes" : "No"));
+            if (prevention.isInitialized())
+            {
+                sender.sendMessage(" - " + prevention.getName());
+            }
         }
 
         return true;

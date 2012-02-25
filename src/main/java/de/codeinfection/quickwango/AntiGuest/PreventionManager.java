@@ -7,6 +7,7 @@ import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
@@ -24,7 +25,6 @@ public class PreventionManager
 
     private Server server;
     private PluginManager pm;
-    private Configuration config;
     private ConfigurationSection defaultConfigSection;
     private Permission parentPermission;
     
@@ -33,7 +33,7 @@ public class PreventionManager
         this.plugin = null;
         this.server = null;
         this.pm = null;
-        this.defaultConfigSection = null;
+        this.defaultConfigSection = new MemoryConfiguration();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
     }
@@ -54,9 +54,6 @@ public class PreventionManager
             this.plugin = plugin;
             this.server = plugin.getServer();
             this.pm = this.server.getPluginManager();
-            this.config = plugin.getConfig();
-            this.config.options().copyDefaults(true);
-            this.defaultConfigSection = this.config.getConfigurationSection("preventions").getDefaultSection();
 
             this.pm.addPermission(this.parentPermission);
         }
@@ -105,17 +102,22 @@ public class PreventionManager
             prevention.initialize(server, config);
             server.getPluginManager().registerEvents(prevention, prevention.getPlugin());
 
-            
-            this.pm.addPermission(prevention.getPermission());
+            try
+            {
+                this.pm.addPermission(prevention.getPermission());
+            }
+            catch (IllegalArgumentException e)
+            {}
 
             return true;
         }
         return false;
     }
 
-    public PreventionManager loadPreventions()
+    public PreventionManager loadPreventions(Configuration config)
     {
-        ConfigurationSection preventionsSection = this.config.getConfigurationSection("preventions");
+        config.getDefaultSection().set("preventions", this.defaultConfigSection);
+        ConfigurationSection preventionsSection = config.getConfigurationSection("preventions");
         if (preventionsSection != null)
         {
             ConfigurationSection currentSection;

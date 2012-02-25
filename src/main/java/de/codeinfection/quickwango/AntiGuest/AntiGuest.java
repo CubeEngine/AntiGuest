@@ -84,10 +84,13 @@ public class AntiGuest extends JavaPlugin
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
 
-        debugMode = this.getConfig().getBoolean("debug");
-        this.saveConfig();
+        this.reloadConfig();
 
-        PreventionManager.getInstance().loadPreventions();
+        this.config = this.getConfig();
+        this.config.options().copyDefaults(true);
+        debugMode = this.config.getBoolean("debug");
+
+        PreventionManager.getInstance().loadPreventions(this.config);
 
         BaseCommand baseCommand = new BaseCommand(this);
         baseCommand.registerSubCommand(new ListCommand(baseCommand))

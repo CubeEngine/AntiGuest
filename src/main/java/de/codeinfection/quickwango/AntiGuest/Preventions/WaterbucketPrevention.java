@@ -26,7 +26,7 @@ public class WaterbucketPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to use water buckets!");
+        config.set("message", "&4You are not allowed to use water buckets!");
 
         return config;
     }

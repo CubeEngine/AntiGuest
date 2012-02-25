@@ -25,8 +25,8 @@ public class PressureplatePrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to pressure the plate!");
-        config.addDefault("messageDelay", 3);
+        config.set("message", "&4You are not allowed to pressure the plate!");
+        config.set("messageDelay", 3);
 
         return config;
     }

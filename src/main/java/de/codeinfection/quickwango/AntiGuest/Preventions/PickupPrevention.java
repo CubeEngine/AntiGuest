@@ -24,8 +24,8 @@ public class PickupPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.addDefault("message", "&4You are not allowed to pickup items!");
-        config.addDefault("messageDelay", 3);
+        config.set("message", "&4You are not allowed to pickup items!");
+        config.set("messageDelay", 3);
 
         return config;
     }
