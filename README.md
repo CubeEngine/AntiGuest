@@ -21,7 +21,7 @@ and even more complex setups, it's completely up to you.
 
 **Watch out! Tips for common mistakes**
 
-- All prevents are disabled by default since version 3.0
+- All preventions are disabled by default since version 3.0
 - The permissions are all lowercase, check that before you report AntiGuest not working
 
 Preventions:
