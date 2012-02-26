@@ -53,6 +53,7 @@ public class AntiGuest extends JavaPlugin
             .registerPrevention(new ChatPrevention())
             .registerPrevention(new ChestPrevention())
             .registerPrevention(new CommandPrevention())
+            .registerPrevention(new DamagePrevention())
             .registerPrevention(new DispenserPrevention())
             .registerPrevention(new DoorPrevention())
             .registerPrevention(new DropPrevention())
