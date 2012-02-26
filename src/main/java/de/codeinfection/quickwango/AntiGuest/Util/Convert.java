@@ -13,39 +13,31 @@ public final class Convert
     private Convert()
     {}
 
-    public static Vector toVector(Location loc)
+    public static Vector3D toVector(Location loc)
     {
         if (loc == null)
         {
             return null;
         }
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+        return new Vector3D(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public static Vector toVector2D(Location loc)
+    public static Vector2D toVector2D(Location loc)
     {
         if (loc == null)
         {
             return null;
         }
-        return new Vector(loc.getX(), loc.getZ());
+        return new Vector2D(loc.getX(), loc.getZ());
     }
 
-    public static Location toLocation(World world, Vector vector)
+    public static Location toLocation(World world, Vector3D vector)
     {
-        if (vector.getDimension() >= 3)
-        {
-            throw new IllegalArgumentException("The vector must have at least 3 dimensions!");
-        }
-        return new Location(world, vector.get(0), vector.get(1), vector.get(2));
+        return new Location(world, vector.x, vector.y, vector.z);
     }
 
-    public static Location toLocation(Player player, Vector vector)
+    public static Location toLocation(Player player, Vector3D vector)
     {
-        if (vector.getDimension() != 3)
-        {
-            throw new IllegalArgumentException("The vector must be of the third dimension!");
-        }
-        return new Location(player.getWorld(), vector.get(0), vector.get(1), vector.get(2), player.getLocation().getYaw(), player.getLocation().getPitch());
+        return toLocation(player, vector);
     }
 }

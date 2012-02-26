@@ -3,7 +3,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions;
 import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.Util.Convert;
-import de.codeinfection.quickwango.AntiGuest.Util.Vector;
+import de.codeinfection.quickwango.AntiGuest.Util.Vector2D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -55,15 +55,15 @@ public class MovePrevention extends Prevention
         {
             final Location toLocation = event.getTo();
             final Location spawnLocation = toLocation.getWorld().getSpawnLocation();
-            final Vector to = Convert.toVector2D(toLocation);
-            final Vector spawn = Convert.toVector2D(spawnLocation);
+            final Vector2D to = Convert.toVector2D(toLocation);
+            final Vector2D spawn = Convert.toVector2D(spawnLocation);
 
             if (this.radius / spawn.distance(to) < 1)
             {
                 sendThrottledMessage(player);
                 event.setCancelled(true);
                 
-                final Vector from = Convert.toVector2D(player.getLocation());
+                final Vector2D from = Convert.toVector2D(player.getLocation());
                 // i bit less then 1 because of the inaccurate from location
                 if (this.radius / spawn.distance(from) <= 0.98)
                 {
