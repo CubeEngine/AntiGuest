@@ -28,7 +28,7 @@ public class DamagePrevention extends FilteredPrevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.set("message", "&4AntiGuest protected you from damage!");
+        config.set("message", "&2AntiGuest protected you from damage!");
         config.set("mode", "none");
         config.set("list", new String[]{"lava"});
 

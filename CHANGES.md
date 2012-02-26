@@ -20,6 +20,7 @@ Version 3.0.0-SNAPSHOT
 - added a changesign prevention
 - added a shear prevention
 - added a afk prevention
+- added a damage prevention
 - changed the hungerprevention to prevent the hunger value from changing
 - added commands /antiguest <command\> (alias: /ag <command\>)
     - commands: help, list, can, reload, debug

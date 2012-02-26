@@ -7,9 +7,20 @@ AntiGuest prevents players from doing specific things like building and fighting
 
 Every prevention has its own configurable message which will be printed to the player. This message supports color codes (&0, &1, ..., &e, &f, &k)
 
+**How does this work?**
+
+AntiGuest uses permissions to determine whether a player is allowed to do a specific action.
+Usually you only want to prevent your guests from doing things like breaking and placing blocks (griefing),
+so should ***not*** give your guests group the permission to do so.
+However your accepted players should by able to do these actions.
+That can be achieved by adding the permission "antiguest.preventions.*" or a action specific permission to the player or his group.
+As you might see, this system allows more than just "guests can nothing, members everything".
+You could for example stagger the permission like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
+and even more complex setups, itÄs completely up to you.
+
 Preventions:
 ---------
-- **drop** -- prevents from dropping specific items
+- **drop** -- prevents from dropping specific items ***\****
 - **fish** -- prevents from fishing
 - **vehicle** -- prevents from using vehicles (entering, placing, destroying, pushing)
 - **door** -- prevents from opening or closing doors (including fence gates)
@@ -20,7 +31,7 @@ Preventions:
 - **repeater** -- prevents from changing the repeater delays
 - **button** --  prevents from pushing buttons
 - **brew** -- prevents from brewing
-- **command** -- prevents from using specific commands
+- **command** -- prevents from using specific commands ***\****
 - **furnace** -- prevents from accessing furnaces
 - **dispenser** -- prevents from accessing dispensers
 - **workbench** -- prevents from accessing workbenches
@@ -33,19 +44,34 @@ Preventions:
 - **cake** -- prevents from eating cakes
 - **pvp** -- prevents from damaging other players
 - **monster** -- prevents from getting targeted by mosters
-- **pickup** -- prevents from picking up specific items
+- **pickup** -- prevents from picking up specific items ***\****
 - **bed** -- prevents from sleeping
 - **pressureplate** -- prevents from triggering pressure plates
 - **tame** -- prevents from taming animals
 - **hunger** -- prevents from starvation
 - **noteblock** -- prevents from using noteblocks
-- **item** -- prevents from using specific items
+- **item** -- prevents from using specific items ***\****
 - **shear** -- prevents from shearing animals
 - **bow** -- prevents from shooting bows
 - **spam** -- prevents from spam
 - **sneak** -- prevents from sneaking (the player will still duck, but the name above him stays visible)
-- **enchant** -- prevents from enchanting specific items
+- **enchant** -- prevents from enchanting specific items ***\****
 - **afk** -- prevents from idling players by kicking them after a configured time
+- **damage** -- prevents from getting damaged ***\****
+
+***\**** These preventions are filterable which means that they're able to prevent from a subset of actions
+
+For example the command preventions which can either prevent the usage of all commands or just a specific set of commands based on a whitelist or blacklist
+
+These preventions usually have at least 2 additional config entries: mode and list
+
+- mode:
+    - none: everything will be prevented (aliases: -1, nolist, all)
+    - whitelist: the listed entries are ***NOT*** prevented (aliases: 0, white, positivlist)
+    - blacklist: only the listed entries will be prevented (aliases: 1, black, negativlist)
+- list:
+    - the list of entries. this might be commands, item names, ...depending on what the prevention does
+    - this list will be ignored if the mode is set to none
 
 Commands:
 ---------
