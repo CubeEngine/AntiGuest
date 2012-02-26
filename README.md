@@ -20,7 +20,7 @@ and even more complex setups, itÄs completely up to you.
 
 Preventions:
 ---------
-- **drop** -- prevents from dropping specific items **\***
+- **drop** -- prevents from dropping specific items *
 - **fish** -- prevents from fishing
 - **vehicle** -- prevents from using vehicles (entering, placing, destroying, pushing)
 - **door** -- prevents from opening or closing doors (including fence gates)
@@ -31,7 +31,7 @@ Preventions:
 - **repeater** -- prevents from changing the repeater delays
 - **button** --  prevents from pushing buttons
 - **brew** -- prevents from brewing
-- **command** -- prevents from using specific commands **\***
+- **command** -- prevents from using specific commands *
 - **furnace** -- prevents from accessing furnaces
 - **dispenser** -- prevents from accessing dispensers
 - **workbench** -- prevents from accessing workbenches
@@ -44,22 +44,22 @@ Preventions:
 - **cake** -- prevents from eating cakes
 - **pvp** -- prevents from damaging other players
 - **monster** -- prevents from getting targeted by mosters
-- **pickup** -- prevents from picking up specific items **\***
+- **pickup** -- prevents from picking up specific items *
 - **bed** -- prevents from sleeping
 - **pressureplate** -- prevents from triggering pressure plates
 - **tame** -- prevents from taming animals
 - **hunger** -- prevents from starvation
 - **noteblock** -- prevents from using noteblocks
-- **item** -- prevents from using specific items **\***
+- **item** -- prevents from using specific items *
 - **shear** -- prevents from shearing animals
 - **bow** -- prevents from shooting bows
 - **spam** -- prevents from spam
 - **sneak** -- prevents from sneaking (the player will still duck, but the name above him stays visible)
-- **enchant** -- prevents from enchanting specific items **\***
+- **enchant** -- prevents from enchanting specific items *
 - **afk** -- prevents from idling players by kicking them after a configured time
-- **damage** -- prevents from getting damaged **\***
+- **damage** -- prevents from getting damaged *
 
-**\*** These preventions are filterable which means that they're able to prevent from a subset of actions
+* These preventions are filterable which means that they're able to prevent from a subset of actions
 
 For example the command preventions which can either prevent the usage of all commands or just a specific set of commands based on a whitelist or blacklist
 
