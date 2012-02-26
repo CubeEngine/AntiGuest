@@ -54,7 +54,7 @@ public abstract class FilteredPrevention extends Prevention
         {
             final boolean isListed = this.filterItems.contains(item);
 
-            AntiGuest.debug("Filter mode: " + this.mode.name());
+            //AntiGuest.debug("Filter mode: " + this.mode.name());
 
             switch (this.mode)
             {
