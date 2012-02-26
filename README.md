@@ -19,6 +19,11 @@ As you might see, this system allows more than just "guests can nothing, members
 You could for example stagger the permission like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
 and even more complex setups, it's completely up to you.
 
+**Watch out! Tips for common mistakes**
+
+- All prevents are disabled by default since version 3.0
+- The permissions are all lowercase, check that before you report AntiGuest not working
+
 Preventions:
 ---------
 - **drop** -- prevents from dropping specific items *
