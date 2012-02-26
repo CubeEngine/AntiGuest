@@ -59,7 +59,7 @@ Preventions:
 - **afk** -- prevents from idling players by kicking them after a configured time
 - **damage** -- prevents from getting damaged *
 
-* These preventions are filterable which means that they're able to prevent from a subset of actions
+\* These preventions are filterable which means that they're able to prevent from a subset of actions
 
 For example the command preventions which can either prevent the usage of all commands or just a specific set of commands based on a whitelist or blacklist
 
