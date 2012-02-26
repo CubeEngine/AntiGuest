@@ -10,6 +10,7 @@ Every prevention has its own configurable message which will be printed to the p
 **How does this work?**
 
 AntiGuest uses permissions to determine whether a player is allowed to do a specific action.
+So you should (not necessarily needed, but recommended) install a permission manager like bPermissions or GroupManager along with AntiGuest.
 Usually you only want to prevent your guests from doing things like breaking and placing blocks (griefing),
 so should ***not*** give your guests group the permission to do so.
 However your accepted players should by able to do these actions.
