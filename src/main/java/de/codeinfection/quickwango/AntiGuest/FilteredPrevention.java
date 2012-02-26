@@ -69,22 +69,26 @@ public abstract class FilteredPrevention extends Prevention
         return true;
     }
 
-    public void prevent(final Cancellable event, final Player player, final String item)
+    public boolean prevent(final Cancellable event, final Player player, final String item)
     {
         if (!this.can(player, item))
         {
             event.setCancelled(true);
             this.sendMessage(player);
+            return true;
         }
+        return false;
     }
     
-    public void preventThrottled(final Cancellable event, final Player player, final String item)
+    public boolean preventThrottled(final Cancellable event, final Player player, final String item)
     {
         if (!this.can(player, item))
         {
             event.setCancelled(true);
             this.sendThrottledMessage(player);
+            return true;
         }
+        return false;
     }
 
     public Mode getMode()

@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
@@ -18,9 +19,12 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
  */
 public class DamagePrevention extends FilteredPrevention
 {
+    private String damagerMessage;
+
     public DamagePrevention()
     {
         super("damage", AntiGuest.getInstance());
+        this.damagerMessage = null;
     }
 
     @Override
@@ -29,6 +33,7 @@ public class DamagePrevention extends FilteredPrevention
         ConfigurationSection config = super.getDefaultConfig();
 
         config.set("message", "&2AntiGuest protected you from damage!");
+        config.set("damagerMessage", "&4This player cannot be damaged!");
         config.set("mode", "none");
         config.set("list", new String[]{"lava"});
 
@@ -39,6 +44,20 @@ public class DamagePrevention extends FilteredPrevention
     public void initialize(final Server server, final ConfigurationSection config)
     {
         super.initialize(server, config);
+
+        this.damagerMessage = config.getString("damagerMessage");
+        if (this.damagerMessage != null)
+        {
+            if (this.damagerMessage.length() > 0)
+            {
+                this.damagerMessage = parseColors(this.damagerMessage);
+            }
+            else
+            {
+                this.damagerMessage = null;
+            }
+        }
+
         HashSet<String> newList = new HashSet<String>();
         for (String item : this.filterItems)
         {
@@ -59,7 +78,17 @@ public class DamagePrevention extends FilteredPrevention
         final Entity entity = event.getEntity();
         if (entity instanceof Player)
         {
-            prevent(event, (Player)entity, event.getCause().name());
+            if (prevent(event, (Player)entity, event.getCause().name()) && this.damagerMessage != null)
+            {
+                if (event instanceof EntityDamageByEntityEvent)
+                {
+                    final Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
+                    if (damager instanceof Player)
+                    {
+                        ((Player)damager).sendMessage(this.damagerMessage);
+                    }
+                }
+            }
         }
     }
 }

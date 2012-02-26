@@ -43,6 +43,11 @@ public abstract class Prevention implements Listener
         this.enabled = false;
     }
 
+    public static String parseColors(final String string)
+    {
+        return string.replaceAll("(?i)&([a-fk0-9])", ChatColor.COLOR_CHAR + "$1");
+    }
+
     public ConfigurationSection getDefaultConfig()
     {
         ConfigurationSection defaultConfig = new MemoryConfiguration();
@@ -65,7 +70,7 @@ public abstract class Prevention implements Listener
             }
             else
             {
-                this.message = this.message.replaceAll("(?i)&([a-fk0-9])", ChatColor.COLOR_CHAR + "$1");
+                this.message = parseColors(this.message);
             }
         }
     }
@@ -148,22 +153,26 @@ public abstract class Prevention implements Listener
         return this.name;
     }
     
-    public void prevent(final Cancellable event, final Player player)
+    public boolean prevent(final Cancellable event, final Player player)
     {
         if (!this.can(player))
         {
             event.setCancelled(true);
             this.sendMessage(player);
+            return true;
         }
+        return false;
     }
     
-    public void preventThrottled(final Cancellable event, final Player player)
+    public boolean preventThrottled(final Cancellable event, final Player player)
     {
         if (!this.can(player))
         {
             event.setCancelled(true);
             this.sendThrottledMessage(player);
+            return true;
         }
+        return false;
     }
 }
 

@@ -57,13 +57,13 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         return can(player, material.name());
     }
 
-    public void prevent(final Cancellable event, final Player player, final Material material)
+    public boolean prevent(final Cancellable event, final Player player, final Material material)
     {
-        prevent(event, player, material.name());
+        return prevent(event, player, material.name());
     }
 
-    public void preventThrottled(final Cancellable event, final Player player, final Material material)
+    public boolean preventThrottled(final Cancellable event, final Player player, final Material material)
     {
-        preventThrottled(event, player, material.name());
+        return preventThrottled(event, player, material.name());
     }
 }
