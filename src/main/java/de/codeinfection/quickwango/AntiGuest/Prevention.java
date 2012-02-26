@@ -65,7 +65,7 @@ public abstract class Prevention implements Listener
             }
             else
             {
-                this.message = this.message.replaceAll("&([a-f0-9])", ChatColor.COLOR_CHAR + "$1");
+                this.message = this.message.replaceAll("&([a-fk0-9])", ChatColor.COLOR_CHAR + "$1");
             }
         }
     }
