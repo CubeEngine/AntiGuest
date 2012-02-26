@@ -17,7 +17,7 @@ However your accepted players should by able to do these actions.
 That can be achieved by adding the permission "antiguest.preventions.*" or a action specific permission to the player or his group.
 As you might see, this system allows more than just "guests can nothing, members everything".
 You could for example stagger the permission like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
-and even more complex setups, itÄs completely up to you.
+and even more complex setups, it's completely up to you.
 
 Preventions:
 ---------
