@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 /**
  *
@@ -34,7 +34,8 @@ public class MovePrevention extends Prevention
 
         config.set("message", "&4You are not allowed to move any further!");
         config.set("messageDelay", 3);
-        config.set("radius", 5);
+        // TODO remove Bukkit dependency
+        config.set("radius", Math.max(5, Bukkit.getSpawnRadius()));
 
         return config;
     }
@@ -67,9 +68,11 @@ public class MovePrevention extends Prevention
                 if (this.radius / spawn.distance(from) <= 0.98)
                 {
                     // teleportation scheduled for the next tick to prevent kick (moved too fast)
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(AntiGuest.getInstance(), new Runnable() {
-                        public void run() {
-                            player.teleport(spawnLocation, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                    player.getServer().getScheduler().scheduleSyncDelayedTask(AntiGuest.getInstance(), new Runnable()
+                    {
+                        public void run()
+                        {
+                            player.teleport(spawnLocation, TeleportCause.PLUGIN);
                         }
                     });
                 }
