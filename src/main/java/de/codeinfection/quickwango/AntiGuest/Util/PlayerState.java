@@ -4,8 +4,9 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 
 /**
+ * This is just a simple class that stores player states on runtime
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class PlayerState
 {

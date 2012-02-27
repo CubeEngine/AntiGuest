@@ -1,8 +1,9 @@
 package de.codeinfection.quickwango.AntiGuest.Util;
 
 /**
+ * This class represents a 3D vector
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class Vector3D
 {

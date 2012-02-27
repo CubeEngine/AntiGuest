@@ -5,8 +5,9 @@ import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import org.bukkit.command.CommandSender;
 
 /**
+ * This command prints a help message
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class HelpCommand extends AbstractCommand
 {

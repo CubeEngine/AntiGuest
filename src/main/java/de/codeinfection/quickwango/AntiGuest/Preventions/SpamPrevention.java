@@ -37,11 +37,18 @@ public class SpamPrevention extends Prevention
     }
     
     @Override
-    public void initialize(Server server, ConfigurationSection config)
+    public void enable(Server server, ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
         this.spamLockDuration = config.getInt("lockDuration");
         this.chatTimestamps = new HashMap<Player, Long>();
+    }
+
+    @Override
+    public void disable()
+    {
+        super.disable();
+        this.chatTimestamps = null;
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

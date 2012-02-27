@@ -10,8 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * This commands checks whether a player can pass a prevention
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class CanCommand extends AbstractCommand
 {

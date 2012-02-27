@@ -7,8 +7,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
+ * This command toggles the debug mode
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class DebugCommand extends AbstractCommand
 {

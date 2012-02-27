@@ -37,15 +37,15 @@ public class CommandPrevention extends FilteredPrevention
     }
 
     @Override
-    public void initialize(final Server server, final ConfigurationSection config)
+    public void enable(final Server server, final ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
         
         // normalize the items
-        HashSet<String> newItems = new HashSet<String>(this.filterItems.size());
-        for (String item : this.filterItems)
+        HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());
+        for (Object item : this.filterItems)
         {
-            newItems.add(item.toLowerCase());
+            newItems.add(String.valueOf(item).toLowerCase());
         }
         this.filterItems = newItems;
     }

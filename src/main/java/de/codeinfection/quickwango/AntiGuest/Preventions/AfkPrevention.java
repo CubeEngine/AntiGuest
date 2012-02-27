@@ -21,14 +21,14 @@ import org.bukkit.scheduler.BukkitScheduler;
  */
 public class AfkPrevention extends Prevention
 {
-    private final HashMap<Player, PlayerAfkTracker> trackerMap;
+    private HashMap<Player, PlayerAfkTracker> trackerMap;
     private BukkitScheduler scheduler;
     private int timeout;
 
     public AfkPrevention()
     {
         super("afk", AntiGuest.getInstance());
-        this.trackerMap = new HashMap<Player, PlayerAfkTracker>();
+        this.trackerMap = null;
     }
     
     @Override
@@ -43,11 +43,13 @@ public class AfkPrevention extends Prevention
     }
 
     @Override
-    public void initialize(final Server server, final ConfigurationSection config)
+    public void enable(final Server server, final ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
         this.scheduler = server.getScheduler();
         this.timeout = config.getInt("timeout") * 20;
+
+        this.trackerMap = new HashMap<Player, PlayerAfkTracker>();
     }
 
     @Override
@@ -59,6 +61,7 @@ public class AfkPrevention extends Prevention
             tracker.cancel();
         }
         this.trackerMap.clear();
+        this.trackerMap = null;
     }
 
     public void updateTracker(final Player player)

@@ -10,8 +10,9 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * This class is the base for all sub commands
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class BaseCommand implements CommandExecutor
 {
@@ -75,6 +76,12 @@ public class BaseCommand implements CommandExecutor
         return command.execute(sender, subArgs);
     }
 
+    /**
+     * Registeres a sub command
+     *
+     * @param command the command to register
+     * @return fluent interface
+     */
     public BaseCommand registerSubCommand(AbstractCommand command)
     {
         this.subCommands.put(command.getLabel(), command);
@@ -89,6 +96,12 @@ public class BaseCommand implements CommandExecutor
         return this;
     }
 
+    /**
+     * Unregisteres a sub command
+     *
+     * @param name the name of the sub command to unregister
+     * @return fluent interface
+     */
     public BaseCommand unregisterSubCommand(String name)
     {
         this.subCommands.remove(name);
@@ -99,12 +112,23 @@ public class BaseCommand implements CommandExecutor
         return this;
     }
 
+    /**
+     * Unregisteres all sub commands
+     *
+     * @return fluent interface
+     */
     public BaseCommand unregisterAllSubCommands()
     {
         this.subCommands.clear();
         return this;
     }
 
+    /**
+     * Sets the default command
+     *
+     * @param name the name of a registered command
+     * @return fluent interface
+     */
     public BaseCommand setDefaultCommand(String name)
     {
         if (this.subCommands.containsKey(name))
@@ -114,16 +138,32 @@ public class BaseCommand implements CommandExecutor
         return this;
     }
 
+    /**
+     * Returns a collection of the registered sub commands
+     *
+     * @return the commands
+     */
     public Collection<AbstractCommand> getRegisteredCommands()
     {
         return this.subCommands.values();
     }
 
+    /**
+     * Returns the label of this command
+     * This is only used by sub commands
+     *
+     * @return
+     */
     public String getLabel()
     {
         return this.label;
     }
 
+    /**
+     * Returns the corresponding plugin
+     *
+     * @return this plugin
+     */
     public Plugin getPlugin()
     {
         return this.plugin;

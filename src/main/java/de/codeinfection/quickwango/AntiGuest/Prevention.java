@@ -14,8 +14,9 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * This class represents a prevention
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public abstract class Prevention implements Listener
 {
@@ -27,12 +28,27 @@ public abstract class Prevention implements Listener
     private boolean enabled;
 
     private final HashMap<Player, Long> throttleTimestamps;
-    
+
+    /**
+     * Initializes the prevention with its name and the corresponding plugin.
+     * This contructor use "antiguest.preventions.<name>" as the permission!
+     *
+     * @param name the name of the prevention
+     * @param plugin the corresponding plugin
+     */
     public Prevention(final String name, final Plugin plugin)
     {
         this(name, "antiguest.preventions." + name, plugin);
     }
 
+    /**
+     * Initializes the prevention with its name, permission and the corresponding plugin.
+     * This contructor use "antiguest.preventions&lt;name&gt;" as the permission!
+     *
+     * @param name the name of the prevention
+     * @param permission the permission
+     * @param plugin the corresponding plugin
+     */
     public Prevention(final String name, final String permission, final Plugin plugin)
     {
         this.name = name;
@@ -46,12 +62,21 @@ public abstract class Prevention implements Listener
 
     private static final String PARSE_COLOR_REPLACEMENT = ChatColor.COLOR_CHAR + "$1";
     private static final Pattern PARSE_COLOR_PATTERN = Pattern.compile("&([0-9A-FK])", Pattern.CASE_INSENSITIVE);
-    
+
+    /**
+     * This method is a small util to parse color codes of the syntax &amp;&lt;code&gt;
+     */
     public static String parseColors(final String string)
     {
         return PARSE_COLOR_PATTERN.matcher(string).replaceAll(PARSE_COLOR_REPLACEMENT);
     }
 
+    /**
+     * Generates the default configuration of this prevention.
+     * This method should be overridden for custom configs.
+     *
+     * @return  the default config
+     */
     public ConfigurationSection getDefaultConfig()
     {
         ConfigurationSection defaultConfig = new MemoryConfiguration();
@@ -61,8 +86,15 @@ public abstract class Prevention implements Listener
 
         return defaultConfig;
     }
-    
-    public void initialize(final Server server, final ConfigurationSection config)
+
+    /**
+     * Enables the prevention.
+     * This method should be overridden for custom configs.
+     *
+     * @param server an Server instance
+     * @param config the configuration of this prevention
+     */
+    public void enable(final Server server, final ConfigurationSection config)
     {
         this.messageDelay = config.getInt("messageDelay") * 1000;
         this.message = config.getString("message");
@@ -79,52 +111,103 @@ public abstract class Prevention implements Listener
         }
     }
 
+    /**
+     * Disables the prevention.
+     * This method should be overridden to cleanup customized preventions
+     */
     public void disable()
     {
         this.throttleTimestamps.clear();
     }
 
+    /**
+     * Returns whether this prevention is enabled.
+     *
+     * @return true if this prevention is enabled
+     */
     public final boolean isEnabled()
     {
         return this.enabled;
     }
 
+    /**
+     * Sets the enabled state of this prevention
+     *
+     * @param enable
+     */
     public final void setEnabled(boolean enable)
     {
         this.enabled = enable;
     }
 
-    public String getName()
+    /**
+     * Returns the prevention's name
+     * 
+     * @return the name
+     */
+    public final String getName()
     {
         return this.name;
     }
 
-    public Permission getPermission()
+    /**
+     * Returns the prevention's permission
+     *
+     * @return the permission
+     */
+    public final Permission getPermission()
     {
         return this.permission;
     }
 
-    public String getMessage()
-    {
-        return this.message;
-    }
-    
-    public Plugin getPlugin()
+    /**
+     * Returns the plugin corresponding to this prevention
+     *
+     * @return the plugin
+     */
+    public final Plugin getPlugin()
     {
         return this.plugin;
     }
 
+    /**
+     * Returns the message this prevention will send to players
+     *
+     * @return the message
+     */
+    public String getMessage()
+    {
+        return this.message;
+    }
+
+    /**
+     * Returns the delay this preventions uses for throttled messages
+     *
+     * @return the delay
+     */
     public int getMessageDelay()
     {
         return this.messageDelay;
     }
 
+    /**
+     * Checks whether a player can pass a prevention
+     *
+     * @param player the player
+     * @return true if the player can pass the prevention
+     */
     public boolean can(final Player player)
     {
         //AntiGuest.debug("Checking permission: " + this.permission.getName());
         return player.hasPermission(this.permission);
     }
 
+    /**
+     * Sends the configured message to the player or nothing of the message is null
+     * (empty string in configuration)
+     *
+     * @param player the player to send to
+     */
     public void sendMessage(final Player player)
     {
         if (this.message != null)
@@ -133,30 +216,40 @@ public abstract class Prevention implements Listener
         }
     }
 
+    /**
+     * Does the same as sendMessage(Player), except that this method throttles the messages sending
+     * 
+     * @param player hte player to send to
+     */
     public void sendThrottledMessage(final Player player)
     {
-        this.sendThrottledMessage(player, this.messageDelay);
-    }
-
-    public void sendThrottledMessage(final Player player, final int delay)
-    {
-        Long last = this.throttleTimestamps.get(player);
-        last = (last == null ? 0 : last);
+        Long next = this.throttleTimestamps.get(player);
+        next = (next == null ? 0 : next);
         final long current = System.currentTimeMillis();
         
-        if (last + delay < current)
+        if (next < current)
         {
             this.sendMessage(player);
-            this.throttleTimestamps.put(player, current);
+            this.throttleTimestamps.put(player, current + this.messageDelay);
         }
     }
 
     @Override
     public String toString()
     {
-        return this.name;
+        return "Prevention{name=" + this.name + ", permission=" + this.permission.toString() + ", plugin=" + this.plugin.toString() + "}";
     }
-    
+
+    /**
+     * This method combines can(Player) and sendMessage(Player),
+     * by first checking whether player can pass the prevention and if not,
+     * the given cancellable event gets cancelled and the message is sent to the
+     * player.
+     *
+     * @param event a cancellable event
+     * @param player the player
+     * @return true if the action was prevented
+     */
     public boolean prevent(final Cancellable event, final Player player)
     {
         if (!this.can(player))
@@ -167,7 +260,17 @@ public abstract class Prevention implements Listener
         }
         return false;
     }
-    
+
+    /**
+     * This method combines can(Player) and sendThrottledMessage(Player),
+     * by first checking whether player can pass the prevention and if not,
+     * the given cancellable event gets cancelled and the message is sent to the
+     * player.
+     *
+     * @param event a cancellable event
+     * @param player the player
+     * @return true if the action was prevented
+     */
     public boolean preventThrottled(final Cancellable event, final Player player)
     {
         if (!this.can(player))

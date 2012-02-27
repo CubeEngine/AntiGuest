@@ -42,9 +42,9 @@ public class DamagePrevention extends FilteredPrevention
     }
 
     @Override
-    public void initialize(final Server server, final ConfigurationSection config)
+    public void enable(final Server server, final ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
 
         this.damagerMessage = config.getString("damagerMessage");
         if (this.damagerMessage != null)
@@ -59,18 +59,26 @@ public class DamagePrevention extends FilteredPrevention
             }
         }
 
-        HashSet<String> newList = new HashSet<String>();
-        for (String item : this.filterItems)
+        HashSet<Object> newList = new HashSet<Object>();
+        String itemString;
+        for (Object item : this.filterItems)
         {
-            item = item.trim().replace(" ", "_").toUpperCase();
+            itemString = String.valueOf(item).trim().replace(" ", "_").toUpperCase();
             try
             {
-                newList.add(DamageCause.valueOf(item).toString());
+                newList.add(DamageCause.valueOf(itemString));
             }
             catch (IllegalArgumentException e)
             {}
         }
         this.filterItems = newList;
+    }
+
+    @Override
+    public void disable()
+    {
+        super.disable();
+        this.damagerMessage = null;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

@@ -10,12 +10,14 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * This base class represents a prevention that can be filtered.
+ * That means it is able to prevent only a subset of actions based an a whitelist or blacklist
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public abstract class FilteredPrevention extends Prevention
 {
-    protected Set<String> filterItems;
+    protected Set<Object> filterItems;
     private Mode mode;
     
     public FilteredPrevention(String name, Plugin plugin)
@@ -28,6 +30,11 @@ public abstract class FilteredPrevention extends Prevention
         super(name, permission, plugin);
     }
 
+    /**
+     * This method adds the entries "mode" and "list" to the default config
+     *
+     * @return the default config
+     */
     @Override
     public ConfigurationSection getDefaultConfig()
     {
@@ -39,16 +46,29 @@ public abstract class FilteredPrevention extends Prevention
         return defaultConfig;
     }
 
+    /**
+     * This method reads the additional entries "mode" and "list"
+     * 
+     * @param server
+     * @param config
+     */
     @Override
-    public void initialize(final Server server, final ConfigurationSection config)
+    public void enable(final Server server, final ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
 
         this.mode = Mode.getByAlias(config.getString("mode"));
-        this.filterItems = new HashSet<String>(config.getStringList("list"));
+        this.filterItems = new HashSet<Object>(config.getList("list"));
     }
 
-    public boolean can(final Player player, final String item)
+    /**
+     * This method checks whether the player can do the subaction
+     *
+     * @param player the player
+     * @param item the item representing the subaction
+     * @return true if he can
+     */
+    public boolean can(final Player player, final Object item)
     {
         if (!can(player))
         {
@@ -69,7 +89,15 @@ public abstract class FilteredPrevention extends Prevention
         return true;
     }
 
-    public boolean prevent(final Cancellable event, final Player player, final String item)
+    /**
+     * Prevents the action if the player can't pass it
+     * 
+     * @param event a cancellable event
+     * @param player the player
+     * @param item the item representing the subaction
+     * @return true if the action was prevented
+     */
+    public boolean prevent(final Cancellable event, final Player player, final Object item)
     {
         if (!this.can(player, item))
         {
@@ -79,8 +107,16 @@ public abstract class FilteredPrevention extends Prevention
         }
         return false;
     }
-    
-    public boolean preventThrottled(final Cancellable event, final Player player, final String item)
+
+    /**
+     * The same as prevent(Cancellable, Player, Object) except that it is throttled
+     *
+     * @param event a cancellable event
+     * @param player the player
+     * @param item the item representing the subaction
+     * @return true if the action was prevented
+     */
+    public boolean preventThrottled(final Cancellable event, final Player player, final Object item)
     {
         if (!this.can(player, item))
         {
@@ -91,11 +127,19 @@ public abstract class FilteredPrevention extends Prevention
         return false;
     }
 
+    /**
+     * Returns the mode this prevention currently uses
+     *
+     * @return the mode
+     */
     public Mode getMode()
     {
         return this.mode;
     }
 
+    /**
+     * Represents the modes of a filtered prevention
+     */
     public enum Mode
     {
         NONE("-1", "none", "nolist", "all"),

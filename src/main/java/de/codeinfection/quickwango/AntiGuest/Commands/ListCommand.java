@@ -8,8 +8,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
+ * This command lists all registered or all active preventions
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class ListCommand extends AbstractCommand
 {
@@ -28,7 +29,7 @@ public class ListCommand extends AbstractCommand
             sender.sendMessage("");
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
             {
-                sender.sendMessage(" - " + ChatColor.YELLOW + prevention.getName());
+                sender.sendMessage(" - " + (prevention.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + prevention.getName());
             }
             sender.sendMessage("");
         }
@@ -42,7 +43,7 @@ public class ListCommand extends AbstractCommand
                 if (prevention.isEnabled())
                 {
                     ++i;
-                    sender.sendMessage(" - " + ChatColor.YELLOW + prevention.getName());
+                    sender.sendMessage(" - " + ChatColor.GREEN + prevention.getName());
                 }
             }
             sender.sendMessage("");

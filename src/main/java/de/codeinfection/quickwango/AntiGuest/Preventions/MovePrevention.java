@@ -42,9 +42,9 @@ public class MovePrevention extends Prevention
     }
     
     @Override
-    public void initialize(Server server, ConfigurationSection config)
+    public void enable(Server server, ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
         this.radius = config.getInt("radius");
     }
 

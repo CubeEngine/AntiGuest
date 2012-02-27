@@ -8,8 +8,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 /**
+ * This command reloads the plugin
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class ReloadCommand extends AbstractCommand
 {

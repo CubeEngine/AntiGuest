@@ -4,13 +4,12 @@ import java.util.HashSet;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * This class represents a filterable Prevention related to Materials
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public abstract class FilteredItemPrevention extends FilteredPrevention
 {
@@ -19,6 +18,16 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         super(name, plugin);
     }
 
+    public FilteredItemPrevention(String name, String permission, Plugin plugin)
+    {
+        super(name, permission, plugin);
+    }
+
+    /**
+     * This method changes the default value if the "list" entry
+     *
+     * @return the default config
+     */
     @Override
     public ConfigurationSection getDefaultConfig()
     {
@@ -29,41 +38,27 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         return config;
     }
 
+    /**
+     * This method parses the string list to Material instances
+     * 
+     * @param server a Server instance
+     * @param config the config of this prevention
+     */
     @Override
-    public void initialize(final Server server, final ConfigurationSection config)
+    public void enable(final Server server, final ConfigurationSection config)
     {
-        super.initialize(server, config);
+        super.enable(server, config);
 
         // normalize the items
-        HashSet<String> newItems = new HashSet<String>(this.filterItems.size());
-        for (String item : this.filterItems)
+        HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());
+        for (Object item : this.filterItems)
         {
-            Material material = Material.matchMaterial(item);
+            Material material = Material.matchMaterial(String.valueOf(item));
             if (item != null)
             {
-                newItems.add(material.name());
+                newItems.add(material);
             }
         }
         this.filterItems = newItems;
-    }
-
-    public FilteredItemPrevention(String name, String permission, Plugin plugin)
-    {
-        super(name, permission, plugin);
-    }
-
-    public boolean can(final Player player, Material material)
-    {
-        return can(player, material.name());
-    }
-
-    public boolean prevent(final Cancellable event, final Player player, final Material material)
-    {
-        return prevent(event, player, material.name());
-    }
-
-    public boolean preventThrottled(final Cancellable event, final Player player, final Material material)
-    {
-        return preventThrottled(event, player, material.name());
     }
 }
