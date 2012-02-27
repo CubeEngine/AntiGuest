@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents chest access
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class ChestPrevention extends Prevention
 {
-
     public ChestPrevention()
     {
         super("chest", AntiGuest.getInstance());

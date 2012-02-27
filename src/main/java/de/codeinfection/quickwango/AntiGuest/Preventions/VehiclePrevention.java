@@ -17,8 +17,9 @@ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 
 /**
+ * Prevents vehicle usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class VehiclePrevention extends Prevention
 {

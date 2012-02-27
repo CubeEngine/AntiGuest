@@ -10,8 +10,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents lever usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class LeverPrevention extends Prevention
 {

@@ -10,12 +10,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 /**
+ * Prevents command usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class CommandPrevention extends FilteredPrevention
 {
-
     public CommandPrevention()
     {
         super("command", AntiGuest.getInstance());

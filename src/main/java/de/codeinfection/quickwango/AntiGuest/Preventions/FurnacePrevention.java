@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents furnace access
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class FurnacePrevention extends Prevention
 {
-
     public FurnacePrevention()
     {
         super("furnace", AntiGuest.getInstance());

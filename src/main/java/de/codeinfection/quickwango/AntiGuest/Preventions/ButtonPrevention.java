@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents button usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class ButtonPrevention extends Prevention
 {
-
     public ButtonPrevention()
     {
         super("button", AntiGuest.getInstance());

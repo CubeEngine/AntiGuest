@@ -10,8 +10,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents repeater changing
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class RepeaterPrevention extends Prevention
 {

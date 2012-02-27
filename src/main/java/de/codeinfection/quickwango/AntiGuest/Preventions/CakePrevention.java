@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents cake consumption
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class CakePrevention extends Prevention
 {
-
     public CakePrevention()
     {
         super("cake", AntiGuest.getInstance());

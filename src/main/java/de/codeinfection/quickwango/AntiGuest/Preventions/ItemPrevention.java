@@ -11,8 +11,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * Prevents item usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class ItemPrevention extends FilteredItemPrevention
 {

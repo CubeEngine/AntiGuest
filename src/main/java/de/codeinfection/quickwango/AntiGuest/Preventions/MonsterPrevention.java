@@ -10,12 +10,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 /**
+ * Prevents targeting by monsters
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class MonsterPrevention extends Prevention
 {
-
     public MonsterPrevention()
     {
         super("monster", AntiGuest.getInstance());

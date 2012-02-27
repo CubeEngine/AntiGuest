@@ -9,8 +9,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.painting.PaintingPlaceEvent;
 
 /**
+ * Prevents placing blocks
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class PlaceblockPrevention extends Prevention
 {

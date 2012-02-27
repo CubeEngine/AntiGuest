@@ -8,8 +8,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 /**
+ * Prevents item dropping
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class DropPrevention extends FilteredItemPrevention
 {

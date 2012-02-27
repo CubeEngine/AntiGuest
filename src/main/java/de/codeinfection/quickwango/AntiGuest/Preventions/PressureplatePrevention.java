@@ -10,8 +10,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents pressureplate usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class PressureplatePrevention extends Prevention
 {

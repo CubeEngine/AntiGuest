@@ -8,12 +8,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.SignChangeEvent;
 
 /**
+ * Prevents sign changing
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class ChangesignPrevention extends Prevention
 {
-
     public ChangesignPrevention()
     {
         super("changesign", AntiGuest.getInstance());

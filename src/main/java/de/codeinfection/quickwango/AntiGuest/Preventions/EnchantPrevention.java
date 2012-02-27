@@ -10,12 +10,12 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 
 /**
+ * Prevents enchanting
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class EnchantPrevention extends FilteredItemPrevention
 {
-
     public EnchantPrevention()
     {
         super("enchant", AntiGuest.getInstance());

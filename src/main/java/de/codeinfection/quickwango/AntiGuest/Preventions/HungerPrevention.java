@@ -10,12 +10,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 /**
+ * Prevents hunger
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class HungerPrevention extends Prevention
 {
-
     public HungerPrevention()
     {
         super("hunger", AntiGuest.getInstance());

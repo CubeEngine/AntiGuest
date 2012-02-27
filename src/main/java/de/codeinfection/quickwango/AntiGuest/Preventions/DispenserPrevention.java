@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents dispenser access
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class DispenserPrevention extends Prevention
 {
-
     public DispenserPrevention()
     {
         super("dispenser", AntiGuest.getInstance());

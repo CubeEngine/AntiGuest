@@ -14,8 +14,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 /**
+ * Prevents damage
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class DamagePrevention extends FilteredPrevention
 {

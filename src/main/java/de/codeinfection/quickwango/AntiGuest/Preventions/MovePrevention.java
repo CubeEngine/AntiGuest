@@ -15,8 +15,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 /**
+ * Prevents movement
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class MovePrevention extends Prevention
 {

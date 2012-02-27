@@ -8,12 +8,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChatEvent;
 
 /**
+ * Prevents chatting
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class ChatPrevention extends Prevention
 {
-
     public ChatPrevention()
     {
         super("chat", AntiGuest.getInstance());

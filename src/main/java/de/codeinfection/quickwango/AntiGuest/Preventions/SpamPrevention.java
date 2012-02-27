@@ -11,8 +11,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChatEvent;
 
 /**
+ * Prevents spamming
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class SpamPrevention extends Prevention
 {

@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents door usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class DoorPrevention extends Prevention
 {
-
     public DoorPrevention()
     {
         super("door", AntiGuest.getInstance());

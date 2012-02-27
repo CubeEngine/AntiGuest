@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents noteblock usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class NoteblockPrevention extends Prevention
 {
-
     public NoteblockPrevention()
     {
         super("noteblock", AntiGuest.getInstance());

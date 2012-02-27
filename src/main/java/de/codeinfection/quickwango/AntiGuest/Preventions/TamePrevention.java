@@ -10,8 +10,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityTameEvent;
 
 /**
+ * Prevents taming
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class TamePrevention extends Prevention
 {

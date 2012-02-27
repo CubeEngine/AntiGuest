@@ -8,12 +8,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerFishEvent;
 
 /**
+ * Prevents fishing
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class FishPrevention extends Prevention
 {
-
     public FishPrevention()
     {
         super("fish", AntiGuest.getInstance());

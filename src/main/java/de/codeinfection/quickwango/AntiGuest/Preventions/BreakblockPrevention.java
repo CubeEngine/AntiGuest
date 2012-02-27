@@ -11,8 +11,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.painting.PaintingBreakByEntityEvent;
 
 /**
+ * Prevents block breaking
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class BreakblockPrevention extends Prevention
 {

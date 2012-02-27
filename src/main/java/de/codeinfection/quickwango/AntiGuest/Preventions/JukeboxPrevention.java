@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents jukebox usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class JukeboxPrevention extends Prevention
 {
-
     public JukeboxPrevention()
     {
         super("jukebox", AntiGuest.getInstance());

@@ -10,12 +10,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityShootBowEvent;
 
 /**
+ * Prevents bow usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class BowPrevention extends Prevention
 {
-
     public BowPrevention()
     {
         super("bow", AntiGuest.getInstance());

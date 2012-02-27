@@ -8,12 +8,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
 /**
+ * Prevents shearing
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class ShearPrevention extends Prevention
 {
-
     public ShearPrevention()
     {
         super("shear", AntiGuest.getInstance());

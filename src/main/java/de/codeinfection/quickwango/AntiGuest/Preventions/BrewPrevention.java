@@ -10,12 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Prevents brewing
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class BrewPrevention extends Prevention
 {
-
     public BrewPrevention()
     {
         super("brew", AntiGuest.getInstance());

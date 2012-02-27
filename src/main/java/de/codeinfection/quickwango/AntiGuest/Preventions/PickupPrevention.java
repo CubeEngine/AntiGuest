@@ -8,8 +8,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 /**
+ * Prevents picking up items
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class PickupPrevention extends FilteredItemPrevention
 {

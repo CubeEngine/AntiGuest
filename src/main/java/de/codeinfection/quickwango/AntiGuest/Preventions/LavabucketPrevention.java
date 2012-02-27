@@ -11,8 +11,9 @@ import org.bukkit.event.player.PlayerBucketEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
 /**
+ * Prevents lava bucket usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class LavabucketPrevention extends Prevention
 {

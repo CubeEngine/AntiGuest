@@ -8,12 +8,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
 /**
+ * Prevents bed usage
  *
- * @author Phillip
+ * @author Phillip Schichtel
  */
 public class BedPrevention extends Prevention
 {
-
     public BedPrevention()
     {
         super("bed", AntiGuest.getInstance());
