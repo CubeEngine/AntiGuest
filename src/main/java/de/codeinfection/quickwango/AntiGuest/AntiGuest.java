@@ -1,10 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import de.codeinfection.quickwango.AntiGuest.Commands.CanCommand;
-import de.codeinfection.quickwango.AntiGuest.Commands.DebugCommand;
-import de.codeinfection.quickwango.AntiGuest.Commands.HelpCommand;
-import de.codeinfection.quickwango.AntiGuest.Commands.ListCommand;
-import de.codeinfection.quickwango.AntiGuest.Commands.ReloadCommand;
+import de.codeinfection.quickwango.AntiGuest.Commands.*;
 import de.codeinfection.quickwango.AntiGuest.Preventions.*;
 import java.io.File;
 import java.util.logging.Level;
@@ -118,7 +114,10 @@ public class AntiGuest extends JavaPlugin
         }
 
         BaseCommand baseCommand = new BaseCommand(this);
-        baseCommand.registerSubCommand(new ListCommand(baseCommand))
+        baseCommand.registerSubCommand(new EnabledCommand(baseCommand))
+                   .registerSubCommand(new EnableCommand(baseCommand))
+                   .registerSubCommand(new DisableCommand(baseCommand))
+                   .registerSubCommand(new ListCommand(baseCommand))
                    .registerSubCommand(new CanCommand(baseCommand))
                    .registerSubCommand(new DebugCommand(baseCommand))
                    .registerSubCommand(new HelpCommand(baseCommand))

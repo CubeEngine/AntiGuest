@@ -10,6 +10,7 @@ import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 /**
@@ -131,14 +132,26 @@ public class PreventionManager
     }
 
     /**
-     * Initializes hte named prevention if registered
+     * Initializes the named prevention if registered
+     *
+     * @param name the preventions name
+     * @param plugin a plugin
+     * @return true if the intialization was successful
+     */
+    public boolean enablePrevention(final String name, final Plugin plugin)
+    {
+        return this.enablePrevention(name, plugin.getServer(), plugin.getConfig());
+    }
+
+    /**
+     * Initializes the named prevention if registered
      * 
      * @param name the preventions name
      * @param server an Server instance
      * @param config the prevention's configuration
      * @return true if the intialization was successful
      */
-    public boolean initializePrevention(final String name, final Server server, final ConfigurationSection config)
+    public boolean enablePrevention(final String name, final Server server, final ConfigurationSection config)
     {
         final Prevention prevention = this.preventions.get(name);
         if (prevention != null)
@@ -186,7 +199,7 @@ public class PreventionManager
                 currentSection = preventionsSection.getConfigurationSection(prevention);
                 if (currentSection.getBoolean("enable", false))
                 {
-                    this.initializePrevention(prevention, this.server, currentSection);
+                    this.enablePrevention(prevention, this.server, currentSection);
                 }
             }
         }

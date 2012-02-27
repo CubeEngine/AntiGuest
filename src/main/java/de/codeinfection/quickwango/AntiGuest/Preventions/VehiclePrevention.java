@@ -58,16 +58,6 @@ public class VehiclePrevention extends Prevention
             prevent(event, (Player)attacker);
         }
     }
-    
-    //@EventHandler(priority = EventPriority.LOWEST)
-    public void handle(VehicleExitEvent event)
-    {
-        final LivingEntity entered = event.getExited();
-        if (entered instanceof Player)
-        {
-            prevent(event, (Player)entered);
-        }
-    }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(VehicleEntityCollisionEvent event)
