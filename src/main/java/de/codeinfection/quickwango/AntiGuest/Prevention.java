@@ -1,6 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
@@ -43,9 +44,12 @@ public abstract class Prevention implements Listener
         this.enabled = false;
     }
 
+    private static final String PARSE_COLOR_REPLACEMENT = ChatColor.COLOR_CHAR + "$1";
+    private static final Pattern PARSE_COLOR_PATTERN = Pattern.compile("&([0-9A-FK])", Pattern.CASE_INSENSITIVE);
+    
     public static String parseColors(final String string)
     {
-        return string.replaceAll("(?i)&([a-fk0-9])", ChatColor.COLOR_CHAR + "$1");
+        return PARSE_COLOR_PATTERN.matcher(string).replaceAll(PARSE_COLOR_REPLACEMENT);
     }
 
     public ConfigurationSection getDefaultConfig()
