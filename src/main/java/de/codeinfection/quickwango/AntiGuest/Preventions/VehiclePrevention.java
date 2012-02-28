@@ -64,10 +64,11 @@ public class VehiclePrevention extends Prevention
         final Entity collider = event.getEntity();
         if (collider instanceof Player)
         {
-            sendThrottledMessage((Player)collider);
-            event.setCancelled(true);
-            event.setCollisionCancelled(true);
-            event.setPickupCancelled(true);
+            if (preventThrottled(event, (Player)collider))
+            {
+                event.setCollisionCancelled(true);
+                event.setPickupCancelled(true);
+            }
         }
     }
 
