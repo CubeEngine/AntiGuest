@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 
 /**
  * This class is the base for all sub commands
@@ -19,6 +20,7 @@ public class BaseCommand implements CommandExecutor
 {
     public final String permissinBase;
     private final Plugin plugin;
+    private final PluginManager pm;
     private final HashMap<String, AbstractCommand> subCommands;
     private final Permission parentPermission;
 
@@ -28,10 +30,12 @@ public class BaseCommand implements CommandExecutor
     public BaseCommand(Plugin plugin)
     {
         this.plugin = plugin;
+        this.pm = plugin.getServer().getPluginManager();
         this.permissinBase = this.plugin.getDescription().getName().toLowerCase() + ".commands.";
         this.defaultCommand = null;
         this.subCommands = new HashMap<String, AbstractCommand>();
         this.parentPermission = new Permission(permissinBase + "*", PermissionDefault.OP);
+        this.pm.addPermission(this.parentPermission);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -89,7 +93,7 @@ public class BaseCommand implements CommandExecutor
         final Permission perm = command.getPermission();
         try
         {
-            this.plugin.getServer().getPluginManager().addPermission(perm);
+            this.pm.addPermission(perm);
         }
         catch (IllegalArgumentException e)
         {}
