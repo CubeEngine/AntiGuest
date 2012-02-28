@@ -106,7 +106,7 @@ public class AntiGuest extends JavaPlugin
             return;
         }
 
-        PreventionManager.getInstance().loadPreventions(this.config);
+        PreventionManager.getInstance().loadPreventions(this.config.getConfigurationSection("preventions"));
 
         if (!this.config.getKeys(false).isEmpty())
         {

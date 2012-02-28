@@ -5,7 +5,6 @@ import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,7 +13,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 
 /**
  * Prevents vehicle usage
@@ -35,6 +33,7 @@ public class VehiclePrevention extends Prevention
         ConfigurationSection config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to use vehicles!");
+        config.set("messageDelay", 3);
 
         return config;
     }

@@ -30,7 +30,7 @@ public class BaseCommand implements CommandExecutor
         this.permissinBase = this.plugin.getDescription().getName().toLowerCase() + ".commands.";
         this.defaultCommand = null;
         this.subCommands = new HashMap<String, AbstractCommand>();
-        this.parentPermission = new Permission(permissinBase, PermissionDefault.OP);
+        this.parentPermission = new Permission(permissinBase + "*", PermissionDefault.OP);
     }
 
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args)
