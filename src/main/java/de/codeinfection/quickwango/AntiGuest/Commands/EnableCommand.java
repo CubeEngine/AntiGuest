@@ -1,7 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
@@ -30,7 +29,7 @@ public class EnableCommand extends AbstractCommand
             {
                 if (!prevention.isEnabled())
                 {
-                    if (PreventionManager.getInstance().enablePrevention(args[0], AntiGuest.getInstance()))
+                    if (PreventionManager.getInstance().enablePrevention(args[0]))
                     {
                         sender.sendMessage(ChatColor.GREEN + "This prevention should now be enabled!");
                     }

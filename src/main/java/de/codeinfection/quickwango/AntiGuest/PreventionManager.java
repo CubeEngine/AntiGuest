@@ -9,7 +9,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 /**
@@ -26,7 +25,8 @@ public class PreventionManager
 
     private Server server;
     private PluginManager pm;
-    private Map<String, ConfigurationSection> defaultValues;
+    private Map<String, ConfigurationSection> configurations;
+    private Map<String, ConfigurationSection> defaultConfigurations;
     private Permission parentPermission;
     
     private PreventionManager()
@@ -34,7 +34,8 @@ public class PreventionManager
         this.plugin = null;
         this.server = null;
         this.pm = null;
-        this.defaultValues = new HashMap<String, ConfigurationSection>();
+        this.configurations = new HashMap<String, ConfigurationSection>();
+        this.defaultConfigurations = new HashMap<String, ConfigurationSection>();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
     }
@@ -102,17 +103,25 @@ public class PreventionManager
      */
     public PreventionManager registerPrevention(Prevention prevention)
     {
-        if (prevention == null)
-        {
-            throw new IllegalArgumentException("prevention must not be null!");
-        }
         if (this.plugin == null)
         {
             throw new IllegalStateException("the preventionmanager has not been initialized!");
         }
+        if (prevention == null)
+        {
+            throw new IllegalArgumentException("prevention must not be null!");
+        }
         this.preventions.put(prevention.getName(), prevention);
-        prevention.getPermission().addParent(this.parentPermission, true);
-        this.defaultValues.put(prevention.getName(), prevention.getDefaultConfig());
+        Permission perm = prevention.getPermission();
+        try
+        {
+            this.pm.addPermission(perm);
+        }
+        catch (IllegalArgumentException e)
+        {}
+        perm.addParent(this.parentPermission, true);
+        perm.recalculatePermissibles();
+        this.configurations.put(prevention.getName(), prevention.getDefaultConfig());
         
         return this;
     }
@@ -126,62 +135,59 @@ public class PreventionManager
     public PreventionManager unregisterPrevention(String name)
     {
         this.preventions.remove(name);
-        this.defaultValues.remove(name);
+        this.configurations.remove(name);
+        this.defaultConfigurations.remove(name);
         return this;
     }
 
     /**
-     * Initializes the named prevention if registered.
-     * The given plugin's configuration must contain the path
+     * Enables the named prevention if registered with it's default configuration
      *
      * @param name the preventions name
-     * @param plugin a plugin
+     * @param server an Server instance
      * @return true if the intialization was successful
      */
-    public boolean enablePrevention(final String name, final Plugin plugin)
+    public boolean enablePrevention(final String name)
     {
-        return this.enablePrevention(name, plugin.getServer(), plugin.getConfig().getConfigurationSection("prevents." + name));
+        return this.enablePrevention(name, null);
     }
 
     /**
-     * Initializes the named prevention if registered
+     * Enables the named prevention if registered
      * 
      * @param name the preventions name
      * @param server an Server instance
      * @param config the prevention's configuration
      * @return true if the intialization was successful
      */
-    public boolean enablePrevention(final String name, final Server server, ConfigurationSection config)
+    public boolean enablePrevention(final String name, ConfigurationSection config)
     {
-        final Prevention prevention = this.preventions.get(name);
+        final Prevention prevention = this.getPrevention(name);
         if (prevention != null)
         {
             try
             {
+                ConfigurationSection defaultConfigration = this.defaultConfigurations.get(name);
+
                 if (config != null)
                 {
-                    ConfigurationSection defaultSection = this.defaultValues.get(name);
-                    if (defaultSection != null)
+                    if (defaultConfigration != null)
                     {
-                        for (String key : defaultSection.getKeys(false))
-                        {
-                            config.addDefault(key, defaultSection.get(key));
-                        }
+                        config.getParent().addDefault(config.getName(), defaultConfigration);
                     }
+                    this.configurations.put(name, config);
                 }
                 else
                 {
-                    config = this.defaultValues.get(name);
+                    config = this.configurations.get(name);
+                    if (config == null)
+                    {
+                        config = defaultConfigration;
+                        this.configurations.put(name, config);
+                    }
                 }
-                prevention.enable(server, config);
+                prevention.enable(this.server, config);
                 this.pm.registerEvents(prevention, prevention.getPlugin());
-
-                try
-                {
-                    this.pm.addPermission(prevention.getPermission());
-                }
-                catch (IllegalArgumentException e)
-                {}
 
                 prevention.setEnabled(true);
 
@@ -202,26 +208,20 @@ public class PreventionManager
      * @param config the configuration
      * @return fluent interface
      */
-    public PreventionManager loadPreventions(ConfigurationSection config)
+    public PreventionManager enablePreventions(Map<String, ConfigurationSection> preventionConfigs)
     {
-        if (config == null)
+        if (preventionConfigs == null)
         {
             throw new IllegalArgumentException("config must not be null!");
         }
-        
 
-        Object value;
         ConfigurationSection currentSection;
-        for (Map.Entry<String, Object> entry : config.getValues(false).entrySet())
+        for (Map.Entry<String, ConfigurationSection> entry : preventionConfigs.entrySet())
         {
-            value = entry.getValue();
-            if (value instanceof ConfigurationSection)
+            currentSection = entry.getValue();
+            if (currentSection != null && currentSection.getBoolean("enable", false))
             {
-                currentSection = (ConfigurationSection)value;
-                if (currentSection.getBoolean("enable", false))
-                {
-                    this.enablePrevention(entry.getKey(), this.server, currentSection);
-                }
+                this.enablePrevention(entry.getKey(), currentSection);
             }
         }
 

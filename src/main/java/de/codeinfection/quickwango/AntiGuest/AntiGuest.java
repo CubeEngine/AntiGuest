@@ -3,10 +3,13 @@ package de.codeinfection.quickwango.AntiGuest;
 import de.codeinfection.quickwango.AntiGuest.Commands.*;
 import de.codeinfection.quickwango.AntiGuest.Preventions.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -106,7 +109,16 @@ public class AntiGuest extends JavaPlugin
             return;
         }
 
-        PreventionManager.getInstance().loadPreventions(this.config.getConfigurationSection("preventions"));
+        HashMap<String, ConfigurationSection> configs  = new HashMap<String, ConfigurationSection>();
+        for (Map.Entry<String, Object> entry : this.config.getConfigurationSection("preventions").getValues(false).entrySet())
+        {
+            if (entry.getValue() instanceof ConfigurationSection)
+            {
+                configs.put(entry.getKey(), (ConfigurationSection)entry.getValue());
+            }
+        }
+
+        PreventionManager.getInstance().enablePreventions(configs);
 
         if (!this.config.getKeys(false).isEmpty())
         {

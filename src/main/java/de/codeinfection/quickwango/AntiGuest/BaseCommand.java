@@ -3,6 +3,7 @@ package de.codeinfection.quickwango.AntiGuest;
 import java.util.Collection;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
@@ -33,7 +34,7 @@ public class BaseCommand implements CommandExecutor
         this.parentPermission = new Permission(permissinBase + "*", PermissionDefault.OP);
     }
 
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args)
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
         this.label = label;
         if (args.length > 0)
@@ -93,6 +94,7 @@ public class BaseCommand implements CommandExecutor
         catch (IllegalArgumentException e)
         {}
         perm.addParent(this.parentPermission, true);
+        perm.recalculatePermissibles();
         return this;
     }
 
