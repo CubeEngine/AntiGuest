@@ -32,15 +32,29 @@ public class EnchantPrevention extends FilteredItemPrevention
         return config;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PrepareItemEnchantEvent event)
+    private static final String DETECTION_CLASS = "net.minecraft.server.Slot";
+    private static final byte SEARCH_OFFSET = 12;
+    private static final byte MAX_OFFSET = SEARCH_OFFSET + 4;
+    private boolean shouldBePrevented()
     {
-        prevent(event, event.getEnchanter(), event.getItem().getType());
+        final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        byte slotCalls = 0;
+        for (byte i = SEARCH_OFFSET; i < MAX_OFFSET && slotCalls < 2; ++i)
+        {
+            if (DETECTION_CLASS.equals(stackTrace[i].getClassName()))
+            {
+                ++slotCalls;
+            }
+        }
+        return (slotCalls == 2);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(EnchantItemEvent event)
+    public void handle(PrepareItemEnchantEvent event)
     {
-        prevent(event, event.getEnchanter(), event.getItem().getType());
+        if (this.shouldBePrevented())
+        {
+            prevent(event, event.getEnchanter(), event.getItem().getType());
+        }
     }
 }
