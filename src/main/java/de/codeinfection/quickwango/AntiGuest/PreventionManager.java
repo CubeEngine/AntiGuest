@@ -120,8 +120,7 @@ public class PreventionManager
         catch (IllegalArgumentException e)
         {}
         perm.addParent(this.parentPermission, true);
-        perm.recalculatePermissibles();
-        this.configurations.put(prevention.getName(), prevention.getDefaultConfig());
+        this.defaultConfigurations.put(prevention.getName(), prevention.getDefaultConfig());
         
         return this;
     }
@@ -173,7 +172,7 @@ public class PreventionManager
                 {
                     if (defaultConfigration != null)
                     {
-                        config.getParent().addDefault(config.getName(), defaultConfigration);
+                        config.getDefaultSection().getParent().set(config.getName(), defaultConfigration);
                     }
                     this.configurations.put(name, config);
                 }
@@ -186,12 +185,16 @@ public class PreventionManager
                         this.configurations.put(name, config);
                     }
                 }
-                prevention.enable(this.server, config);
-                this.pm.registerEvents(prevention, prevention.getPlugin());
 
-                prevention.setEnabled(true);
+                if (config != null && config.getBoolean("enable"))
+                {
 
-                return true;
+                    prevention.enable(this.server, config);
+                    this.pm.registerEvents(prevention, prevention.getPlugin());
+
+                    prevention.setEnabled(true);
+                    return true;
+                }
             }
             catch (Throwable t)
             {
@@ -208,21 +211,19 @@ public class PreventionManager
      * @param config the configuration
      * @return fluent interface
      */
-    public PreventionManager enablePreventions(Map<String, ConfigurationSection> preventionConfigs)
+    public PreventionManager enablePreventions(ConfigurationSection preventionsSection)
     {
-        if (preventionConfigs == null)
+        if (preventionsSection == null)
         {
             throw new IllegalArgumentException("config must not be null!");
         }
 
         ConfigurationSection currentSection;
-        for (Map.Entry<String, ConfigurationSection> entry : preventionConfigs.entrySet())
+        for (String preventionName : this.preventions.keySet())
         {
-            currentSection = entry.getValue();
-            if (currentSection != null && currentSection.getBoolean("enable", false))
-            {
-                this.enablePrevention(entry.getKey(), currentSection);
-            }
+            currentSection = preventionsSection.getConfigurationSection(preventionName);
+            currentSection.getParent().getDefaultSection().set(preventionName, this.defaultConfigurations.get(preventionName));
+            this.enablePrevention(preventionName, currentSection);
         }
 
         return this;

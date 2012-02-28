@@ -35,7 +35,12 @@ public class BaseCommand implements CommandExecutor
         this.defaultCommand = null;
         this.subCommands = new HashMap<String, AbstractCommand>();
         this.parentPermission = new Permission(permissinBase + "*", PermissionDefault.OP);
-        this.pm.addPermission(this.parentPermission);
+        try
+        {
+            this.pm.addPermission(this.parentPermission);
+        }
+        catch (IllegalArgumentException e)
+        {}
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
