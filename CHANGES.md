@@ -1,11 +1,10 @@
 Changes
 =======
 
-Version 3.0.0-SNAPSHOT
+Version 3.0.0
 -------------
 - completely rewritten
-- depends now on Bukkit 1.1-R4 !
-- fully compatible with Bukkit 1.1-R5 !
+- depends now on Bukkit 1.1-R5 !
 - dynamic default configuration generation
 - permissions reworked
     - dynamic permission registration

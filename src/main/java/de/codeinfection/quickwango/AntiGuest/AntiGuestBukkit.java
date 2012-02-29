@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -95,12 +94,12 @@ public class AntiGuestBukkit extends JavaPlugin
 
         try
         {
-            EventHandler.class.getMethod("ignoreCancelled");
+            Class.forName("org.bukkit.event.inventory.InventoryOpenEvent");
         }
-        catch (NoSuchMethodException e)
+        catch (ClassNotFoundException e)
         {
             AntiGuestBukkit.error("AntiGuest detected that your CraftBukkit version is too old.");
-            AntiGuestBukkit.error("You should at least use CraftBukkit 1.1-R4 !");
+            AntiGuestBukkit.error("You should at least use CraftBukkit 1.1-R5 !");
             AntiGuestBukkit.error("I will now disable my self!");
             this.pm.disablePlugin(this);
             return;

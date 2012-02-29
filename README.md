@@ -91,6 +91,9 @@ General syntax: **/antiguest <command\>** or **/ag <command\>**
 
 Installation:
 -------------
+
+AntiGuest 3 needs at least Bukkit 1.1-R5
+
 - Just put the AntiGuest into you plugins folder
 - If your upgrading from an older version you might remove you config to get a fresh one
 - restart/reload your server
