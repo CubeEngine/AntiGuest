@@ -1,7 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -21,8 +21,8 @@ public class DebugCommand extends AbstractCommand
     @Override
     public boolean execute(CommandSender sender, String[] args)
     {
-        AntiGuest.debugMode = !AntiGuest.debugMode;
-        if (AntiGuest.debugMode)
+        AntiGuestBukkit.debugMode = !AntiGuestBukkit.debugMode;
+        if (AntiGuestBukkit.debugMode)
         {
             sender.sendMessage(ChatColor.GREEN + "Debug mode is now enabled!");
         }

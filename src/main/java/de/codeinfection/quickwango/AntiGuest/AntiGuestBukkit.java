@@ -11,9 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AntiGuest extends JavaPlugin
+public class AntiGuestBukkit extends JavaPlugin
 {
-    private static AntiGuest instance = null;
+    private static AntiGuestBukkit instance = null;
 
     private static Logger logger = null;
     public static boolean debugMode = false;
@@ -23,12 +23,12 @@ public class AntiGuest extends JavaPlugin
     private Configuration config;
     private File dataFolder;
 
-    public AntiGuest()
+    public AntiGuestBukkit()
     {
         instance = this;
     }
 
-    public static AntiGuest getInstance()
+    public static AntiGuestBukkit getInstance()
     {
         return instance;
     }
@@ -99,9 +99,9 @@ public class AntiGuest extends JavaPlugin
         }
         catch (NoSuchMethodException e)
         {
-            AntiGuest.error("AntiGuest detected that your CraftBukkit version is too old.");
-            AntiGuest.error("You should at least use CraftBukkit 1.1-R4 !");
-            AntiGuest.error("I will now disable my self!");
+            AntiGuestBukkit.error("AntiGuest detected that your CraftBukkit version is too old.");
+            AntiGuestBukkit.error("You should at least use CraftBukkit 1.1-R4 !");
+            AntiGuestBukkit.error("I will now disable my self!");
             this.pm.disablePlugin(this);
             return;
         }

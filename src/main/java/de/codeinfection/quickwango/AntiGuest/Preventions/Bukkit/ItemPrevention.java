@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,7 +19,7 @@ public class ItemPrevention extends FilteredItemPrevention
 {
     public ItemPrevention()
     {
-        super("item", AntiGuest.getInstance());
+        super("item", AntiGuestBukkit.getInstance());
     }
 
     @Override

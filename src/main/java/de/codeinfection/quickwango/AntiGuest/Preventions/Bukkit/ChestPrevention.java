@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,7 +18,7 @@ public class ChestPrevention extends Prevention
 {
     public ChestPrevention()
     {
-        super("chest", AntiGuest.getInstance());
+        super("chest", AntiGuestBukkit.getInstance());
     }
 
     @Override

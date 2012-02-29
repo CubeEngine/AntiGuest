@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -17,7 +17,7 @@ public class PlaceblockPrevention extends Prevention
 {
     public PlaceblockPrevention()
     {
-        super("placeblock", AntiGuest.getInstance());
+        super("placeblock", AntiGuestBukkit.getInstance());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,7 +18,7 @@ public class SneakPrevention extends Prevention
 {
     public SneakPrevention()
     {
-        super("sneak", AntiGuest.getInstance());
+        super("sneak", AntiGuestBukkit.getInstance());
     }
 
     @Override

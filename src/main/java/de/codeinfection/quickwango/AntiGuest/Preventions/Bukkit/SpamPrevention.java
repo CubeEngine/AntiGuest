@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import java.util.HashMap;
 import org.bukkit.Server;
@@ -22,7 +22,7 @@ public class SpamPrevention extends Prevention
 
     public SpamPrevention()
     {
-        super("spam", AntiGuest.getInstance());
+        super("spam", AntiGuestBukkit.getInstance());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -24,7 +24,7 @@ public class VehiclePrevention extends Prevention
 
     public VehiclePrevention()
     {
-        super("vehicle", AntiGuest.getInstance());
+        super("vehicle", AntiGuestBukkit.getInstance());
     }
 
     @Override

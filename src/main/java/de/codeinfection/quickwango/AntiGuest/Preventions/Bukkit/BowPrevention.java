@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -18,7 +18,7 @@ public class BowPrevention extends Prevention
 {
     public BowPrevention()
     {
-        super("bow", AntiGuest.getInstance());
+        super("bow", AntiGuestBukkit.getInstance());
     }
 
     @Override

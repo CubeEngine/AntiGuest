@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import java.util.HashMap;
 import org.bukkit.Server;
@@ -27,7 +27,7 @@ public class AfkPrevention extends Prevention
 
     public AfkPrevention()
     {
-        super("afk", AntiGuest.getInstance());
+        super("afk", AntiGuestBukkit.getInstance());
         this.trackerMap = null;
     }
     
@@ -141,7 +141,7 @@ public class AfkPrevention extends Prevention
                 this.taskId = scheduler.scheduleSyncDelayedTask(getPlugin(), this, timeout);
                 if (this.taskId < 0)
                 {
-                    AntiGuest.error("Tracker for " + this.player.getName() + " failed to schedule!");
+                    AntiGuestBukkit.error("Tracker for " + this.player.getName() + " failed to schedule!");
                 }
             }
         }

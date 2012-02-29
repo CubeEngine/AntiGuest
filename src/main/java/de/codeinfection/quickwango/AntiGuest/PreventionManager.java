@@ -20,7 +20,7 @@ public class PreventionManager
 {
     private static PreventionManager instance = null;
 
-    private AntiGuest plugin;
+    private AntiGuestBukkit plugin;
     private Map<String, Prevention> preventions;
 
     private Server server;
@@ -58,10 +58,10 @@ public class PreventionManager
      * This method initializes the PreventionManager.
      * This has to be done before any other method call!
      *
-     * @param plugin an instance of AntiGuest
+     * @param plugin an instance of AntiGuestBukkit
      * @return fluent interface
      */
-    public PreventionManager initialize(AntiGuest plugin)
+    public PreventionManager initialize(AntiGuestBukkit plugin)
     {
         if (this.plugin == null)
         {
@@ -187,7 +187,7 @@ public class PreventionManager
             }
             catch (Throwable t)
             {
-                AntiGuest.error("Failed to enable the prevention '" + name + "'...", t);
+                AntiGuestBukkit.error("Failed to enable the prevention '" + name + "'...", t);
             }
         }
         return false;
@@ -240,7 +240,7 @@ public class PreventionManager
             }
             catch (Throwable t)
             {
-                AntiGuest.error("Failed to disable the prevention '" + prevention.getName() + "'...", t);
+                AntiGuestBukkit.error("Failed to disable the prevention '" + prevention.getName() + "'...", t);
             }
         }
         return this;

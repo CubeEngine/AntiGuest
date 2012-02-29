@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,7 +19,7 @@ public class LavabucketPrevention extends Prevention
 {
     public LavabucketPrevention()
     {
-        super("lavabucket", AntiGuest.getInstance());
+        super("lavabucket", AntiGuestBukkit.getInstance());
     }
 
     @Override

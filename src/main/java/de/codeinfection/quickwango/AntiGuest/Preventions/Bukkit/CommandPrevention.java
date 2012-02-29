@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredPrevention;
 import java.util.HashSet;
 import org.bukkit.Server;
@@ -18,7 +18,7 @@ public class CommandPrevention extends FilteredPrevention
 {
     public CommandPrevention()
     {
-        super("command", AntiGuest.getInstance());
+        super("command", AntiGuestBukkit.getInstance());
     }
 
     @Override

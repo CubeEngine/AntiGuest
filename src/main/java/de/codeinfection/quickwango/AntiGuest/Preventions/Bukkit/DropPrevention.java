@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ public class DropPrevention extends FilteredItemPrevention
 {
     public DropPrevention()
     {
-        super("drop", AntiGuest.getInstance());
+        super("drop", AntiGuestBukkit.getInstance());
     }
 
     @Override

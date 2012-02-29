@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -19,7 +19,7 @@ public class BreakblockPrevention extends Prevention
 {
     public BreakblockPrevention()
     {
-        super("breakblock", AntiGuest.getInstance());
+        super("breakblock", AntiGuestBukkit.getInstance());
     }
 
     @Override

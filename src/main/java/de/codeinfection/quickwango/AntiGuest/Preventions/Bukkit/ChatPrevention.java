@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,7 +19,7 @@ public class ChatPrevention extends Prevention
 
     public ChatPrevention()
     {
-        super("chat", AntiGuest.getInstance());
+        super("chat", AntiGuestBukkit.getInstance());
     }
 
     @Override

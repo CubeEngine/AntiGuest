@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.AnimalTamer;
@@ -19,7 +19,7 @@ public class TamePrevention extends Prevention
 
     public TamePrevention()
     {
-        super("tame", AntiGuest.getInstance());
+        super("tame", AntiGuestBukkit.getInstance());
     }
 
     @Override

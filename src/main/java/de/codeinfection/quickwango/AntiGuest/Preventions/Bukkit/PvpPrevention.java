@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -20,7 +20,7 @@ public class PvpPrevention extends Prevention
 {
     public PvpPrevention()
     {
-        super("pvp", AntiGuest.getInstance());
+        super("pvp", AntiGuestBukkit.getInstance());
     }
 
     @Override

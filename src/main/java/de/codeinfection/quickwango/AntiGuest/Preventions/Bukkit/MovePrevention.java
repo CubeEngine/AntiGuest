@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.quickwango.AntiGuest.AntiGuest;
+import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.Util.Convert;
 import de.codeinfection.quickwango.AntiGuest.Util.Vector2D;
@@ -25,7 +25,7 @@ public class MovePrevention extends Prevention
 
     public MovePrevention()
     {
-        super("move", AntiGuest.getInstance());
+        super("move", AntiGuestBukkit.getInstance());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MovePrevention extends Prevention
                 if (this.radius / spawn.distance(from) <= 0.98)
                 {
                     // teleportation scheduled for the next tick to prevent kick (moved too fast)
-                    player.getServer().getScheduler().scheduleSyncDelayedTask(AntiGuest.getInstance(), new Runnable()
+                    player.getServer().getScheduler().scheduleSyncDelayedTask(AntiGuestBukkit.getInstance(), new Runnable()
                     {
                         public void run()
                         {
