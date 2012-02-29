@@ -1,7 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import de.codeinfection.quickwango.AntiGuest.Commands.*;
-import de.codeinfection.quickwango.AntiGuest.Preventions.*;
+import de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit.*;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
