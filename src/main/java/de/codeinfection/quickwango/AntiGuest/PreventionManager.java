@@ -166,24 +166,13 @@ public class PreventionManager
         {
             try
             {
-                ConfigurationSection defaultConfigration = this.defaultConfigurations.get(name);
-
-                if (config != null)
+                if (config == null)
                 {
-                    if (defaultConfigration != null)
-                    {
-                        config.getDefaultSection().getParent().set(config.getName(), defaultConfigration);
-                    }
-                    this.configurations.put(name, config);
+                    config = this.configurations.get(name);
                 }
                 else
                 {
-                    config = this.configurations.get(name);
-                    if (config == null)
-                    {
-                        config = defaultConfigration;
-                        this.configurations.put(name, config);
-                    }
+                    this.configurations.put(name, config);
                 }
 
                 if (config != null && config.getBoolean("enable"))
@@ -218,12 +207,15 @@ public class PreventionManager
             throw new IllegalArgumentException("config must not be null!");
         }
 
-        ConfigurationSection currentSection;
+        ConfigurationSection currentDefault;
         for (String preventionName : this.preventions.keySet())
         {
-            currentSection = preventionsSection.getConfigurationSection(preventionName);
-            currentSection.getParent().getDefaultSection().set(preventionName, this.defaultConfigurations.get(preventionName));
-            this.enablePrevention(preventionName, currentSection);
+            currentDefault = this.defaultConfigurations.get(preventionName);
+            if (currentDefault != null)
+            {
+                preventionsSection.addDefault(preventionName, currentDefault);
+            }
+            this.enablePrevention(preventionName, preventionsSection.getConfigurationSection(preventionName));
         }
 
         return this;
