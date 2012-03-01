@@ -4,7 +4,10 @@ import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityTameEvent;
@@ -35,10 +38,9 @@ public class TamePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EntityTameEvent event)
     {
-        final AnimalTamer tamer = event.getOwner();
-        if (tamer instanceof Player)
+        if (event.getOwner() instanceof Player)
         {
-            prevent(event, (Player)tamer);
+            prevent(event, (Player)event.getOwner());
         }
     }
 }
