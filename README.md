@@ -64,7 +64,7 @@ Preventions:
 - **enchant** -- prevents from accessing enchantment tables
 - **afk** -- prevents from idling players by kicking them after a configured time
 - **damage** -- prevents from getting damaged *
-- **milking** -- prevents from milkong cows
+- **milking** -- prevents from milking cows
 
 \* These preventions are filterable which means that they're able to prevent a subset of actions
 
