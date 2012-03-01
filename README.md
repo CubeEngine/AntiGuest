@@ -61,9 +61,10 @@ Preventions:
 - **bow** -- prevents from shooting bows
 - **spam** -- prevents from spam
 - **sneak** -- prevents from sneaking (the player will still duck, but the name above him stays visible)
-- **enchant** -- prevents from enchanting specific items *
+- **enchant** -- prevents from accessing enchantment tables
 - **afk** -- prevents from idling players by kicking them after a configured time
 - **damage** -- prevents from getting damaged *
+- **milking** -- prevents from milkong cows
 
 \* These preventions are filterable which means that they're able to prevent a subset of actions
 
