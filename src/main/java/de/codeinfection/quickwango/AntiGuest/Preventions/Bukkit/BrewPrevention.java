@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.block.BrewingStand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +34,7 @@ public class BrewPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(InventoryOpenEvent event)
     {
-        if ("container.brewing".equals(event.getInventory().getName()))
+        if (event.getInventory() != null && event.getInventory().getHolder() instanceof BrewingStand)
         {
             if (event.getPlayer() instanceof Player)
             {
