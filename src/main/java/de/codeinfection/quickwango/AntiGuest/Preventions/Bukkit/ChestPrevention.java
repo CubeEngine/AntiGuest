@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.block.Chest;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,11 +35,14 @@ public class ChestPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(InventoryOpenEvent event)
     {
-        if ((event.getInventory() instanceof DoubleChestInventory) || "container.chest".equals(event.getInventory().getName()))
+        if (event.getInventory() != null)
         {
-            if (event.getPlayer() instanceof Player)
+            if (event.getInventory() instanceof DoubleChestInventory || event.getInventory().getHolder() instanceof Chest)
             {
-                prevent(event, (Player)event.getPlayer());
+                if (event.getPlayer() instanceof Player)
+                {
+                    prevent(event, (Player)event.getPlayer());
+                }
             }
         }
     }
