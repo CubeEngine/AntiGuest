@@ -43,8 +43,7 @@ public class LavabucketPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fill(PlayerBucketFillEvent event)
     {
-        final Material material = event.getBlockClicked().getType();
-        if (material == Material.STATIONARY_LAVA || material == Material.LAVA)
+        if (event.getItemStack().getType() == Material.LAVA_BUCKET)
         {
             prevent(event, event.getPlayer());
         }
