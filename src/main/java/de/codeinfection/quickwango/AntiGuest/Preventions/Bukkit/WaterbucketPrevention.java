@@ -7,7 +7,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
 /**
@@ -35,18 +34,16 @@ public class WaterbucketPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void empty(PlayerBucketEmptyEvent event)
     {
-        handle(event);
+        if (event.getBucket() == Material.WATER_BUCKET)
+        {
+            prevent(event, event.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fill(PlayerBucketFillEvent event)
     {
-        handle(event);
-    }
-    
-    public void handle(PlayerBucketEvent event)
-    {
-        if (event.getBucket() == Material.WATER_BUCKET)
+        if (event.getBlockClicked().getType() == Material.STATIONARY_WATER)
         {
             prevent(event, event.getPlayer());
         }

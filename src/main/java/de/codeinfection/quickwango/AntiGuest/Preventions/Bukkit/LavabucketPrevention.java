@@ -7,7 +7,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
 /**
@@ -35,18 +34,17 @@ public class LavabucketPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void empty(PlayerBucketEmptyEvent event)
     {
-        handle(event);
+        if (event.getBucket() == Material.LAVA_BUCKET)
+        {
+            prevent(event, event.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void fill(PlayerBucketFillEvent event)
     {
-        handle(event);
-    }
-    
-    public void handle(PlayerBucketEvent event)
-    {
-        if (event.getBucket() == Material.LAVA_BUCKET)
+        final Material material = event.getBlockClicked().getType();
+        if (material == Material.STATIONARY_LAVA || material == Material.LAVA)
         {
             prevent(event, event.getPlayer());
         }
