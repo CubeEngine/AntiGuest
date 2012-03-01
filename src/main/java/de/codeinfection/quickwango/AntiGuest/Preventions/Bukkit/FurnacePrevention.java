@@ -34,11 +34,6 @@ public class FurnacePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(InventoryOpenEvent event)
     {
-        AntiGuestBukkit.log("InventoryOpenEvent triggered!");
-        AntiGuestBukkit.log("Name: " + event.getInventory().getName());
-        AntiGuestBukkit.log("Title: " + event.getInventory().getTitle());
-        AntiGuestBukkit.log("Inventory: " + event.getInventory().getClass().getName());
-        AntiGuestBukkit.log("Holder: " + (event.getInventory().getHolder() != null ? event.getInventory().getHolder().getClass().getName() : "null"));
         if (event.getInventory() instanceof FurnaceInventory)
         {
             if (event.getPlayer() instanceof Player)

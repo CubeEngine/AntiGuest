@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.CraftingInventory;
 
 /**
  * Prevents workbench access
@@ -34,7 +35,7 @@ public class WorkbenchPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(InventoryOpenEvent event)
     {
-        if ("container.crafting".equals(event.getInventory().getName()))
+        if (event.getInventory() instanceof CraftingInventory)
         {
             if (event.getPlayer() instanceof Player)
             {
