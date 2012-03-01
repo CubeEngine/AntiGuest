@@ -66,7 +66,7 @@ public class AntiGuestBukkit extends JavaPlugin
             .registerPrevention(new PickupPrevention())
             .registerPrevention(new PlaceblockPrevention())
             .registerPrevention(new PressureplatePrevention())
-            .registerPrevention(new PvpPrevention())
+            .registerPrevention(new FightPrevention())
             .registerPrevention(new RepeaterPrevention())
             .registerPrevention(new ShearPrevention())
             .registerPrevention(new SneakPrevention())

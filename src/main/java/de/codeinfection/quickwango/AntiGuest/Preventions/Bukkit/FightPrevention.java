@@ -16,11 +16,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
  *
  * @author Phillip Schichtel
  */
-public class PvpPrevention extends Prevention
+public class FightPrevention extends Prevention
 {
-    public PvpPrevention()
+    public FightPrevention()
     {
-        super("pvp", AntiGuestBukkit.getInstance());
+        super("fight", AntiGuestBukkit.getInstance());
     }
 
     @Override

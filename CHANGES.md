@@ -20,7 +20,9 @@ Version 3.0.0
 - added a shear prevention
 - added a afk prevention
 - added a damage prevention
+- changed following preventions to use the new inventory API: chest, furnace, enchant, dispenser, brew, workbench
 - changed the hungerprevention to prevent the hunger value from changing
+- renamed the pvp prevention to fight
 - added commands /antiguest <command\> (alias: /ag <command\>)
     - commands: help, list, can, reload, debug
 
