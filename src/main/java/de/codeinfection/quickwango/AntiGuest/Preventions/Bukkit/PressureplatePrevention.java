@@ -40,7 +40,7 @@ public class PressureplatePrevention extends Prevention
             final Material material = event.getClickedBlock().getType();
             if (material == Material.STONE_PLATE || material == Material.WOOD_PLATE)
             {
-                prevent(event, event.getPlayer());
+                preventThrottled(event, event.getPlayer());
             }
         }
     }
