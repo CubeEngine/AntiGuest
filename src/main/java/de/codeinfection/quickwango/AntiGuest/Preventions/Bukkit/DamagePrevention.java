@@ -89,6 +89,7 @@ public class DamagePrevention extends FilteredPrevention
         {
             if (prevent(event, (Player)entity, event.getCause().name()) && this.damagerMessage != null)
             {
+                entity.setFireTicks(0);
                 if (event instanceof EntityDamageByEntityEvent)
                 {
                     final Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
