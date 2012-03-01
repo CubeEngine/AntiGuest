@@ -36,7 +36,7 @@ public class AfkPrevention extends Prevention
     {
         ConfigurationSection config = super.getDefaultConfig();
 
-        config.set("message", "You were kicked for being idle!");
+        config.set("message", "&4You were kicked for being idle!");
         config.set("timeout", 60 * 10);
 
         return config;
