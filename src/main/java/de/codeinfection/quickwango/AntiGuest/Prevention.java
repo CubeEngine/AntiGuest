@@ -65,10 +65,32 @@ public abstract class Prevention implements Listener
 
     /**
      * This method is a small util to parse color codes of the syntax &amp;&lt;code&gt;
+     *
+     * @param string hte string to parse
+     * @return the parsed string
      */
     public static String parseColors(final String string)
     {
         return PARSE_COLOR_PATTERN.matcher(string).replaceAll(PARSE_COLOR_REPLACEMENT);
+    }
+
+    /**
+     * Parses a message
+     *
+     * @param message the message to parse
+     * @return null if message is null or empty, otherwise the parsed message
+     */
+    public static String parseMessage(final String message)
+    {
+        if (message == null)
+        {
+            return null;
+        }
+        if (message.length() == 0)
+        {
+            return null;
+        }
+        return parseColors(message);
     }
 
     /**
@@ -97,18 +119,7 @@ public abstract class Prevention implements Listener
     public void enable(final Server server, final ConfigurationSection config)
     {
         this.messageDelay = config.getInt("messageDelay") * 1000;
-        this.message = config.getString("message");
-        if (this.message != null)
-        {
-            if (this.message.length() == 0)
-            {
-                this.message = null;
-            }
-            else
-            {
-                this.message = parseColors(this.message);
-            }
-        }
+        this.message = parseMessage(config.getString("message"));
     }
 
     /**

@@ -45,7 +45,7 @@ public class CommandPrevention extends FilteredPrevention
         HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());
         for (Object item : this.filterItems)
         {
-            newItems.add(String.valueOf(item).toLowerCase());
+            newItems.add(String.valueOf(item).trim().toLowerCase());
         }
         this.filterItems = newItems;
     }

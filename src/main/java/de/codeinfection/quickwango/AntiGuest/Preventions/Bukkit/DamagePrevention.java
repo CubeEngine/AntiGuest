@@ -2,16 +2,19 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredPrevention;
+import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.PotionSplashEvent;
 
 /**
  * Prevents damage
@@ -21,6 +24,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 public class DamagePrevention extends FilteredPrevention
 {
     private String damagerMessage;
+    private boolean preventPotions;
+    private String potionMessage;
 
     public DamagePrevention()
     {
@@ -35,6 +40,8 @@ public class DamagePrevention extends FilteredPrevention
 
         config.set("message", "&2AntiGuest protected you from damage!");
         config.set("damagerMessage", "&4This player cannot be damaged!");
+        config.set("preventPotions", true);
+        config.set("potionMessage", "&2AntiGuest protected you from this potion!");
         config.set("mode", "none");
         config.set("list", new String[]{"lava"});
 
@@ -46,18 +53,9 @@ public class DamagePrevention extends FilteredPrevention
     {
         super.enable(server, config);
 
-        this.damagerMessage = config.getString("damagerMessage");
-        if (this.damagerMessage != null)
-        {
-            if (this.damagerMessage.length() > 0)
-            {
-                this.damagerMessage = parseColors(this.damagerMessage);
-            }
-            else
-            {
-                this.damagerMessage = null;
-            }
-        }
+        this.damagerMessage = parseMessage(config.getString("damagerMessage"));
+        this.preventPotions = config.getBoolean("preventPotions");
+        this.potionMessage = parseMessage(config.getString("potionMessage"));
 
         HashSet<Object> newList = new HashSet<Object>();
         String itemString;
@@ -87,9 +85,10 @@ public class DamagePrevention extends FilteredPrevention
         final Entity entity = event.getEntity();
         if (entity instanceof Player)
         {
-            if (prevent(event, (Player)entity, event.getCause().name()) && this.damagerMessage != null)
+            final Player player = (Player)entity;
+            if (prevent(event, player, event.getCause().name()) && this.damagerMessage != null)
             {
-                entity.setFireTicks(0);
+                player.setFireTicks(0);
                 if (event instanceof EntityDamageByEntityEvent)
                 {
                     final Entity damager = ((EntityDamageByEntityEvent)event).getDamager();
@@ -99,6 +98,39 @@ public class DamagePrevention extends FilteredPrevention
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void handle(PotionSplashEvent event)
+    {
+        if (!this.preventPotions)
+        {
+            return;
+        }
+        Collection<LivingEntity> affectedEntities = event.getAffectedEntities();
+        Player affectedPlayer;
+        Entity shooter = event.getPotion().getShooter();
+        int affectedCount = 0;
+        for (LivingEntity entity : affectedEntities)
+        {
+            if (entity instanceof Player)
+            {
+                affectedPlayer = (Player)entity;
+                if (!can(affectedPlayer))
+                {
+                    ++affectedCount;
+                    affectedEntities.remove(entity);
+                    if (this.potionMessage != null)
+                    {
+                        affectedPlayer.sendMessage(this.potionMessage);
+                    }
+                }
+            }
+        }
+        if (affectedCount > 0 && this.damagerMessage != null && shooter != null && shooter instanceof Player)
+        {
+            ((Player)shooter).sendMessage(this.damagerMessage);
         }
     }
 }

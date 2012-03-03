@@ -4,6 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -33,7 +34,7 @@ public class ItemPrevention extends FilteredItemPrevention
         return config;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void handle(PlayerInteractEvent event)
     {
         if (event.getAction() != Action.PHYSICAL)
@@ -41,7 +42,11 @@ public class ItemPrevention extends FilteredItemPrevention
             final ItemStack itemInHand = event.getItem();
             if (itemInHand != null)
             {
-                this.prevent(event, event.getPlayer(), event.getItem().getType());
+                if (prevent(event, event.getPlayer(), event.getItem().getType()))
+                {
+                    event.setUseInteractedBlock(Result.DENY);
+                    event.setUseItemInHand(Result.DENY);
+                }
             }
         }
     }
