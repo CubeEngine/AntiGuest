@@ -72,8 +72,6 @@ public abstract class FilteredPrevention extends Prevention
     {
         if (!can(player))
         {
-            final boolean isListed = this.filterItems.contains(item);
-
             //AntiGuest.debug("Filter mode: " + this.mode.name());
 
             switch (this.mode)
@@ -81,9 +79,9 @@ public abstract class FilteredPrevention extends Prevention
                 case NONE:
                     return false;
                 case WHITELIST:
-                    return isListed;
+                    return this.filterItems.contains(item);
                 case BLACKLIST:
-                    return !isListed;
+                    return !this.filterItems.contains(item);
             }
         }
         return true;
