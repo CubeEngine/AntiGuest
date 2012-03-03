@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
@@ -58,7 +59,15 @@ public abstract class FilteredPrevention extends Prevention
         super.enable(server, config);
 
         this.mode = Mode.getByAlias(config.getString("mode"));
-        this.filterItems = new HashSet<Object>(config.getList("list"));
+        List<?> items = config.getList("list");
+        if (items == null)
+        {
+            this.filterItems = new HashSet<Object>();
+        }
+        else
+        {
+            this.filterItems = new HashSet<Object>(items);
+        }
     }
 
     /**
