@@ -1,6 +1,16 @@
 Changes
 =======
 
+Version 3.0.1
+-------------
+- improved some preventions
+    - item: prevents non-block interactions now
+    - damage: can prevent splash potion effects
+    - command: trims the list items
+- improved performance of filtered preventions using the none-mode
+- fixed chests pseudo opening by also preventing the interaction
+- fixed a possible NPE
+
 Version 3.0.0
 -------------
 - completely rewritten
