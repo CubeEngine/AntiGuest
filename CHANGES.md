@@ -1,6 +1,12 @@
 Changes
 =======
 
+Version 3.0.2
+-------------
+- Partially supports 1.1-R4
+    - incompatible preventions will fail to load
+    - unloading preventions (eg on plugin reload) will print error messages, this should be avoided
+
 Version 3.0.1
 -------------
 - improved some preventions
