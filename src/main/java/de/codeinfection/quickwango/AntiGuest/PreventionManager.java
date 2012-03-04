@@ -233,7 +233,15 @@ public class PreventionManager
         if (prevention != null && prevention.isEnabled())
         {
             prevention.setEnabled(false);
-            HandlerList.unregisterAll(prevention);
+            try
+            {
+                HandlerList.unregisterAll(prevention);
+            }
+            catch (Throwable t)
+            {
+                AntiGuestBukkit.error("Failed to unregister the prevention event handlers.");
+                AntiGuestBukkit.error("It seems like you're using a CraftBukkit build that doesn't support it.");
+            }
             try
             {
                 prevention.disable();
