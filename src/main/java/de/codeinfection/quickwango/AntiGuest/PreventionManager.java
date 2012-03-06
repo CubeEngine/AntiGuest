@@ -9,6 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 /**
@@ -111,16 +112,19 @@ public class PreventionManager
         {
             throw new IllegalArgumentException("prevention must not be null!");
         }
-        this.preventions.put(prevention.getName(), prevention);
-        Permission perm = prevention.getPermission();
-        try
+        if (!this.preventions.containsValue(prevention))
         {
-            this.pm.addPermission(perm);
+            this.preventions.put(prevention.getName(), prevention);
+            Permission perm = prevention.getPermission();
+            try
+            {
+                this.pm.addPermission(perm);
+            }
+            catch (IllegalArgumentException e)
+            {}
+            perm.addParent(this.parentPermission, true);
+            this.defaultConfigurations.put(prevention.getName(), prevention.getDefaultConfig());
         }
-        catch (IllegalArgumentException e)
-        {}
-        perm.addParent(this.parentPermission, true);
-        this.defaultConfigurations.put(prevention.getName(), prevention.getDefaultConfig());
         
         return this;
     }
@@ -162,7 +166,7 @@ public class PreventionManager
     public boolean enablePrevention(final String name, ConfigurationSection config)
     {
         final Prevention prevention = this.getPrevention(name);
-        if (prevention != null)
+        if (prevention != null && !prevention.isEnabled())
         {
             try
             {
@@ -265,6 +269,25 @@ public class PreventionManager
         {
             this.disablePrevention(name);
         }
+        return this;
+    }
+
+    /**
+     * Disables all preventions of a plugin
+     *
+     * @param plugin the plugin that registered the preventions
+     * @return fluent interface
+     */
+    public PreventionManager disablePreventions(Plugin plugin)
+    {
+        for (Prevention prevention : this.preventions.values())
+        {
+            if (prevention.getPlugin() == plugin)
+            {
+                this.disablePrevention(prevention.getName());
+            }
+        }
+
         return this;
     }
 }

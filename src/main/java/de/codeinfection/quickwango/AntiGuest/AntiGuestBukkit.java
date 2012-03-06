@@ -7,10 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AntiGuestBukkit extends JavaPlugin
+public class AntiGuestBukkit extends JavaPlugin implements Listener
 {
     private static AntiGuestBukkit instance = null;
 
@@ -157,5 +161,11 @@ public class AntiGuestBukkit extends JavaPlugin
         {
             log("[debug] " + msg);
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPluginDisable(PluginDisableEvent event)
+    {
+        PreventionManager.getInstance().disablePreventions(event.getPlugin());
     }
 }
