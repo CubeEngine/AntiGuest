@@ -40,7 +40,7 @@ public class SpamPrevention extends Prevention
     public void enable(Server server, ConfigurationSection config)
     {
         super.enable(server, config);
-        this.spamLockDuration = config.getInt("lockDuration");
+        this.spamLockDuration = config.getInt("lockDuration") * 1000;
         this.chatTimestamps = new HashMap<Player, Long>();
     }
 
@@ -55,19 +55,36 @@ public class SpamPrevention extends Prevention
     public void handle(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
-        if (isChatLocked(player))
+        if (!can(player))
         {
-            prevent(event, event.getPlayer());
+            if (isChatLocked(player))
+            {
+                sendMessage(player);
+                event.setCancelled(true);
+            }
+            else
+            {
+                setChatLock(player);
+            }
         }
+    }
+
+    private void setChatLock(final Player player)
+    {
+        this.chatTimestamps.put(player, System.currentTimeMillis() + this.spamLockDuration);
     }
     
     private boolean isChatLocked(final Player player)
     {
-        final Long lastTime = this.chatTimestamps.get(player);
-        final long currentTime = System.currentTimeMillis();
-        if (lastTime == null || lastTime + this.spamLockDuration < currentTime)
+        final Long nextPossible = this.chatTimestamps.get(player);
+        if (nextPossible == null)
         {
-            this.chatTimestamps.put(player, currentTime);
+            return false;
+        }
+        
+        final long currentTime = System.currentTimeMillis();
+        if (nextPossible < currentTime)
+        {
             return false;
         }
         return true;

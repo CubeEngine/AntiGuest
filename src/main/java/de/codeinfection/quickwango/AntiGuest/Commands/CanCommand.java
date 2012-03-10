@@ -62,7 +62,7 @@ public class CanCommand extends AbstractCommand
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(ChatColor.RED + "You unable able to pass this prevention!");
+                        sender.sendMessage(ChatColor.RED + "You are unable to pass this prevention!");
                     }
                     else
                     {
