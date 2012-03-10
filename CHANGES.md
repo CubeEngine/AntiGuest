@@ -1,6 +1,10 @@
 Changes
 =======
 
+Version 3.0.3
+-------------
+- fixed and improved the spam prevention
+
 Version 3.0.2
 -------------
 - Partially supports 1.1-R4
