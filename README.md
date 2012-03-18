@@ -115,7 +115,7 @@ Self-explanatory
 
 ***[Source on Github](https://github.com/quickwango/AntiGuest)***
 
-***[Talk to the developer](http://webchat.esper.net/?channels=code-infection&nick=)***
+***[Talk to the developer](http://webchat.esper.net/?channels=code-infection&nick=)*** (#code-infection on EsperNet)
 
 Plugin developed by Quick_Wango - [Parallel Universe](http://parallel-universe.de)
 
