@@ -12,11 +12,12 @@ Every prevention has its own configurable message which will be printed to the p
 AntiGuest uses permissions to determine whether a player is allowed to do a specific action.
 So you should (not necessarily needed, but recommended) install a permission manager like bPermissions or GroupManager along with AntiGuest.
 Usually you only want to prevent your guests from doing things like breaking and placing blocks (griefing),
-so should ***not*** give your guests group the permission to do so.
+so you should ***not*** give your guests' group the permission to do so.
 However your accepted players should by able to do these actions.
 That can be achieved by adding the permission "antiguest.preventions.*" or a action specific permission to the player or his group.
+
 As you might see, this system allows more than just "guests can nothing, members everything".
-You could for example stagger the permission like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
+You could for example stagger the permissions like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
 and even more complex setups, it's completely up to you.
 
 **Watch out! Tips for common mistakes**
@@ -95,8 +96,8 @@ Installation:
 
 **AntiGuest 3 needs at least Bukkit 1.1-R5!**
 
-- Just put the AntiGuest into you plugins folder
-- If your upgrading from an older version you might remove you config to get a fresh one
+- Just put the AntiGuest into your plugins folder
+- If you're upgrading from an older version you might remove you config to get a fresh one
 - restart/reload your server
 - The configuration file will be generated/updated as soon as the plugin gets enabled
 
@@ -114,4 +115,20 @@ Self-explanatory
 
 ***[Source on Github](https://github.com/quickwango/AntiGuest)***
 
-Plugin developed by Quick_Wango - [Minecraft Portal](http://mc-portal.de)
+***[Talk to the developer](http://webchat.esper.net/?channels=code-infection&nick=)***
+
+Plugin developed by Quick_Wango - [Parallel Universe](http://parallel-universe.de)
+
+
+***README***
+============
+
+- You want new features?
+- You want the plugin to be always up to date?
+- You want good support?
+
+I'm doing this for literally nothing in my freetime, so keep me interessted in my plugins and help pay my bills by simply donating a few bucks.
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif "Donate")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QU7NLJW3W58A)
+
+Thanks in advance!
