@@ -27,7 +27,6 @@ public class PreventionManager
     private Server server;
     private PluginManager pm;
     private Map<String, ConfigurationSection> configurations;
-    private Map<String, ConfigurationSection> defaultConfigurations;
     private Permission parentPermission;
     
     private PreventionManager()
@@ -36,7 +35,6 @@ public class PreventionManager
         this.server = null;
         this.pm = null;
         this.configurations = new HashMap<String, ConfigurationSection>();
-        this.defaultConfigurations = new HashMap<String, ConfigurationSection>();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
     }
@@ -123,7 +121,7 @@ public class PreventionManager
             catch (IllegalArgumentException e)
             {}
             perm.addParent(this.parentPermission, true);
-            this.defaultConfigurations.put(prevention.getName(), prevention.getDefaultConfig());
+            this.configurations.put(prevention.getName(), prevention.getDefaultConfig());
         }
         
         return this;
@@ -139,7 +137,6 @@ public class PreventionManager
     {
         this.preventions.remove(name);
         this.configurations.remove(name);
-        this.defaultConfigurations.remove(name);
         return this;
     }
 
@@ -214,7 +211,7 @@ public class PreventionManager
         ConfigurationSection currentDefault;
         for (String preventionName : this.preventions.keySet())
         {
-            currentDefault = this.defaultConfigurations.get(preventionName);
+            currentDefault = this.configurations.get(preventionName);
             if (currentDefault != null)
             {
                 preventionsSection.addDefault(preventionName, currentDefault);
