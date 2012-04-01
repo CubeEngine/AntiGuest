@@ -20,7 +20,7 @@ public class ItemPrevention extends FilteredItemPrevention
 {
     public ItemPrevention()
     {
-        super("item", AntiGuestBukkit.getInstance());
+        super("item", AntiGuestBukkit.getInstance(), true);
     }
 
     @Override

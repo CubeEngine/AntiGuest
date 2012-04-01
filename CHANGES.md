@@ -3,12 +3,13 @@ Changes
 
 Version 3.1.0
 -------------
-- added CraftBukkitUpToDate
+- added CraftBukkitUpToDate support
 - fixed color parsing (this may break 1.1 compatibility)
 - added a swear prevention
 - throttled the messages for fire related damage causes
 - fixed filtering of the damage prevention
 - made breakblock and placeblock filterable
+- made the item prevention ignore blocks (item ID <= 256)
 
 Version 3.0.3
 -------------
