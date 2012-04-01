@@ -142,6 +142,7 @@ public class BaseCommand implements CommandExecutor
      */
     public BaseCommand setDefaultCommand(String name)
     {
+        name = name.toLowerCase();
         if (this.subCommands.containsKey(name))
         {
             this.defaultCommand = name;
