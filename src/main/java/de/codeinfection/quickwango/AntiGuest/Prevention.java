@@ -60,9 +60,6 @@ public abstract class Prevention implements Listener
         this.enabled = false;
     }
 
-    private static final String PARSE_COLOR_REPLACEMENT = ChatColor.COLOR_CHAR + "$1";
-    private static final Pattern PARSE_COLOR_PATTERN = Pattern.compile("&([0-9A-FK])", Pattern.CASE_INSENSITIVE);
-
     /**
      * This method is a small util to parse color codes of the syntax &amp;&lt;code&gt;
      *
@@ -71,7 +68,7 @@ public abstract class Prevention implements Listener
      */
     public static String parseColors(final String string)
     {
-        return PARSE_COLOR_PATTERN.matcher(string).replaceAll(PARSE_COLOR_REPLACEMENT);
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 
     /**

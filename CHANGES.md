@@ -1,6 +1,11 @@
 Changes
 =======
 
+Version 3.1.0
+-------------
+- added CraftBukkitUpToDate
+- fixed color parsing (this may break 1.1 compatibility)
+
 Version 3.0.3
 -------------
 - fixed and improved the spam prevention

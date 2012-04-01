@@ -1,6 +1,7 @@
 name: AntiGuest
-main: de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit
 version: "${project.version}"
+main: de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit
+dev-url: http://dev.bukkit.org/server-mods/antiguest
 authors:
   - "Quick_Wango"
 description: "Prevents guests from griefing."
