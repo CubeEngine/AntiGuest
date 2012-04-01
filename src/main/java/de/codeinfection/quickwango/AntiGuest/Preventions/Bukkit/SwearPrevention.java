@@ -44,9 +44,9 @@ public class SwearPrevention extends Prevention
     }
 
     @Override
-    public void enable(final Server server, ConfigurationSection config)
+    public void enable(ConfigurationSection config)
     {
-        super.enable(server, config);
+        super.enable(config);
         this.swearPatterns = new ArrayList<Pattern>();
         for (String word : config.getStringList("words"))
         {

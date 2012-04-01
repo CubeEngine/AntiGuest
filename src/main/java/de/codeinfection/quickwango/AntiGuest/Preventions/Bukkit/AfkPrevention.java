@@ -44,10 +44,10 @@ public class AfkPrevention extends Prevention
     }
 
     @Override
-    public void enable(final Server server, final ConfigurationSection config)
+    public void enable(final ConfigurationSection config)
     {
-        super.enable(server, config);
-        this.scheduler = server.getScheduler();
+        super.enable(config);
+        this.scheduler = getPlugin().getServer().getScheduler();
         this.timeout = config.getInt("timeout") * 20;
 
         this.trackerMap = new HashMap<Player, PlayerAfkTracker>();

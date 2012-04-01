@@ -38,9 +38,9 @@ public class SpamPrevention extends Prevention
     }
     
     @Override
-    public void enable(Server server, ConfigurationSection config)
+    public void enable(ConfigurationSection config)
     {
-        super.enable(server, config);
+        super.enable(config);
         this.spamLockDuration = config.getInt("lockDuration") * 1000;
         this.chatTimestamps = new HashMap<Player, Long>();
     }

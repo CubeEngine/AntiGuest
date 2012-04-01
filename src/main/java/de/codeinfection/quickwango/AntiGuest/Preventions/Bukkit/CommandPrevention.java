@@ -38,9 +38,9 @@ public class CommandPrevention extends FilteredPrevention
     }
 
     @Override
-    public void enable(final Server server, final ConfigurationSection config)
+    public void enable(final ConfigurationSection config)
     {
-        super.enable(server, config);
+        super.enable(config);
         
         // normalize the items
         HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());

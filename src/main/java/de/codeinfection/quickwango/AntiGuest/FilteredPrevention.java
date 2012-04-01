@@ -55,9 +55,9 @@ public abstract class FilteredPrevention extends Prevention
      * @param config
      */
     @Override
-    public void enable(final Server server, final ConfigurationSection config)
+    public void enable(final ConfigurationSection config)
     {
-        super.enable(server, config);
+        super.enable(config);
 
         this.mode = Mode.getByAlias(config.getString("mode"));
         List<?> items = config.getList("list");

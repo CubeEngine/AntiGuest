@@ -52,9 +52,9 @@ public class DamagePrevention extends FilteredPrevention
     }
 
     @Override
-    public void enable(final Server server, final ConfigurationSection config)
+    public void enable(final ConfigurationSection config)
     {
-        super.enable(server, config);
+        super.enable(config);
 
         this.damagerMessage = parseMessage(config.getString("damagerMessage"));
         this.preventPotions = config.getBoolean("preventPotions");

@@ -179,7 +179,7 @@ public class PreventionManager
                 if (config != null)
                 {
 
-                    prevention.enable(this.server, config);
+                    prevention.enable(config);
                     this.pm.registerEvents(prevention, prevention.getPlugin());
 
                     prevention.setEnabled(true);

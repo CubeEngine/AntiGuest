@@ -113,7 +113,7 @@ public abstract class Prevention implements Listener
      * @param server an Server instance
      * @param config the configuration of this prevention
      */
-    public void enable(final Server server, final ConfigurationSection config)
+    public void enable(final ConfigurationSection config)
     {
         this.messageDelay = config.getInt("messageDelay") * 1000;
         this.message = parseMessage(config.getString("message"));

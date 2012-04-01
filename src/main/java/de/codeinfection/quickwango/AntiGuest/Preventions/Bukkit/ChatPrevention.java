@@ -35,9 +35,9 @@ public class ChatPrevention extends Prevention
     }
 
     @Override
-    public void enable(final Server server, final ConfigurationSection config)
+    public void enable(final ConfigurationSection config)
     {
-        super.enable(server, config);
+        super.enable(config);
         this.ignoreWorldeditCUIMessages = config.getBoolean("ignoreWorldeditCUIMessages");
     }
 
