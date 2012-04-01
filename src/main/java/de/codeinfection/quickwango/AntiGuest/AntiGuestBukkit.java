@@ -76,6 +76,7 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener
             .registerPrevention(new ShearPrevention())
             .registerPrevention(new SneakPrevention())
             .registerPrevention(new SpamPrevention())
+            .registerPrevention(new SwearPrevention())
             .registerPrevention(new TamePrevention())
             .registerPrevention(new VehiclePrevention())
             .registerPrevention(new WaterbucketPrevention())
