@@ -8,6 +8,7 @@ Version 3.1.0
 - added a swear prevention
 - throttled the messages for fire related damage causes
 - fixed filtering of the damage prevention
+- made breakblock and placeblock filterable
 
 Version 3.0.3
 -------------

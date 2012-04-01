@@ -1,7 +1,9 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
+import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -15,7 +17,7 @@ import org.bukkit.event.painting.PaintingBreakByEntityEvent;
  *
  * @author Phillip Schichtel
  */
-public class BreakblockPrevention extends Prevention
+public class BreakblockPrevention extends FilteredItemPrevention
 {
     public BreakblockPrevention()
     {
@@ -28,6 +30,7 @@ public class BreakblockPrevention extends Prevention
         ConfigurationSection config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to break blocks!");
+        config.set("mode", "none");
 
         return config;
     }
@@ -35,7 +38,7 @@ public class BreakblockPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(BlockBreakEvent event)
     {
-        prevent(event, event.getPlayer());
+        prevent(event, event.getPlayer(), event.getBlock().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -44,7 +47,7 @@ public class BreakblockPrevention extends Prevention
         final Entity remover = event.getRemover();
         if (remover instanceof Player)
         {
-            prevent(event, (Player)remover);
+            prevent(event, (Player)remover, Material.PAINTING);
         }
     }
 }

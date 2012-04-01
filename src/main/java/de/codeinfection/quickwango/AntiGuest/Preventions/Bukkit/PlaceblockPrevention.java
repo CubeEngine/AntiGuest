@@ -1,7 +1,7 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
-import de.codeinfection.quickwango.AntiGuest.Prevention;
+import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +13,7 @@ import org.bukkit.event.painting.PaintingPlaceEvent;
  *
  * @author Phillip Schichtel
  */
-public class PlaceblockPrevention extends Prevention
+public class PlaceblockPrevention extends FilteredItemPrevention
 {
     public PlaceblockPrevention()
     {
@@ -26,6 +26,7 @@ public class PlaceblockPrevention extends Prevention
         ConfigurationSection config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to place blocks!");
+        config.set("mode", "none");
 
         return config;
     }
@@ -33,7 +34,7 @@ public class PlaceblockPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(BlockPlaceEvent event)
     {
-        prevent(event, event.getPlayer());
+        prevent(event, event.getPlayer(), event.getBlockPlaced().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
