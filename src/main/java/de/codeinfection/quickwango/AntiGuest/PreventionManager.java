@@ -176,7 +176,7 @@ public class PreventionManager
                     this.configurations.put(name, config);
                 }
 
-                if (config != null && config.getBoolean("enable"))
+                if (config != null)
                 {
 
                     prevention.enable(this.server, config);
@@ -208,7 +208,7 @@ public class PreventionManager
             throw new IllegalArgumentException("config must not be null!");
         }
 
-        ConfigurationSection currentDefault;
+        ConfigurationSection currentDefault, preventionConfig;
         for (String preventionName : this.preventions.keySet())
         {
             currentDefault = this.configurations.get(preventionName);
@@ -216,7 +216,11 @@ public class PreventionManager
             {
                 preventionsSection.addDefault(preventionName, currentDefault);
             }
-            this.enablePrevention(preventionName, preventionsSection.getConfigurationSection(preventionName));
+            preventionConfig = preventionsSection.getConfigurationSection(preventionName);
+            if (preventionConfig.getBoolean("enable"))
+            {
+                this.enablePrevention(preventionName, preventionConfig);
+            }
         }
 
         return this;
