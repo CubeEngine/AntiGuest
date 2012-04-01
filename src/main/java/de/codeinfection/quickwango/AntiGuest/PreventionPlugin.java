@@ -1,7 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import java.io.File;
-import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
 /**
