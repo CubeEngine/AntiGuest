@@ -7,6 +7,7 @@ Version 3.1.0
 - fixed color parsing (this may break 1.1 compatibility)
 - added a swear prevention
 - throttled the messages for fire related damage causes
+- fixed filtering of the damage prevention
 
 Version 3.0.3
 -------------

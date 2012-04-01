@@ -44,8 +44,8 @@ public class DamagePrevention extends FilteredPrevention
         config.set("damagerMessage", "&4This player cannot be damaged!");
         config.set("preventPotions", true);
         config.set("potionMessage", "&2AntiGuest protected you from this potion!");
-        config.set("mode", "none");
-        config.set("list", new String[]{"lava"});
+        config.set("mode", "whitelist");
+        config.set("list", new String[]{"void"});
 
         return config;
     }
@@ -83,9 +83,9 @@ public class DamagePrevention extends FilteredPrevention
 
     private boolean prevent(final Cancellable event, final Player player, final DamageCause cause)
     {
-        if (!this.can(player, cause.name()))
+        if (!this.can(player, cause))
         {
-            if (cause == DamageCause.LAVA || cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK)
+            if (cause == DamageCause.LAVA || cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK || cause == DamageCause.VOID)
             {
                 this.sendThrottledMessage(player);
             }
