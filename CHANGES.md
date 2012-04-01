@@ -11,6 +11,7 @@ Version 3.1.0
 - made breakblock and placeblock filterable
 - made the item prevention ignore blocks (item ID <= 256)
 - fixed enabling preventions that are disabled in the config
+- made the commands case-insensitive
 
 Version 3.0.3
 -------------
