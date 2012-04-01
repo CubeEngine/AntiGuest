@@ -35,8 +35,7 @@ public class MovePrevention extends Prevention
 
         config.set("message", "&4You are not allowed to move any further!");
         config.set("messageDelay", 3);
-        // TODO remove Bukkit dependency
-        config.set("radius", Math.max(5, Bukkit.getSpawnRadius()));
+        config.set("radius", Math.max(5, getPlugin().getServer().getSpawnRadius()));
 
         return config;
     }

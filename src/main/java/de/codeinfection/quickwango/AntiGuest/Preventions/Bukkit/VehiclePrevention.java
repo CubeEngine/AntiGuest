@@ -79,7 +79,6 @@ public class VehiclePrevention extends Prevention
         {
             final Material clickedMaterial = event.getClickedBlock().getType();
             final Player player = event.getPlayer();
-            // TODO returns AIR or null??
             final Material materialInHand = player.getItemInHand().getType();
             if (clickedMaterial == Material.RAILS || clickedMaterial == Material.POWERED_RAIL || clickedMaterial == Material.DETECTOR_RAIL)
             {
