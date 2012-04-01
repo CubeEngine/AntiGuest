@@ -6,6 +6,7 @@ Version 3.1.0
 - added CraftBukkitUpToDate
 - fixed color parsing (this may break 1.1 compatibility)
 - added a swear prevention
+- throttled the messages for fire related damage causes
 
 Version 3.0.3
 -------------

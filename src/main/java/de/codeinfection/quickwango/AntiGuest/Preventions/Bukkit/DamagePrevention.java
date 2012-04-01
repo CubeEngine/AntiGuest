@@ -9,6 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -39,6 +40,7 @@ public class DamagePrevention extends FilteredPrevention
         ConfigurationSection config = super.getDefaultConfig();
 
         config.set("message", "&2AntiGuest protected you from damage!");
+        config.set("messageDelay", 3);
         config.set("damagerMessage", "&4This player cannot be damaged!");
         config.set("preventPotions", true);
         config.set("potionMessage", "&2AntiGuest protected you from this potion!");
@@ -79,6 +81,24 @@ public class DamagePrevention extends FilteredPrevention
         this.damagerMessage = null;
     }
 
+    private boolean prevent(final Cancellable event, final Player player, final DamageCause cause)
+    {
+        if (!this.can(player, cause.name()))
+        {
+            if (cause == DamageCause.LAVA || cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK)
+            {
+                this.sendThrottledMessage(player);
+            }
+            else
+            {
+                this.sendMessage(player);
+            }
+            event.setCancelled(true);
+            return true;
+        }
+        return false;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EntityDamageEvent event)
     {
@@ -86,7 +106,7 @@ public class DamagePrevention extends FilteredPrevention
         if (entity instanceof Player)
         {
             final Player player = (Player)entity;
-            if (prevent(event, player, event.getCause().name()) && this.damagerMessage != null)
+            if (prevent(event, player, event.getCause()) && this.damagerMessage != null)
             {
                 player.setFireTicks(0);
                 if (event instanceof EntityDamageByEntityEvent)
