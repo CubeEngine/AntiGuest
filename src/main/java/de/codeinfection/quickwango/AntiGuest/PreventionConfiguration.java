@@ -3,9 +3,7 @@ package de.codeinfection.quickwango.AntiGuest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
