@@ -49,7 +49,6 @@ public class SwearPrevention extends Prevention
         this.swearPatterns = new ArrayList<Pattern>();
         for (String word : config.getStringList("words"))
         {
-            AntiGuestBukkit.debug("word: " + word);
             this.swearPatterns.add(compile(word));
         }
     }
