@@ -14,7 +14,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AntiGuestBukkit extends JavaPlugin implements Listener
+public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionPlugin
 {
     private static AntiGuestBukkit instance = null;
 
@@ -25,6 +25,7 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener
     private PluginManager pm;
     private Configuration config;
     private File dataFolder;
+    private File preventionConfigFolder;
 
     public AntiGuestBukkit()
     {
@@ -91,6 +92,7 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener
         this.pm = this.server.getPluginManager();
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
+        this.preventionConfigFolder = new File(this.dataFolder, "preventions");
 
         this.reloadConfig();
 
@@ -139,6 +141,11 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener
     {
         PreventionManager.getInstance().disablePreventions();
         log(this.getDescription().getVersion() + " disabled");
+    }
+
+    public File getConfigurationFolder()
+    {
+        return this.preventionConfigFolder;
     }
 
     public static void log(String msg)

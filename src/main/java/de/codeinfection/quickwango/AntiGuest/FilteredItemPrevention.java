@@ -2,12 +2,10 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashSet;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.plugin.Plugin;
 
 /**
  * This class represents a filterable Prevention related to Materials
@@ -19,23 +17,23 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
 {
     private final boolean ignoreBlocks;
 
-    public FilteredItemPrevention(final String name, final Plugin plugin)
+    public FilteredItemPrevention(final String name, final PreventionPlugin plugin)
     {
         this(name, plugin, false);
     }
 
-    public FilteredItemPrevention(final String name, final Plugin plugin, final boolean ignoreBlocks)
+    public FilteredItemPrevention(final String name, final PreventionPlugin plugin, final boolean ignoreBlocks)
     {
         super(name, plugin);
         this.ignoreBlocks = ignoreBlocks;
     }
 
-    public FilteredItemPrevention(String name, String permission, Plugin plugin)
+    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin)
     {
         this(name, permission, plugin, false);
     }
 
-    public FilteredItemPrevention(String name, String permission, Plugin plugin, final boolean ignoreBlocks)
+    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin, final boolean ignoreBlocks)
     {
         super(name, permission, plugin);
         this.ignoreBlocks = ignoreBlocks;

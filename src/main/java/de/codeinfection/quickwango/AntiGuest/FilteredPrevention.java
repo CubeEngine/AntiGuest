@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.plugin.Plugin;
 
 /**
  * This base class represents a prevention that can be filtered.
@@ -22,12 +20,12 @@ public abstract class FilteredPrevention extends Prevention
     protected Set<Object> filterItems;
     private Mode mode;
     
-    public FilteredPrevention(String name, Plugin plugin)
+    public FilteredPrevention(String name, PreventionPlugin plugin)
     {
         super(name, plugin);
     }
 
-    public FilteredPrevention(String name, String permission, Plugin plugin)
+    public FilteredPrevention(String name, String permission, PreventionPlugin plugin)
     {
         super(name, permission, plugin);
     }

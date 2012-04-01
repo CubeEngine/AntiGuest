@@ -1,5 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,19 +22,21 @@ public class PreventionManager
 {
     private static PreventionManager instance = null;
 
-    private AntiGuestBukkit plugin;
+    private PreventionPlugin plugin;
     private Map<String, Prevention> preventions;
 
     private Server server;
     private PluginManager pm;
     private Map<String, ConfigurationSection> configurations;
     private Permission parentPermission;
+    private File configFolder;
     
     private PreventionManager()
     {
         this.plugin = null;
         this.server = null;
         this.pm = null;
+        this.configFolder = null;
         this.configurations = new HashMap<String, ConfigurationSection>();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
@@ -60,13 +63,14 @@ public class PreventionManager
      * @param plugin an instance of AntiGuestBukkit
      * @return fluent interface
      */
-    public PreventionManager initialize(AntiGuestBukkit plugin)
+    public PreventionManager initialize(PreventionPlugin plugin)
     {
         if (this.plugin == null)
         {
             this.plugin = plugin;
             this.server = plugin.getServer();
             this.pm = this.server.getPluginManager();
+            this.configFolder = plugin.getConfigurationFolder();
 
             this.pm.addPermission(this.parentPermission);
         }
@@ -121,7 +125,7 @@ public class PreventionManager
             catch (IllegalArgumentException e)
             {}
             perm.addParent(this.parentPermission, true);
-            this.configurations.put(prevention.getName(), prevention.getDefaultConfig());
+            //this.configurations.put(prevention.getName(), prevention.getDefaultConfig());
         }
         
         return this;

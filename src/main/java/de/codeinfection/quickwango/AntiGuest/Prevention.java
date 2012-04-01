@@ -2,7 +2,6 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -11,7 +10,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.Plugin;
 
 /**
  * This class represents a prevention
@@ -24,7 +22,7 @@ public abstract class Prevention implements Listener
     private final Permission permission;
     private String message;
     private int messageDelay;
-    private final Plugin plugin;
+    private final PreventionPlugin plugin;
     private boolean enabled;
 
     private final HashMap<Player, Long> throttleTimestamps;
@@ -36,7 +34,7 @@ public abstract class Prevention implements Listener
      * @param name the name of the prevention
      * @param plugin the corresponding plugin
      */
-    public Prevention(final String name, final Plugin plugin)
+    public Prevention(final String name, final PreventionPlugin plugin)
     {
         this(name, "antiguest.preventions." + name, plugin);
     }
@@ -49,7 +47,7 @@ public abstract class Prevention implements Listener
      * @param permission the permission
      * @param plugin the corresponding plugin
      */
-    public Prevention(final String name, final String permission, final Plugin plugin)
+    public Prevention(final String name, final String permission, final PreventionPlugin plugin)
     {
         this.name = name;
         this.permission = new Permission(permission, PermissionDefault.OP);
@@ -173,7 +171,7 @@ public abstract class Prevention implements Listener
      *
      * @return the plugin
      */
-    public final Plugin getPlugin()
+    public final PreventionPlugin getPlugin()
     {
         return this.plugin;
     }

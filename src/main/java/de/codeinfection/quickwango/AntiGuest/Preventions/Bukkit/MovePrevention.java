@@ -6,7 +6,6 @@ import de.codeinfection.quickwango.AntiGuest.Util.Convert;
 import de.codeinfection.quickwango.AntiGuest.Util.Vector2D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
