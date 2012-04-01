@@ -1,9 +1,9 @@
 package de.codeinfection.quickwango.AntiGuest;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
@@ -96,9 +96,9 @@ public abstract class Prevention implements Listener
      *
      * @return  the default config
      */
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection defaultConfig = new MemoryConfiguration();
+        Configuration defaultConfig = new MemoryConfiguration();
 
         defaultConfig.set("enable", false);
         defaultConfig.set("message", "&4You are not allowed to do this.");

@@ -3,6 +3,7 @@ package de.codeinfection.quickwango.AntiGuest;
 import java.util.HashSet;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -46,9 +47,9 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
      * @return the default config
      */
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("list", new String[] {Material.DIRT.toString().toLowerCase()});
 

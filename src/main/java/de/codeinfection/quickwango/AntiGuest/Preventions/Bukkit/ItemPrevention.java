@@ -3,7 +3,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,9 +24,9 @@ public class ItemPrevention extends FilteredItemPrevention
     }
 
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to use this item!");
         config.set("list", new String[] {Material.DIAMOND_SWORD.toString().toLowerCase().replace('_', ' ')});

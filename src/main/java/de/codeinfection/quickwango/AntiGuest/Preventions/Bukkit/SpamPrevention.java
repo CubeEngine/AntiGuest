@@ -4,6 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import java.util.HashMap;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,9 +27,9 @@ public class SpamPrevention extends Prevention
     }
 
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("message", "&4Don't spam the chat!");
         config.set("lockDuration", 2);

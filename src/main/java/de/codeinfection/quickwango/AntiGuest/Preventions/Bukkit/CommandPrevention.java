@@ -4,6 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredPrevention;
 import java.util.HashSet;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,9 +23,9 @@ public class CommandPrevention extends FilteredPrevention
     }
 
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to use this command!");
         config.set("list", new String[] {

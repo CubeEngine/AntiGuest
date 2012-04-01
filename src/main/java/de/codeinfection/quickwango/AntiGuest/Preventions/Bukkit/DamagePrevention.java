@@ -5,6 +5,7 @@ import de.codeinfection.quickwango.AntiGuest.FilteredPrevention;
 import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -35,9 +36,9 @@ public class DamagePrevention extends FilteredPrevention
     }
 
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("message", "&2AntiGuest protected you from damage!");
         config.set("messageDelay", 3);

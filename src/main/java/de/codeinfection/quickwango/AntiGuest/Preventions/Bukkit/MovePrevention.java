@@ -7,6 +7,7 @@ import de.codeinfection.quickwango.AntiGuest.Util.Vector2D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,9 +30,9 @@ public class MovePrevention extends Prevention
     }
 
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to move any further!");
         config.set("messageDelay", 3);

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.bukkit.Server;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -37,9 +38,9 @@ public abstract class FilteredPrevention extends Prevention
      * @return the default config
      */
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection defaultConfig = super.getDefaultConfig();
+        Configuration defaultConfig = super.getDefaultConfig();
 
         defaultConfig.set("mode", "blacklist");
         defaultConfig.set("list", new String[] {"example"});

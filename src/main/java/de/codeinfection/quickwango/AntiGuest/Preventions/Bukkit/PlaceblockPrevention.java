@@ -2,7 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.FilteredItemPrevention;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -21,9 +21,9 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     }
 
     @Override
-    public ConfigurationSection getDefaultConfig()
+    public Configuration getDefaultConfig()
     {
-        ConfigurationSection config = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
         config.set("message", "&4You are not allowed to place blocks!");
         config.set("mode", "none");
