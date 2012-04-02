@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.EnchantingInventory;
+import org.bukkit.event.inventory.InventoryType;
 
 /**
  * Prevents enchanting
@@ -34,7 +34,7 @@ public class EnchantPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(InventoryOpenEvent event)
     {
-        if (event.getInventory() instanceof EnchantingInventory)
+        if (event.getInventory().getType() == InventoryType.ENCHANTING)
         {
             if (event.getPlayer() instanceof Player)
             {

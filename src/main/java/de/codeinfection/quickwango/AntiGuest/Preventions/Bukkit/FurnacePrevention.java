@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.FurnaceInventory;
+import org.bukkit.event.inventory.InventoryType;
 
 /**
  * Prevents furnace access
@@ -34,7 +34,7 @@ public class FurnacePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(InventoryOpenEvent event)
     {
-        if (event.getInventory() instanceof FurnaceInventory)
+        if (event.getInventory().getType() == InventoryType.FURNACE)
         {
             if (event.getPlayer() instanceof Player)
             {
