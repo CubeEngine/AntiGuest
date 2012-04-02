@@ -3,7 +3,6 @@ package de.codeinfection.quickwango.AntiGuest;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -24,6 +23,7 @@ public abstract class Prevention implements Listener
     private int messageDelay;
     private final PreventionPlugin plugin;
     private boolean enabled;
+    private final PreventionConfiguration config;
 
     private final HashMap<Player, Long> throttleTimestamps;
 
@@ -56,6 +56,40 @@ public abstract class Prevention implements Listener
         this.messageDelay = 0;
         this.plugin = plugin;
         this.enabled = false;
+        this.config = PreventionConfiguration.loadConfig(plugin.getConfigurationFolder(), this);
+    }
+
+    public final PreventionConfiguration getConfig()
+    {
+        return this.config;
+    }
+
+    public final boolean reloadConfig()
+    {
+        try
+        {
+            this.config.load();
+            return true;
+        }
+        catch (Throwable e)
+        {
+            AntiGuestBukkit.error(e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
+
+    public final boolean saveConfig()
+    {
+        try
+        {
+            this.config.save();
+            return true;
+        }
+        catch (Throwable e)
+        {
+            AntiGuestBukkit.error(e.getLocalizedMessage(), e);
+        }
+        return false;
     }
 
     /**
@@ -111,7 +145,7 @@ public abstract class Prevention implements Listener
      * @param server an Server instance
      * @param config the configuration of this prevention
      */
-    public void enable(final ConfigurationSection config)
+    public void enable()
     {
         this.messageDelay = config.getInt("messageDelay") * 1000;
         this.message = parseMessage(config.getString("message"));

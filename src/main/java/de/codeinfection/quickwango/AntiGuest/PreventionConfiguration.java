@@ -13,6 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class PreventionConfiguration extends YamlConfiguration
 {
     private final File file;
+    private static final String FILE_EXTENTION = ".yml";
 
     private PreventionConfiguration(File file)
     {
@@ -21,12 +22,20 @@ public class PreventionConfiguration extends YamlConfiguration
 
     public static PreventionConfiguration loadConfig(File dir, Prevention prevention)
     {
-        final PreventionConfiguration config = new PreventionConfiguration(new File(dir, prevention.getName() + ".yml"));
+        if (dir == null || prevention == null)
+        {
+            throw new IllegalArgumentException("dir or prevention both must not be null!");
+        }
+        dir.mkdirs();
+        if (!dir.isDirectory())
+        {
+            throw new IllegalArgumentException("dir must represent a directory!");
+        }
+
+        final PreventionConfiguration config = new PreventionConfiguration(new File(dir, prevention.getName() + FILE_EXTENTION));
         try
         {
             config.load();
-            config.options().copyDefaults(true);
-            config.setDefaults(prevention.getDefaultConfig());
         }
         catch (FileNotFoundException e)
         {}
@@ -35,6 +44,16 @@ public class PreventionConfiguration extends YamlConfiguration
             e.printStackTrace(System.err);
         }
         catch (InvalidConfigurationException e)
+        {
+            e.printStackTrace(System.err);
+        }
+        config.options().copyDefaults(true);
+        config.setDefaults(prevention.getDefaultConfig());
+        try
+        {
+            config.save();
+        }
+        catch (IOException e)
         {
             e.printStackTrace(System.err);
         }

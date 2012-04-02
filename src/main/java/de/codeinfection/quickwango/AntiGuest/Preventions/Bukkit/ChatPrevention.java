@@ -3,7 +3,6 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChatEvent;
@@ -34,10 +33,10 @@ public class ChatPrevention extends Prevention
     }
 
     @Override
-    public void enable(final ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
-        this.ignoreWorldeditCUIMessages = config.getBoolean("ignoreWorldeditCUIMessages");
+        super.enable();
+        this.ignoreWorldeditCUIMessages = getConfig().getBoolean("ignoreWorldeditCUIMessages");
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

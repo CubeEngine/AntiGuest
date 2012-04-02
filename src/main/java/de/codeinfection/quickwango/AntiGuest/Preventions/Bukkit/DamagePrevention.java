@@ -5,7 +5,6 @@ import de.codeinfection.quickwango.AntiGuest.FilteredPrevention;
 import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -51,9 +50,10 @@ public class DamagePrevention extends FilteredPrevention
     }
 
     @Override
-    public void enable(final ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
+        super.enable();
+        final Configuration config = getConfig();
 
         this.damagerMessage = parseMessage(config.getString("damagerMessage"));
         this.preventPotions = config.getBoolean("preventPotions");

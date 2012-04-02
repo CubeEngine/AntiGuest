@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
@@ -53,12 +52,12 @@ public abstract class FilteredPrevention extends Prevention
      * @param config
      */
     @Override
-    public void enable(final ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
+        super.enable();
 
-        this.mode = Mode.getByAlias(config.getString("mode"));
-        List<?> items = config.getList("list");
+        this.mode = Mode.getByAlias(getConfig().getString("mode"));
+        List<?> items = getConfig().getList("list");
         if (items == null)
         {
             this.filterItems = new HashSet<Object>();

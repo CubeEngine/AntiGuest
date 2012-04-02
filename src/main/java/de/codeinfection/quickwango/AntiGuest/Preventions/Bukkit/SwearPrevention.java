@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,11 +42,11 @@ public class SwearPrevention extends Prevention
     }
 
     @Override
-    public void enable(ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
+        super.enable();
         this.swearPatterns = new ArrayList<Pattern>();
-        for (String word : config.getStringList("words"))
+        for (String word : getConfig().getStringList("words"))
         {
             this.swearPatterns.add(compile(word));
         }

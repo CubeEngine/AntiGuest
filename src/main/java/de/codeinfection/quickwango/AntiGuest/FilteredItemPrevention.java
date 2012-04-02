@@ -61,9 +61,9 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
      * @param config the config of this prevention
      */
     @Override
-    public void enable(final ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
+        super.enable();
 
         // normalize the items
         HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());

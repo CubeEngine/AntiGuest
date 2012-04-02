@@ -29,8 +29,10 @@ public class DisableCommand extends AbstractCommand
             {
                 if (prevention.isEnabled())
                 {
-                    PreventionManager.getInstance().disablePrevention(args[0]);
+                    PreventionManager.getInstance().disablePrevention(prevention);
                     sender.sendMessage(ChatColor.GREEN + "This prevention should now be disabled!");
+                    prevention.getConfig().set("enable", true);
+                    prevention.saveConfig();
                 }
                 else
                 {

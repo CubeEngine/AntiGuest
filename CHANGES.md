@@ -12,6 +12,8 @@ Version 3.1.0
 - made the item prevention ignore blocks (item ID <= 256)
 - fixed enabling preventions that are disabled in the config
 - made the commands case-insensitive
+- removed 1.1-R4 compatibility code
+- splitted the huge configuration into small prevent configurations
 
 Version 3.0.3
 -------------

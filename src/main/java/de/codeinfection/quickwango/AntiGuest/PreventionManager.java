@@ -1,12 +1,9 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.Server;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -25,19 +22,13 @@ public class PreventionManager
     private PreventionPlugin plugin;
     private Map<String, Prevention> preventions;
 
-    private Server server;
     private PluginManager pm;
-    private Map<String, ConfigurationSection> configurations;
     private Permission parentPermission;
-    private File configFolder;
     
     private PreventionManager()
     {
         this.plugin = null;
-        this.server = null;
         this.pm = null;
-        this.configFolder = null;
-        this.configurations = new HashMap<String, ConfigurationSection>();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
     }
@@ -68,9 +59,7 @@ public class PreventionManager
         if (this.plugin == null)
         {
             this.plugin = plugin;
-            this.server = plugin.getServer();
-            this.pm = this.server.getPluginManager();
-            this.configFolder = plugin.getConfigurationFolder();
+            this.pm = plugin.getServer().getPluginManager();
 
             this.pm.addPermission(this.parentPermission);
         }
@@ -125,7 +114,6 @@ public class PreventionManager
             catch (IllegalArgumentException e)
             {}
             perm.addParent(this.parentPermission, true);
-            //this.configurations.put(prevention.getName(), prevention.getDefaultConfig());
         }
         
         return this;
@@ -140,59 +128,42 @@ public class PreventionManager
     public PreventionManager unregisterPrevention(String name)
     {
         this.preventions.remove(name);
-        this.configurations.remove(name);
         return this;
     }
 
-    /**
-     * Enables the named prevention if registered with it's default configuration
-     *
-     * @param name the preventions name
-     * @param server an Server instance
-     * @return true if the intialization was successful
-     */
     public boolean enablePrevention(final String name)
     {
-        return this.enablePrevention(name, null);
+        final Prevention prevention = this.preventions.get(name);
+        if (prevention != null)
+        {
+            return this.enablePrevention(prevention);
+        }
+        return false;
     }
 
     /**
      * Enables the named prevention if registered
      * 
-     * @param name the preventions name
+     * @param prevention the preventions name
      * @param server an Server instance
      * @param config the prevention's configuration
      * @return true if the intialization was successful
      */
-    public boolean enablePrevention(final String name, ConfigurationSection config)
+    public boolean enablePrevention(final Prevention prevention)
     {
-        final Prevention prevention = this.getPrevention(name);
         if (prevention != null && !prevention.isEnabled())
         {
             try
             {
-                if (config == null)
-                {
-                    config = this.configurations.get(name);
-                }
-                else
-                {
-                    this.configurations.put(name, config);
-                }
+                prevention.enable();
+                this.pm.registerEvents(prevention, prevention.getPlugin());
 
-                if (config != null)
-                {
-
-                    prevention.enable(config);
-                    this.pm.registerEvents(prevention, prevention.getPlugin());
-
-                    prevention.setEnabled(true);
-                    return true;
-                }
+                prevention.setEnabled(true);
+                return true;
             }
             catch (Throwable t)
             {
-                AntiGuestBukkit.error("Failed to enable the prevention '" + name + "'...", t);
+                AntiGuestBukkit.error("Failed to enable the prevention '" + prevention.getName() + "'...", t);
             }
         }
         return false;
@@ -205,25 +176,13 @@ public class PreventionManager
      * @param config the configuration
      * @return fluent interface
      */
-    public PreventionManager enablePreventions(ConfigurationSection preventionsSection)
+    public PreventionManager enablePreventions()
     {
-        if (preventionsSection == null)
+        for (Prevention prevention : this.preventions.values())
         {
-            throw new IllegalArgumentException("config must not be null!");
-        }
-
-        ConfigurationSection currentDefault, preventionConfig;
-        for (String preventionName : this.preventions.keySet())
-        {
-            currentDefault = this.configurations.get(preventionName);
-            if (currentDefault != null)
+            if (prevention.getConfig().getBoolean("enable"))
             {
-                preventionsSection.addDefault(preventionName, currentDefault);
-            }
-            preventionConfig = preventionsSection.getConfigurationSection(preventionName);
-            if (preventionConfig.getBoolean("enable"))
-            {
-                this.enablePrevention(preventionName, preventionConfig);
+                this.enablePrevention(prevention);
             }
         }
 
@@ -238,19 +197,26 @@ public class PreventionManager
      */
     public PreventionManager disablePrevention(String name)
     {
-        Prevention prevention =  this.getPrevention(name);
+        final Prevention prevention = this.preventions.get(name);
+        if (prevention != null)
+        {
+            this.enablePrevention(prevention);
+        }
+        return this;
+    }
+
+    /**
+     * Disables the named prevention
+     *
+     * @param prevention name of the prevention
+     * @return fluent interface
+     */
+    public PreventionManager disablePrevention(Prevention prevention)
+    {
         if (prevention != null && prevention.isEnabled())
         {
             prevention.setEnabled(false);
-            try
-            {
-                HandlerList.unregisterAll(prevention);
-            }
-            catch (Throwable t)
-            {
-                AntiGuestBukkit.error("Failed to unregister the prevention event handlers.");
-                AntiGuestBukkit.error("It seems like you're using a CraftBukkit build that doesn't support it.");
-            }
+            HandlerList.unregisterAll(prevention);
             try
             {
                 prevention.disable();
@@ -270,9 +236,9 @@ public class PreventionManager
      */
     public PreventionManager disablePreventions()
     {
-        for (String name : this.preventions.keySet())
+        for (Prevention prevention : this.preventions.values())
         {
-            this.disablePrevention(name);
+            this.disablePrevention(prevention);
         }
         return this;
     }
@@ -289,7 +255,7 @@ public class PreventionManager
         {
             if (prevention.getPlugin() == plugin)
             {
-                this.disablePrevention(prevention.getName());
+                this.disablePrevention(prevention);
             }
         }
 

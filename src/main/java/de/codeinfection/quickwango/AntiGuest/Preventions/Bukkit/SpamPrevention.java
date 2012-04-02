@@ -4,7 +4,6 @@ import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import java.util.HashMap;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,10 +36,10 @@ public class SpamPrevention extends Prevention
     }
     
     @Override
-    public void enable(ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
-        this.spamLockDuration = config.getInt("lockDuration") * 1000;
+        super.enable();
+        this.spamLockDuration = getConfig().getInt("lockDuration") * 1000;
         this.chatTimestamps = new HashMap<Player, Long>();
     }
 

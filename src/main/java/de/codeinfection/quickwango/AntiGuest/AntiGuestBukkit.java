@@ -40,6 +40,10 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     @Override
     public void onLoad()
     {
+        logger = this.getLogger();
+        this.dataFolder = this.getDataFolder();
+        this.dataFolder.mkdirs();
+        this.preventionConfigFolder = new File(this.dataFolder, "preventions");
         PreventionManager.getInstance()
             .initialize(this)
             .registerPrevention(new AfkPrevention())
@@ -87,12 +91,8 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     @Override
     public void onEnable()
     {
-        logger = this.getLogger();
         this.server = this.getServer();
         this.pm = this.server.getPluginManager();
-        this.dataFolder = this.getDataFolder();
-        this.dataFolder.mkdirs();
-        this.preventionConfigFolder = new File(this.dataFolder, "preventions");
 
         this.reloadConfig();
 
@@ -113,7 +113,7 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
             return;
         }
 
-        PreventionManager.getInstance().enablePreventions(this.config.getConfigurationSection("preventions"));
+        PreventionManager.getInstance().enablePreventions();
 
         if (!this.config.getKeys(false).isEmpty())
         {

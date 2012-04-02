@@ -4,10 +4,8 @@ import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.Util.Convert;
 import de.codeinfection.quickwango.AntiGuest.Util.Vector2D;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,10 +39,10 @@ public class MovePrevention extends Prevention
     }
     
     @Override
-    public void enable(ConfigurationSection config)
+    public void enable()
     {
-        super.enable(config);
-        this.radius = config.getInt("radius");
+        super.enable();
+        this.radius = getConfig().getInt("radius");
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
