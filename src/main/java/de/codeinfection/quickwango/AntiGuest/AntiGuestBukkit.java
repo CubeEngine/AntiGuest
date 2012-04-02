@@ -5,13 +5,10 @@ import de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit.*;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Server;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionPlugin
@@ -21,9 +18,6 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     private static Logger logger = null;
     public static boolean debugMode = false;
     
-    private Server server;
-    private PluginManager pm;
-    private Configuration config;
     private File dataFolder;
     private File preventionConfigFolder;
 
@@ -91,34 +85,12 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     @Override
     public void onEnable()
     {
-        this.server = this.getServer();
-        this.pm = this.server.getPluginManager();
-
-        this.reloadConfig();
-
-        this.config = this.getConfig();
-        this.config.options().copyDefaults(true);
-        debugMode = this.config.getBoolean("debug");
-
-        try
-        {
-            Class.forName("org.bukkit.event.inventory.InventoryOpenEvent");
-        }
-        catch (ClassNotFoundException e)
-        {
-            AntiGuestBukkit.error("AntiGuest detected that your CraftBukkit version is too old.");
-            AntiGuestBukkit.error("You should at least use CraftBukkit 1.1-R5 !");
-            AntiGuestBukkit.error("I will now disable my self!");
-            this.pm.disablePlugin(this);
-            return;
-        }
+        reloadConfig();
+        getConfig().options().copyDefaults(true);
+        debugMode = getConfig().getBoolean("debug");
+        saveConfig();
 
         PreventionManager.getInstance().enablePreventions();
-
-        if (!this.config.getKeys(false).isEmpty())
-        {
-            this.saveConfig();
-        }
 
         BaseCommand baseCommand = new BaseCommand(this);
         baseCommand.registerSubCommand(new EnabledCommand(baseCommand))

@@ -42,11 +42,11 @@ Preventions:
 - **furnace** -- prevents from accessing furnaces
 - **dispenser** -- prevents from accessing dispensers
 - **workbench** -- prevents from accessing workbenches
-- **breakblock** -- prevents from breaking blocks
+- **breakblock** -- prevents from breaking blocks *
 - **lever** -- prevents from using levers
 - **waterbucket** -- prevents from using water buckets
 - **move** -- prevents from moving too far
-- **placeblock** -- prevents from placing blocks
+- **placeblock** -- prevents from placing blocks *
 - **lavabucket** -- prevents from using lava buckets
 - **cake** -- prevents from eating cakes
 - **pvp** -- prevents from damaging other players
@@ -66,6 +66,7 @@ Preventions:
 - **afk** -- prevents from idling players by kicking them after a configured time
 - **damage** -- prevents from getting damaged *
 - **milking** -- prevents from milking cows
+- **swear** -- prevents from swearing
 
 \* These preventions are filterable which means that they're able to prevent a subset of actions
 

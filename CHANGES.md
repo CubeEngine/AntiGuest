@@ -6,7 +6,7 @@ Version 3.1.0
 - added CraftBukkitUpToDate support
 - fixed color parsing (this may break 1.1 compatibility)
 - added a swear prevention
-- throttled the messages for fire related damage causes
+- throttled the messages for fire related damage causes and void damage
 - fixed filtering of the damage prevention
 - made breakblock and placeblock filterable
 - made the item prevention ignore blocks (item ID <= 256)
@@ -14,6 +14,8 @@ Version 3.1.0
 - made the commands case-insensitive
 - removed 1.1-R4 compatibility code
 - splitted the huge configuration into small prevent configurations
+- the enable and disable commands save the prevention's state to its config
+- added a parameter to the reload command to be able to reload specific preventions
 
 Version 3.0.3
 -------------
