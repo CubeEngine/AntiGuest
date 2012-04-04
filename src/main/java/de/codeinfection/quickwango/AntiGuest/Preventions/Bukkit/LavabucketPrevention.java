@@ -26,6 +26,7 @@ public class LavabucketPrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
+        config.set("enable", true);
         config.set("message", "&4You are not allowed to use lava buckets!");
 
         return config;

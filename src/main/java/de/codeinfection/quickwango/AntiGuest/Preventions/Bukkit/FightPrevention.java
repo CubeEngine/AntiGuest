@@ -28,6 +28,7 @@ public class FightPrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
+        config.set("enable", true);
         config.set("message", "&4You are not allowed to fight!");
 
         return config;

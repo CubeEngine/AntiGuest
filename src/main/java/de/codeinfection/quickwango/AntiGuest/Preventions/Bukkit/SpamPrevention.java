@@ -29,6 +29,7 @@ public class SpamPrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
+        config.set("enable", true);
         config.set("message", "&4Don't spam the chat!");
         config.set("lockDuration", 2);
 

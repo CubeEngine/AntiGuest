@@ -25,6 +25,7 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     {
         Configuration config = super.getDefaultConfig();
 
+        config.set("enable", true);
         config.set("message", "&4You are not allowed to place blocks!");
         config.set("mode", "none");
 
