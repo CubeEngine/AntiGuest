@@ -221,6 +221,16 @@ public abstract class Prevention implements Listener
     }
 
     /**
+     * Sets the message this prevention will send to players
+     *
+     * @param message the new message
+     */
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
+
+    /**
      * Returns the delay this preventions uses for throttled messages
      *
      * @return the delay

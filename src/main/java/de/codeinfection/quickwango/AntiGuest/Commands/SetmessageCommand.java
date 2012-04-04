@@ -12,41 +12,41 @@ import org.bukkit.command.CommandSender;
  *
  * @author Phillip Schichtel
  */
-public class DisableCommand extends AbstractCommand
+public class SetmessageCommand extends AbstractCommand
 {
-    public DisableCommand(BaseCommand base)
+    public SetmessageCommand(BaseCommand base)
     {
-        super("disable", base);
+        super("setmessage", base);
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args)
     {
-        if (args.length > 0)
+        if (args.length > 1)
         {
             Prevention prevention = PreventionManager.getInstance().getPrevention(args[0]);
             if (prevention != null)
             {
-                if (prevention.isEnabled())
+                StringBuilder messageBuilder = new StringBuilder(args[1]);
+                for (int i = 2; i < args.length; ++i)
                 {
-                    PreventionManager.getInstance().disablePrevention(prevention);
-                    sender.sendMessage(ChatColor.GREEN + "This prevention should now be disabled!");
-                    prevention.getConfig().set("enable", true);
-                    prevention.saveConfig();
+                    messageBuilder.append(' ').append(args[i]);
                 }
-                else
-                {
-                    sender.sendMessage(ChatColor.RED + "This prevention is already disabled!");
-                }
+                String message = messageBuilder.toString();
+                prevention.setMessage(message);
+                prevention.getConfig().set("message", message);
+                prevention.saveConfig();
+
+                sender.sendMessage(ChatColor.GREEN + "The message was successfully set!");
             }
             else
             {
-                sender.sendMessage(ChatColor.RED + "The given prevention is not registered!");
+                sender.sendMessage("Prevention not found!");
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.RED + "You didn't specify a prevention!");
+            sender.sendMessage("Too few arguments!");
         }
         
         return true;
@@ -55,12 +55,12 @@ public class DisableCommand extends AbstractCommand
     @Override
     public String getUsage()
     {
-        return super.getUsage() + " <prevention>";
+        return super.getUsage() + " <prevention> <message>";
     }
 
     @Override
     public String getDescription()
     {
-        return "Disables the given prevention.";
+        return "Enables the given prevention.";
     }
 }

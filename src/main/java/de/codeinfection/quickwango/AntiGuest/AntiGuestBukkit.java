@@ -95,7 +95,10 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
         BaseCommand baseCommand = new BaseCommand(this);
         baseCommand.registerSubCommand(new EnabledCommand(baseCommand))
                    .registerSubCommand(new EnableCommand(baseCommand))
+                   .registerSubCommand(new EnableallCommand(baseCommand))
                    .registerSubCommand(new DisableCommand(baseCommand))
+                   .registerSubCommand(new DisableallCommand(baseCommand))
+                   .registerSubCommand(new SetmessageCommand(baseCommand))
                    .registerSubCommand(new ListCommand(baseCommand))
                    .registerSubCommand(new CanCommand(baseCommand))
                    .registerSubCommand(new DebugCommand(baseCommand))

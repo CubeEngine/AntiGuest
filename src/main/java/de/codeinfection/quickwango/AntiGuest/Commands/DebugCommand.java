@@ -35,12 +35,6 @@ public class DebugCommand extends AbstractCommand
     }
 
     @Override
-    public String getUsage()
-    {
-        return "/" + getBase().getLabel() + " " + this.getLabel();
-    }
-
-    @Override
     public String getDescription()
     {
         return "Toggles the debug mode of antiguest.";

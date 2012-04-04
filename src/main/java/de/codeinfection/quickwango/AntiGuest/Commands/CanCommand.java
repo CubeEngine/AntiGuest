@@ -86,7 +86,7 @@ public class CanCommand extends AbstractCommand
     @Override
     public String getUsage()
     {
-        return "/" + getBase().getLabel() + " " + this.getLabel() + " [player] <prevention>";
+        return super.getUsage() + " [player] <prevention>";
     }
 
     @Override

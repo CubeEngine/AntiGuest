@@ -61,7 +61,7 @@ public class EnableCommand extends AbstractCommand
     @Override
     public String getUsage()
     {
-        return "/" + getBase().getLabel() + " " + this.getLabel() + " <prevention>";
+        return super.getUsage() + " <prevention>";
     }
 
     @Override
