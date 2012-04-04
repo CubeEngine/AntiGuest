@@ -148,7 +148,7 @@ public abstract class Prevention implements Listener
     public void enable()
     {
         this.messageDelay = config.getInt("messageDelay") * 1000;
-        this.message = parseMessage(config.getString("message"));
+        this.setMessage(config.getString("message"));
     }
 
     /**
@@ -227,7 +227,7 @@ public abstract class Prevention implements Listener
      */
     public void setMessage(String message)
     {
-        this.message = message;
+        this.message = parseMessage(message);
     }
 
     /**
