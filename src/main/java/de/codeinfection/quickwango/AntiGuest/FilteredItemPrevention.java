@@ -3,7 +3,6 @@ package de.codeinfection.quickwango.AntiGuest;
 import java.util.HashSet;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
@@ -22,20 +21,25 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         this(name, plugin, false);
     }
 
-    public FilteredItemPrevention(final String name, final PreventionPlugin plugin, final boolean ignoreBlocks)
+    public FilteredItemPrevention(final String name, final PreventionPlugin plugin, boolean ignoreBlocks)
     {
-        super(name, plugin);
+        this(name, plugin, false, ignoreBlocks);
+    }
+
+    public FilteredItemPrevention(final String name, final PreventionPlugin plugin, boolean enableByDefault, boolean ignoreBlocks)
+    {
+        super(name, plugin, enableByDefault);
         this.ignoreBlocks = ignoreBlocks;
     }
 
-    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin)
+    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
     {
-        this(name, permission, plugin, false);
+        this(name, permission, plugin, enableByDefault, false);
     }
 
-    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin, final boolean ignoreBlocks)
+    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault, boolean ignoreBlocks)
     {
-        super(name, permission, plugin);
+        super(name, permission, plugin, enableByDefault);
         this.ignoreBlocks = ignoreBlocks;
     }
 

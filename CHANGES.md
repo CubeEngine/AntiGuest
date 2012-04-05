@@ -1,6 +1,20 @@
 Changes
 =======
 
+Version 3.2.0
+-------------
+- fixed disabling preventions via command
+- added temporary enabling/disabling
+- add 3 new command
+    - enableall -- enables all preventions
+    - disableall -- disables all preventions
+    - setmessage -- sets the message of a prevention
+- enabled some preventions by default
+- improved all inventory related preventions
+- fixed the breakblock preventions to prevent taking out fire
+- added translation (languages: en, de)
+- added a converter (old config.yml => prevention configs)
+
 Version 3.1.0
 -------------
 - added CraftBukkitUpToDate support

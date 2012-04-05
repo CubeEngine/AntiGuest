@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest;
 
 import de.codeinfection.quickwango.AntiGuest.Commands.*;
 import de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit.*;
+import de.codeinfection.quickwango.Translation.Translator;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,6 +89,10 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
         reloadConfig();
         getConfig().options().copyDefaults(true);
         debugMode = getConfig().getBoolean("debug");
+        if (Translator.loadTranslation(getConfig().getString("language")))
+        {
+            Translator.loadTranslation("en");
+        }
         saveConfig();
 
         PreventionManager.getInstance().enablePreventions();
@@ -107,15 +112,12 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
                    .setDefaultCommand("help");
         
         this.getCommand("antiguest").setExecutor(baseCommand);
-
-        log("Version " + this.getDescription().getVersion() + " enabled");
     }
 
     @Override
     public void onDisable()
     {
         PreventionManager.getInstance().disablePreventions();
-        log(this.getDescription().getVersion() + " disabled");
     }
 
     public File getConfigurationFolder()

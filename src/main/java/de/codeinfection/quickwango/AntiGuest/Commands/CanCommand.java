@@ -4,8 +4,8 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -38,8 +38,8 @@ public class CanCommand extends AbstractCommand
         }
         else
         {
-            sender.sendMessage(ChatColor.DARK_RED + "Too few arguments given!");
-            sender.sendMessage(ChatColor.DARK_RED + "See /" + getBase().getLabel() + " help");
+            sender.sendMessage(t("tooFewArguments"));
+            sender.sendMessage(t("see", getBase().getLabel() + " help"));
             return true;
         }
 
@@ -51,33 +51,33 @@ public class CanCommand extends AbstractCommand
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(ChatColor.GREEN + "You are able to pass this prevention!");
+                        sender.sendMessage(t("you_ableToPass"));
                     }
                     else
                     {
-                        sender.sendMessage(ChatColor.GREEN + "The player is able to pass this prevention!");
+                        sender.sendMessage(t("other_ableToPass"));
                     }
                 }
                 else
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(ChatColor.RED + "You are unable to pass this prevention!");
+                        sender.sendMessage(t("you_unableToPass"));
                     }
                     else
                     {
-                        sender.sendMessage(ChatColor.RED + "The player is unable to pass this prevention!");
+                        sender.sendMessage(t("other_unableToPass"));
                     }
                 }
             }
             else
             {
-                sender.sendMessage(ChatColor.DARK_RED + "Prevention not found!");
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.DARK_RED + "Player not found!");
+            sender.sendMessage(t("playerNotFound"));
         }
         
         return true;
@@ -87,11 +87,5 @@ public class CanCommand extends AbstractCommand
     public String getUsage()
     {
         return super.getUsage() + " [player] <prevention>";
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Checks whether a player can pass a specific prevention.";
     }
 }

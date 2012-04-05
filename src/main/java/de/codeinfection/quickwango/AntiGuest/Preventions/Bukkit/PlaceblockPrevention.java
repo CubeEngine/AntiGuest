@@ -17,7 +17,7 @@ public class PlaceblockPrevention extends FilteredItemPrevention
 {
     public PlaceblockPrevention()
     {
-        super("placeblock", AntiGuestBukkit.getInstance());
+        super("placeblock", AntiGuestBukkit.getInstance(), true, true);
     }
 
     @Override
@@ -25,8 +25,6 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("enable", true);
-        config.set("message", "&4You are not allowed to place blocks!");
         config.set("mode", "none");
 
         return config;

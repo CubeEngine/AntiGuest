@@ -2,6 +2,7 @@ package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -20,7 +21,7 @@ public class HelpCommand extends AbstractCommand
 
     public boolean execute(CommandSender sender, String[] args)
     {
-        sender.sendMessage("Here is a list of the available commands and their usage:");
+        sender.sendMessage(t("listOfCommands"));
         sender.sendMessage("");
 
         for (AbstractCommand command : getBase().getRegisteredCommands())
@@ -31,11 +32,5 @@ public class HelpCommand extends AbstractCommand
         }
 
         return true;
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Prints this help message.";
     }
 }

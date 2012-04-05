@@ -1,5 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
@@ -23,6 +24,7 @@ public abstract class Prevention implements Listener
     private int messageDelay;
     private final PreventionPlugin plugin;
     private boolean enabled;
+    private final boolean enableByDefault;
     private final PreventionConfiguration config;
 
     private final HashMap<Player, Long> throttleTimestamps;
@@ -36,7 +38,20 @@ public abstract class Prevention implements Listener
      */
     public Prevention(final String name, final PreventionPlugin plugin)
     {
-        this(name, "antiguest.preventions." + name, plugin);
+        this(name, plugin, false);
+    }
+
+    /**
+     * Initializes the prevention with its name and the corresponding plugin.
+     * This contructor use "antiguest.preventions.<name>" as the permission!
+     *
+     * @param name the name of the prevention
+     * @param plugin the corresponding plugin
+     * @param enableByDefault whether to enable this prevention by default
+     */
+    public Prevention(final String name, final PreventionPlugin plugin, boolean enableByDefault)
+    {
+        this(name, "antiguest.preventions." + name, plugin, enableByDefault);
     }
 
     /**
@@ -46,8 +61,9 @@ public abstract class Prevention implements Listener
      * @param name the name of the prevention
      * @param permission the permission
      * @param plugin the corresponding plugin
+     * @param enableByDefault whether to enable this prevention by default
      */
-    public Prevention(final String name, final String permission, final PreventionPlugin plugin)
+    public Prevention(final String name, final String permission, final PreventionPlugin plugin, boolean enableByDefault)
     {
         this.name = name;
         this.permission = new Permission(permission, PermissionDefault.OP);
@@ -56,6 +72,7 @@ public abstract class Prevention implements Listener
         this.messageDelay = 0;
         this.plugin = plugin;
         this.enabled = false;
+        this.enableByDefault = enableByDefault;
         this.config = PreventionConfiguration.loadConfig(plugin.getConfigurationFolder(), this);
     }
 
@@ -132,8 +149,8 @@ public abstract class Prevention implements Listener
     {
         Configuration defaultConfig = new MemoryConfiguration();
 
-        defaultConfig.set("enable", false);
-        defaultConfig.set("message", "&4You are not allowed to do this.");
+        defaultConfig.set("enable", this.enableByDefault);
+        defaultConfig.set("message", t("message_" + this.name));
 
         return defaultConfig;
     }

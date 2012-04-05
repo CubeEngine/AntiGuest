@@ -4,7 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import org.bukkit.ChatColor;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -30,7 +30,7 @@ public class DisableCommand extends AbstractCommand
                 if (prevention.isEnabled())
                 {
                     PreventionManager.getInstance().disablePrevention(prevention);
-                    sender.sendMessage(ChatColor.GREEN + "This prevention should now be disabled!");
+                    sender.sendMessage(t("preventionDisabled"));
                     if (args.length <= 1 || !("-t".equals(args[1])))
                     {
                         prevention.getConfig().set("enable", false);
@@ -39,17 +39,17 @@ public class DisableCommand extends AbstractCommand
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.RED + "This prevention is already disabled!");
+                    sender.sendMessage(t("alreadyDisabled"));
                 }
             }
             else
             {
-                sender.sendMessage(ChatColor.RED + "The given prevention is not registered!");
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.RED + "You didn't specify a prevention!");
+            sender.sendMessage(t("noPrevention"));
         }
         
         return true;
@@ -59,11 +59,5 @@ public class DisableCommand extends AbstractCommand
     public String getUsage()
     {
         return super.getUsage() + " <prevention> [-t]";
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Disables the given prevention.";
     }
 }

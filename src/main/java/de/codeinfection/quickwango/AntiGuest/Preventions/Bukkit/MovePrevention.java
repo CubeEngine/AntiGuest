@@ -31,7 +31,6 @@ public class MovePrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("message", "&4You are not allowed to move any further!");
         config.set("messageDelay", 3);
         config.set("radius", Math.max(5, getPlugin().getServer().getSpawnRadius()));
 

@@ -18,15 +18,20 @@ public abstract class FilteredPrevention extends Prevention
 {
     protected Set<Object> filterItems;
     private Mode mode;
-    
+
     public FilteredPrevention(String name, PreventionPlugin plugin)
     {
         super(name, plugin);
     }
-
-    public FilteredPrevention(String name, String permission, PreventionPlugin plugin)
+    
+    public FilteredPrevention(String name, PreventionPlugin plugin, boolean enableByDefault)
     {
-        super(name, permission, plugin);
+        super(name, plugin, enableByDefault);
+    }
+
+    public FilteredPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
+    {
+        super(name, permission, plugin, enableByDefault);
     }
 
     /**

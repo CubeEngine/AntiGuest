@@ -3,7 +3,6 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
@@ -18,18 +17,7 @@ public class WaterbucketPrevention extends Prevention
 {
     public WaterbucketPrevention()
     {
-        super("waterbucket", AntiGuestBukkit.getInstance());
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("enable", true);
-        config.set("message", "&4You are not allowed to use water buckets!");
-
-        return config;
+        super("waterbucket", AntiGuestBukkit.getInstance(), true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

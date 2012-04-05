@@ -4,7 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import org.bukkit.ChatColor;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -37,16 +37,16 @@ public class SetmessageCommand extends AbstractCommand
                 prevention.getConfig().set("message", message);
                 prevention.saveConfig();
 
-                sender.sendMessage(ChatColor.GREEN + "The message was successfully set!");
+                sender.sendMessage(t("messageSet"));
             }
             else
             {
-                sender.sendMessage("Prevention not found!");
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage("Too few arguments!");
+            sender.sendMessage(t("tooFewArguments"));
         }
         
         return true;
@@ -56,11 +56,5 @@ public class SetmessageCommand extends AbstractCommand
     public String getUsage()
     {
         return super.getUsage() + " <prevention> <message>";
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Enables the given prevention.";
     }
 }

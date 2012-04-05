@@ -2,7 +2,6 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,16 +18,6 @@ public class DispenserPrevention extends Prevention
     public DispenserPrevention()
     {
         super("dispenser", AntiGuestBukkit.getInstance());
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("message", "&4You are not allowed to access dispensers!");
-
-        return config;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

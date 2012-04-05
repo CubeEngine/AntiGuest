@@ -25,7 +25,6 @@ public class CommandPrevention extends FilteredPrevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("message", "&4You are not allowed to use this command!");
         config.set("list", new String[] {
             "plugins",
             "pl",

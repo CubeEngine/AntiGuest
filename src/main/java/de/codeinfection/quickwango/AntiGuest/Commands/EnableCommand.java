@@ -4,6 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -31,7 +32,7 @@ public class EnableCommand extends AbstractCommand
                 {
                     if (PreventionManager.getInstance().enablePrevention(prevention))
                     {
-                        sender.sendMessage(ChatColor.GREEN + "This prevention should now be enabled!");
+                        sender.sendMessage(t("preventionEnabled"));
                         if (args.length <= 1 || !("-t".equals(args[1])))
                         {
                             prevention.getConfig().set("enable", true);
@@ -40,22 +41,22 @@ public class EnableCommand extends AbstractCommand
                     }
                     else
                     {
-                        sender.sendMessage(ChatColor.RED + "Something seems to have failed!");
+                        sender.sendMessage(t("somethingFailed"));
                     }
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.RED + "This prevention is already enabled!");
+                    sender.sendMessage(t("alreadyEnabled"));
                 }
             }
             else
             {
-                sender.sendMessage(ChatColor.RED + "The given prevention is not registered!");
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.RED + "You didn't specify a prevention!");
+            sender.sendMessage(t("noPrevention"));
         }
         
         return true;
@@ -65,11 +66,5 @@ public class EnableCommand extends AbstractCommand
     public String getUsage()
     {
         return super.getUsage() + " <prevention> [-t]";
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Enables the given prevention.";
     }
 }

@@ -4,7 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import org.bukkit.ChatColor;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -22,18 +22,6 @@ public class ReloadCommand extends AbstractCommand
     }
 
     @Override
-    public String getDescription()
-    {
-        return "Reloads the configuration of the plugin or a specific prevention.";
-    }
-
-    @Override
-    public String getUsage()
-    {
-        return super.getUsage() + " [prevention]";
-    }
-
-    @Override
     public boolean execute(CommandSender sender, String[] args)
     {
         if (args.length > 0)
@@ -45,11 +33,11 @@ public class ReloadCommand extends AbstractCommand
                 mgr.disablePrevention(prevention);
                 prevention.reloadConfig();
                 mgr.enablePrevention(prevention);
-                sender.sendMessage(ChatColor.GREEN + "The prevention " + prevention.getName() + " was successfully reloaded!");
+                sender.sendMessage(t("preventionReloaded", prevention.getName()));
             }
             else
             {
-                sender.sendMessage(ChatColor.RED + "The given preventions is not available!");
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
@@ -59,9 +47,15 @@ public class ReloadCommand extends AbstractCommand
             pm.disablePlugin(plugin);
             pm.enablePlugin(plugin);
 
-            sender.sendMessage(ChatColor.GREEN + plugin.getDescription().getName() + " successfully reloaded!");
+            sender.sendMessage(t("reloaded"));
         }
 
         return true;
+    }
+
+    @Override
+    public String getUsage()
+    {
+        return super.getUsage() + " [prevention]";
     }
 }

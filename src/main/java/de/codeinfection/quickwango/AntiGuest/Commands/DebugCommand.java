@@ -3,7 +3,7 @@ package de.codeinfection.quickwango.AntiGuest.Commands;
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
-import org.bukkit.ChatColor;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -24,19 +24,13 @@ public class DebugCommand extends AbstractCommand
         AntiGuestBukkit.debugMode = !AntiGuestBukkit.debugMode;
         if (AntiGuestBukkit.debugMode)
         {
-            sender.sendMessage(ChatColor.GREEN + "Debug mode is now enabled!");
+            sender.sendMessage(t("debugEnabled"));
         }
         else
         {
-            sender.sendMessage(ChatColor.RED + "Debug mode is now disabled!");
+            sender.sendMessage(t("debugDisabled"));
         }
 
         return true;
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Toggles the debug mode of antiguest.";
     }
 }

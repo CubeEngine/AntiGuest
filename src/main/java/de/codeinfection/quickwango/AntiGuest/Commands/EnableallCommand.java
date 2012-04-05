@@ -4,7 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import org.bukkit.ChatColor;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -31,14 +31,8 @@ public class EnableallCommand extends AbstractCommand
             prevention.saveConfig();
         }
 
-        sender.sendMessage(ChatColor.GREEN + "All preventions were successfully enabled!");
+        sender.sendMessage(t("preventionsEnabled"));
 
         return true;
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Enables all preventions.";
     }
 }

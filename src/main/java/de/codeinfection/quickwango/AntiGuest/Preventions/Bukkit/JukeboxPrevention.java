@@ -3,7 +3,6 @@ package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -19,16 +18,6 @@ public class JukeboxPrevention extends Prevention
     public JukeboxPrevention()
     {
         super("jukebox", AntiGuestBukkit.getInstance());
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("message", "&4You are not allowed to play music!");
-
-        return config;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

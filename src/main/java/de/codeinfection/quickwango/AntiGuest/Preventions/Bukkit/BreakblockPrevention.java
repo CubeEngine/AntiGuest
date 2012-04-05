@@ -24,7 +24,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
 {
     public BreakblockPrevention()
     {
-        super("breakblock", AntiGuestBukkit.getInstance());
+        super("breakblock", AntiGuestBukkit.getInstance(), true, true);
     }
 
     @Override
@@ -32,8 +32,6 @@ public class BreakblockPrevention extends FilteredItemPrevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("enable", true);
-        config.set("message", "&4You are not allowed to break blocks!");
         config.set("mode", "none");
 
         return config;

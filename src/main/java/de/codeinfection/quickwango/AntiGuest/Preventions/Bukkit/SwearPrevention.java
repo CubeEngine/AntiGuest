@@ -29,7 +29,6 @@ public class SwearPrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("message", "&4Hey! Don't swear!");
         config.set("words", new String[] {
             "hitler",
             "nazi",

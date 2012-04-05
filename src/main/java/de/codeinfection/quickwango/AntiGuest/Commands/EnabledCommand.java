@@ -4,7 +4,7 @@ import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import org.bukkit.ChatColor;
+import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -29,21 +29,21 @@ public class EnabledCommand extends AbstractCommand
             {
                 if (prevention.isEnabled())
                 {
-                    sender.sendMessage(ChatColor.GREEN + "This prevention is enabled!");
+                    sender.sendMessage(t("enabled"));
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.RED + "This prevention is disabled!");
+                    sender.sendMessage(t("disabled"));
                 }
             }
             else
             {
-                sender.sendMessage(ChatColor.RED + "The given prevention is not registered!");
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.RED + "You didn't specify a prevention!");
+            sender.sendMessage(t("noPrevention"));
         }
         
         return true;
@@ -53,11 +53,5 @@ public class EnabledCommand extends AbstractCommand
     public String getUsage()
     {
         return super.getUsage() + " <prevention>";
-    }
-
-    @Override
-    public String getDescription()
-    {
-        return "Checks whether the given prevention is enabled.";
     }
 }
