@@ -1,10 +1,10 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -37,16 +37,16 @@ public class SetmessageCommand extends AbstractCommand
                 prevention.getConfig().set("message", message);
                 prevention.saveConfig();
 
-                sender.sendMessage(t("messageSet"));
+                sender.sendMessage(_("messageSet"));
             }
             else
             {
-                sender.sendMessage(t("preventionNotFound"));
+                sender.sendMessage(_("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(t("tooFewArguments"));
+            sender.sendMessage(_("tooFewArguments"));
         }
         
         return true;

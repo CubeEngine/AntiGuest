@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import static de.codeinfection.quickwango.Translation.Translator.t;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
@@ -25,7 +25,7 @@ public abstract class Prevention implements Listener
     private final PreventionPlugin plugin;
     private boolean enabled;
     private final boolean enableByDefault;
-    private final PreventionConfiguration config;
+    private PreventionConfiguration config;
 
     private final HashMap<Player, Long> throttleTimestamps;
 
@@ -73,12 +73,18 @@ public abstract class Prevention implements Listener
         this.plugin = plugin;
         this.enabled = false;
         this.enableByDefault = enableByDefault;
-        this.config = PreventionConfiguration.loadConfig(plugin.getConfigurationFolder(), this);
+        this.config = PreventionConfiguration.get(plugin.getConfigurationFolder(), this);
     }
 
     public final PreventionConfiguration getConfig()
     {
         return this.config;
+    }
+
+    public final void resetConfig()
+    {
+        this.config = PreventionConfiguration.get(getPlugin().getConfigurationFolder(), this, false);
+        this.saveConfig();
     }
 
     public final boolean reloadConfig()
@@ -150,7 +156,7 @@ public abstract class Prevention implements Listener
         Configuration defaultConfig = new MemoryConfiguration();
 
         defaultConfig.set("enable", this.enableByDefault);
-        defaultConfig.set("message", t("message_" + this.name));
+        defaultConfig.set("message", _("message_" + this.name));
 
         return defaultConfig;
     }

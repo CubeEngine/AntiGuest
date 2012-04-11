@@ -1,10 +1,10 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,8 +38,8 @@ public class CanCommand extends AbstractCommand
         }
         else
         {
-            sender.sendMessage(t("tooFewArguments"));
-            sender.sendMessage(t("see", getBase().getLabel() + " help"));
+            sender.sendMessage(_("tooFewArguments"));
+            sender.sendMessage(_("see", getBase().getLabel() + " help"));
             return true;
         }
 
@@ -51,33 +51,33 @@ public class CanCommand extends AbstractCommand
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(t("you_ableToPass"));
+                        sender.sendMessage(_("you_ableToPass"));
                     }
                     else
                     {
-                        sender.sendMessage(t("other_ableToPass"));
+                        sender.sendMessage(_("other_ableToPass"));
                     }
                 }
                 else
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(t("you_unableToPass"));
+                        sender.sendMessage(_("you_unableToPass"));
                     }
                     else
                     {
-                        sender.sendMessage(t("other_unableToPass"));
+                        sender.sendMessage(_("other_unableToPass"));
                     }
                 }
             }
             else
             {
-                sender.sendMessage(t("preventionNotFound"));
+                sender.sendMessage(_("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(t("playerNotFound"));
+            sender.sendMessage(_("playerNotFound"));
         }
         
         return true;

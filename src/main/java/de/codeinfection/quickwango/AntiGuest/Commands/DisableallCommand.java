@@ -1,10 +1,10 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -31,7 +31,7 @@ public class DisableallCommand extends AbstractCommand
             prevention.saveConfig();
         }
 
-        sender.sendMessage(t("preventionsDisabled"));
+        sender.sendMessage(_("preventionsDisabled"));
 
         return true;
     }

@@ -1,8 +1,8 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.FilteredPrevention;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.configuration.Configuration;
@@ -40,9 +40,9 @@ public class DamagePrevention extends FilteredPrevention
         Configuration config = super.getDefaultConfig();
 
         config.set("messageDelay", 3);
-        config.set("damagerMessage", t("damagerMessage"));
+        config.set("damagerMessage", _("damagerMessage"));
         config.set("preventPotions", true);
-        config.set("potionMessage", t("potionMessage"));
+        config.set("potionMessage", _("potionMessage"));
         config.set("mode", "whitelist");
         config.set("list", new String[]{"void"});
 

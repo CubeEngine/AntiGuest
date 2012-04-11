@@ -2,8 +2,8 @@ package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -24,11 +24,11 @@ public class DebugCommand extends AbstractCommand
         AntiGuestBukkit.debugMode = !AntiGuestBukkit.debugMode;
         if (AntiGuestBukkit.debugMode)
         {
-            sender.sendMessage(t("debugEnabled"));
+            sender.sendMessage(_("debugEnabled"));
         }
         else
         {
-            sender.sendMessage(t("debugDisabled"));
+            sender.sendMessage(_("debugDisabled"));
         }
 
         return true;

@@ -1,9 +1,9 @@
 package de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit;
 
+import de.codeinfection.Util.Vector2D;
 import de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit;
+import de.codeinfection.quickwango.AntiGuest.Convert;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
-import de.codeinfection.quickwango.AntiGuest.Util.Convert;
-import de.codeinfection.quickwango.AntiGuest.Util.Vector2D;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;

@@ -20,7 +20,12 @@ public class PreventionConfiguration extends YamlConfiguration
         this.file = file;
     }
 
-    public static PreventionConfiguration loadConfig(File dir, Prevention prevention)
+    public static PreventionConfiguration get(File dir, Prevention prevention)
+    {
+        return get(dir, prevention, true);
+    }
+
+    public static PreventionConfiguration get(File dir, Prevention prevention, boolean load)
     {
         if (dir == null || prevention == null)
         {
@@ -33,19 +38,22 @@ public class PreventionConfiguration extends YamlConfiguration
         }
 
         final PreventionConfiguration config = new PreventionConfiguration(new File(dir, prevention.getName() + FILE_EXTENTION));
-        try
+        if (load)
         {
-            config.load();
-        }
-        catch (FileNotFoundException e)
-        {}
-        catch (IOException e)
-        {
-            e.printStackTrace(System.err);
-        }
-        catch (InvalidConfigurationException e)
-        {
-            e.printStackTrace(System.err);
+            try
+            {
+                config.load();
+            }
+            catch (FileNotFoundException e)
+            {}
+            catch (IOException e)
+            {
+                e.printStackTrace(System.err);
+            }
+            catch (InvalidConfigurationException e)
+            {
+                e.printStackTrace(System.err);
+            }
         }
         config.options().copyDefaults(true);
         config.setDefaults(prevention.getDefaultConfig());

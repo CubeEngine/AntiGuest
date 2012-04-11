@@ -1,8 +1,8 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -21,7 +21,7 @@ public class HelpCommand extends AbstractCommand
 
     public boolean execute(CommandSender sender, String[] args)
     {
-        sender.sendMessage(t("listOfCommands"));
+        sender.sendMessage(_("listOfCommands"));
         sender.sendMessage("");
 
         for (AbstractCommand command : getBase().getRegisteredCommands())

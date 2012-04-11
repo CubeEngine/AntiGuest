@@ -1,10 +1,10 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -33,11 +33,11 @@ public class ReloadCommand extends AbstractCommand
                 mgr.disablePrevention(prevention);
                 prevention.reloadConfig();
                 mgr.enablePrevention(prevention);
-                sender.sendMessage(t("preventionReloaded", prevention.getName()));
+                sender.sendMessage(_("preventionReloaded", prevention.getName()));
             }
             else
             {
-                sender.sendMessage(t("preventionNotFound"));
+                sender.sendMessage(_("preventionNotFound"));
             }
         }
         else
@@ -47,7 +47,7 @@ public class ReloadCommand extends AbstractCommand
             pm.disablePlugin(plugin);
             pm.enablePlugin(plugin);
 
-            sender.sendMessage(t("reloaded"));
+            sender.sendMessage(_("reloaded", getBase().getPlugin().getName()));
         }
 
         return true;

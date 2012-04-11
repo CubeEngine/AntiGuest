@@ -1,5 +1,7 @@
-package de.codeinfection.quickwango.AntiGuest.Util;
+package de.codeinfection.quickwango.AntiGuest;
 
+import de.codeinfection.Util.Vector2D;
+import de.codeinfection.Util.Vector3D;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -53,7 +55,7 @@ public final class Convert
      */
     public static Location toLocation(World world, Vector3D vector)
     {
-        if (vector == null)
+        if (world == null || vector == null)
         {
             return null;
         }
@@ -69,7 +71,7 @@ public final class Convert
      */
     public static Location toLocation(Player player, Vector3D vector)
     {
-        if (player == null)
+        if (player == null || vector == null)
         {
             return null;
         }

@@ -1,10 +1,10 @@
 package de.codeinfection.quickwango.AntiGuest.Commands;
 
 import de.codeinfection.quickwango.AntiGuest.AbstractCommand;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import de.codeinfection.quickwango.AntiGuest.BaseCommand;
 import de.codeinfection.quickwango.AntiGuest.Prevention;
 import de.codeinfection.quickwango.AntiGuest.PreventionManager;
-import static de.codeinfection.quickwango.Translation.Translator.t;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -30,7 +30,7 @@ public class DisableCommand extends AbstractCommand
                 if (prevention.isEnabled())
                 {
                     PreventionManager.getInstance().disablePrevention(prevention);
-                    sender.sendMessage(t("preventionDisabled"));
+                    sender.sendMessage(_("preventionDisabled"));
                     if (args.length <= 1 || !("-t".equals(args[1])))
                     {
                         prevention.getConfig().set("enable", false);
@@ -39,17 +39,17 @@ public class DisableCommand extends AbstractCommand
                 }
                 else
                 {
-                    sender.sendMessage(t("alreadyDisabled"));
+                    sender.sendMessage(_("alreadyDisabled"));
                 }
             }
             else
             {
-                sender.sendMessage(t("preventionNotFound"));
+                sender.sendMessage(_("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(t("noPrevention"));
+            sender.sendMessage(_("noPrevention"));
         }
         
         return true;

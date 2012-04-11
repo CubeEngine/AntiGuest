@@ -1,6 +1,6 @@
 package de.codeinfection.quickwango.AntiGuest;
 
-import static de.codeinfection.quickwango.Translation.Translator.t;
+import static de.codeinfection.quickwango.AntiGuest.AntiGuestBukkit._;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -76,7 +76,7 @@ public abstract class AbstractCommand
      */
     public String getDescription()
     {
-        return t(this.label + "_description");
+        return _(this.label + "_description");
     }
 
     /**

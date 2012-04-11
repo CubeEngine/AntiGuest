@@ -1,11 +1,16 @@
 package de.codeinfection.quickwango.AntiGuest;
 
+import de.codeinfection.Util.Translation;
 import de.codeinfection.quickwango.AntiGuest.Commands.*;
 import de.codeinfection.quickwango.AntiGuest.Preventions.Bukkit.*;
-import de.codeinfection.quickwango.Translation.Translator;
 import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,6 +26,7 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     
     private File dataFolder;
     private File preventionConfigFolder;
+    private static Translation translation;
 
     public AntiGuestBukkit()
     {
@@ -87,11 +93,15 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     public void onEnable()
     {
         reloadConfig();
-        getConfig().options().copyDefaults(true);
+        Configuration config = getConfig();
+        this.convertConfig((FileConfiguration)config);
+        config.addDefault("language", System.getProperty("user.language", "en"));
+        config.options().copyDefaults(true);
         debugMode = getConfig().getBoolean("debug");
-        if (Translator.loadTranslation(getConfig().getString("language")))
+        translation = Translation.get(this.getClass(), getConfig().getString("language"));
+        if (translation == null)
         {
-            Translator.loadTranslation("en");
+            translation = Translation.get(this.getClass(), "en");
         }
         saveConfig();
 
@@ -109,6 +119,8 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
                    .registerSubCommand(new DebugCommand(baseCommand))
                    .registerSubCommand(new HelpCommand(baseCommand))
                    .registerSubCommand(new ReloadCommand(baseCommand))
+                   .registerSubCommand(new LanguageCommand(baseCommand))
+                   .registerSubCommand(new ResetCommand(baseCommand))
                    .setDefaultCommand("help");
         
         this.getCommand("antiguest").setExecutor(baseCommand);
@@ -117,7 +129,55 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     @Override
     public void onDisable()
     {
+        translation = null;
         PreventionManager.getInstance().disablePreventions();
+    }
+
+    private void convertConfig(FileConfiguration config)
+    {
+        final String PREVENTIONS_KEY = "preventions";
+        ConfigurationSection section = config.getConfigurationSection(PREVENTIONS_KEY);
+        if (section != null)
+        {
+            PreventionManager mgr = PreventionManager.getInstance();
+            Prevention currentPrevention;
+            PreventionConfiguration preventionConfig;
+            ConfigurationSection currentSection;
+            for (String key : section.getKeys(false))
+            {
+                currentPrevention = mgr.getPrevention(key);
+                if (currentPrevention == null)
+                {
+                    continue;
+                }
+                currentSection = section.getConfigurationSection(key);
+                if (currentPrevention == null)
+                {
+                    continue;
+                }
+                preventionConfig = currentPrevention.getConfig();
+
+                for (Map.Entry<String, Object> entry : currentSection.getValues(true).entrySet())
+                {
+                    preventionConfig.set(entry.getKey(), entry.getValue());
+                }
+                try
+                {
+                    preventionConfig.save();
+                }
+                catch (IOException e)
+                {}
+            }
+            try
+            {
+                config.save(new File(this.dataFolder, "config.yml.old"));
+            }
+            catch (IOException e)
+            {
+                error("Failed to write the old configuration file", e);
+            }
+            config.set(PREVENTIONS_KEY, null);
+        }
     }
 
     public File getConfigurationFolder()
@@ -146,6 +206,21 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
         {
             log("[debug] " + msg);
         }
+    }
+
+    public static String _(String message, Object... params)
+    {
+        return translation.translate(message, params);
+    }
+
+    public static Translation getTranslation()
+    {
+        return translation;
+    }
+
+    public static void setTranslation(Translation newTranslation)
+    {
+        translation = newTranslation;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
