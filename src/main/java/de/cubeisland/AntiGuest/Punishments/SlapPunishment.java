@@ -1,7 +1,9 @@
 package de.cubeisland.AntiGuest.Punishments;
 
 import de.cubeisland.AntiGuest.Punishment;
+import java.util.Random;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 /**
  * Slaps a player
@@ -10,6 +12,13 @@ import org.bukkit.entity.Player;
  */
 public class SlapPunishment implements Punishment
 {
+    private final Random rand;
+
+    public SlapPunishment()
+    {
+        this.rand = new Random();
+    }
+
     public String getName()
     {
         return "slap";
@@ -18,5 +27,6 @@ public class SlapPunishment implements Punishment
     public void punish(Player player)
     {
         player.setHealth(player.getHealth() - 3);
+        player.getVelocity().add(new Vector(-rand.nextInt(5), rand.nextInt(2), -rand.nextInt(5)));
     }
 }
