@@ -1,6 +1,6 @@
 name: "AntiGuest"
 version: "${project.version}"
-main: "de.cubeisland.AntiGuest.AntiGuestBukkit"
+main: "de.cubeisland.AntiGuest.AntiGuest"
 dev-url: "http://dev.bukkit.org/server-mods/antiguest"
 authors:
   - "Quick_Wango"
