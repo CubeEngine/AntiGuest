@@ -3,7 +3,7 @@
 
     <groupId>de.cubeisland</groupId>
     <artifactId>antiguest</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
     <name>AntiGuest</name>
     <url>http://cubeisland.de</url>
     <packaging>jar</packaging>
@@ -22,7 +22,7 @@
     <repositories>
         <repository>
             <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
+            <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
     </repositories>
 
