@@ -34,7 +34,7 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>de.codeinfection</groupId>
+            <groupId>de.cubeisland</groupId>
             <artifactId>libminecraft</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <type>jar</type>
@@ -93,7 +93,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>de.codeinfection:libminecraft</include>
+                                    <include>de.cubeisland:libminecraft</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

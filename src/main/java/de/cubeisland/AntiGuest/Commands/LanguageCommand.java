@@ -1,11 +1,10 @@
 package de.cubeisland.AntiGuest.Commands;
 
-import com.avaje.ebean.Transaction;
-import de.codeinfection.Util.Translation;
 import de.cubeisland.AntiGuest.AbstractCommand;
 import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
 import de.cubeisland.AntiGuest.BaseCommand;
+import de.cubeisland.libMinecraft.Translation;
 import org.bukkit.command.CommandSender;
 
 /**

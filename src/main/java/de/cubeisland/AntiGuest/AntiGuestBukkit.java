@@ -1,8 +1,8 @@
 package de.cubeisland.AntiGuest;
 
-import de.codeinfection.Util.Translation;
 import de.cubeisland.AntiGuest.Commands.*;
 import de.cubeisland.AntiGuest.Preventions.Bukkit.*;
+import de.cubeisland.libMinecraft.Translation;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;

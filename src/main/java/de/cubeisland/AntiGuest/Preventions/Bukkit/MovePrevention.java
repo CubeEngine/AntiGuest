@@ -1,9 +1,9 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.codeinfection.Util.Vector2D;
-import de.cubeisland.AntiGuest.Convert;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
+import de.cubeisland.libMinecraft.Convert;
+import de.cubeisland.libMinecraft.Vector2D;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
