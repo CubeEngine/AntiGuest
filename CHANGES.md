@@ -5,12 +5,13 @@ Version 3.2.0
 -------------
 - fixed disabling preventions via command
 - added temporary enabling/disabling
-- add 5 new command
+- add 6 new command
     - enableall -- enables all preventions
     - disableall -- disables all preventions
     - setmessage -- sets the message of a prevention
     - language -- changes the language
     - reset -- resets all configurations
+    - badword -- adds a badword to the swear prevention
 - enabled some preventions by default
 - improved all inventory related preventions
 - fixed the breakblock preventions to prevent taking out fire
