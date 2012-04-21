@@ -18,6 +18,6 @@ public class RocketPunishment implements Punishment
 
     public void punish(Player player)
     {
-        player.setVelocity(new Vector(0, 50, 0));
+        player.getVelocity().add(new Vector(0, 50, 0));
     }
 }
