@@ -23,6 +23,7 @@ and even more complex setups, it's completely up to you.
 **Watch out! Tips for common mistakes**
 
 - All preventions are disabled by default since version 3.0
+- All preventions have their own configuration file since 3.1, since 3.2 the old configuration will be converted
 - The permissions are all lowercase, check that before you report AntiGuest not working
 
 Preventions:
@@ -89,8 +90,16 @@ General syntax: **/antiguest <command\>** or **/ag <command\>**
 - **help** -- prints a help text
 - **can [player] <preventionname\>** -- checks whether the player (or another player) passes a prevention
 - **list [all|*]** -- lists the active or all registered preventions
-- **reload** -- reloads the plugin
+- **reload [prevention]** -- reloads the plugin
 - **debug** -- toggles the debug mode
+- **setmessage <prevention\> <message\>** -- sets the message of a prevention
+- **language [languagecode]** -- shows or sets the language
+- **badword <word\>** -- adds a badword to the swear prevention
+- **disable <prevention\> [-t]** -- disables a prevention
+- **enable <prevention\> [-t]** -- enables a prevention
+- **disableall** -- disables all preventions
+- **enableall** -- enables all preventions
+- **reset** -- resets all configurations
 
 Installation:
 -------------
@@ -113,7 +122,7 @@ Permissions:
 ***README***
 ============
 
-Plugin developed by Quick_Wango - [Parallel Universe](http://parallel-universe.de)
+Plugin developed by Quick_Wango - [Cube Island](http://cubeisland.de)
 
 - You want new features?
 - You want the plugin to be always up to date?
@@ -127,4 +136,4 @@ Thanks in advance!
 
 ***[Talk to the developer](http://webchat.esper.net/?channels=code-infection&nick=)*** (#code-infection on EsperNet)
 
-***[Source on Github](https://github.com/quickwango/AntiGuest)***
+***[Source on Github](https://github.com/CubeIsland/AntiGuest)***

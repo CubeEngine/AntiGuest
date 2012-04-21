@@ -1,17 +1,17 @@
-name: AntiGuest
+name: "AntiGuest"
 version: "${project.version}"
-main: de.cubeisland.AntiGuest.AntiGuestBukkit
-dev-url: http://dev.bukkit.org/server-mods/antiguest
+main: "de.cubeisland.AntiGuest.AntiGuestBukkit"
+dev-url: "http://dev.bukkit.org/server-mods/antiguest"
 authors:
   - "Quick_Wango"
 description: "Prevents guests from griefing."
-website: "http://parallel-universe.de"
+website: "http://cubeisland.de"
 commands:
   antiguest:
     usage: "/<command> <subcommand> [arguments...]"
     description: "This is the base command for all AntiGuest commands"
     aliases:
-      - ag
+      - "ag"
 permissions:
   antiguest.*:
     description: "Allows the player to do everything"
