@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -19,18 +20,19 @@ public class PreventionManager
 {
     private static PreventionManager instance = null;
 
-    private PreventionPlugin plugin;
-    private Map<String, Prevention> preventions;
+    private final Map<String, Prevention> preventions;
+    private final Map<String, Punishment> punishments;
 
-    private PluginManager pm;
-    private Permission parentPermission;
+    private final PluginManager pm;
+    private final Permission parentPermission;
     
     private PreventionManager()
     {
-        this.plugin = null;
-        this.pm = null;
+        this.pm = Bukkit.getPluginManager();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
         this.preventions = new HashMap<String, Prevention>();
+        this.punishments = new HashMap<String, Punishment>();
+        this.pm.addPermission(this.parentPermission);
     }
 
     /**
@@ -45,25 +47,6 @@ public class PreventionManager
             instance = new PreventionManager();
         }
         return instance;
-    }
-
-    /**
-     * This method initializes the PreventionManager.
-     * This has to be done before any other method call!
-     *
-     * @param plugin an instance of AntiGuest
-     * @return fluent interface
-     */
-    public PreventionManager initialize(PreventionPlugin plugin)
-    {
-        if (this.plugin == null)
-        {
-            this.plugin = plugin;
-            this.pm = plugin.getServer().getPluginManager();
-
-            this.pm.addPermission(this.parentPermission);
-        }
-        return this;
     }
 
     /**
@@ -95,10 +78,6 @@ public class PreventionManager
      */
     public PreventionManager registerPrevention(Prevention prevention)
     {
-        if (this.plugin == null)
-        {
-            throw new IllegalStateException("the preventionmanager has not been initialized!");
-        }
         if (prevention == null)
         {
             throw new IllegalArgumentException("prevention must not be null!");
@@ -260,5 +239,59 @@ public class PreventionManager
         }
 
         return this;
+    }
+
+    /**
+     * Registeres a punishment
+     *
+     * @param punishment the punishment
+     * @return fluent interface
+     */
+    public PreventionManager registerPunishment(Punishment punishment)
+    {
+        if (punishment == null)
+        {
+            throw new IllegalArgumentException("The punishment must not be null!");
+        }
+        this.punishments.put(punishment.getName(), punishment);
+        return this;
+    }
+
+    /**
+     * Unregisteres a punishment
+     *
+     * @param punishment the punishment to unregister
+     * @return fluent interface
+     */
+    public PreventionManager unregisterPunishment(Punishment punishment)
+    {
+        if (punishment == null)
+        {
+            throw new IllegalArgumentException("The punishment must not be null!");
+        }
+        return this.unregisterPunishment(punishment.getName());
+    }
+
+    /**
+     * Unregisteres a punishment by its name
+     *
+     * @param punishment the name of the punishment to unregister
+     * @return fluent interface
+     */
+    public PreventionManager unregisterPunishment(String name)
+    {
+        this.punishments.remove(name);
+        return this;
+    }
+
+    /**
+     * Returns a punishment by its name
+     *
+     * @param name the name of the punishment
+     * @return the punishment
+     */
+    public Punishment getPunishment(String name)
+    {
+        return this.punishments.get(name);
     }
 }

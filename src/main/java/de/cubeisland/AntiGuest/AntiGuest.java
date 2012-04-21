@@ -2,6 +2,7 @@ package de.cubeisland.AntiGuest;
 
 import de.cubeisland.AntiGuest.Commands.*;
 import de.cubeisland.AntiGuest.Preventions.*;
+import de.cubeisland.AntiGuest.Punishments.*;
 import de.cubeisland.libMinecraft.Translation;
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +51,12 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 
 
         PreventionManager.getInstance()
-            .initialize(this)
+            .registerPunishment(new BanPunishment())
+            .registerPunishment(new BurnPunishment())
+            .registerPunishment(new KickPunishment())
+            .registerPunishment(new KillPunishment())
+            .registerPunishment(new PoisonPunishment())
+            .registerPunishment(new SlapPunishment())
             .registerPrevention(new AfkPrevention(this))
             .registerPrevention(new BedPrevention(this))
             .registerPrevention(new BowPrevention(this))
