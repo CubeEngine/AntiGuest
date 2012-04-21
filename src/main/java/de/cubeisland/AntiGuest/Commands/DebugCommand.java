@@ -1,8 +1,8 @@
 package de.cubeisland.AntiGuest.Commands;
 
 import de.cubeisland.AntiGuest.AbstractCommand;
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
-import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
+import de.cubeisland.AntiGuest.AntiGuest;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.BaseCommand;
 import org.bukkit.command.CommandSender;
 
@@ -21,8 +21,8 @@ public class DebugCommand extends AbstractCommand
     @Override
     public boolean execute(CommandSender sender, String[] args)
     {
-        AntiGuestBukkit.debugMode = !AntiGuestBukkit.debugMode;
-        if (AntiGuestBukkit.debugMode)
+        AntiGuest.debugMode = !AntiGuest.debugMode;
+        if (AntiGuest.debugMode)
         {
             sender.sendMessage(_("debugEnabled"));
         }

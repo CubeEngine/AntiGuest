@@ -1,8 +1,8 @@
 package de.cubeisland.AntiGuest.Commands;
 
 import de.cubeisland.AntiGuest.AbstractCommand;
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
-import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
+import de.cubeisland.AntiGuest.AntiGuest;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.BaseCommand;
 import de.cubeisland.libMinecraft.Translation;
 import org.bukkit.command.CommandSender;
@@ -24,10 +24,10 @@ public class LanguageCommand extends AbstractCommand
     {
         if (args.length > 0)
         {
-            Translation tranlation = Translation.get(AntiGuestBukkit.class, args[0]);
+            Translation tranlation = Translation.get(AntiGuest.class, args[0]);
             if (tranlation != null)
             {
-                AntiGuestBukkit.setTranslation(tranlation);
+                AntiGuest.setTranslation(tranlation);
                 getBase().getPlugin().getConfig().set("language", args[0]);
                 getBase().getPlugin().saveConfig();
                 sender.sendMessage(_("languageLoaded", tranlation.getLanguage()));
@@ -39,7 +39,7 @@ public class LanguageCommand extends AbstractCommand
         }
         else
         {
-            sender.sendMessage(_("currentLanguage", AntiGuestBukkit.getTranslation().getLanguage()));
+            sender.sendMessage(_("currentLanguage", AntiGuest.getTranslation().getLanguage()));
         }
 
         return true;

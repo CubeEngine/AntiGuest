@@ -1,6 +1,6 @@
 package de.cubeisland.AntiGuest;
 
-import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;

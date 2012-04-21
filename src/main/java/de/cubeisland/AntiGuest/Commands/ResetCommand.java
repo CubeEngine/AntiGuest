@@ -1,8 +1,8 @@
 package de.cubeisland.AntiGuest.Commands;
 
 import de.cubeisland.AntiGuest.AbstractCommand;
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
-import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
+import de.cubeisland.AntiGuest.AntiGuest;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.BaseCommand;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionManager;
@@ -71,7 +71,7 @@ public class ResetCommand extends AbstractCommand implements Listener
     {
         if (sender != null)
         {
-            AntiGuestBukkit.log(message);
+            AntiGuest.log(message);
         }
         for (Player player : this.server.getOnlinePlayers())
         {

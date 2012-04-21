@@ -1,6 +1,6 @@
 package de.cubeisland.AntiGuest;
 
-import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
@@ -96,7 +96,7 @@ public abstract class Prevention implements Listener
         }
         catch (Throwable e)
         {
-            AntiGuestBukkit.error(e.getLocalizedMessage(), e);
+            AntiGuest.error(e.getLocalizedMessage(), e);
         }
         return false;
     }
@@ -110,7 +110,7 @@ public abstract class Prevention implements Listener
         }
         catch (Throwable e)
         {
-            AntiGuestBukkit.error(e.getLocalizedMessage(), e);
+            AntiGuest.error(e.getLocalizedMessage(), e);
         }
         return false;
     }

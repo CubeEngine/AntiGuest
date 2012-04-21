@@ -51,7 +51,7 @@ public class PreventionManager
      * This method initializes the PreventionManager.
      * This has to be done before any other method call!
      *
-     * @param plugin an instance of AntiGuestBukkit
+     * @param plugin an instance of AntiGuest
      * @return fluent interface
      */
     public PreventionManager initialize(PreventionPlugin plugin)
@@ -163,7 +163,7 @@ public class PreventionManager
             }
             catch (Throwable t)
             {
-                AntiGuestBukkit.error("Failed to enable the prevention '" + prevention.getName() + "'...", t);
+                AntiGuest.error("Failed to enable the prevention '" + prevention.getName() + "'...", t);
             }
         }
         return false;
@@ -223,7 +223,7 @@ public class PreventionManager
             }
             catch (Throwable t)
             {
-                AntiGuestBukkit.error("Failed to disable the prevention '" + prevention.getName() + "'...", t);
+                AntiGuest.error("Failed to disable the prevention '" + prevention.getName() + "'...", t);
             }
         }
         return this;

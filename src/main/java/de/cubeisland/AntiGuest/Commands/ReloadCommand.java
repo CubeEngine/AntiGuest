@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Commands;
 
 import de.cubeisland.AntiGuest.AbstractCommand;
-import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.BaseCommand;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionManager;
