@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.FilteredPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import java.util.HashSet;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
@@ -15,9 +15,9 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  */
 public class CommandPrevention extends FilteredPrevention
 {
-    public CommandPrevention()
+    public CommandPrevention(PreventionPlugin plugin)
     {
-        super("command", AntiGuestBukkit.getInstance());
+        super("command", plugin);
     }
 
     @Override

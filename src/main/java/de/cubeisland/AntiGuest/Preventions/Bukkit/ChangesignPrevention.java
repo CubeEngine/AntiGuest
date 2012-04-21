@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.SignChangeEvent;
@@ -13,9 +13,9 @@ import org.bukkit.event.block.SignChangeEvent;
  */
 public class ChangesignPrevention extends Prevention
 {
-    public ChangesignPrevention()
+    public ChangesignPrevention(PreventionPlugin plugin)
     {
-        super("changesign", AntiGuestBukkit.getInstance(), true);
+        super("changesign", plugin, true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

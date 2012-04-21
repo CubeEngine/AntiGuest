@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,9 +15,9 @@ import org.bukkit.event.entity.EntityTameEvent;
 public class TamePrevention extends Prevention
 {
 
-    public TamePrevention()
+    public TamePrevention(PreventionPlugin plugin)
     {
-        super("tame", AntiGuestBukkit.getInstance());
+        super("tame", plugin);
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

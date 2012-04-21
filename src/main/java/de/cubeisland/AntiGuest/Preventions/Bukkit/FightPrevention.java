@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -17,9 +17,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
  */
 public class FightPrevention extends Prevention
 {
-    public FightPrevention()
+    public FightPrevention(PreventionPlugin plugin)
     {
-        super("fight", AntiGuestBukkit.getInstance(), true);
+        super("fight", plugin, true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

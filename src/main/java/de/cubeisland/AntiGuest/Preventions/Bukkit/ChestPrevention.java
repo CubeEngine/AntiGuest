@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -19,9 +19,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class ChestPrevention extends Prevention
 {
-    public ChestPrevention()
+    public ChestPrevention(PreventionPlugin plugin)
     {
-        super("chest", AntiGuestBukkit.getInstance(), true);
+        super("chest", plugin, true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

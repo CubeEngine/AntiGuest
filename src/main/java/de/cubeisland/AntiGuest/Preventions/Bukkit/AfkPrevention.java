@@ -2,6 +2,7 @@ package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
 import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import java.util.HashMap;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -24,9 +25,9 @@ public class AfkPrevention extends Prevention
     private BukkitScheduler scheduler;
     private int timeout;
 
-    public AfkPrevention()
+    public AfkPrevention(PreventionPlugin plugin)
     {
-        super("afk", AntiGuestBukkit.getInstance());
+        super("afk", plugin);
         this.trackerMap = null;
     }
     

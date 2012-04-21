@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.Configuration;
@@ -22,9 +22,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class BreakblockPrevention extends FilteredItemPrevention
 {
-    public BreakblockPrevention()
+    public BreakblockPrevention(PreventionPlugin plugin)
     {
-        super("breakblock", AntiGuestBukkit.getInstance(), true, true);
+        super("breakblock", plugin, true, true);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
@@ -16,9 +16,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class PressureplatePrevention extends Prevention
 {
-    public PressureplatePrevention()
+    public PressureplatePrevention(PreventionPlugin plugin)
     {
-        super("pressureplate", AntiGuestBukkit.getInstance());
+        super("pressureplate", plugin);
     }
 
     @Override

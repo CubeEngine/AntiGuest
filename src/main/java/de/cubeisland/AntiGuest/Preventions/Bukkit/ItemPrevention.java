@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.Event.Result;
@@ -18,9 +18,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class ItemPrevention extends FilteredItemPrevention
 {
-    public ItemPrevention()
+    public ItemPrevention(PreventionPlugin plugin)
     {
-        super("item", AntiGuestBukkit.getInstance(), true);
+        super("item", plugin, true);
     }
 
     @Override

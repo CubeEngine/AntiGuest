@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,9 +15,9 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
  */
 public class SneakPrevention extends Prevention
 {
-    public SneakPrevention()
+    public SneakPrevention(PreventionPlugin plugin)
     {
-        super("sneak", AntiGuestBukkit.getInstance());
+        super("sneak", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

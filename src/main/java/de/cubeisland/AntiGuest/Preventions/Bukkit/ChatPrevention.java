@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,9 +16,9 @@ public class ChatPrevention extends Prevention
 {
     private boolean ignoreWorldeditCUIMessages;
 
-    public ChatPrevention()
+    public ChatPrevention(PreventionPlugin plugin)
     {
-        super("chat", AntiGuestBukkit.getInstance());
+        super("chat", plugin);
     }
 
     @Override

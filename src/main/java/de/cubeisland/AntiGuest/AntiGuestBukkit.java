@@ -1,59 +1,8 @@
 package de.cubeisland.AntiGuest;
 
-import de.cubeisland.AntiGuest.Commands.DebugCommand;
-import de.cubeisland.AntiGuest.Commands.SetmessageCommand;
-import de.cubeisland.AntiGuest.Commands.DisableCommand;
-import de.cubeisland.AntiGuest.Commands.LanguageCommand;
-import de.cubeisland.AntiGuest.Commands.ListCommand;
-import de.cubeisland.AntiGuest.Commands.DisableallCommand;
-import de.cubeisland.AntiGuest.Commands.HelpCommand;
-import de.cubeisland.AntiGuest.Commands.ResetCommand;
-import de.cubeisland.AntiGuest.Commands.EnableCommand;
-import de.cubeisland.AntiGuest.Commands.EnableallCommand;
-import de.cubeisland.AntiGuest.Commands.EnabledCommand;
-import de.cubeisland.AntiGuest.Commands.ReloadCommand;
-import de.cubeisland.AntiGuest.Commands.CanCommand;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.DamagePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.RepeaterPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.NoteblockPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.ChangesignPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.DispenserPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.PlaceblockPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.BreakblockPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.DoorPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.VehiclePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.MonsterPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.TamePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.ShearPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.FurnacePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.ItemPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.BowPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.MovePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.ChatPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.EnchantPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.AfkPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.WorkbenchPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.CakePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.HungerPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.LavabucketPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.SneakPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.JukeboxPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.MilkingPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.LeverPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.BrewPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.ChestPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.WaterbucketPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.DropPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.PickupPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.FishPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.SpamPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.ButtonPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.BedPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.PressureplatePrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.CommandPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.FightPrevention;
-import de.cubeisland.AntiGuest.Preventions.Bukkit.SwearPrevention;
 import de.codeinfection.Util.Translation;
+import de.cubeisland.AntiGuest.Commands.*;
+import de.cubeisland.AntiGuest.Preventions.Bukkit.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -70,8 +19,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionPlugin
 {
-    private static AntiGuestBukkit instance = null;
-
     private static Logger logger = null;
     public static boolean debugMode = false;
     
@@ -79,76 +26,21 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
     private File preventionConfigFolder;
     private static Translation translation;
 
-    public AntiGuestBukkit()
-    {
-        instance = this;
-    }
-
-    public static AntiGuestBukkit getInstance()
-    {
-        return instance;
-    }
-    
     @Override
-    public void onLoad()
+    public void onEnable()
     {
         logger = this.getLogger();
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
         this.preventionConfigFolder = new File(this.dataFolder, "preventions");
-        PreventionManager.getInstance()
-            .initialize(this)
-            .registerPrevention(new AfkPrevention())
-            .registerPrevention(new BedPrevention())
-            .registerPrevention(new BowPrevention())
-            .registerPrevention(new BreakblockPrevention())
-            .registerPrevention(new BrewPrevention())
-            .registerPrevention(new ButtonPrevention())
-            .registerPrevention(new CakePrevention())
-            .registerPrevention(new ChangesignPrevention())
-            .registerPrevention(new ChatPrevention())
-            .registerPrevention(new ChestPrevention())
-            .registerPrevention(new CommandPrevention())
-            .registerPrevention(new DamagePrevention())
-            .registerPrevention(new DispenserPrevention())
-            .registerPrevention(new DoorPrevention())
-            .registerPrevention(new DropPrevention())
-            .registerPrevention(new EnchantPrevention())
-            .registerPrevention(new FightPrevention())
-            .registerPrevention(new FishPrevention())
-            .registerPrevention(new FurnacePrevention())
-            .registerPrevention(new HungerPrevention())
-            .registerPrevention(new ItemPrevention())
-            .registerPrevention(new JukeboxPrevention())
-            .registerPrevention(new LavabucketPrevention())
-            .registerPrevention(new LeverPrevention())
-            .registerPrevention(new MilkingPrevention())
-            .registerPrevention(new MonsterPrevention())
-            .registerPrevention(new MovePrevention())
-            .registerPrevention(new NoteblockPrevention())
-            .registerPrevention(new PickupPrevention())
-            .registerPrevention(new PlaceblockPrevention())
-            .registerPrevention(new PressureplatePrevention())
-            .registerPrevention(new RepeaterPrevention())
-            .registerPrevention(new ShearPrevention())
-            .registerPrevention(new SneakPrevention())
-            .registerPrevention(new SpamPrevention())
-            .registerPrevention(new SwearPrevention())
-            .registerPrevention(new TamePrevention())
-            .registerPrevention(new VehiclePrevention())
-            .registerPrevention(new WaterbucketPrevention())
-            .registerPrevention(new WorkbenchPrevention());
-    }
-
-    @Override
-    public void onEnable()
-    {
+        
         reloadConfig();
         Configuration config = getConfig();
         this.convertConfig((FileConfiguration)config);
         config.addDefault("language", System.getProperty("user.language", "en"));
         config.options().copyDefaults(true);
         debugMode = getConfig().getBoolean("debug");
+        
         translation = Translation.get(this.getClass(), getConfig().getString("language"));
         if (translation == null)
         {
@@ -156,7 +48,50 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
         }
         saveConfig();
 
-        PreventionManager.getInstance().enablePreventions();
+
+        PreventionManager.getInstance()
+            .initialize(this)
+            .registerPrevention(new AfkPrevention(this))
+            .registerPrevention(new BedPrevention(this))
+            .registerPrevention(new BowPrevention(this))
+            .registerPrevention(new BreakblockPrevention(this))
+            .registerPrevention(new BrewPrevention(this))
+            .registerPrevention(new ButtonPrevention(this))
+            .registerPrevention(new CakePrevention(this))
+            .registerPrevention(new ChangesignPrevention(this))
+            .registerPrevention(new ChatPrevention(this))
+            .registerPrevention(new ChestPrevention(this))
+            .registerPrevention(new CommandPrevention(this))
+            .registerPrevention(new DamagePrevention(this))
+            .registerPrevention(new DispenserPrevention(this))
+            .registerPrevention(new DoorPrevention(this))
+            .registerPrevention(new DropPrevention(this))
+            .registerPrevention(new EnchantPrevention(this))
+            .registerPrevention(new FightPrevention(this))
+            .registerPrevention(new FishPrevention(this))
+            .registerPrevention(new FurnacePrevention(this))
+            .registerPrevention(new HungerPrevention(this))
+            .registerPrevention(new ItemPrevention(this))
+            .registerPrevention(new JukeboxPrevention(this))
+            .registerPrevention(new LavabucketPrevention(this))
+            .registerPrevention(new LeverPrevention(this))
+            .registerPrevention(new MilkingPrevention(this))
+            .registerPrevention(new MonsterPrevention(this))
+            .registerPrevention(new MovePrevention(this))
+            .registerPrevention(new NoteblockPrevention(this))
+            .registerPrevention(new PickupPrevention(this))
+            .registerPrevention(new PlaceblockPrevention(this))
+            .registerPrevention(new PressureplatePrevention(this))
+            .registerPrevention(new RepeaterPrevention(this))
+            .registerPrevention(new ShearPrevention(this))
+            .registerPrevention(new SneakPrevention(this))
+            .registerPrevention(new SpamPrevention(this))
+            .registerPrevention(new SwearPrevention(this))
+            .registerPrevention(new TamePrevention(this))
+            .registerPrevention(new VehiclePrevention(this))
+            .registerPrevention(new WaterbucketPrevention(this))
+            .registerPrevention(new WorkbenchPrevention(this))
+            .enablePreventions();
 
         BaseCommand baseCommand = new BaseCommand(this);
         baseCommand.registerSubCommand(new EnabledCommand(baseCommand))
@@ -172,6 +107,7 @@ public class AntiGuestBukkit extends JavaPlugin implements Listener, PreventionP
                    .registerSubCommand(new ReloadCommand(baseCommand))
                    .registerSubCommand(new LanguageCommand(baseCommand))
                    .registerSubCommand(new ResetCommand(baseCommand))
+                   .registerSubCommand(new BadwordCommand(baseCommand))
                    .setDefaultCommand("help");
         
         this.getCommand("antiguest").setExecutor(baseCommand);

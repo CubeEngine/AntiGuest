@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,9 +15,9 @@ import org.bukkit.event.painting.PaintingPlaceEvent;
  */
 public class PlaceblockPrevention extends FilteredItemPrevention
 {
-    public PlaceblockPrevention()
+    public PlaceblockPrevention(PreventionPlugin plugin)
     {
-        super("placeblock", AntiGuestBukkit.getInstance(), true, true);
+        super("placeblock", plugin, true, true);
     }
 
     @Override

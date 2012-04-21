@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerShearEntityEvent;
@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerShearEntityEvent;
  */
 public class ShearPrevention extends Prevention
 {
-    public ShearPrevention()
+    public ShearPrevention(PreventionPlugin plugin)
     {
-        super("shear", AntiGuestBukkit.getInstance());
+        super("shear", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

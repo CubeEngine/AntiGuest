@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,9 +15,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class ButtonPrevention extends Prevention
 {
-    public ButtonPrevention()
+    public ButtonPrevention(PreventionPlugin plugin)
     {
-        super("button", AntiGuestBukkit.getInstance());
+        super("button", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

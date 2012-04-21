@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,9 +16,9 @@ import org.bukkit.event.entity.EntityTargetEvent;
  */
 public class MonsterPrevention extends Prevention
 {
-    public MonsterPrevention()
+    public MonsterPrevention(PreventionPlugin plugin)
     {
-        super("monster", AntiGuestBukkit.getInstance());
+        super("monster", plugin);
     }
 
     @Override

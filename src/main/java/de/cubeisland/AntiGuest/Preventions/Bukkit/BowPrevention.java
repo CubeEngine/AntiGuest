@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,9 +15,9 @@ import org.bukkit.event.entity.EntityShootBowEvent;
  */
 public class BowPrevention extends Prevention
 {
-    public BowPrevention()
+    public BowPrevention(PreventionPlugin plugin)
     {
-        super("bow", AntiGuestBukkit.getInstance(), true);
+        super("bow", plugin, true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

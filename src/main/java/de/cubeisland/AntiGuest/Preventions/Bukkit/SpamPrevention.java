@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import java.util.HashMap;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -19,9 +19,9 @@ public class SpamPrevention extends Prevention
     private int spamLockDuration;
     private HashMap<Player, Long> chatTimestamps;
 
-    public SpamPrevention()
+    public SpamPrevention(PreventionPlugin plugin)
     {
-        super("spam", AntiGuestBukkit.getInstance(), true);
+        super("spam", plugin, true);
     }
 
     @Override

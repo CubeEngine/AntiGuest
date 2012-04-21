@@ -1,9 +1,9 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
 import de.codeinfection.Util.Vector2D;
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Convert;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -21,9 +21,9 @@ public class MovePrevention extends Prevention
 {
     private int radius;
 
-    public MovePrevention()
+    public MovePrevention(PreventionPlugin plugin)
     {
-        super("move", AntiGuestBukkit.getInstance());
+        super("move", plugin);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MovePrevention extends Prevention
                 if (this.radius / spawn.distance(from) <= 0.98)
                 {
                     // teleportation scheduled for the next tick to prevent kick (moved too fast)
-                    player.getServer().getScheduler().scheduleSyncDelayedTask(AntiGuestBukkit.getInstance(), new Runnable()
+                    player.getServer().getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable()
                     {
                         public void run()
                         {

@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,9 +14,9 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
  */
 public class PickupPrevention extends FilteredItemPrevention
 {
-    public PickupPrevention()
+    public PickupPrevention(PreventionPlugin plugin)
     {
-        super("pickup", AntiGuestBukkit.getInstance());
+        super("pickup", plugin);
     }
 
     @Override

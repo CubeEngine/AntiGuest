@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -19,9 +19,9 @@ public class SwearPrevention extends Prevention
 {
     private List<Pattern> swearPatterns;
 
-    public SwearPrevention()
+    public SwearPrevention(PreventionPlugin plugin)
     {
-        super("swear", AntiGuestBukkit.getInstance());
+        super("swear", plugin, true);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerDropItemEvent;
  */
 public class DropPrevention extends FilteredItemPrevention
 {
-    public DropPrevention()
+    public DropPrevention(PreventionPlugin plugin)
     {
-        super("drop", AntiGuestBukkit.getInstance());
+        super("drop", plugin);
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

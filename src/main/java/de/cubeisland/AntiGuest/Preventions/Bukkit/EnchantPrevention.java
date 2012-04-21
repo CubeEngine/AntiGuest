@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,9 +15,9 @@ import org.bukkit.event.inventory.InventoryType;
  */
 public class EnchantPrevention extends Prevention
 {
-    public EnchantPrevention()
+    public EnchantPrevention(PreventionPlugin plugin)
     {
-        super("enchant", AntiGuestBukkit.getInstance());
+        super("enchant", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

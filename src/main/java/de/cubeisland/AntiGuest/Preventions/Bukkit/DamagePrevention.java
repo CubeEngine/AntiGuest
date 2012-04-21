@@ -3,6 +3,7 @@ package de.cubeisland.AntiGuest.Preventions.Bukkit;
 import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import static de.cubeisland.AntiGuest.AntiGuestBukkit._;
 import de.cubeisland.AntiGuest.FilteredPrevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.configuration.Configuration;
@@ -28,9 +29,9 @@ public class DamagePrevention extends FilteredPrevention
     private boolean preventPotions;
     private String potionMessage;
 
-    public DamagePrevention()
+    public DamagePrevention(PreventionPlugin plugin)
     {
-        super("damage", AntiGuestBukkit.getInstance());
+        super("damage", plugin);
         this.damagerMessage = null;
     }
 

@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerFishEvent;
  */
 public class FishPrevention extends Prevention
 {
-    public FishPrevention()
+    public FishPrevention(PreventionPlugin plugin)
     {
-        super("fish", AntiGuestBukkit.getInstance());
+        super("fish", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

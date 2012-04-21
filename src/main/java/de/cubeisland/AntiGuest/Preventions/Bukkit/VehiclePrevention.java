@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.Preventions.Bukkit;
 
-import de.cubeisland.AntiGuest.AntiGuestBukkit;
 import de.cubeisland.AntiGuest.Prevention;
+import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
@@ -22,9 +22,9 @@ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 public class VehiclePrevention extends Prevention
 {
 
-    public VehiclePrevention()
+    public VehiclePrevention(PreventionPlugin plugin)
     {
-        super("vehicle", AntiGuestBukkit.getInstance());
+        super("vehicle", plugin);
     }
 
     @Override
