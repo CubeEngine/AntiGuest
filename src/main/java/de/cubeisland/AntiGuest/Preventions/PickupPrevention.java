@@ -24,7 +24,7 @@ public class PickupPrevention extends FilteredItemPrevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("messageDelay", 3);
+        config.set("throttleDelay", 3);
 
         return config;
     }

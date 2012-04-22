@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest.Punishments;
 
 import de.cubeisland.AntiGuest.Punishment;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 /**
@@ -15,8 +16,8 @@ public class BurnPunishment implements Punishment
         return "burn";
     }
 
-    public void punish(Player player)
+    public void punish(Player player, ConfigurationSection config)
     {
-        player.setFireTicks(80);
+        player.setFireTicks(config.getInt("duration", 3) * 20);
     }
 }

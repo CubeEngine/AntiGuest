@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest.Punishments;
 
 import de.cubeisland.AntiGuest.Punishment;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -16,8 +17,8 @@ public class RocketPunishment implements Punishment
         return "rockets";
     }
 
-    public void punish(Player player)
+    public void punish(Player player, ConfigurationSection config)
     {
-        player.getVelocity().add(new Vector(0, 50, 0));
+        player.getVelocity().add(new Vector(0, config.getInt("height", 50), 0));
     }
 }

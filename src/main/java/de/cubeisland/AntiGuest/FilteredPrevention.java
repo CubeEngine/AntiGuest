@@ -14,7 +14,7 @@ import org.bukkit.event.Cancellable;
  *
  * @author Phillip Schichtel
  */
-public abstract class FilteredPrevention extends Prevention
+public abstract class FilteredPrevention extends PunishedPrevention
 {
     protected Set<Object> filterItems;
     private Mode mode;

@@ -40,7 +40,7 @@ public class DamagePrevention extends FilteredPrevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("messageDelay", 3);
+        config.set("throttleDelay", 3);
         config.set("damagerMessage", _("damagerMessage"));
         config.set("preventPotions", true);
         config.set("potionMessage", _("potionMessage"));

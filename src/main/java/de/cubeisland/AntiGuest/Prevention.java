@@ -2,8 +2,11 @@ package de.cubeisland.AntiGuest;
 
 import static de.cubeisland.AntiGuest.AntiGuest._;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -20,14 +23,19 @@ public abstract class Prevention implements Listener
 {
     private final String name;
     private final Permission permission;
+    private boolean punish;
     private String message;
-    private int messageDelay;
+    private int throttleDelay;
     private final PreventionPlugin plugin;
     private boolean enabled;
     private final boolean enableByDefault;
     private PreventionConfiguration config;
+    private final Map<Integer, Map<Punishment, ConfigurationSection>> violationPunishmentMap;
+    private final Map<Player, Integer> playerViolationMap;
+    private int highestPunishmentViolation;
 
-    private final HashMap<Player, Long> throttleTimestamps;
+    private final HashMap<Player, Long> messageThrottleTimestamps;
+    private final HashMap<Player, Long> punishThrottleTimestamps;
 
     /**
      * Initializes the prevention with its name and the corresponding plugin.
@@ -43,7 +51,7 @@ public abstract class Prevention implements Listener
 
     /**
      * Initializes the prevention with its name and the corresponding plugin.
-     * This contructor use "antiguest.preventions.<name>" as the permission!
+     * This contructor use "antiguest.preventions.&lt;name&gt;" as the permission!
      *
      * @param name the name of the prevention
      * @param plugin the corresponding plugin
@@ -67,13 +75,18 @@ public abstract class Prevention implements Listener
     {
         this.name = name;
         this.permission = new Permission(permission, PermissionDefault.OP);
-        this.throttleTimestamps = new HashMap<Player, Long>(0);
+        this.messageThrottleTimestamps = new HashMap<Player, Long>(0);
+        this.punishThrottleTimestamps = new HashMap<Player, Long>(0);
         this.message = null;
-        this.messageDelay = 0;
+        this.throttleDelay = 0;
+        this.punish = false;
         this.plugin = plugin;
         this.enabled = false;
         this.enableByDefault = enableByDefault;
         this.config = PreventionConfiguration.get(plugin.getConfigurationFolder(), this);
+        this.violationPunishmentMap = new HashMap<Integer, Map<Punishment, ConfigurationSection>>();
+        this.playerViolationMap = new HashMap<Player, Integer>();
+        this.highestPunishmentViolation = 0;
     }
 
     public final PreventionConfiguration getConfig()
@@ -170,8 +183,56 @@ public abstract class Prevention implements Listener
      */
     public void enable()
     {
-        this.messageDelay = config.getInt("messageDelay") * 1000;
+        this.throttleDelay = config.getInt("throttleDelay") * 1000;
         this.setMessage(config.getString("message"));
+        this.punish = config.getBoolean("punish", this.punish);
+
+        if (this.punish)
+        {
+            List punishmentSections = config.getList("punishments");
+            if (punishmentSections != null)
+            {
+                PreventionManager prevMgr = PreventionManager.getInstance();
+                Punishment punishment;
+                int violations;
+                Map<Punishment, ConfigurationSection> punishmentConfigMap;
+                ConfigurationSection punishmentSection;
+                for (Object entry : punishmentSections)
+                {
+                    if (entry instanceof ConfigurationSection)
+                    {
+                        punishmentSection = (ConfigurationSection)entry;
+                        for (String key : punishmentSection.getKeys(false))
+                        {
+                            punishment = prevMgr.getPunishment(key);
+                            if (punishment != null && punishmentSection.isConfigurationSection(key))
+                            {
+                                punishmentSection = punishmentSection.getConfigurationSection(key);
+                                if (punishmentSection.isInt("violations"))
+                                {
+                                    violations = punishmentSection.getInt("violations", 0);
+                                    if (violations > 0)
+                                    {
+                                        punishmentConfigMap = this.violationPunishmentMap.get(violations);
+                                        if (punishmentConfigMap == null)
+                                        {
+                                            punishmentConfigMap = new HashMap<Punishment, ConfigurationSection>();
+                                            this.violationPunishmentMap.put(violations, punishmentConfigMap);
+                                            if (violations > this.highestPunishmentViolation)
+                                            {
+                                                this.highestPunishmentViolation = violations;
+                                            }
+                                        }
+                                        punishmentConfigMap.put(punishment, punishmentSection);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -180,7 +241,7 @@ public abstract class Prevention implements Listener
      */
     public void disable()
     {
-        this.throttleTimestamps.clear();
+        this.messageThrottleTimestamps.clear();
     }
 
     /**
@@ -260,7 +321,7 @@ public abstract class Prevention implements Listener
      */
     public int getMessageDelay()
     {
-        return this.messageDelay;
+        return this.throttleDelay;
     }
 
     /**
@@ -296,14 +357,14 @@ public abstract class Prevention implements Listener
      */
     public void sendThrottledMessage(final Player player)
     {
-        Long next = this.throttleTimestamps.get(player);
+        Long next = this.messageThrottleTimestamps.get(player);
         next = (next == null ? 0 : next);
         final long current = System.currentTimeMillis();
         
         if (next < current)
         {
             this.sendMessage(player);
-            this.throttleTimestamps.put(player, current + this.messageDelay);
+            this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
         }
     }
 
@@ -353,6 +414,46 @@ public abstract class Prevention implements Listener
             return true;
         }
         return false;
+    }
+
+    public void punish(Player player)
+    {
+        if (!this.punish)
+        {
+            return;
+        }
+        Integer violations = this.playerViolationMap.get(player);
+        if (violations == null || violations >= this.highestPunishmentViolation)
+        {
+            violations = 0;
+        }
+        this.playerViolationMap.put(player, ++violations);
+
+        Map<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
+        if (punishments != null)
+        {
+            for (Map.Entry<Punishment, ConfigurationSection> entry : punishments.entrySet())
+            {
+                entry.getKey().punish(player, entry.getValue());
+            }
+        }
+    }
+
+    public void punishThrottled(Player player)
+    {
+        if (!this.punish)
+        {
+            return;
+        }
+        Long next = this.punishThrottleTimestamps.get(player);
+        next = (next == null ? 0 : next);
+        final long current = System.currentTimeMillis();
+
+        if (next < current)
+        {
+            this.punish(player);
+            this.punishThrottleTimestamps.put(player, current + this.throttleDelay);
+        }
     }
 }
 

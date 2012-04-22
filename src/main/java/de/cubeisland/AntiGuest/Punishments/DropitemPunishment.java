@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest.Punishments;
 
 import de.cubeisland.AntiGuest.Punishment;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 /**
@@ -15,7 +16,7 @@ public class DropitemPunishment implements Punishment
         return "dropitem";
     }
 
-    public void punish(Player player)
+    public void punish(Player player, ConfigurationSection config)
     {
         player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand()).setPickupDelay(80);
         player.getInventory().clear(player.getInventory().getHeldItemSlot());

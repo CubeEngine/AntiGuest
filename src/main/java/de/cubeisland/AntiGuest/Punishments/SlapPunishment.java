@@ -2,6 +2,7 @@ package de.cubeisland.AntiGuest.Punishments;
 
 import de.cubeisland.AntiGuest.Punishment;
 import java.util.Random;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -24,9 +25,9 @@ public class SlapPunishment implements Punishment
         return "slap";
     }
 
-    public void punish(Player player)
+    public void punish(Player player, ConfigurationSection config)
     {
-        player.setHealth(player.getHealth() - 3);
+        player.setHealth(player.getHealth() - config.getInt("damage", 3));
         player.getVelocity().add(new Vector(-rand.nextInt(5), rand.nextInt(2), -rand.nextInt(5)));
     }
 }

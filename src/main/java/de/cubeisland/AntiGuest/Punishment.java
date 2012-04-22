@@ -1,4 +1,5 @@
 package de.cubeisland.AntiGuest;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 /**
@@ -20,5 +21,5 @@ public interface Punishment
      *
      * @param player the player to punish
      */
-    public void punish(Player player);
+    public void punish(Player player, ConfigurationSection config);
 }
