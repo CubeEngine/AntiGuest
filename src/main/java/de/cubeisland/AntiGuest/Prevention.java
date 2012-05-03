@@ -20,6 +20,8 @@ import org.bukkit.permissions.PermissionDefault;
  */
 public abstract class Prevention implements Listener
 {
+    protected static final String PERMISSION_BASE = "antiguest.preventions.";
+    
     private final String name;
     private final Permission permission;
     private String message;
@@ -53,7 +55,7 @@ public abstract class Prevention implements Listener
      */
     public Prevention(final String name, final PreventionPlugin plugin, boolean enableByDefault)
     {
-        this(name, "antiguest.preventions." + name, plugin, enableByDefault);
+        this(name, PERMISSION_BASE + name, plugin, enableByDefault);
     }
 
     /**

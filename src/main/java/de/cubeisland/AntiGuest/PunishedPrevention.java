@@ -29,7 +29,16 @@ public class PunishedPrevention extends Prevention
 
     public PunishedPrevention(String name, PreventionPlugin plugin, boolean enableByDefault)
     {
-        this(name, null, plugin, enableByDefault);
+        this(name, PERMISSION_BASE + name, plugin, enableByDefault);
+    }
+
+    public PunishedPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
+    {
+        super(name, permission, plugin, enableByDefault);
+        this.punishThrottleTimestamps = new HashMap<Player, Long>();
+        this.violationPunishmentMap = new HashMap<Integer, Map<Punishment, ConfigurationSection>>();
+        this.playerViolationMap = new HashMap<Player, Integer>();
+        this.highestPunishmentViolation = 0;
     }
 
     @Override
@@ -84,15 +93,6 @@ public class PunishedPrevention extends Prevention
                 }
             }
         }
-    }
-
-    public PunishedPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
-    {
-        super(name, permission, plugin, enableByDefault);
-        this.punishThrottleTimestamps = new HashMap<Player, Long>();
-        this.violationPunishmentMap = new HashMap<Integer, Map<Punishment, ConfigurationSection>>();
-        this.playerViolationMap = new HashMap<Player, Integer>();
-        this.highestPunishmentViolation = 0;
     }
 
     public Configuration getDefaultConfiguration()

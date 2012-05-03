@@ -1,10 +1,15 @@
 package de.cubeisland.AntiGuest.Preventions;
 
+import de.cubeisland.AntiGuest.AntiGuest;
+import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
+import de.cubeisland.libMinecraft.command.Command;
+import de.cubeisland.libMinecraft.command.CommandArgs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,6 +54,8 @@ public class SwearPrevention extends Prevention
         {
             this.swearPatterns.add(compile(word));
         }
+
+        ((AntiGuest)getPlugin()).getBaseCommand().registerCommands(this);
     }
 
     @Override
@@ -57,6 +64,7 @@ public class SwearPrevention extends Prevention
         super.disable();
         this.swearPatterns.clear();
         this.swearPatterns = null;
+        ((AntiGuest)getPlugin()).getBaseCommand().unregisterCommands(this);
     }
 
     private static Pattern compile(String string)
@@ -80,6 +88,28 @@ public class SwearPrevention extends Prevention
                     return;
                 }
             }
+        }
+    }
+
+    @Command(desc = "Adds a badword to the swear prevention")
+    public void badword(CommandSender sender, CommandArgs args)
+    {
+        String word = args.getString(0);
+        if (word != null)
+        {
+            Configuration config = getConfig();
+            List<String> words = new ArrayList<String>(config.getStringList("words"));
+            words.add(word);
+            config.set("words", words);
+            saveConfig();
+            disable();
+            enable();
+
+            sender.sendMessage(_("wordAdded"));
+        }
+        else
+        {
+            sender.sendMessage(_("noWord"));
         }
     }
 }

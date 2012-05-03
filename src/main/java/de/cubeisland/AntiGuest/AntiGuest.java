@@ -3,7 +3,9 @@ package de.cubeisland.AntiGuest;
 import de.cubeisland.AntiGuest.Commands.*;
 import de.cubeisland.AntiGuest.Preventions.*;
 import de.cubeisland.AntiGuest.Punishments.*;
-import de.cubeisland.libMinecraft.Translation;
+import de.cubeisland.libMinecraft.command.BaseCommand;
+import de.cubeisland.libMinecraft.translation.TranslatablePlugin;
+import de.cubeisland.libMinecraft.translation.Translation;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -16,16 +18,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
+public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin, TranslatablePlugin
 {
     private static Logger logger = null;
     public static boolean debugMode = false;
+    private static final String PERMISSION_BASE = "antiguest.commands.";
     
     private File dataFolder;
     private File preventionConfigFolder;
     private static Translation translation;
+    private BaseCommand baseCommand;
 
     @Override
     public void onEnable()
@@ -48,6 +54,12 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             translation = Translation.get(this.getClass(), "en");
         }
         saveConfig();
+
+        this.baseCommand = new BaseCommand(this, new Permission(PERMISSION_BASE + "*", PermissionDefault.OP), PERMISSION_BASE);
+        this.baseCommand.registerCommands(new BasicCommands(this))
+                        .registerCommands(new PreventionManagementCommands());
+
+        getCommand("antiguest").setExecutor(baseCommand);
 
 
         PreventionManager.getInstance()
@@ -105,25 +117,6 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new WaterbucketPrevention(this))
             .registerPrevention(new WorkbenchPrevention(this))
             .enablePreventions();
-
-        BaseCommand baseCommand = new BaseCommand(this);
-        baseCommand.registerSubCommand(new EnabledCommand(baseCommand))
-                   .registerSubCommand(new EnableCommand(baseCommand))
-                   .registerSubCommand(new EnableallCommand(baseCommand))
-                   .registerSubCommand(new DisableCommand(baseCommand))
-                   .registerSubCommand(new DisableallCommand(baseCommand))
-                   .registerSubCommand(new SetmessageCommand(baseCommand))
-                   .registerSubCommand(new ListCommand(baseCommand))
-                   .registerSubCommand(new CanCommand(baseCommand))
-                   .registerSubCommand(new DebugCommand(baseCommand))
-                   .registerSubCommand(new HelpCommand(baseCommand))
-                   .registerSubCommand(new ReloadCommand(baseCommand))
-                   .registerSubCommand(new LanguageCommand(baseCommand))
-                   .registerSubCommand(new ResetCommand(baseCommand))
-                   .registerSubCommand(new BadwordCommand(baseCommand))
-                   .setDefaultCommand("help");
-        
-        this.getCommand("antiguest").setExecutor(baseCommand);
     }
 
     @Override
@@ -213,12 +206,12 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         return translation.translate(message, params);
     }
 
-    public static Translation getTranslation()
+    public Translation getTranslation()
     {
         return translation;
     }
 
-    public static void setTranslation(Translation newTranslation)
+    public void setTranslation(Translation newTranslation)
     {
         translation = newTranslation;
     }
@@ -227,5 +220,10 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     public void onPluginDisable(PluginDisableEvent event)
     {
         PreventionManager.getInstance().disablePreventions(event.getPlugin());
+    }
+
+    public BaseCommand getBaseCommand()
+    {
+        return this.baseCommand;
     }
 }
