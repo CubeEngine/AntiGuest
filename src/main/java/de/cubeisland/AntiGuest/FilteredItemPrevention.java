@@ -114,7 +114,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         if (!this.can(player, material))
         {
             event.setCancelled(true);
-            this.sendMessage(player);
+            sendMessage(player);
             return true;
         }
         return false;
@@ -133,7 +133,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         if (!this.can(player, material))
         {
             event.setCancelled(true);
-            this.sendThrottledMessage(player);
+            sendThrottledMessage(player);
             return true;
         }
         return false;

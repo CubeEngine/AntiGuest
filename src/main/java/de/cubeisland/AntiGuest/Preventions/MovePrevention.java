@@ -44,6 +44,7 @@ public class MovePrevention extends Prevention
         this.width = new Vector2(tmpWidth, tmpWidth);
     }
 
+    // TODO fix for players outside the square
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerMoveEvent event)
     {

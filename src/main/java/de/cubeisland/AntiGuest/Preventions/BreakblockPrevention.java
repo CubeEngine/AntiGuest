@@ -24,7 +24,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
 {
     public BreakblockPrevention(PreventionPlugin plugin)
     {
-        super("breakblock", plugin, true, true);
+        super("breakblock", plugin, true, false);
     }
 
     @Override

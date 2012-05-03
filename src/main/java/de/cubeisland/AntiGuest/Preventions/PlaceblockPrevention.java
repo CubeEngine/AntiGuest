@@ -17,7 +17,7 @@ public class PlaceblockPrevention extends FilteredItemPrevention
 {
     public PlaceblockPrevention(PreventionPlugin plugin)
     {
-        super("placeblock", plugin, true, true);
+        super("placeblock", plugin, true, false);
     }
 
     @Override
