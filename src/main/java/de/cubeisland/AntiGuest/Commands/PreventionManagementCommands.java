@@ -73,7 +73,7 @@ public class PreventionManagementCommands
                     if (PreventionManager.getInstance().enablePrevention(prevention))
                     {
                         sender.sendMessage(_("preventionEnabled"));
-                        if (args.hasFlag("t"))
+                        if (!args.hasFlag("t"))
                         {
                             prevention.getConfig().set("enable", true);
                             prevention.saveConfig();
@@ -113,7 +113,7 @@ public class PreventionManagementCommands
                 {
                     PreventionManager.getInstance().disablePrevention(prevention);
                     sender.sendMessage(_("preventionDisabled"));
-                    if (args.hasFlag("t"))
+                    if (!args.hasFlag("t"))
                     {
                         prevention.getConfig().set("enable", false);
                         prevention.saveConfig();
