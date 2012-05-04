@@ -21,20 +21,15 @@ public class PunishedPrevention extends Prevention
     private final Map<Player, Integer> playerViolationMap;
     private int highestPunishmentViolation;
     private final Map<Player, Long> punishThrottleTimestamps;
-    
+
     public PunishedPrevention(String name, PreventionPlugin plugin)
     {
-        this(name, plugin, false);
+        this(name, PERMISSION_BASE + name, plugin);
     }
 
-    public PunishedPrevention(String name, PreventionPlugin plugin, boolean enableByDefault)
+    public PunishedPrevention(String name, String permission, PreventionPlugin plugin)
     {
-        this(name, PERMISSION_BASE + name, plugin, enableByDefault);
-    }
-
-    public PunishedPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
-    {
-        super(name, permission, plugin, enableByDefault);
+        super(name, permission, plugin);
         this.punishThrottleTimestamps = new HashMap<Player, Long>();
         this.violationPunishmentMap = new HashMap<Integer, Map<Punishment, ConfigurationSection>>();
         this.playerViolationMap = new HashMap<Player, Integer>();
@@ -44,6 +39,8 @@ public class PunishedPrevention extends Prevention
     @Override
     public void enable()
     {
+        super.enable();
+
         Configuration config = getConfig();
         this.punish = config.getBoolean("punish", this.punish);
 

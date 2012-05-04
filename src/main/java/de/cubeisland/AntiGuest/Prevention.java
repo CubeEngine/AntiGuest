@@ -1,6 +1,5 @@
 package de.cubeisland.AntiGuest;
 
-import static de.cubeisland.AntiGuest.AntiGuest._;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.ChatColor;
@@ -27,22 +26,10 @@ public abstract class Prevention implements Listener
     private int throttleDelay;
     private final PreventionPlugin plugin;
     private boolean enabled;
-    private final boolean enableByDefault;
+    private boolean enableByDefault;
     private PreventionConfiguration config;
 
     private final Map<Player, Long> messageThrottleTimestamps;
-
-    /**
-     * Initializes the prevention with its name and the corresponding plugin.
-     * This contructor use "antiguest.preventions.<name>" as the permission!
-     *
-     * @param name the name of the prevention
-     * @param plugin the corresponding plugin
-     */
-    public Prevention(final String name, final PreventionPlugin plugin)
-    {
-        this(name, plugin, false);
-    }
 
     /**
      * Initializes the prevention with its name and the corresponding plugin.
@@ -50,11 +37,10 @@ public abstract class Prevention implements Listener
      *
      * @param name the name of the prevention
      * @param plugin the corresponding plugin
-     * @param enableByDefault whether to enable this prevention by default
      */
-    public Prevention(final String name, final PreventionPlugin plugin, boolean enableByDefault)
+    public Prevention(final String name, final PreventionPlugin plugin)
     {
-        this(name, PERMISSION_BASE + name, plugin, enableByDefault);
+        this(name, PERMISSION_BASE + name, plugin);
     }
 
     /**
@@ -64,9 +50,8 @@ public abstract class Prevention implements Listener
      * @param name the name of the prevention
      * @param permission the permission
      * @param plugin the corresponding plugin
-     * @param enableByDefault whether to enable this prevention by default
      */
-    public Prevention(final String name, final String permission, final PreventionPlugin plugin, boolean enableByDefault)
+    public Prevention(final String name, final String permission, final PreventionPlugin plugin)
     {
         this.name = name;
         this.permission = new Permission(permission, PermissionDefault.OP);
@@ -75,8 +60,28 @@ public abstract class Prevention implements Listener
         this.throttleDelay = 0;
         this.plugin = plugin;
         this.enabled = false;
-        this.enableByDefault = enableByDefault;
+        this.enableByDefault = false;
         this.config = PreventionConfiguration.get(plugin.getConfigurationFolder(), this);
+    }
+
+    /**
+     * Sets whether to enable this prevention by default
+     *
+     * @param enable true to enable it by default
+     */
+    public final void setEnableByDefault(boolean enable)
+    {
+        this.enableByDefault = enable;
+    }
+
+    /**
+     * Returns whether this prevention will be enabled by default
+     *
+     * @return true if it will be enabled by default
+     */
+    public final boolean getEnableByDefault()
+    {
+        return this.enableByDefault;
     }
 
     public final PreventionConfiguration getConfig()
@@ -159,7 +164,7 @@ public abstract class Prevention implements Listener
         Configuration defaultConfig = new MemoryConfiguration();
 
         defaultConfig.set("enable", this.enableByDefault);
-        defaultConfig.set("message", _("message_" + this.name));
+        defaultConfig.set("message", this.plugin.getTranslation().translate("message_" + this.name));
 
         return defaultConfig;
     }

@@ -20,7 +20,8 @@ public class ItemPrevention extends FilteredItemPrevention
 {
     public ItemPrevention(PreventionPlugin plugin)
     {
-        super("item", plugin, true);
+        super("item", plugin);
+        this.setIgnoreBlocks(true);
     }
 
     @Override

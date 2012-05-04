@@ -17,7 +17,8 @@ public class DoorPrevention extends Prevention
 {
     public DoorPrevention(PreventionPlugin plugin)
     {
-        super("door", plugin, true);
+        super("door", plugin);
+        this.setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

@@ -18,20 +18,15 @@ public abstract class FilteredPrevention extends PunishedPrevention
 {
     protected Set<Object> filterItems;
     private Mode mode;
-
+    
     public FilteredPrevention(String name, PreventionPlugin plugin)
     {
         super(name, plugin);
     }
-    
-    public FilteredPrevention(String name, PreventionPlugin plugin, boolean enableByDefault)
-    {
-        super(name, plugin, enableByDefault);
-    }
 
-    public FilteredPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
+    public FilteredPrevention(String name, String permission, PreventionPlugin plugin)
     {
-        super(name, permission, plugin, enableByDefault);
+        super(name, permission, plugin);
     }
 
     /**

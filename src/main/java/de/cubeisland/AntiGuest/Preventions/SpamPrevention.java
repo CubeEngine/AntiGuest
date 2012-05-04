@@ -21,7 +21,8 @@ public class SpamPrevention extends Prevention
 
     public SpamPrevention(PreventionPlugin plugin)
     {
-        super("spam", plugin, true);
+        super("spam", plugin);
+        this.setEnableByDefault(true);
     }
 
     @Override

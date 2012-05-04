@@ -17,7 +17,8 @@ public class WaterbucketPrevention extends Prevention
 {
     public WaterbucketPrevention(PreventionPlugin plugin)
     {
-        super("waterbucket", plugin, true);
+        super("waterbucket", plugin);
+        this.setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

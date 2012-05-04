@@ -18,7 +18,8 @@ public class ChestPrevention extends Prevention
 {
     public ChestPrevention(PreventionPlugin plugin)
     {
-        super("chest", plugin, true);
+        super("chest", plugin);
+        this.setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

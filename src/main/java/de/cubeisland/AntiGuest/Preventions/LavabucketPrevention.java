@@ -17,7 +17,8 @@ public class LavabucketPrevention extends Prevention
 {
     public LavabucketPrevention(PreventionPlugin plugin)
     {
-        super("lavabucket", plugin, true);
+        super("lavabucket", plugin);
+        this.setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

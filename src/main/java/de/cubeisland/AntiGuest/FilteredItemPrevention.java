@@ -14,33 +14,36 @@ import org.bukkit.event.Cancellable;
  */
 public abstract class FilteredItemPrevention extends FilteredPrevention
 {
-    private final boolean ignoreBlocks;
+    private boolean ignoreBlocks = false;
 
     public FilteredItemPrevention(final String name, final PreventionPlugin plugin)
     {
-        this(name, plugin, false);
+        super(name, plugin);
     }
 
-    public FilteredItemPrevention(final String name, final PreventionPlugin plugin, boolean ignoreBlocks)
+    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin)
     {
-        this(name, plugin, false, ignoreBlocks);
+        super(name, permission, plugin);
     }
 
-    public FilteredItemPrevention(final String name, final PreventionPlugin plugin, boolean enableByDefault, boolean ignoreBlocks)
+    /**
+     * Sets whether this prevention should ignore blocks
+     *
+     * @param ignore true to ignore blocks
+     */
+    public final void setIgnoreBlocks(boolean ignore)
     {
-        super(name, plugin, enableByDefault);
-        this.ignoreBlocks = ignoreBlocks;
+        this.ignoreBlocks = ignore;
     }
 
-    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault)
+    /**
+     * Returns whether this prevention ignores blocks
+     *
+     * @return true if it ignores blocks
+     */
+    public final boolean getIgnoreBlocks()
     {
-        this(name, permission, plugin, enableByDefault, false);
-    }
-
-    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin, boolean enableByDefault, boolean ignoreBlocks)
-    {
-        super(name, permission, plugin, enableByDefault);
-        this.ignoreBlocks = ignoreBlocks;
+        return this.ignoreBlocks;
     }
 
     /**

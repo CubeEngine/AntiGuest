@@ -17,7 +17,8 @@ public class BowPrevention extends Prevention
 {
     public BowPrevention(PreventionPlugin plugin)
     {
-        super("bow", plugin, true);
+        super("bow", plugin);
+        this.setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
