@@ -6,6 +6,7 @@ import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
+import de.cubeisland.libMinecraft.command.CommandPermission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -93,6 +94,7 @@ public class SwearPrevention extends Prevention
     }
 
     @Command(desc = "Adds a badword to the swear prevention")
+    @CommandPermission
     public void badword(CommandSender sender, CommandArgs args)
     {
         String word = args.getString(0);
