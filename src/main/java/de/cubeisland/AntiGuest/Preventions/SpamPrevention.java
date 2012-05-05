@@ -2,7 +2,7 @@ package de.cubeisland.AntiGuest.Preventions;
 
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
-import java.util.HashMap;
+import gnu.trove.map.hash.TObjectLongHashMap;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 public class SpamPrevention extends Prevention
 {
     private int spamLockDuration;
-    private HashMap<Player, Long> chatTimestamps;
+    private TObjectLongHashMap<Player> chatTimestamps;
 
     public SpamPrevention(PreventionPlugin plugin)
     {
@@ -40,7 +40,7 @@ public class SpamPrevention extends Prevention
     {
         super.enable();
         this.spamLockDuration = getConfig().getInt("lockDuration") * 1000;
-        this.chatTimestamps = new HashMap<Player, Long>();
+        this.chatTimestamps = new TObjectLongHashMap<Player>();
     }
 
     @Override
@@ -75,12 +75,12 @@ public class SpamPrevention extends Prevention
     
     private boolean isChatLocked(final Player player)
     {
-        final Long nextPossible = this.chatTimestamps.get(player);
-        if (nextPossible == null)
+        final long nextPossible = this.chatTimestamps.get(player);
+        if (nextPossible == 0)
         {
             return false;
         }
-        
+
         final long currentTime = System.currentTimeMillis();
         if (nextPossible < currentTime)
         {

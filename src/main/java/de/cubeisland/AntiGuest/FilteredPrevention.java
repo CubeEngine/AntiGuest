@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest;
 
+import gnu.trove.set.hash.THashSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.bukkit.configuration.Configuration;
@@ -16,7 +16,7 @@ import org.bukkit.event.Cancellable;
  */
 public abstract class FilteredPrevention extends PunishedPrevention
 {
-    protected Set<Object> filterItems;
+    protected Set filterItems;
     private Mode mode;
     
     public FilteredPrevention(String name, PreventionPlugin plugin)
@@ -60,11 +60,11 @@ public abstract class FilteredPrevention extends PunishedPrevention
         List<?> items = getConfig().getList("list");
         if (items == null)
         {
-            this.filterItems = new HashSet<Object>();
+            this.filterItems = new THashSet();
         }
         else
         {
-            this.filterItems = new HashSet<Object>(items);
+            this.filterItems = new THashSet(items);
         }
     }
 
@@ -151,7 +151,7 @@ public abstract class FilteredPrevention extends PunishedPrevention
         WHITELIST("0", "white", "whitelist", "positivlist"),
         BLACKLIST("1", "black", "blacklist", "negativlist");
 
-        private static final HashMap<String, Mode> ALIAS_MAP = new HashMap<String, Mode>();
+        private static final HashMap<String, Mode> ALIAS_MAP = new HashMap<String, Mode>(values().length);
 
         private final String[] aliases;
         

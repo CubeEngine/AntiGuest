@@ -1,9 +1,8 @@
 package de.cubeisland.AntiGuest;
 
+import gnu.trove.map.hash.THashMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
@@ -20,8 +19,8 @@ public class PreventionManager
 {
     private static PreventionManager instance = null;
 
-    private final Map<String, Prevention> preventions;
-    private final Map<String, Punishment> punishments;
+    private final THashMap<String, Prevention> preventions;
+    private final THashMap<String, Punishment> punishments;
 
     private final PluginManager pm;
     private final Permission parentPermission;
@@ -30,8 +29,8 @@ public class PreventionManager
     {
         this.pm = Bukkit.getPluginManager();
         this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
-        this.preventions = new HashMap<String, Prevention>();
-        this.punishments = new HashMap<String, Punishment>();
+        this.preventions = new THashMap<String, Prevention>();
+        this.punishments = new THashMap<String, Punishment>();
         this.pm.addPermission(this.parentPermission);
     }
 

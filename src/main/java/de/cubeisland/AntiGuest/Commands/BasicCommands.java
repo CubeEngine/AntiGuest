@@ -8,7 +8,7 @@ import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.CommandPermission;
 import de.cubeisland.libMinecraft.translation.Translation;
-import java.util.HashSet;
+import gnu.trove.set.hash.THashSet;
 import java.util.Set;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class BasicCommands
     public BasicCommands(AntiGuest plugin)
     {
         this.plugin = plugin;
-        this.resetRequest = new HashSet<CommandSender>();
+        this.resetRequest = new THashSet<CommandSender>();
     }
 
     @Command(desc = "Reloads a single or all preventions", usage = "[prevention]")

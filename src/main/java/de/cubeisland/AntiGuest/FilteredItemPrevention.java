@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest;
 
-import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -73,7 +74,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         super.enable();
 
         // normalize the items
-        HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());
+        Set<Material> newItems = EnumSet.noneOf(Material.class);
         for (Object item : this.filterItems)
         {
             Material material = Material.matchMaterial(String.valueOf(item));

@@ -1,11 +1,10 @@
 package de.cubeisland.AntiGuest.Preventions;
 
-import de.cubeisland.AntiGuest.AntiGuest;
-import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.FilteredPrevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Set;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -41,9 +40,9 @@ public class DamagePrevention extends FilteredPrevention
         Configuration config = super.getDefaultConfig();
 
         config.set("throttleDelay", 3);
-        config.set("damagerMessage", _("damagerMessage"));
+        config.set("damagerMessage", getPlugin().getTranslation().translate("damagerMessage"));
         config.set("preventPotions", true);
-        config.set("potionMessage", _("potionMessage"));
+        config.set("potionMessage", getPlugin().getTranslation().translate("potionMessage"));
         config.set("mode", "whitelist");
         config.set("list", new String[]{"void"});
 
@@ -60,7 +59,7 @@ public class DamagePrevention extends FilteredPrevention
         this.preventPotions = config.getBoolean("preventPotions");
         this.potionMessage = parseMessage(config.getString("potionMessage"));
 
-        HashSet<Object> newList = new HashSet<Object>();
+        Set<DamageCause> newList = EnumSet.noneOf(DamageCause.class);
         String itemString;
         for (Object item : this.filterItems)
         {

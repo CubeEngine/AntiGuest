@@ -3,11 +3,11 @@ package de.cubeisland.AntiGuest;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.TObjectLongMap;
+import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
-import java.util.HashMap;
-import java.util.Map;
+import gnu.trove.procedure.TObjectObjectProcedure;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -19,8 +19,9 @@ import org.bukkit.entity.Player;
  */
 public class PunishedPrevention extends Prevention
 {
+    private final static PunishmentProcedure PUNISHMENT_PROCEDURE = new PunishmentProcedure();
     private boolean punish;
-    private TIntObjectMap<Map<Punishment, ConfigurationSection>> violationPunishmentMap;
+    private TIntObjectMap<THashMap<Punishment, ConfigurationSection>> violationPunishmentMap;
     private TObjectIntMap<Player> playerViolationMap;
     private TObjectLongMap<Player> punishThrottleTimestamps;
     private int highestPunishmentViolation;
@@ -42,7 +43,7 @@ public class PunishedPrevention extends Prevention
         super.enable();
 
         this.punishThrottleTimestamps = new TObjectLongHashMap<Player>();
-        this.violationPunishmentMap = new TIntObjectHashMap<Map<Punishment, ConfigurationSection>>();
+        this.violationPunishmentMap = new TIntObjectHashMap<THashMap<Punishment, ConfigurationSection>>();
         this.playerViolationMap = new TObjectIntHashMap<Player>();
 
         Configuration config = getConfig();
@@ -54,7 +55,7 @@ public class PunishedPrevention extends Prevention
             if (punishmentsSection != null)
             {
                 int violation;
-                Map<Punishment, ConfigurationSection> punishments;
+                THashMap<Punishment, ConfigurationSection> punishments;
                 ConfigurationSection violationSection;
                 ConfigurationSection punishmentSection;
                 PreventionManager pm = PreventionManager.getInstance();
@@ -79,7 +80,7 @@ public class PunishedPrevention extends Prevention
                                     {
                                         if (punishments == null)
                                         {
-                                            punishments = new HashMap<Punishment, ConfigurationSection>();
+                                            punishments = new THashMap<Punishment, ConfigurationSection>();
                                             this.violationPunishmentMap.put(violation, punishments);
                                         }
                                         punishments.put(punishment, punishmentSection);
@@ -120,7 +121,7 @@ public class PunishedPrevention extends Prevention
         return config;
     }
 
-    public void punish(Player player)
+    public void punish(final Player player)
     {
         if (!this.punish)
         {
@@ -133,13 +134,11 @@ public class PunishedPrevention extends Prevention
         }
         this.playerViolationMap.put(player, ++violations);
 
-        Map<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
+        THashMap<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
         if (punishments != null)
         {
-            for (Map.Entry<Punishment, ConfigurationSection> entry : punishments.entrySet())
-            {
-                entry.getKey().punish(player, entry.getValue());
-            }
+            PUNISHMENT_PROCEDURE.player = player;
+            punishments.forEachEntry(PUNISHMENT_PROCEDURE);
         }
     }
 
@@ -160,6 +159,17 @@ public class PunishedPrevention extends Prevention
         {
             this.punish(player);
             this.punishThrottleTimestamps.put(player, current + getThrottleDelay());
+        }
+    }
+
+    private static final class PunishmentProcedure implements TObjectObjectProcedure<Punishment, ConfigurationSection>
+    {
+        public Player player;
+
+        public boolean execute(Punishment punishment, ConfigurationSection config)
+        {
+            punishment.punish(this.player, config);
+            return true;
         }
     }
 }

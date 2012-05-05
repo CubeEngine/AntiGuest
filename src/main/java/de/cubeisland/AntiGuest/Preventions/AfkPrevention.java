@@ -3,7 +3,8 @@ package de.cubeisland.AntiGuest.Preventions;
 import de.cubeisland.AntiGuest.AntiGuest;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
-import java.util.HashMap;
+import gnu.trove.map.hash.THashMap;
+import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +22,7 @@ import org.bukkit.scheduler.BukkitScheduler;
  */
 public class AfkPrevention extends Prevention
 {
-    private HashMap<Player, PlayerAfkTracker> trackerMap;
+    private THashMap<Player, PlayerAfkTracker> trackerMap;
     private BukkitScheduler scheduler;
     private int timeout;
 
@@ -48,7 +49,7 @@ public class AfkPrevention extends Prevention
         this.scheduler = getPlugin().getServer().getScheduler();
         this.timeout = getConfig().getInt("timeout") * 20;
 
-        this.trackerMap = new HashMap<Player, PlayerAfkTracker>();
+        this.trackerMap = new THashMap<Player, PlayerAfkTracker>();
     }
 
     @Override
@@ -95,6 +96,12 @@ public class AfkPrevention extends Prevention
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void moveUpdater(PlayerMoveEvent event)
     {
+        final Location from = event.getFrom();
+        final Location to = event.getTo();
+        if (from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY() && from.getBlockZ() == to.getBlockZ())
+        {
+            return;
+        }
         this.updateTracker(event.getPlayer());
     }
 

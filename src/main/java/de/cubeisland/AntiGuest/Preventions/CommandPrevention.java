@@ -2,7 +2,8 @@ package de.cubeisland.AntiGuest.Preventions;
 
 import de.cubeisland.AntiGuest.FilteredPrevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
-import java.util.HashSet;
+import gnu.trove.set.hash.THashSet;
+import java.util.Set;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,7 +41,7 @@ public class CommandPrevention extends FilteredPrevention
         super.enable();
         
         // normalize the items
-        HashSet<Object> newItems = new HashSet<Object>(this.filterItems.size());
+        Set<String> newItems = new THashSet<String>(this.filterItems.size());
         for (Object item : this.filterItems)
         {
             newItems.add(String.valueOf(item).trim().toLowerCase());

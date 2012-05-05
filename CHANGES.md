@@ -1,6 +1,15 @@
 Changes
 =======
 
+Version 3.3.0
+-------------
+- added fully per-prevention configurable punishments
+- fixed the placeblock and breakblock preventions
+- many internal improvements
+- the move prevention now uses a square around the spawn
+- also improved move's performance and border handling
+- improved overall performance
+
 Version 3.2.0
 -------------
 - fixed disabling preventions via command
