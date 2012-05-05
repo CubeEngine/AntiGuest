@@ -82,6 +82,7 @@ public class PunishedPrevention extends Prevention
                                         {
                                             punishments = new THashMap<Punishment, ConfigurationSection>();
                                             this.violationPunishmentMap.put(violation, punishments);
+                                            this.highestPunishmentViolation = Math.max(this.highestPunishmentViolation, violation);
                                         }
                                         punishments.put(punishment, punishmentSection);
                                     }
