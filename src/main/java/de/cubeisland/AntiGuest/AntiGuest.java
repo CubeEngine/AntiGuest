@@ -54,6 +54,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         if (translation == null)
         {
             translation = Translation.get(this.getClass(), "en");
+            config.set("language", "en");
         }
         saveConfig();
 
