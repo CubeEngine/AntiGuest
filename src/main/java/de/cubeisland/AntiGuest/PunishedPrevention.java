@@ -110,7 +110,8 @@ public class PunishedPrevention extends Prevention
         this.violationPunishmentMap = null;
     }
 
-    public Configuration getDefaultConfiguration()
+    @Override
+    public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();
 
