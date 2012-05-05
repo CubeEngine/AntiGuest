@@ -22,14 +22,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 {
     private static Logger logger = null;
-    private static final String PERMISSION_BASE = "antiguest.commands.";
     
     private File dataFolder;
     private File preventionConfigFolder;
@@ -58,7 +55,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         }
         saveConfig();
 
-        this.baseCommand = new BaseCommand(this, new Permission(PERMISSION_BASE + "*", PermissionDefault.OP), PERMISSION_BASE);
+        this.baseCommand = new BaseCommand(this, "antiguest.commands.");
         this.baseCommand.registerCommands(new BasicCommands(this))
                         .registerCommands(new PreventionManagementCommands());
 
