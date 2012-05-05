@@ -1,10 +1,14 @@
 package de.cubeisland.AntiGuest;
 
-import de.cubeisland.AntiGuest.Commands.*;
-import de.cubeisland.AntiGuest.Preventions.*;
-import de.cubeisland.AntiGuest.Punishments.*;
+import de.cubeisland.AntiGuest.commands.BasicCommands;
+import de.cubeisland.AntiGuest.commands.PreventionManagementCommands;
+import de.cubeisland.AntiGuest.prevention.Prevention;
+import de.cubeisland.AntiGuest.prevention.PreventionConfiguration;
+import de.cubeisland.AntiGuest.prevention.PreventionManager;
+import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
+import de.cubeisland.AntiGuest.prevention.preventions.*;
+import de.cubeisland.AntiGuest.prevention.punishments.*;
 import de.cubeisland.libMinecraft.command.BaseCommand;
-import de.cubeisland.libMinecraft.translation.TranslatablePlugin;
 import de.cubeisland.libMinecraft.translation.Translation;
 import java.io.File;
 import java.io.IOException;
