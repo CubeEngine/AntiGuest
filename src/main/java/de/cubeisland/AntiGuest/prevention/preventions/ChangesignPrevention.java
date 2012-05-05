@@ -17,6 +17,7 @@ public class ChangesignPrevention extends Prevention
     {
         super("changesign", plugin);
         setEnableByDefault(true);
+        setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

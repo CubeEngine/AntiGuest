@@ -82,6 +82,10 @@ public class PreventionManager
         {
             throw new IllegalArgumentException("prevention must not be null!");
         }
+        if (!prevention.isLoaded())
+        {
+            prevention.load();
+        }
         if (!this.preventions.containsValue(prevention))
         {
             this.preventions.put(prevention.getName(), prevention);

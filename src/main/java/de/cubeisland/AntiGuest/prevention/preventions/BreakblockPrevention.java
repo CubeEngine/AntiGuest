@@ -25,6 +25,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
     {
         super("breakblock", plugin);
         setEnableByDefault(true);
+        setEnablePunishing(true);
         setFilterMode(FilterMode.NONE);
     }
 

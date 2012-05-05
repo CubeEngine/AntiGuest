@@ -82,7 +82,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
 
         // normalize the items
         Set<Material> newItems = EnumSet.noneOf(Material.class);
-        for (Object item : this.filterItems)
+        for (Material item : this.filterItems)
         {
             Material material = Material.matchMaterial(String.valueOf(item));
             if (material != null)

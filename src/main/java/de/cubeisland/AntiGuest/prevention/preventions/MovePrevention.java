@@ -24,7 +24,7 @@ public class MovePrevention extends Prevention
 
     public MovePrevention(PreventionPlugin plugin)
     {
-        super("move", plugin);
+        super("move", plugin, false);
         setThrottleDelay(3);
     }
 

@@ -27,6 +27,7 @@ public class SwearPrevention extends Prevention
     {
         super("swear", plugin);
         setEnableByDefault(true);
+        setEnablePunishing(true);
     }
 
     @Override

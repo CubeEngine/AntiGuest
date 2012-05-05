@@ -29,7 +29,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
 
     public DamagePrevention(PreventionPlugin plugin)
     {
-        super("damage", plugin);
+        super("damage", plugin, false);
         setThrottleDelay(3);
         setFilterMode(FilterMode.WHITELIST);
         this.damagerMessage = null;

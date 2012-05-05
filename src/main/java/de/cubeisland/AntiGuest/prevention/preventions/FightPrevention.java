@@ -21,6 +21,7 @@ public class FightPrevention extends Prevention
     {
         super("fight", plugin);
         setEnableByDefault(true);
+        setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

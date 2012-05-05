@@ -18,6 +18,7 @@ public class NoteblockPrevention extends Prevention
     public NoteblockPrevention(PreventionPlugin plugin)
     {
         super("noteblock", plugin);
+        setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

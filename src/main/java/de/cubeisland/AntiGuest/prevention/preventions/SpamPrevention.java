@@ -23,6 +23,7 @@ public class SpamPrevention extends Prevention
     {
         super("spam", plugin);
         setEnableByDefault(true);
+        setEnablePunishing(true);
     }
 
     @Override

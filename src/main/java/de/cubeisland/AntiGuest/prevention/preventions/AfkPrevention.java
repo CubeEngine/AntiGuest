@@ -28,7 +28,7 @@ public class AfkPrevention extends Prevention
 
     public AfkPrevention(PreventionPlugin plugin)
     {
-        super("afk", plugin);
+        super("afk", plugin, false);
         this.trackerMap = null;
     }
     

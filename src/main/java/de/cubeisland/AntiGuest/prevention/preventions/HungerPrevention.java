@@ -17,7 +17,7 @@ public class HungerPrevention extends Prevention
 {
     public HungerPrevention(PreventionPlugin plugin)
     {
-        super("hunger", plugin);
+        super("hunger", plugin, false);
         setEnableByDefault(true);
     }
 

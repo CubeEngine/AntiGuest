@@ -32,6 +32,7 @@ public abstract class Prevention implements Listener
     private final PreventionPlugin plugin;
     private final boolean allowPunishing;
 
+    private boolean loaded;
     private String message;
     private int throttleDelay;
     private boolean enabled;
@@ -72,33 +73,14 @@ public abstract class Prevention implements Listener
         this.plugin = plugin;
         this.allowPunishing = allowPunishing;
 
+        this.loaded = false;
         this.message = null;
         this.throttleDelay = 0;
         this.enabled = false;
         this.enableByDefault = false;
-        this.config = PreventionConfiguration.get(plugin.getConfigurationFolder(), this);
+        this.config = null;
         this.highestPunishmentViolation = 0;
         this.enablePunishing = false;
-    }
-
-    /**
-     * Sets whether to enable this prevention by default
-     *
-     * @param enable true to enable it by default
-     */
-    public final void setEnableByDefault(boolean enable)
-    {
-        this.enableByDefault = enable;
-    }
-
-    /**
-     * Returns whether this prevention will be enabled by default
-     *
-     * @return true if it will be enabled by default
-     */
-    public final boolean getEnableByDefault()
-    {
-        return this.enableByDefault;
     }
 
     /**
@@ -164,7 +146,7 @@ public abstract class Prevention implements Listener
      * Generates the default configuration of this prevention.
      * This method should be overridden for custom configs.
      *
-     * @return  the default config
+     * @return the default config
      */
     public Configuration getDefaultConfig()
     {
@@ -179,12 +161,22 @@ public abstract class Prevention implements Listener
 
         if (this.allowPunishing)
         {
-            config.set("punish", this.enablePunishing);
-            config.set("punishments.3.slap.damage", 4);
-            config.set("punishments.5.kick.reason", this.plugin.getTranslation().translate("defaultKickReason"));
+            defaultConfig.set("punish", this.enablePunishing);
+            defaultConfig.set("punishments.3.slap.damage", 4);
+            defaultConfig.set("punishments.5.kick.reason", this.plugin.getTranslation().translate("defaultKickReason"));
         }
 
         return defaultConfig;
+    }
+
+    /**
+     * Loads the configuration of the prevention.
+     * this method should be called right after the object got constructed.
+     */
+    public void load()
+    {
+        this.loaded = true;
+        this.config = PreventionConfiguration.get(this.plugin.getConfigurationFolder(), this);
     }
 
     /**
@@ -280,6 +272,36 @@ public abstract class Prevention implements Listener
     }
 
     /**
+     * Sets whether to enable this prevention by default
+     *
+     * @param enable true to enable it by default
+     */
+    public final void setEnableByDefault(boolean enable)
+    {
+        this.enableByDefault = enable;
+    }
+
+    /**
+     * Returns whether this prevention will be enabled by default
+     *
+     * @return true if it will be enabled by default
+     */
+    public final boolean getEnableByDefault()
+    {
+        return this.enableByDefault;
+    }
+
+    /**
+     * Returns whether this prevention is already loaded
+     *
+     * @return true if loaded
+     */
+    public final boolean isLoaded()
+    {
+        return this.loaded;
+    }
+
+    /**
      * Returns whether this prevention is enabled.
      *
      * @return true if this prevention is enabled
@@ -367,6 +389,26 @@ public abstract class Prevention implements Listener
     public void setThrottleDelay(int delay)
     {
         this.throttleDelay = delay * 1000;
+    }
+
+    /**
+     * Sets whether this prevention enables punishing
+     * 
+     * @param enable true to enable it
+     */
+    public void setEnablePunishing(boolean enable)
+    {
+        this.enablePunishing = enable;
+    }
+
+    /**
+     * Returns whether this prevention enables punishing
+     *
+     * @return true if it enables it
+     */
+    public boolean getEnablePunishing()
+    {
+        return this.enablePunishing;
     }
 
     /**
@@ -468,17 +510,6 @@ public abstract class Prevention implements Listener
     }
 
     /**
-     * This method is a small util to parse color codes of the syntax &amp;&lt;code&gt;
-     *
-     * @param string hte string to parse
-     * @return the parsed string
-     */
-    public static String parseColors(final String string)
-    {
-        return ChatColor.translateAlternateColorCodes('&', string);
-    }
-
-    /**
      * Parses a message
      *
      * @param message the message to parse
@@ -494,7 +525,7 @@ public abstract class Prevention implements Listener
         {
             return null;
         }
-        return parseColors(message);
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     @Override

@@ -16,6 +16,7 @@ public class DropPrevention extends FilteredItemPrevention
     public DropPrevention(PreventionPlugin plugin)
     {
         super("drop", plugin);
+        setEnablePunishing(true);
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

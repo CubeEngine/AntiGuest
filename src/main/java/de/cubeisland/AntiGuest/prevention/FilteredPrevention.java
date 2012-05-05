@@ -18,7 +18,7 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
 {
     protected Set<T> filterItems;
     private FilterMode filterMode;
-    
+
     public FilteredPrevention(String name, PreventionPlugin plugin)
     {
         this(name, plugin, true);

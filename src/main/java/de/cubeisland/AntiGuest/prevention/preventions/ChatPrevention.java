@@ -19,6 +19,7 @@ public class ChatPrevention extends Prevention
     public ChatPrevention(PreventionPlugin plugin)
     {
         super("chat", plugin);
+        setEnablePunishing(false);
     }
 
     @Override

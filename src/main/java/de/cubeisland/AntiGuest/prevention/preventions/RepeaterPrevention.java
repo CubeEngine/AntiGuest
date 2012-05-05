@@ -18,6 +18,7 @@ public class RepeaterPrevention extends Prevention
     public RepeaterPrevention(PreventionPlugin plugin)
     {
         super("repeater", plugin);
+        setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

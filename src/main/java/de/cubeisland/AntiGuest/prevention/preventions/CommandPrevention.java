@@ -19,6 +19,7 @@ public class CommandPrevention extends FilteredPrevention<String>
     public CommandPrevention(PreventionPlugin plugin)
     {
         super("command", plugin);
+        setEnablePunishing(true);
     }
 
     @Override
