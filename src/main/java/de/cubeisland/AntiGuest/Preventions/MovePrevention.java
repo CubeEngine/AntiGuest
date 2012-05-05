@@ -46,7 +46,6 @@ public class MovePrevention extends Prevention
         this.width = new Vector2(tmpWidth, tmpWidth);
     }
 
-    // TODO fix for players outside the square
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerMoveEvent event)
     {
@@ -71,19 +70,14 @@ public class MovePrevention extends Prevention
             // is the new location inside the spawn square?
             if (!spawnSquare.contains(Convert.toBlockVector2(to)))
             {
+                Location fallback = from;
+                if (!spawnSquare.contains(Convert.toBlockVector2(fallback)))
+                {
+                    fallback = player.getWorld().getSpawnLocation();
+                }
                 sendThrottledMessage(player);
+                player.teleport(fallback, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 event.setCancelled(true);
-            }
-
-            // was the old position in the spawn square?
-            if (!spawnSquare.contains(Convert.toBlockVector2(from)))
-            {
-                player.getServer().getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable() {
-                    public void run()
-                    {
-                        player.teleport(player.getWorld().getSpawnLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
-                    }
-                });
             }
         }
     }
