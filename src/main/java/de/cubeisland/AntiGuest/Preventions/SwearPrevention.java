@@ -1,7 +1,5 @@
 package de.cubeisland.AntiGuest.Preventions;
 
-import de.cubeisland.AntiGuest.AntiGuest;
-import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
 import de.cubeisland.libMinecraft.command.Command;
@@ -57,7 +55,7 @@ public class SwearPrevention extends Prevention
             this.swearPatterns.add(compile(word));
         }
 
-        ((AntiGuest)getPlugin()).getBaseCommand().registerCommands(this);
+        getPlugin().getBaseCommand().registerCommands(this);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class SwearPrevention extends Prevention
         super.disable();
         this.swearPatterns.clear();
         this.swearPatterns = null;
-        ((AntiGuest)getPlugin()).getBaseCommand().unregisterCommands(this);
+        getPlugin().getBaseCommand().unregisterCommands(this);
     }
 
     private static Pattern compile(String string)
@@ -108,11 +106,11 @@ public class SwearPrevention extends Prevention
             disable();
             enable();
 
-            sender.sendMessage(_("wordAdded"));
+            sender.sendMessage(getPlugin().getTranslation().translate("wordAdded"));
         }
         else
         {
-            sender.sendMessage(_("noWord"));
+            sender.sendMessage(getPlugin().getTranslation().translate("noWord"));
         }
     }
 }

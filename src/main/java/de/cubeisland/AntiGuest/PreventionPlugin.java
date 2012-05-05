@@ -1,5 +1,6 @@
 package de.cubeisland.AntiGuest;
 
+import de.cubeisland.libMinecraft.command.BaseCommand;
 import de.cubeisland.libMinecraft.translation.TranslatablePlugin;
 import java.io.File;
 
@@ -16,4 +17,11 @@ public interface PreventionPlugin extends TranslatablePlugin
      * @return the folder as a File object
      */
     public File getConfigurationFolder();
+
+    /**
+     * Returns the plugins base command
+     *
+     * @return the plugins base command
+     */
+    public BaseCommand getBaseCommand();
 }

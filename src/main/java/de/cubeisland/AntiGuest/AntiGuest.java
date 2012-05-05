@@ -22,7 +22,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin, TranslatablePlugin
+public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 {
     private static Logger logger = null;
     private static final String PERMISSION_BASE = "antiguest.commands.";
