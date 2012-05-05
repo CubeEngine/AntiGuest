@@ -31,6 +31,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     {
         super("damage", plugin);
         setThrottleDelay(3);
+        setFilterMode(FilterMode.WHITELIST);
         this.damagerMessage = null;
     }
 
@@ -42,7 +43,6 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         config.set("damagerMessage", getPlugin().getTranslation().translate("damagerMessage"));
         config.set("preventPotions", true);
         config.set("potionMessage", getPlugin().getTranslation().translate("potionMessage"));
-        config.set("mode", "whitelist");
         config.set("list", new String[]{"void"});
 
         return config;

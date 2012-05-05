@@ -20,7 +20,7 @@ public class FightPrevention extends Prevention
     public FightPrevention(PreventionPlugin plugin)
     {
         super("fight", plugin);
-        this.setEnableByDefault(true);
+        setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

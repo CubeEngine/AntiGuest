@@ -17,16 +17,37 @@ import org.bukkit.event.Cancellable;
 public abstract class FilteredPrevention<T extends Object> extends PunishedPrevention
 {
     protected Set<T> filterItems;
-    private Mode mode;
+    private FilterMode filterMode;
     
     public FilteredPrevention(String name, PreventionPlugin plugin)
     {
-        super(name, plugin);
+        this(name, PERMISSION_BASE + name, plugin);
     }
 
     public FilteredPrevention(String name, String permission, PreventionPlugin plugin)
     {
         super(name, permission, plugin);
+        this.filterMode = FilterMode.BLACKLIST;
+    }
+
+    /**
+     * Returns the mode this prevention filters in
+     *
+     * @return the filter mode
+     */
+    public FilterMode getFilterMode()
+    {
+        return this.filterMode;
+    }
+
+    /**
+     * Sets the mode this prevention filters in
+     *
+     * @param mode the mode to filter in
+     */
+    public void setFilterMode(FilterMode mode)
+    {
+        this.filterMode = mode;
     }
 
     /**
@@ -39,7 +60,7 @@ public abstract class FilteredPrevention<T extends Object> extends PunishedPreve
     {
         Configuration defaultConfig = super.getDefaultConfig();
 
-        defaultConfig.set("mode", "blacklist");
+        defaultConfig.set("mode", this.filterMode.getName());
         defaultConfig.set("list", new String[] {"example"});
 
         return defaultConfig;
@@ -56,7 +77,7 @@ public abstract class FilteredPrevention<T extends Object> extends PunishedPreve
     {
         super.enable();
 
-        this.mode = Mode.getByAlias(getConfig().getString("mode"));
+        this.filterMode = FilterMode.getByAlias(getConfig().getString("mode"));
         List<?> items = getConfig().getList("list");
         if (items == null)
         {
@@ -81,7 +102,7 @@ public abstract class FilteredPrevention<T extends Object> extends PunishedPreve
         {
             //AntiGuest.debug("Filter mode: " + this.mode.name());
 
-            switch (this.mode)
+            switch (this.filterMode)
             {
                 case NONE:
                     return false;
@@ -118,27 +139,34 @@ public abstract class FilteredPrevention<T extends Object> extends PunishedPreve
      *
      * @return the mode
      */
-    public Mode getMode()
+    public FilterMode getMode()
     {
-        return this.mode;
+        return this.filterMode;
     }
 
     /**
      * Represents the modes of a filtered prevention
      */
-    public enum Mode
+    public enum FilterMode
     {
-        NONE("-1", "none", "nolist", "all"),
-        WHITELIST("0", "white", "whitelist", "positivlist"),
-        BLACKLIST("1", "black", "blacklist", "negativlist");
+        NONE("none", "-1", "nolist", "all"),
+        WHITELIST("whitelist", "0", "white", "positivlist"),
+        BLACKLIST("blacklist", "1", "black", "negativlist");
 
-        private static final HashMap<String, Mode> ALIAS_MAP = new HashMap<String, Mode>(values().length);
+        private static final HashMap<String, FilterMode> ALIAS_MAP = new HashMap<String, FilterMode>(values().length);
 
+        private final String name;
         private final String[] aliases;
         
-        Mode(String... aliases)
+        FilterMode(String name, String... aliases)
         {
+            this.name = name;
             this.aliases = aliases;
+        }
+
+        public String getName()
+        {
+            return this.name;
         }
 
         public String[] getAliases()
@@ -146,15 +174,16 @@ public abstract class FilteredPrevention<T extends Object> extends PunishedPreve
             return this.aliases;
         }
 
-        public static Mode getByAlias(String alias)
+        public static FilterMode getByAlias(String alias)
         {
             return ALIAS_MAP.get(alias.toLowerCase());
         }
 
         static
         {
-            for (Mode mode : values())
+            for (FilterMode mode : values())
             {
+                ALIAS_MAP.put(mode.getName(), mode);
                 for (String alias : mode.getAliases())
                 {
                     ALIAS_MAP.put(alias.toLowerCase(), mode);

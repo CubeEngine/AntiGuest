@@ -16,7 +16,7 @@ public class ChangesignPrevention extends Prevention
     public ChangesignPrevention(PreventionPlugin plugin)
     {
         super("changesign", plugin);
-        this.setEnableByDefault(true);
+        setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

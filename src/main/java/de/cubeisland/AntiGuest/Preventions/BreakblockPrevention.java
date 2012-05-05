@@ -4,7 +4,6 @@ import de.cubeisland.AntiGuest.FilteredItemPrevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -25,17 +24,8 @@ public class BreakblockPrevention extends FilteredItemPrevention
     public BreakblockPrevention(PreventionPlugin plugin)
     {
         super("breakblock", plugin);
-        this.setEnableByDefault(true);
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("mode", "none");
-
-        return config;
+        setEnableByDefault(true);
+        setFilterMode(FilterMode.NONE);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

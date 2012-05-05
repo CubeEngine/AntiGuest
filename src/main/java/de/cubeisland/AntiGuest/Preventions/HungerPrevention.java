@@ -18,7 +18,7 @@ public class HungerPrevention extends Prevention
     public HungerPrevention(PreventionPlugin plugin)
     {
         super("hunger", plugin);
-        this.setEnableByDefault(true);
+        setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

@@ -28,7 +28,7 @@ public class SwearPrevention extends Prevention
     public SwearPrevention(PreventionPlugin plugin)
     {
         super("swear", plugin);
-        this.setEnableByDefault(true);
+        setEnableByDefault(true);
     }
 
     @Override

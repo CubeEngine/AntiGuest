@@ -1,5 +1,6 @@
 package de.cubeisland.AntiGuest;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Set;
 import org.bukkit.Material;
@@ -19,12 +20,13 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
 
     public FilteredItemPrevention(final String name, final PreventionPlugin plugin)
     {
-        super(name, plugin);
+        this(name, PERMISSION_BASE + name, plugin);
     }
 
     public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin)
     {
         super(name, permission, plugin);
+        this.filterItems = EnumSet.of(Material.DIRT);
     }
 
     /**
@@ -57,7 +59,13 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("list", new String[] {Material.DIRT.toString().toLowerCase()});
+        ArrayList<String> materials = new ArrayList<String>(this.filterItems.size());
+        for (Material material : this.filterItems)
+        {
+            materials.add(material.toString().toLowerCase().replace('_', ' '));
+        }
+        
+        config.set("list", materials);
 
         return config;
     }

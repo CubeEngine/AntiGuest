@@ -2,7 +2,6 @@ package de.cubeisland.AntiGuest.Preventions;
 
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -18,17 +17,8 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     public PlaceblockPrevention(PreventionPlugin plugin)
     {
         super("placeblock", plugin);
-        this.setEnableByDefault(true);
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("mode", "none");
-
-        return config;
+        setEnableByDefault(true);
+        setFilterMode(FilterMode.NONE);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

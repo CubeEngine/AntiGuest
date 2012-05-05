@@ -2,8 +2,8 @@ package de.cubeisland.AntiGuest.Preventions;
 
 import de.cubeisland.AntiGuest.FilteredItemPrevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
+import java.util.EnumSet;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,16 +22,7 @@ public class ItemPrevention extends FilteredItemPrevention
     {
         super("item", plugin);
         this.setIgnoreBlocks(true);
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("list", new String[] {Material.DIAMOND_SWORD.toString().toLowerCase().replace('_', ' ')});
-
-        return config;
+        this.filterItems = EnumSet.of(Material.DIAMOND_SWORD);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
