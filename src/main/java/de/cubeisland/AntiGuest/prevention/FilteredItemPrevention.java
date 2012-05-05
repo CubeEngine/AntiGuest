@@ -19,12 +19,12 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
 
     public FilteredItemPrevention(final String name, final PreventionPlugin plugin)
     {
-        this(name, PERMISSION_BASE + name, plugin);
+        this(name, plugin, true);
     }
 
-    public FilteredItemPrevention(String name, String permission, PreventionPlugin plugin)
+    public FilteredItemPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
     {
-        super(name, permission, plugin);
+        super(name, plugin, allowPunishing);
         this.filterItems = EnumSet.of(Material.DIRT);
     }
 

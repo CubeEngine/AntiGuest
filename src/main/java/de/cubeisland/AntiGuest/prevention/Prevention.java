@@ -1,10 +1,16 @@
 package de.cubeisland.AntiGuest.prevention;
 
-import de.cubeisland.AntiGuest.AntiGuest;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.TObjectLongMap;
+import gnu.trove.map.hash.THashMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
+import gnu.trove.procedure.TObjectObjectProcedure;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -19,11 +25,12 @@ import org.bukkit.permissions.PermissionDefault;
  */
 public abstract class Prevention implements Listener
 {
-    protected static final String PERMISSION_BASE = "antiguest.preventions.";
-    
+    private static final PunishmentProcedure PUNISHMENT_PROCEDURE = new PunishmentProcedure();
+
     private final String name;
     private final Permission permission;
     private final PreventionPlugin plugin;
+    private final boolean allowPunishing;
 
     private String message;
     private int throttleDelay;
@@ -32,36 +39,46 @@ public abstract class Prevention implements Listener
     private PreventionConfiguration config;
     private TObjectLongMap<Player> messageThrottleTimestamps;
 
+    private boolean enablePunishing;
+    private TIntObjectMap<THashMap<Punishment, ConfigurationSection>> violationPunishmentMap;
+    private TObjectIntMap<Player> playerViolationMap;
+    private TObjectLongMap<Player> punishThrottleTimestamps;
+    private int highestPunishmentViolation;
+
     /**
-     * Initializes the prevention with its name and the corresponding plugin.
-     * This contructor use "antiguest.preventions.&lt;name&gt;" as the permission!
+     * Initializes the prevention with its name, the corresponding plugin and
+     * allowed punishing.
      *
      * @param name the name of the prevention
-     * @param plugin the corresponding plugin
+     * @param plugin the plugin
      */
     public Prevention(final String name, final PreventionPlugin plugin)
     {
-        this(name, PERMISSION_BASE + name, plugin);
+        this(name, plugin, true);
     }
 
     /**
-     * Initializes the prevention with its name, permission and the corresponding plugin.
-     * This contructor use "antiguest.preventions&lt;name&gt;" as the permission!
+     * Initializes the prevention with its name, the corresponding plugin and
+     * whether to allow punishing.
      *
      * @param name the name of the prevention
-     * @param permission the permission
-     * @param plugin the corresponding plugin
+     * @param plugin the plugin
+     * @param allowPunishing whether to allow punishing
      */
-    public Prevention(final String name, final String permission, final PreventionPlugin plugin)
+    public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing)
     {
         this.name = name;
-        this.permission = new Permission(permission, PermissionDefault.OP);
+        this.permission = new Permission(plugin.getPermissionBase() + name, PermissionDefault.OP);
+        this.plugin = plugin;
+        this.allowPunishing = allowPunishing;
+
         this.message = null;
         this.throttleDelay = 0;
-        this.plugin = plugin;
         this.enabled = false;
         this.enableByDefault = false;
         this.config = PreventionConfiguration.get(plugin.getConfigurationFolder(), this);
+        this.highestPunishmentViolation = 0;
+        this.enablePunishing = false;
     }
 
     /**
@@ -84,17 +101,32 @@ public abstract class Prevention implements Listener
         return this.enableByDefault;
     }
 
+    /**
+     * Returns the configuration of this prevention
+     *
+     * @return the config
+     */
     public final PreventionConfiguration getConfig()
     {
         return this.config;
     }
 
-    public final void resetConfig()
+    /**
+     * Resets the configuration of this prevention
+     *
+     * @return true on success
+     */
+    public final boolean resetConfig()
     {
         this.config = PreventionConfiguration.get(getPlugin().getConfigurationFolder(), this, false);
-        this.saveConfig();
+        return saveConfig();
     }
 
+    /**
+     * Reloads the prevention's configuration
+     *
+     * @return true on success
+     */
     public final boolean reloadConfig()
     {
         try
@@ -104,11 +136,16 @@ public abstract class Prevention implements Listener
         }
         catch (Throwable e)
         {
-            AntiGuest.error(e.getLocalizedMessage(), e);
+            e.printStackTrace(System.err);
         }
         return false;
     }
 
+    /**
+     * Saves the configuration of the prevention
+     *
+     * @return true on success
+     */
     public final boolean saveConfig()
     {
         try
@@ -118,7 +155,7 @@ public abstract class Prevention implements Listener
         }
         catch (Throwable e)
         {
-            AntiGuest.error(e.getLocalizedMessage(), e);
+            e.printStackTrace(System.err);
         }
         return false;
     }
@@ -140,6 +177,13 @@ public abstract class Prevention implements Listener
             defaultConfig.set("throttleDelay", this.throttleDelay);
         }
 
+        if (this.allowPunishing)
+        {
+            config.set("punish", this.enablePunishing);
+            config.set("punishments.3.slap.damage", 4);
+            config.set("punishments.5.kick.reason", this.plugin.getTranslation().translate("defaultKickReason"));
+        }
+
         return defaultConfig;
     }
 
@@ -155,6 +199,62 @@ public abstract class Prevention implements Listener
         this.messageThrottleTimestamps = new TObjectLongHashMap<Player>();
         this.throttleDelay = config.getInt("throttleDelay", 0) * 1000;
         this.setMessage(config.getString("message"));
+
+        if (this.allowPunishing)
+        {
+            this.punishThrottleTimestamps = new TObjectLongHashMap<Player>();
+            this.violationPunishmentMap = new TIntObjectHashMap<THashMap<Punishment, ConfigurationSection>>();
+            this.playerViolationMap = new TObjectIntHashMap<Player>();
+
+            this.enablePunishing = config.getBoolean("punish", this.enablePunishing);
+
+            if (this.enablePunishing)
+            {
+                ConfigurationSection punishmentsSection = config.getConfigurationSection("punishments");
+                if (punishmentsSection != null)
+                {
+                    int violation;
+                    THashMap<Punishment, ConfigurationSection> punishments;
+                    ConfigurationSection violationSection;
+                    ConfigurationSection punishmentSection;
+                    PreventionManager pm = PreventionManager.getInstance();
+                    Punishment punishment;
+
+                    for (String violationString : punishmentsSection.getKeys(false))
+                    {
+                        try
+                        {
+                            violation = Integer.parseInt(violationString);
+                            punishments = this.violationPunishmentMap.get(violation);
+                            violationSection = punishmentsSection.getConfigurationSection(violationString);
+                            if (violationSection != null)
+                            {
+                                for (String punishmentName : violationSection.getKeys(false))
+                                {
+                                    punishment = pm.getPunishment(punishmentName);
+                                    if (punishment != null)
+                                    {
+                                        punishmentSection = violationSection.getConfigurationSection(punishmentName);
+                                        if (punishmentSection != null)
+                                        {
+                                            if (punishments == null)
+                                            {
+                                                punishments = new THashMap<Punishment, ConfigurationSection>();
+                                                this.violationPunishmentMap.put(violation, punishments);
+                                                this.highestPunishmentViolation = Math.max(this.highestPunishmentViolation, violation);
+                                            }
+                                            punishments.put(punishment, punishmentSection);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch (NumberFormatException e)
+                        {}
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -165,6 +265,18 @@ public abstract class Prevention implements Listener
     {
         this.messageThrottleTimestamps.clear();
         this.messageThrottleTimestamps = null;
+
+        if (this.allowPunishing)
+        {
+            this.playerViolationMap.clear();
+            this.playerViolationMap = null;
+
+            this.punishThrottleTimestamps.clear();
+            this.punishThrottleTimestamps = null;
+            
+            this.violationPunishmentMap.clear();
+            this.violationPunishmentMap = null;
+        }
     }
 
     /**
@@ -279,20 +391,21 @@ public abstract class Prevention implements Listener
         {
             return;
         }
-        if (this.throttleDelay < 1)
-        {
-            player.sendMessage(this.message);
-        }
-        else
+        if (this.throttleDelay > 0)
         {
             final long next = this.messageThrottleTimestamps.get(player);
             final long current = System.currentTimeMillis();
             if (next < current)
             {
-                player.sendMessage(this.message);
                 this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
             }
+            else
+            {
+                return;
+            }
         }
+        
+        player.sendMessage(this.message);
     }
 
     /**
@@ -310,10 +423,48 @@ public abstract class Prevention implements Listener
         if (!this.can(player))
         {
             event.setCancelled(true);
-            this.sendMessage(player);
+            sendMessage(player);
+            punish(player);
             return true;
         }
         return false;
+    }
+
+    public void punish(final Player player)
+    {
+        if (!this.allowPunishing || !this.enablePunishing)
+        {
+            return;
+        }
+        Integer violations = this.playerViolationMap.get(player);
+        if (violations == null || violations >= this.highestPunishmentViolation)
+        {
+            violations = 0;
+        }
+        this.playerViolationMap.put(player, ++violations);
+
+        THashMap<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
+        if (punishments == null)
+        {
+            return;
+        }
+
+        if (this.throttleDelay > 0)
+        {
+            final long next = this.messageThrottleTimestamps.get(player);
+            final long current = System.currentTimeMillis();
+            if (next < current)
+            {
+                this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
+            }
+            else
+            {
+                return;
+            }
+        }
+        
+        PUNISHMENT_PROCEDURE.player = player;
+        punishments.forEachEntry(PUNISHMENT_PROCEDURE);
     }
 
     /**
@@ -350,6 +501,17 @@ public abstract class Prevention implements Listener
     public String toString()
     {
         return this.getClass().getSimpleName() + "{name=" + this.name + ", permission=" + this.permission.toString() + ", plugin=" + this.plugin.toString() + "}";
+    }
+
+    private static final class PunishmentProcedure implements TObjectObjectProcedure<Punishment, ConfigurationSection>
+    {
+        public Player player;
+
+        public boolean execute(Punishment punishment, ConfigurationSection config)
+        {
+            punishment.punish(this.player, config);
+            return true;
+        }
     }
 }
 

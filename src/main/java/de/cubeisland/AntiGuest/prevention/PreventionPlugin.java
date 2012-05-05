@@ -24,4 +24,11 @@ public interface PreventionPlugin extends TranslatablePlugin
      * @return the plugins base command
      */
     public BaseCommand getBaseCommand();
+
+    /**
+     * Returns the base string for the prevention permissions
+     *
+     * @return the base string for the permissions
+     */
+    public String getPermissionBase();
 }

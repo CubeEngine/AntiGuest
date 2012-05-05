@@ -6,7 +6,7 @@ import de.cubeisland.AntiGuest.prevention.PreventionManager;
 import de.cubeisland.libMinecraft.ChatColor;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
-import de.cubeisland.libMinecraft.command.CommandPermission;
+import de.cubeisland.libMinecraft.command.RequiresPermission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -23,8 +23,8 @@ public class PreventionManagementCommands
         this.pm = PreventionManager.getInstance();
     }
 
-    @Command(desc = "Disables all preventions", usage = "[-t]")
-    @CommandPermission
+    @Command(usage = "[-t]")
+    @RequiresPermission
     public void disableAll(CommandSender sender, CommandArgs args)
     {
         boolean temporary = args.hasFlag("t");
@@ -41,8 +41,8 @@ public class PreventionManagementCommands
         sender.sendMessage(_("preventionsDisabled"));
     }
 
-    @Command(desc = "Enables all preventions", usage = "[-t]")
-    @CommandPermission
+    @Command(usage = "[-t]")
+    @RequiresPermission
     public void enableAll(CommandSender sender, CommandArgs args)
     {
         boolean temporary = args.hasFlag("t");
@@ -59,8 +59,8 @@ public class PreventionManagementCommands
         sender.sendMessage(_("preventionsEnabled"));
     }
 
-    @Command(desc = "Enables a prevention", usage = "<prevention> [-t]")
-    @CommandPermission
+    @Command(usage = "<prevention> [-t]")
+    @RequiresPermission
     public void enable(CommandSender sender, CommandArgs args)
     {
         if (args.size() > 0)
@@ -100,8 +100,8 @@ public class PreventionManagementCommands
         }
     }
 
-    @Command(desc = "Disables a prevention", usage = "<prevention> [-t]")
-    @CommandPermission
+    @Command(usage = "<prevention> [-t]")
+    @RequiresPermission
     public void disable(CommandSender sender, CommandArgs args)
     {
         if (args.size() > 0)
@@ -135,8 +135,8 @@ public class PreventionManagementCommands
         }
     }
 
-    @Command(desc = "Checks whether the prevention is enabled", usage = "<prevention>")
-    @CommandPermission
+    @Command(usage = "<prevention>")
+    @RequiresPermission
     public void enabled(CommandSender sender, CommandArgs args)
     {
         if (args.size() > 0)
@@ -164,8 +164,8 @@ public class PreventionManagementCommands
         }
     }
 
-    @Command(desc = "Lists the preventions", usage = "[-a]")
-    @CommandPermission
+    @Command(usage = "[-a]")
+    @RequiresPermission
     public void list(CommandSender sender, CommandArgs args)
     {
         if (args.hasFlag("a"))
@@ -195,8 +195,8 @@ public class PreventionManagementCommands
         }
     }
 
-    @Command(desc = "Checks whether a player can pass the prevention", usage = "[player] <prevention>")
-    @CommandPermission
+    @Command(usage = "[player] <prevention>")
+    @RequiresPermission
     public void can(CommandSender sender, CommandArgs args)
     {
         Player player;
@@ -256,8 +256,8 @@ public class PreventionManagementCommands
         }
     }
 
-    @Command(desc = "Sets the message of a prevention", usage = "<prevention> <message>")
-    @CommandPermission
+    @Command(usage = "<prevention> <message>")
+    @RequiresPermission
     public void setMessage(CommandSender sender, CommandArgs args)
     {
         if (args.size() > 1)

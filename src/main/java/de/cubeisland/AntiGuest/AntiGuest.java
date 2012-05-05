@@ -220,4 +220,9 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     {
         return this.baseCommand;
     }
+
+    public String getPermissionBase()
+    {
+        return "antiguest.preventions.";
+    }
 }

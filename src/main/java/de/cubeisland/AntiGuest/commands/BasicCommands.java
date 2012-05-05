@@ -6,7 +6,7 @@ import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionManager;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
-import de.cubeisland.libMinecraft.command.CommandPermission;
+import de.cubeisland.libMinecraft.command.RequiresPermission;
 import de.cubeisland.libMinecraft.translation.Translation;
 import gnu.trove.set.hash.THashSet;
 import java.util.Set;
@@ -29,8 +29,8 @@ public class BasicCommands
         this.resetRequest = new THashSet<CommandSender>();
     }
 
-    @Command(desc = "Reloads a single or all preventions", usage = "[prevention]")
-    @CommandPermission
+    @Command(usage = "[prevention]")
+    @RequiresPermission
     public void reload(CommandSender sender, CommandArgs args)
     {
         if (args.size() > 0)
@@ -59,8 +59,8 @@ public class BasicCommands
         }
     }
 
-    @Command(desc = "Resets all prevention configurations")
-    @CommandPermission
+    @Command
+    @RequiresPermission
     public void reset(CommandSender sender, CommandArgs args)
     {
         if (resetRequest.contains(sender))
@@ -104,32 +104,6 @@ public class BasicCommands
             {
                 player.sendMessage(message);
             }
-        }
-    }
-
-    @Command(desc = "Sets or gets the language", usage = "[language]")
-    @CommandPermission
-    public void language(CommandSender sender, CommandArgs args)
-    {
-        if (args.size() > 0)
-        {
-            String language = args.getString(0);
-            Translation tranlation = Translation.get(AntiGuest.class, language);
-            if (tranlation != null)
-            {
-                plugin.setTranslation(tranlation);
-                plugin.getConfig().set("language", language);
-                plugin.saveConfig();
-                sender.sendMessage(_("languageLoaded", tranlation.getLanguage()));
-            }
-            else
-            {
-                sender.sendMessage(_("languageFailed", language));
-            }
-        }
-        else
-        {
-            sender.sendMessage(_("currentLanguage", plugin.getTranslation().getLanguage()));
         }
     }
 }

@@ -14,19 +14,19 @@ import org.bukkit.event.Cancellable;
  *
  * @author Phillip Schichtel
  */
-public abstract class FilteredPrevention<T extends Object> extends PunishedPrevention
+public abstract class FilteredPrevention<T extends Object> extends Prevention
 {
     protected Set<T> filterItems;
     private FilterMode filterMode;
     
     public FilteredPrevention(String name, PreventionPlugin plugin)
     {
-        this(name, PERMISSION_BASE + name, plugin);
+        this(name, plugin, true);
     }
 
-    public FilteredPrevention(String name, String permission, PreventionPlugin plugin)
+    public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
     {
-        super(name, permission, plugin);
+        super(name, plugin, allowPunishing);
         this.filterMode = FilterMode.BLACKLIST;
     }
 
