@@ -19,6 +19,6 @@ public class ExplosionPunishment implements Punishment
     public void punish(Player player, ConfigurationSection config)
     {
         player.getWorld().createExplosion(player.getLocation(), 0);
-        player.setHealth(player.getHealth() - config.getInt("damage", 3));
+        player.damage(config.getInt("damage", 3));
     }
 }

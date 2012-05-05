@@ -19,6 +19,6 @@ public class LightningPunishment implements Punishment
     public void punish(Player player, ConfigurationSection config)
     {
         player.getWorld().strikeLightningEffect(player.getLocation());
-        player.setHealth(player.getHealth() - config.getInt("damage", 3));
+        player.damage(config.getInt("damage", 3));
     }
 }
