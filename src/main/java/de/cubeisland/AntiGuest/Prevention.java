@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest;
 
-import java.util.HashMap;
-import java.util.Map;
+import gnu.trove.map.TObjectLongMap;
+import gnu.trove.map.hash.TObjectLongHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -29,7 +29,7 @@ public abstract class Prevention implements Listener
     private boolean enableByDefault;
     private PreventionConfiguration config;
 
-    private final Map<Player, Long> messageThrottleTimestamps;
+    private TObjectLongMap<Player> messageThrottleTimestamps;
 
     /**
      * Initializes the prevention with its name and the corresponding plugin.
@@ -55,7 +55,6 @@ public abstract class Prevention implements Listener
     {
         this.name = name;
         this.permission = new Permission(permission, PermissionDefault.OP);
-        this.messageThrottleTimestamps = new HashMap<Player, Long>(0);
         this.message = null;
         this.throttleDelay = 0;
         this.plugin = plugin;
@@ -124,36 +123,6 @@ public abstract class Prevention implements Listener
     }
 
     /**
-     * This method is a small util to parse color codes of the syntax &amp;&lt;code&gt;
-     *
-     * @param string hte string to parse
-     * @return the parsed string
-     */
-    public static String parseColors(final String string)
-    {
-        return ChatColor.translateAlternateColorCodes('&', string);
-    }
-
-    /**
-     * Parses a message
-     *
-     * @param message the message to parse
-     * @return null if message is null or empty, otherwise the parsed message
-     */
-    public static String parseMessage(final String message)
-    {
-        if (message == null)
-        {
-            return null;
-        }
-        if (message.length() == 0)
-        {
-            return null;
-        }
-        return parseColors(message);
-    }
-
-    /**
      * Generates the default configuration of this prevention.
      * This method should be overridden for custom configs.
      *
@@ -178,6 +147,7 @@ public abstract class Prevention implements Listener
      */
     public void enable()
     {
+        this.messageThrottleTimestamps = new TObjectLongHashMap<Player>();
         this.throttleDelay = config.getInt("throttleDelay") * 1000;
         this.setMessage(config.getString("message"));
     }
@@ -189,6 +159,7 @@ public abstract class Prevention implements Listener
     public void disable()
     {
         this.messageThrottleTimestamps.clear();
+        this.messageThrottleTimestamps = null;
     }
 
     /**
@@ -304,10 +275,14 @@ public abstract class Prevention implements Listener
      */
     public void sendThrottledMessage(final Player player)
     {
-        Long next = this.messageThrottleTimestamps.get(player);
-        next = (next == null ? 0 : next);
+        if (this.throttleDelay < 1)
+        {
+            sendMessage(player);
+            return;
+        }
+
+        final long next = this.messageThrottleTimestamps.get(player);
         final long current = System.currentTimeMillis();
-        
         if (next < current)
         {
             this.sendMessage(player);
@@ -361,6 +336,36 @@ public abstract class Prevention implements Listener
             return true;
         }
         return false;
+    }
+
+    /**
+     * This method is a small util to parse color codes of the syntax &amp;&lt;code&gt;
+     *
+     * @param string hte string to parse
+     * @return the parsed string
+     */
+    public static String parseColors(final String string)
+    {
+        return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    /**
+     * Parses a message
+     *
+     * @param message the message to parse
+     * @return null if message is null or empty, otherwise the parsed message
+     */
+    public static String parseMessage(final String message)
+    {
+        if (message == null)
+        {
+            return null;
+        }
+        if (message.length() == 0)
+        {
+            return null;
+        }
+        return parseColors(message);
     }
 }
 

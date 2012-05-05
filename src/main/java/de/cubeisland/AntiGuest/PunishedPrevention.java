@@ -1,26 +1,29 @@
 package de.cubeisland.AntiGuest;
 
-import static de.cubeisland.AntiGuest.AntiGuest._;
-import java.util.ArrayList;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.TObjectLongMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.map.hash.TObjectLongHashMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 
 /**
+ * This class represents a prevention the player gets punished from
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class PunishedPrevention extends Prevention
 {
     private boolean punish;
-    private final Map<Integer, Map<Punishment, ConfigurationSection>> violationPunishmentMap;
-    private final Map<Player, Integer> playerViolationMap;
+    private TIntObjectMap<Map<Punishment, ConfigurationSection>> violationPunishmentMap;
+    private TObjectIntMap<Player> playerViolationMap;
+    private TObjectLongMap<Player> punishThrottleTimestamps;
     private int highestPunishmentViolation;
-    private final Map<Player, Long> punishThrottleTimestamps;
 
     public PunishedPrevention(String name, PreventionPlugin plugin)
     {
@@ -30,9 +33,6 @@ public class PunishedPrevention extends Prevention
     public PunishedPrevention(String name, String permission, PreventionPlugin plugin)
     {
         super(name, permission, plugin);
-        this.punishThrottleTimestamps = new HashMap<Player, Long>();
-        this.violationPunishmentMap = new HashMap<Integer, Map<Punishment, ConfigurationSection>>();
-        this.playerViolationMap = new HashMap<Player, Integer>();
         this.highestPunishmentViolation = 0;
     }
 
@@ -41,79 +41,83 @@ public class PunishedPrevention extends Prevention
     {
         super.enable();
 
+        this.punishThrottleTimestamps = new TObjectLongHashMap<Player>();
+        this.violationPunishmentMap = new TIntObjectHashMap<Map<Punishment, ConfigurationSection>>();
+        this.playerViolationMap = new TObjectIntHashMap<Player>();
+
         Configuration config = getConfig();
         this.punish = config.getBoolean("punish", this.punish);
 
         if (this.punish)
         {
-            List punishmentSections = config.getList("punishments");
-            if (punishmentSections != null)
+            ConfigurationSection punishmentsSection = config.getConfigurationSection("punishments");
+            if (punishmentsSection != null)
             {
-                PreventionManager prevMgr = PreventionManager.getInstance();
-                Punishment punishment;
-                int violations;
-                Map<Punishment, ConfigurationSection> punishmentConfigMap;
+                int violation;
+                Map<Punishment, ConfigurationSection> punishments;
+                ConfigurationSection violationSection;
                 ConfigurationSection punishmentSection;
-                for (Object entry : punishmentSections)
+                PreventionManager pm = PreventionManager.getInstance();
+                Punishment punishment;
+
+                for (String violationString : punishmentsSection.getKeys(false))
                 {
-                    if (entry instanceof ConfigurationSection)
+                    try
                     {
-                        punishmentSection = (ConfigurationSection)entry;
-                        for (String key : punishmentSection.getKeys(false))
+                        violation = Integer.parseInt(violationString);
+                        punishments = this.violationPunishmentMap.get(violation);
+                        violationSection = punishmentsSection.getConfigurationSection(violationString);
+                        if (violationSection != null)
                         {
-                            punishment = prevMgr.getPunishment(key);
-                            if (punishment != null && punishmentSection.isConfigurationSection(key))
+                            for (String punishmentName : violationSection.getKeys(false))
                             {
-                                punishmentSection = punishmentSection.getConfigurationSection(key);
-                                if (punishmentSection.isInt("violations"))
+                                punishment = pm.getPunishment(punishmentName);
+                                if (punishment != null)
                                 {
-                                    violations = punishmentSection.getInt("violations", 0);
-                                    if (violations > 0)
+                                    punishmentSection = violationSection.getConfigurationSection(punishmentName);
+                                    if (punishmentSection != null)
                                     {
-                                        punishmentConfigMap = this.violationPunishmentMap.get(violations);
-                                        if (punishmentConfigMap == null)
+                                        if (punishments == null)
                                         {
-                                            punishmentConfigMap = new HashMap<Punishment, ConfigurationSection>();
-                                            this.violationPunishmentMap.put(violations, punishmentConfigMap);
-                                            if (violations > this.highestPunishmentViolation)
-                                            {
-                                                this.highestPunishmentViolation = violations;
-                                            }
+                                            punishments = new HashMap<Punishment, ConfigurationSection>();
+                                            this.violationPunishmentMap.put(violation, punishments);
                                         }
-                                        punishmentConfigMap.put(punishment, punishmentSection);
-                                        break;
+                                        punishments.put(punishment, punishmentSection);
                                     }
                                 }
                             }
                         }
                     }
+                    catch (NumberFormatException e)
+                    {}
                 }
             }
         }
     }
 
+    @Override
+    public void disable()
+    {
+        super.disable();
+        
+        this.playerViolationMap.clear();
+        this.punishThrottleTimestamps.clear();
+        this.violationPunishmentMap.clear();
+
+        this.playerViolationMap = null;
+        this.punishThrottleTimestamps = null;
+        this.violationPunishmentMap = null;
+    }
+
     public Configuration getDefaultConfiguration()
     {
-        Configuration defaultConfig = super.getDefaultConfig();
+        Configuration config = super.getDefaultConfig();
 
-        defaultConfig.set("punish", false);
+        config.set("punish", false);
+        config.set("punishments.3.slap.damage", 4);
+        config.set("punishments.5.kick.reason", getPlugin().getTranslation().translate("defaultKickReason"));
 
-        ConfigurationSection punishmentSection;
-        List<ConfigurationSection> punishments = new ArrayList<ConfigurationSection>(2);
-
-        punishmentSection = new MemoryConfiguration();
-        punishmentSection.set("slap.violations", 3);
-        punishmentSection.set("slap.damage", 4);
-        punishments.add(punishmentSection);
-
-        punishmentSection = new MemoryConfiguration();
-        punishmentSection.set("kick.violations", 3);
-        punishmentSection.set("kick.reason", _("defaultKickReason"));
-        punishments.add(punishmentSection);
-
-        defaultConfig.set("punishments", punishments);
-
-        return defaultConfig;
+        return config;
     }
 
     public void punish(Player player)
@@ -145,10 +149,13 @@ public class PunishedPrevention extends Prevention
         {
             return;
         }
-        Long next = this.punishThrottleTimestamps.get(player);
-        next = (next == null ? 0 : next);
-        final long current = System.currentTimeMillis();
+        Long next = (long)this.punishThrottleTimestamps.get(player);
+        if (next == null)
+        {
+            next = 0L;
+        }
 
+        final long current = System.currentTimeMillis();
         if (next < current)
         {
             this.punish(player);
