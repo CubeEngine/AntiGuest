@@ -14,9 +14,9 @@ import org.bukkit.event.Cancellable;
  *
  * @author Phillip Schichtel
  */
-public abstract class FilteredPrevention extends PunishedPrevention
+public abstract class FilteredPrevention<T extends Object> extends PunishedPrevention
 {
-    protected Set filterItems;
+    protected Set<T> filterItems;
     private Mode mode;
     
     public FilteredPrevention(String name, PreventionPlugin plugin)
@@ -75,7 +75,7 @@ public abstract class FilteredPrevention extends PunishedPrevention
      * @param item the item representing the subaction
      * @return true if he can
      */
-    public boolean can(final Player player, final Object item)
+    public boolean can(final Player player, final T item)
     {
         if (!can(player))
         {
@@ -102,31 +102,12 @@ public abstract class FilteredPrevention extends PunishedPrevention
      * @param item the item representing the subaction
      * @return true if the action was prevented
      */
-    public boolean prevent(final Cancellable event, final Player player, final Object item)
+    public boolean prevent(final Cancellable event, final Player player, final T item)
     {
         if (!this.can(player, item))
         {
             event.setCancelled(true);
             this.sendMessage(player);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * The same as prevent(Cancellable, Player, Object) except that it is throttled
-     *
-     * @param event a cancellable event
-     * @param player the player
-     * @param item the item representing the subaction
-     * @return true if the action was prevented
-     */
-    public boolean preventThrottled(final Cancellable event, final Player player, final Object item)
-    {
-        if (!this.can(player, item))
-        {
-            event.setCancelled(true);
-            this.sendThrottledMessage(player);
             return true;
         }
         return false;

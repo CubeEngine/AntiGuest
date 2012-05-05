@@ -2,7 +2,6 @@ package de.cubeisland.AntiGuest.Preventions;
 
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,16 +18,7 @@ public class MonsterPrevention extends Prevention
     public MonsterPrevention(PreventionPlugin plugin)
     {
         super("monster", plugin);
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("throttleDelay", 3);
-
-        return config;
+        setThrottleDelay(3);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -37,7 +27,7 @@ public class MonsterPrevention extends Prevention
         final Entity target = event.getTarget();
         if (target instanceof Player)
         {
-            preventThrottled(event, (Player)target);
+            prevent(event, (Player)target);
         }
     }
 }

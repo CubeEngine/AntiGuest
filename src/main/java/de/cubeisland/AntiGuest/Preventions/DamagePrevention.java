@@ -9,7 +9,6 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -22,7 +21,7 @@ import org.bukkit.event.entity.PotionSplashEvent;
  *
  * @author Phillip Schichtel
  */
-public class DamagePrevention extends FilteredPrevention
+public class DamagePrevention extends FilteredPrevention<DamageCause>
 {
     private String damagerMessage;
     private boolean preventPotions;
@@ -31,6 +30,7 @@ public class DamagePrevention extends FilteredPrevention
     public DamagePrevention(PreventionPlugin plugin)
     {
         super("damage", plugin);
+        setThrottleDelay(3);
         this.damagerMessage = null;
     }
 
@@ -39,7 +39,6 @@ public class DamagePrevention extends FilteredPrevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("throttleDelay", 3);
         config.set("damagerMessage", getPlugin().getTranslation().translate("damagerMessage"));
         config.set("preventPotions", true);
         config.set("potionMessage", getPlugin().getTranslation().translate("potionMessage"));
@@ -79,24 +78,6 @@ public class DamagePrevention extends FilteredPrevention
     {
         super.disable();
         this.damagerMessage = null;
-    }
-
-    private boolean prevent(final Cancellable event, final Player player, final DamageCause cause)
-    {
-        if (!this.can(player, cause))
-        {
-            if (cause == DamageCause.LAVA || cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK || cause == DamageCause.VOID)
-            {
-                this.sendThrottledMessage(player);
-            }
-            else
-            {
-                this.sendMessage(player);
-            }
-            event.setCancelled(true);
-            return true;
-        }
-        return false;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

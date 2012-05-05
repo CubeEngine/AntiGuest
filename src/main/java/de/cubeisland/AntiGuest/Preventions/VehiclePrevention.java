@@ -3,7 +3,6 @@ package de.cubeisland.AntiGuest.Preventions;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,16 +24,7 @@ public class VehiclePrevention extends Prevention
     public VehiclePrevention(PreventionPlugin plugin)
     {
         super("vehicle", plugin);
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("throttleDelay", 3);
-
-        return config;
+        setThrottleDelay(3);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -63,7 +53,7 @@ public class VehiclePrevention extends Prevention
         final Entity collider = event.getEntity();
         if (collider instanceof Player)
         {
-            if (preventThrottled(event, (Player)collider))
+            if (prevent(event, (Player)collider))
             {
                 event.setCollisionCancelled(true);
                 event.setPickupCancelled(true);

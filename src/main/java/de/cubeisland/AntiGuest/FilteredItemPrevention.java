@@ -11,9 +11,9 @@ import org.bukkit.event.Cancellable;
  * This class represents a filterable Prevention related to Materials
  *
  * @author Phillip Schichtel
- * @TODO reduce code duplication in prevent and preventThrottled
+ * @TODO reduce code duplication in prevent and prevent
  */
-public abstract class FilteredItemPrevention extends FilteredPrevention
+public abstract class FilteredItemPrevention extends FilteredPrevention<Material>
 {
     private boolean ignoreBlocks = false;
 
@@ -119,25 +119,6 @@ public abstract class FilteredItemPrevention extends FilteredPrevention
         {
             event.setCancelled(true);
             sendMessage(player);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * The same as prevent(Cancellable, Player, Object) except that it is throttled
-     *
-     * @param event a cancellable event
-     * @param player the player
-     * @param material the item representing the subaction
-     * @return true if the action was prevented
-     */
-    public boolean preventThrottled(final Cancellable event, final Player player, final Material material)
-    {
-        if (!this.can(player, material))
-        {
-            event.setCancelled(true);
-            sendThrottledMessage(player);
             return true;
         }
         return false;

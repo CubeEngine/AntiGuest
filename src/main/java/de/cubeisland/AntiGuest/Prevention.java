@@ -22,13 +22,13 @@ public abstract class Prevention implements Listener
     
     private final String name;
     private final Permission permission;
+    private final PreventionPlugin plugin;
+
     private String message;
     private int throttleDelay;
-    private final PreventionPlugin plugin;
     private boolean enabled;
     private boolean enableByDefault;
     private PreventionConfiguration config;
-
     private TObjectLongMap<Player> messageThrottleTimestamps;
 
     /**
@@ -134,6 +134,10 @@ public abstract class Prevention implements Listener
 
         defaultConfig.set("enable", this.enableByDefault);
         defaultConfig.set("message", this.plugin.getTranslation().translate("message_" + this.name));
+        if (this.throttleDelay > 0)
+        {
+            defaultConfig.set("throttleDelay", this.throttleDelay);
+        }
 
         return defaultConfig;
     }
@@ -148,7 +152,7 @@ public abstract class Prevention implements Listener
     public void enable()
     {
         this.messageThrottleTimestamps = new TObjectLongHashMap<Player>();
-        this.throttleDelay = config.getInt("throttleDelay") * 1000;
+        this.throttleDelay = config.getInt("throttleDelay", 0) * 1000;
         this.setMessage(config.getString("message"));
     }
 
@@ -239,7 +243,17 @@ public abstract class Prevention implements Listener
      */
     public int getThrottleDelay()
     {
-        return this.throttleDelay;
+        return this.throttleDelay / 1000;
+    }
+
+    /**
+     * Sets the delay this preventions uses for throttled messages
+     *
+     * @return the delay
+     */
+    public void setThrottleDelay(int delay)
+    {
+        this.throttleDelay = delay * 1000;
     }
 
     /**
@@ -250,22 +264,7 @@ public abstract class Prevention implements Listener
      */
     public boolean can(final Player player)
     {
-        //AntiGuest.debug("Checking permission: " + this.permission.getName());
         return player.hasPermission(this.permission);
-    }
-
-    /**
-     * Sends the configured message to the player or nothing of the message is null
-     * (empty string in configuration)
-     *
-     * @param player the player to send to
-     */
-    public void sendMessage(final Player player)
-    {
-        if (this.message != null)
-        {
-            player.sendMessage(this.message);
-        }
     }
 
     /**
@@ -273,27 +272,26 @@ public abstract class Prevention implements Listener
      * 
      * @param player hte player to send to
      */
-    public void sendThrottledMessage(final Player player)
+    public void sendMessage(final Player player)
     {
-        if (this.throttleDelay < 1)
+        if (this.message == null)
         {
-            sendMessage(player);
             return;
         }
-
-        final long next = this.messageThrottleTimestamps.get(player);
-        final long current = System.currentTimeMillis();
-        if (next < current)
+        if (this.throttleDelay < 1)
         {
-            this.sendMessage(player);
-            this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
+            player.sendMessage(this.message);
         }
-    }
-
-    @Override
-    public String toString()
-    {
-        return "Prevention{name=" + this.name + ", permission=" + this.permission.toString() + ", plugin=" + this.plugin.toString() + "}";
+        else
+        {
+            final long next = this.messageThrottleTimestamps.get(player);
+            final long current = System.currentTimeMillis();
+            if (next < current)
+            {
+                player.sendMessage(this.message);
+                this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
+            }
+        }
     }
 
     /**
@@ -312,27 +310,6 @@ public abstract class Prevention implements Listener
         {
             event.setCancelled(true);
             this.sendMessage(player);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * This method combines can(Player) and sendThrottledMessage(Player),
-     * by first checking whether player can pass the prevention and if not,
-     * the given cancellable event gets cancelled and the message is sent to the
-     * player.
-     *
-     * @param event a cancellable event
-     * @param player the player
-     * @return true if the action was prevented
-     */
-    public boolean preventThrottled(final Cancellable event, final Player player)
-    {
-        if (!this.can(player))
-        {
-            event.setCancelled(true);
-            this.sendThrottledMessage(player);
             return true;
         }
         return false;
@@ -366,6 +343,12 @@ public abstract class Prevention implements Listener
             return null;
         }
         return parseColors(message);
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.getClass().getSimpleName() + "{name=" + this.name + ", permission=" + this.permission.toString() + ", plugin=" + this.plugin.toString() + "}";
     }
 }
 

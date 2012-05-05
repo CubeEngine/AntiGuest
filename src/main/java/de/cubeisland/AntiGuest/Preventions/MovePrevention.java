@@ -25,6 +25,7 @@ public class MovePrevention extends Prevention
     public MovePrevention(PreventionPlugin plugin)
     {
         super("move", plugin);
+        setThrottleDelay(3);
     }
 
     @Override
@@ -32,7 +33,6 @@ public class MovePrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
-        config.set("throttleDelay", 3);
         config.set("width", Math.max(5, getPlugin().getServer().getSpawnRadius()));
 
         return config;
@@ -75,7 +75,7 @@ public class MovePrevention extends Prevention
                 {
                     fallback = player.getWorld().getSpawnLocation();
                 }
-                sendThrottledMessage(player);
+                sendMessage(player);
                 player.teleport(fallback, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 event.setCancelled(true);
             }

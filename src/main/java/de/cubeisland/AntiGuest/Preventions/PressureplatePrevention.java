@@ -3,7 +3,6 @@ package de.cubeisland.AntiGuest.Preventions;
 import de.cubeisland.AntiGuest.Prevention;
 import de.cubeisland.AntiGuest.PreventionPlugin;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -19,16 +18,7 @@ public class PressureplatePrevention extends Prevention
     public PressureplatePrevention(PreventionPlugin plugin)
     {
         super("pressureplate", plugin);
-    }
-
-    @Override
-    public Configuration getDefaultConfig()
-    {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("throttleDelay", 3);
-
-        return config;
+        setThrottleDelay(3);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -39,7 +29,7 @@ public class PressureplatePrevention extends Prevention
             final Material material = event.getClickedBlock().getType();
             if (material == Material.STONE_PLATE || material == Material.WOOD_PLATE)
             {
-                preventThrottled(event, event.getPlayer());
+                prevent(event, event.getPlayer());
             }
         }
     }

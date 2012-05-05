@@ -25,7 +25,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin, TranslatablePlugin
 {
     private static Logger logger = null;
-    public static boolean debugMode = false;
     private static final String PERMISSION_BASE = "antiguest.commands.";
     
     private File dataFolder;
@@ -46,7 +45,6 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin,
         this.convertConfig((FileConfiguration)config);
         config.addDefault("language", System.getProperty("user.language", "en"));
         config.options().copyDefaults(true);
-        debugMode = getConfig().getBoolean("debug");
         
         translation = Translation.get(this.getClass(), getConfig().getString("language"));
         if (translation == null)
@@ -191,14 +189,6 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin,
     public static void error(String msg, Throwable t)
     {
         logger.log(Level.SEVERE, msg, t);
-    }
-
-    public static void debug(String msg)
-    {
-        if (debugMode)
-        {
-            log("[debug] " + msg);
-        }
     }
 
     public static String _(String message, Object... params)

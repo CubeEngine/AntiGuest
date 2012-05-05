@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  *
  * @author Phillip Schichtel
  */
-public class CommandPrevention extends FilteredPrevention
+public class CommandPrevention extends FilteredPrevention<String>
 {
     public CommandPrevention(PreventionPlugin plugin)
     {
