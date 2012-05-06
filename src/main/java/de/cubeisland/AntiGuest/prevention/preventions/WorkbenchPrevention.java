@@ -15,7 +15,6 @@ import org.bukkit.event.inventory.InventoryType;
  */
 public class WorkbenchPrevention extends Prevention
 {
-
     public WorkbenchPrevention(PreventionPlugin plugin)
     {
         super("workbench", plugin);

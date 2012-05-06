@@ -6,7 +6,6 @@ import gnu.trove.set.hash.THashSet;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -21,6 +20,7 @@ public class CommandPrevention extends FilteredPrevention<String>
     public CommandPrevention(PreventionPlugin plugin)
     {
         super("command", plugin);
+        setEnableByDefault(true);
         setEnablePunishing(true);
         setFilterItems(new THashSet<String>(Arrays.asList("plugins", "pl", "version")));
     }
