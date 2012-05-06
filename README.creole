@@ -19,7 +19,7 @@ As you might see, this system allows more than just "guests can nothing, members
 You could for example stagger the permissions like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
 and even more complex setups, it's completely up to you.
 
-===== <<color red>>Watch out!<</color>> Tips for common mistakes ====
+===== Watch out! Tips for common mistakes ====
 
 * All preventions are disabled by default since version 3.0 (3.2 changes that, see the table below)
 * All preventions have their own configuration file since 3.1, since 3.2 the old configurations will be converted
@@ -133,7 +133,7 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 |antiguest.preventions.*            |Allows the player to pass all preventions          |
 |antiguest.preventions.<prevention> |Allows the player to pass the specific prevention  |
 
---
+----
 
 === Developer Notice ===
 
@@ -145,7 +145,7 @@ Plugin developed by Quick_Wango - [[http://cubeisland.de|Cube Island]]
 
 I'm doing this for literally nothing in my freetime, so keep me interessted in my plugins and help pay my bills by simply donating a few bucks.
 
-[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QU7NLJW3W58A|{{https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif|Donate}}]]
+[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QU7NLJW3W58A|{{https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif}}]]
 
 Thanks in advance!
 
