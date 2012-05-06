@@ -21,6 +21,12 @@ public class LavabucketPrevention extends Prevention
         setEnableByDefault(true);
     }
 
+    @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\nThis prevention works, even though the client shows that lava was placed!\n";
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void empty(PlayerBucketEmptyEvent event)
     {

@@ -7,7 +7,6 @@ import de.cubeisland.AntiGuest.prevention.PreventionManager;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
-import de.cubeisland.libMinecraft.translation.Translation;
 import gnu.trove.set.hash.THashSet;
 import java.util.Set;
 import org.bukkit.command.CommandSender;

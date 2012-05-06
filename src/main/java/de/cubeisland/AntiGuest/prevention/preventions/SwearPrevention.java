@@ -31,6 +31,15 @@ public class SwearPrevention extends Prevention
     }
 
     @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\n" +
+                "Every message a guest sends will be checked for the words listed under words.\n" +
+                "More words will result in more time to check the message. Even though the words\n" +
+                "get compiled on startup, an extreme list may lag the chat for guests.\n";
+    }
+
+    @Override
     public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();
@@ -85,6 +94,7 @@ public class SwearPrevention extends Prevention
                 if (regex.matcher(message).find())
                 {
                     sendMessage(player);
+                    punish(player);
                     event.setCancelled(true);
                     return;
                 }

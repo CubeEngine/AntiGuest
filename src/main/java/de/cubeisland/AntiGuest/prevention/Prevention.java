@@ -171,6 +171,16 @@ public abstract class Prevention implements Listener
     }
 
     /**
+     * Returns a list of strings for the config header
+     *
+     * @return the lines
+     */
+    public String getConfigHeader()
+    {
+        return "This is the configuration file of the " + this.name + " configuration.\n";
+    }
+
+    /**
      * Loads the configuration of the prevention.
      * this method should be called right after the object got constructed.
      */

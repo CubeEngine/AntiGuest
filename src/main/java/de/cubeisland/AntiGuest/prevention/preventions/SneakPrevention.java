@@ -20,6 +20,12 @@ public class SneakPrevention extends Prevention
         super("sneak", plugin);
     }
 
+    @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\nThis prevention doesn't prevent crouching!\n";
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerToggleSneakEvent event)
     {
@@ -31,6 +37,7 @@ public class SneakPrevention extends Prevention
                 if (!player.getGameMode().equals(GameMode.CREATIVE))
                 {
                     sendMessage(player);
+                    punish(player);
                 }
                 event.setCancelled(true);
             }

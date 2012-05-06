@@ -21,6 +21,12 @@ public class HungerPrevention extends Prevention
         setEnableByDefault(true);
     }
 
+    @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\nThis prevention conflicts with the starvation punishment!\n";
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(FoodLevelChangeEvent event)
     {

@@ -29,6 +29,14 @@ public class MovePrevention extends Prevention
     }
 
     @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\n" +
+                "Configuration info:\n" +
+                "    width: the number of blocks a player can move awy from the spawn\n";
+    }
+
+    @Override
     public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();

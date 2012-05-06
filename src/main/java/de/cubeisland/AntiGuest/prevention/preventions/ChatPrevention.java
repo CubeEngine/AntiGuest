@@ -23,6 +23,14 @@ public class ChatPrevention extends Prevention
     }
 
     @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\n" +
+                "Configuration info:\n" +
+                "    ignoreWorldeditCUIMessages: this option makes AntiGuest ignore the handshake messages of the WordEditCUI mod\n";
+    }
+
+    @Override
     public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();

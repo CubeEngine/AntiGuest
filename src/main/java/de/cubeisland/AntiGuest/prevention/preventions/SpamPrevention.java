@@ -27,6 +27,14 @@ public class SpamPrevention extends Prevention
     }
 
     @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() +
+                "Configuration info:\n" +
+                "    lockDuration: the time in seconds a player has to wait between messages";
+    }
+
+    @Override
     public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();
@@ -60,6 +68,7 @@ public class SpamPrevention extends Prevention
             if (isChatLocked(player))
             {
                 sendMessage(player);
+                punish(player);
                 event.setCancelled(true);
             }
             else

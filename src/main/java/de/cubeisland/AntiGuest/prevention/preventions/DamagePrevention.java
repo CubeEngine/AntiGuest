@@ -38,6 +38,16 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     }
 
     @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\n" +
+                "Configuration info:\n" +
+                "    damagerMessage: this message will be send to the player who attacked a guest\n" +
+                "    preventPostions: if this is enabled potion effects also get prevented\n" +
+                "    postionMessage: this will be send to players protected from postions\n";
+    }
+
+    @Override
     public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();

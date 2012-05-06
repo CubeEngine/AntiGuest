@@ -23,75 +23,57 @@ public class PreventionManagementCommands
         this.pm = PreventionManager.getInstance();
     }
 
-    @Command(usage = "[-t]")
-    @RequiresPermission
-    public void disableAll(CommandSender sender, CommandArgs args)
-    {
-        boolean temporary = args.hasFlag("t");
-        for (Prevention prevention : pm.getPreventions())
-        {
-            pm.disablePrevention(prevention);
-            if (!temporary)
-            {
-                prevention.getConfig().set("enable", false);
-                prevention.saveConfig();
-            }
-        }
-
-        sender.sendMessage(_("preventionsDisabled"));
-    }
-
-    @Command(usage = "[-t]")
-    @RequiresPermission
-    public void enableAll(CommandSender sender, CommandArgs args)
-    {
-        boolean temporary = args.hasFlag("t");
-        for (Prevention prevention : pm.getPreventions())
-        {
-            pm.enablePrevention(prevention);
-            if (!temporary)
-            {
-                prevention.getConfig().set("enable", true);
-                prevention.saveConfig();
-            }
-        }
-
-        sender.sendMessage(_("preventionsEnabled"));
-    }
-
-    @Command(usage = "<prevention> [-t]")
+    @Command(usage = "<prevention|*> [-t]")
     @RequiresPermission
     public void enable(CommandSender sender, CommandArgs args)
     {
         if (args.size() > 0)
         {
-            Prevention prevention = this.pm.getPrevention(args.getString(0));
-            if (prevention != null)
+            boolean temporary = args.hasFlag("t");
+            if ("*".equals(args.getString(0)))
             {
-                if (!prevention.isEnabled())
+                for (Prevention prevention : pm.getPreventions())
                 {
-                    if (PreventionManager.getInstance().enablePrevention(prevention))
+                    pm.enablePrevention(prevention);
+                    if (!temporary)
                     {
-                        sender.sendMessage(_("preventionEnabled"));
-                        if (!args.hasFlag("t"))
+                        prevention.getConfig().set("enable", true);
+                        prevention.saveConfig();
+                    }
+                }
+
+                sender.sendMessage(_("preventionsEnabled"));
+            }
+            else
+            {
+                Prevention prevention = this.pm.getPrevention(args.getString(0));
+                if (prevention != null)
+                {
+                    if (!prevention.isEnabled())
+                    {
+                        if (PreventionManager.getInstance().enablePrevention(prevention))
                         {
-                            prevention.getConfig().set("enable", true);
-                            prevention.saveConfig();
+                            sender.sendMessage(_("preventionEnabled"));
+                            if (!temporary)
+                            {
+                                prevention.getConfig().set("enable", true);
+                                prevention.saveConfig();
+                            }
+                        }
+                        else
+                        {
+                            sender.sendMessage(_("somethingFailed"));
                         }
                     }
                     else
                     {
-                        sender.sendMessage(_("somethingFailed"));
+                        sender.sendMessage(_("alreadyEnabled"));
                     }
                 }
                 else
                 {
-                    sender.sendMessage(_("alreadyEnabled"));
+                    sender.sendMessage(_("preventionNotFound"));
                 }
-            }
-            else
-            {
-                sender.sendMessage(_("preventionNotFound"));
             }
         }
         else
@@ -106,27 +88,45 @@ public class PreventionManagementCommands
     {
         if (args.size() > 0)
         {
-            Prevention prevention = PreventionManager.getInstance().getPrevention(args.getString(0));
-            if (prevention != null)
+            boolean temporary = args.hasFlag("t");
+            if ("*".equals(args.getString(0)))
             {
-                if (prevention.isEnabled())
+                for (Prevention prevention : pm.getPreventions())
                 {
-                    PreventionManager.getInstance().disablePrevention(prevention);
-                    sender.sendMessage(_("preventionDisabled"));
-                    if (!args.hasFlag("t"))
+                    pm.disablePrevention(prevention);
+                    if (!temporary)
                     {
                         prevention.getConfig().set("enable", false);
                         prevention.saveConfig();
                     }
                 }
-                else
-                {
-                    sender.sendMessage(_("alreadyDisabled"));
-                }
+
+                sender.sendMessage(_("preventionsDisabled"));
             }
             else
             {
-                sender.sendMessage(_("preventionNotFound"));
+                Prevention prevention = PreventionManager.getInstance().getPrevention(args.getString(0));
+                if (prevention != null)
+                {
+                    if (prevention.isEnabled())
+                    {
+                        PreventionManager.getInstance().disablePrevention(prevention);
+                        sender.sendMessage(_("preventionDisabled"));
+                        if (!temporary)
+                        {
+                            prevention.getConfig().set("enable", false);
+                            prevention.saveConfig();
+                        }
+                    }
+                    else
+                    {
+                        sender.sendMessage(_("alreadyDisabled"));
+                    }
+                }
+                else
+                {
+                    sender.sendMessage(_("preventionNotFound"));
+                }
             }
         }
         else

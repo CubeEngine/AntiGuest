@@ -38,6 +38,7 @@ public class PreventionConfiguration extends YamlConfiguration
         }
 
         final PreventionConfiguration config = new PreventionConfiguration(new File(dir, prevention.getName() + FILE_EXTENTION));
+        config.options().header(prevention.getConfigHeader());
         if (load)
         {
             try

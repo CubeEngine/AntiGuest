@@ -25,6 +25,12 @@ public class ItemPrevention extends FilteredItemPrevention
         setFilterItems(EnumSet.of(Material.DIAMOND_SWORD));
     }
 
+    @Override
+    public String getConfigHeader()
+    {
+        return super.getConfigHeader() + "\nBlocks will not be count as items!\n";
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void handle(PlayerInteractEvent event)
     {
