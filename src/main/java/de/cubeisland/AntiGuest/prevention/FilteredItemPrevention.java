@@ -1,12 +1,10 @@
 package de.cubeisland.AntiGuest.prevention;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 
 /**
  * This class represents a filterable Prevention related to Materials
@@ -25,7 +23,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
     public FilteredItemPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
     {
         super(name, plugin, allowPunishing);
-        this.filterItems = EnumSet.of(Material.DIRT);
+        setFilterItems(EnumSet.of(Material.DIRT));
     }
 
     /**
@@ -48,49 +46,34 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
         return this.ignoreBlocks;
     }
 
-    /**
-     * This method changes the default value if the "list" entry
-     *
-     * @return the default config
-     */
     @Override
-    public Configuration getDefaultConfig()
+    public List<String> encodeSet(Set<Material> set)
     {
-        Configuration config = super.getDefaultConfig();
+        List<String> materials = super.encodeSet(set);
 
-        ArrayList<String> materials = new ArrayList<String>(this.filterItems.size());
-        for (Material material : this.filterItems)
+        for (int i = 0; i < materials.size(); ++i)
         {
-            materials.add(material.toString().toLowerCase().replace('_', ' '));
+            materials.set(i, materials.get(i).toLowerCase().replace('_', ' '));
         }
-        
-        config.set("list", materials);
 
-        return config;
+        return materials;
     }
 
-    /**
-     * This method parses the string list to Material instances
-     *
-     * @param server a Server instance
-     * @param config the config of this prevention
-     */
     @Override
-    public void enable()
+    public Set<Material> decodeList(List list)
     {
-        super.enable();
+        Set<Material> materials = EnumSet.noneOf(Material.class);
 
-        // normalize the items
-        Set<Material> newItems = EnumSet.noneOf(Material.class);
-        for (Material item : this.filterItems)
+        for (Object entry : list)
         {
-            Material material = Material.matchMaterial(String.valueOf(item));
+            Material material = Material.matchMaterial(String.valueOf(entry));
             if (material != null)
             {
-                newItems.add(material);
+                materials.add(material);
             }
         }
-        this.filterItems = newItems;
+
+        return materials;
     }
 
     /**
@@ -111,25 +94,5 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
         {
             return super.can(player, material);
         }
-    }
-
-    /**
-     * Prevents the action if the player can't pass it
-     *
-     * @param event a cancellable event
-     * @param player the player
-     * @param material the material
-     * @return true if the action was prevented
-     */
-    @Override
-    public boolean prevent(final Cancellable event, final Player player, final Material material)
-    {
-        if (!this.can(player, material))
-        {
-            event.setCancelled(true);
-            sendMessage(player);
-            return true;
-        }
-        return false;
     }
 }

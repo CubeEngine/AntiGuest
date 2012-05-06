@@ -18,6 +18,7 @@ public class MonsterPrevention extends Prevention
     public MonsterPrevention(PreventionPlugin plugin)
     {
         super("monster", plugin, false);
+        setEnableByDefault(true);
         setThrottleDelay(3);
     }
 

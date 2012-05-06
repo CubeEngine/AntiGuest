@@ -21,8 +21,8 @@ public class ItemPrevention extends FilteredItemPrevention
     public ItemPrevention(PreventionPlugin plugin)
     {
         super("item", plugin);
-        this.setIgnoreBlocks(true);
-        this.filterItems = EnumSet.of(Material.DIAMOND_SWORD);
+        setIgnoreBlocks(true);
+        setFilterItems(EnumSet.of(Material.DIAMOND_SWORD));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

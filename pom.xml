@@ -119,7 +119,6 @@
                             <artifactSet>
                                 <includes>
                                     <include>de.cubeisland:libminecraft</include>
-                                    <include>net.sf.trove4j:trove4j</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

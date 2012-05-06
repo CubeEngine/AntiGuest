@@ -14,11 +14,11 @@ public class RocketPunishment implements Punishment
 {
     public String getName()
     {
-        return "rockets";
+        return "rocket";
     }
 
     public void punish(Player player, ConfigurationSection config)
     {
-        player.getVelocity().add(new Vector(0, config.getInt("height", 50), 0));
+        player.setVelocity(player.getVelocity().add(new Vector(0, config.getInt("height", 50), 0)));
     }
 }

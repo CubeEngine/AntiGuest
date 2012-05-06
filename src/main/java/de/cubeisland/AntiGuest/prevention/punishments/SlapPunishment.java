@@ -28,6 +28,6 @@ public class SlapPunishment implements Punishment
     public void punish(Player player, ConfigurationSection config)
     {
         player.damage(config.getInt("damage", 3));
-        player.getVelocity().add(new Vector(-rand.nextInt(5), rand.nextInt(2), -rand.nextInt(5)));
+        player.setVelocity(player.getVelocity().add(new Vector(-rand.nextInt(5), rand.nextInt(2), -rand.nextInt(5))));
     }
 }

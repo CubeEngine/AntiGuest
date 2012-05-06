@@ -4,6 +4,7 @@ import de.cubeisland.AntiGuest.prevention.FilteredPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
@@ -32,6 +33,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         super("damage", plugin, false);
         setThrottleDelay(3);
         setFilterMode(FilterMode.WHITELIST);
+        setFilterItems(EnumSet.of(DamageCause.VOID));
         this.damagerMessage = null;
     }
 
@@ -43,9 +45,37 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         config.set("damagerMessage", getPlugin().getTranslation().translate("damagerMessage"));
         config.set("preventPotions", true);
         config.set("potionMessage", getPlugin().getTranslation().translate("potionMessage"));
-        config.set("list", new String[]{"void"});
 
         return config;
+    }
+
+    @Override
+    public List<String> encodeSet(Set<DamageCause> set)
+    {
+        List<String> damageCauses = super.encodeSet(set);
+
+        for (int i = 0; i < damageCauses.size(); ++i)
+        {
+            damageCauses.set(i, damageCauses.get(i).toLowerCase().replace('_', ' '));
+        }
+
+        return damageCauses;
+    }
+
+    @Override
+    public Set<DamageCause> decodeList(List list)
+    {
+        Set<DamageCause> damageCauses = EnumSet.noneOf(DamageCause.class);
+        for (Object entry : list)
+        {
+            try
+            {
+                damageCauses.add(DamageCause.valueOf(String.valueOf(entry).trim().replace(" ", "_").toUpperCase()));
+            }
+            catch (IllegalArgumentException e)
+            {}
+        }
+        return damageCauses;
     }
 
     @Override
@@ -58,19 +88,6 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         this.preventPotions = config.getBoolean("preventPotions");
         this.potionMessage = parseMessage(config.getString("potionMessage"));
 
-        Set<DamageCause> newList = EnumSet.noneOf(DamageCause.class);
-        String itemString;
-        for (Object item : this.filterItems)
-        {
-            itemString = String.valueOf(item).trim().replace(" ", "_").toUpperCase();
-            try
-            {
-                newList.add(DamageCause.valueOf(itemString));
-            }
-            catch (IllegalArgumentException e)
-            {}
-        }
-        this.filterItems = newList;
     }
 
     @Override

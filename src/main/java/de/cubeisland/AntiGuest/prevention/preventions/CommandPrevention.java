@@ -3,6 +3,8 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.FilteredPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import gnu.trove.set.hash.THashSet;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
@@ -20,34 +22,18 @@ public class CommandPrevention extends FilteredPrevention<String>
     {
         super("command", plugin);
         setEnablePunishing(true);
+        setFilterItems(new THashSet<String>(Arrays.asList("plugins", "pl", "version")));
     }
 
     @Override
-    public Configuration getDefaultConfig()
+    public Set<String> decodeList(List list)
     {
-        Configuration config = super.getDefaultConfig();
-
-        config.set("list", new String[] {
-            "plugins",
-            "pl",
-            "version"
-        });
-
-        return config;
-    }
-
-    @Override
-    public void enable()
-    {
-        super.enable();
-        
-        // normalize the items
-        Set<String> newItems = new THashSet<String>(this.filterItems.size());
-        for (Object item : this.filterItems)
+        Set<String> commands = new THashSet<String>(list.size());
+        for (Object entry : list)
         {
-            newItems.add(String.valueOf(item).trim().toLowerCase());
+            commands.add(String.valueOf(entry).trim().toLowerCase());
         }
-        this.filterItems = newItems;
+        return commands;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

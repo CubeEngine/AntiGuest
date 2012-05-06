@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest.prevention.punishments;
 
 import de.cubeisland.AntiGuest.prevention.Punishment;
+import de.cubeisland.libMinecraft.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -19,6 +20,6 @@ public class BanPunishment implements Punishment
     public void punish(Player player, ConfigurationSection config)
     {
         player.setBanned(true);
-        player.kickPlayer(config.getString("reason", "You were banned as a punishment!"));
+        player.kickPlayer(ChatColor.translateAlternateColorCodes('&', config.getString("reason", "&cYou were banned as a punishment!")));
     }
 }

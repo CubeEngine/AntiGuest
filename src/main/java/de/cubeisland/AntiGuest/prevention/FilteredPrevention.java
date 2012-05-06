@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest.prevention;
 
 import gnu.trove.set.hash.THashSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ import org.bukkit.event.Cancellable;
  */
 public abstract class FilteredPrevention<T extends Object> extends Prevention
 {
-    protected Set<T> filterItems;
+    private Set<T> filterItems;
     private FilterMode filterMode;
 
     public FilteredPrevention(String name, PreventionPlugin plugin)
@@ -28,6 +29,7 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
     {
         super(name, plugin, allowPunishing);
         this.filterMode = FilterMode.BLACKLIST;
+        this.filterItems = new THashSet<T>(0);
     }
 
     /**
@@ -51,6 +53,26 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
     }
 
     /**
+     * Sets the filter items
+     *
+     * @param filterItems the filter items
+     */
+    public void setFilterItems(Set<T> filterItems)
+    {
+        this.filterItems = filterItems;
+    }
+
+    /**
+     * Returns the filter items
+     *
+     * @return the filter items
+     */
+    public Set<T> getFilterItems()
+    {
+        return this.filterItems;
+    }
+
+    /**
      * This method adds the entries "mode" and "list" to the default config
      *
      * @return the default config
@@ -61,10 +83,36 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
         Configuration defaultConfig = super.getDefaultConfig();
 
         defaultConfig.set("mode", this.filterMode.getName());
-        defaultConfig.set("list", new String[] {"example"});
+        defaultConfig.set("list", encodeSet(this.filterItems));
 
         return defaultConfig;
     }
+
+    /**
+     * Encodes the type specific set into a string list
+     *
+     * @param set the set
+     * @return the string list
+     */
+    public List<String> encodeSet(Set<T> set)
+    {
+        List<String> stringList = new ArrayList<String>(set.size());
+
+        for (T entry : set)
+        {
+            stringList.add(String.valueOf(entry));
+        }
+
+        return stringList;
+    }
+
+    /**
+     * Decodes a object list into the type specific item set
+     *
+     * @param list the list
+     * @return the set
+     */
+    public abstract Set<T> decodeList(List list);
 
     /**
      * This method reads the additional entries "mode" and "list"
@@ -78,14 +126,10 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
         super.enable();
 
         this.filterMode = FilterMode.getByAlias(getConfig().getString("mode"));
-        List<?> items = getConfig().getList("list");
-        if (items == null)
+        List items = getConfig().getList("list");
+        if (items != null)
         {
-            this.filterItems = new THashSet();
-        }
-        else
-        {
-            this.filterItems = new THashSet(items);
+            this.filterItems = this.decodeList(items);
         }
     }
 
@@ -128,7 +172,8 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
         if (!this.can(player, item))
         {
             event.setCancelled(true);
-            this.sendMessage(player);
+            sendMessage(player);
+            punish(player);
             return true;
         }
         return false;

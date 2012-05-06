@@ -1,5 +1,6 @@
 package de.cubeisland.AntiGuest.prevention;
 
+import de.cubeisland.libMinecraft.ChatColor;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.TObjectLongMap;
@@ -8,7 +9,6 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
 import gnu.trove.procedure.TObjectObjectProcedure;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -153,10 +153,11 @@ public abstract class Prevention implements Listener
         Configuration defaultConfig = new MemoryConfiguration();
 
         defaultConfig.set("enable", this.enableByDefault);
+        // TODO perperly solve the color code problem
         defaultConfig.set("message", this.plugin.getTranslation().translate("message_" + this.name));
         if (this.throttleDelay > 0)
         {
-            defaultConfig.set("throttleDelay", this.throttleDelay);
+            defaultConfig.set("throttleDelay", getThrottleDelay());
         }
 
         if (this.allowPunishing)
@@ -540,6 +541,7 @@ public abstract class Prevention implements Listener
 
         public boolean execute(Punishment punishment, ConfigurationSection config)
         {
+            System.err.println("Punishment: " + punishment.getName());
             punishment.punish(this.player, config);
             return true;
         }
