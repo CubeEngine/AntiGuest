@@ -1,0 +1,154 @@
+== AntiGuest ==
+
+=== Description ===
+
+AntiGuest prevents players from doing specific things like building and fighting, which can be used to grief.
+
+Every prevention has its own configurable message which will be printed to the player. This message supports color codes (&0, &1, ..., &e, &f, &k)
+
+===== How does this work? ====
+
+AntiGuest uses permissions to determine whether a player is allowed to do a specific action.
+So you should (not necessarily needed, but recommended) install a permission manager like bPermissions or GroupManager along with AntiGuest.
+Usually you only want to prevent your guests from doing things like breaking and placing blocks (griefing),
+so you should **//not//** give your guests' group the permission to do so.
+However your accepted players should by able to do these actions.
+That can be achieved by adding the permission "antiguest.preventions.*" or a action specific permission to the player or his group.
+
+As you might see, this system allows more than just "guests can nothing, members everything".
+You could for example stagger the permissions like "guests can nothing but chat; trails can chat, place and break blocks; members can everything"
+and even more complex setups, it's completely up to you.
+
+===== <<color red>>Watch out!<</color>> Tips for common mistakes ====
+
+* All preventions are disabled by default since version 3.0 (3.2 changes that, see the table below)
+* All preventions have their own configuration file since 3.1, since 3.2 the old configurations will be converted
+* The permissions are all lowercase, check that before you report AntiGuest not working
+
+----
+
+=== Preventions ===
+
+|=Name          |=Prevents from ...                                                         |=Enabled by default    |=Filterable |
+|afk            |idling players by kicking them after a configured time                     | no                    | no         |
+|bed            |sleeping                                                                   | no                    | no         |
+|bow            |shooting bows                                                              | no                    | no         |
+|breakblock     |breaking blocks                                                            | no                    | yes        |
+|brew           |brewing                                                                    | no                    | no         |
+|button         |pushing buttons                                                            | no                    | no         |
+|cake           |eating cakes                                                               | no                    | no         |
+|changesign     |changing signs                                                             | no                    | no         |
+|chat           |chatting                                                                   | no                    | no         |
+|chest          |accessing chests                                                           | yes                   | no         |
+|command        |using specific commands                                                    | no                    | yes        |
+|damage         |getting damaged                                                            | no                    | yes        |
+|dispenser      |accessing dispensers                                                       | no                    | no         |
+|door           |opening or closing doors (including fence gates)                           | yes                   | no         |
+|drop           |dropping specific items                                                    | no                    | yes        |
+|enchant        |accessing enchantment tables                                               | no                    | no         |
+|fight          |damaging other players                                                     | no                    | no         |
+|fish           |fishing                                                                    | no                    | no         |
+|furnace        |accessing furnaces                                                         | no                    | no         |
+|hunger         |starvation                                                                 | no                    | no         |
+|item           |using specific items                                                       | no                    | yes        |
+|jukebox        |using jukeboxes                                                            | no                    | no         |
+|lavabucket     |using lava buckets                                                         | no                    | no         |
+|lever          |using levers                                                               | no                    | no         |
+|milking        |milking cows                                                               | no                    | no         |
+|monster        |getting targeted by mosters                                                | no                    | no         |
+|move           |moving too far                                                             | no                    | no         |
+|noteblock      |using noteblocks                                                           | no                    | no         |
+|pickup         |picking up specific items                                                  | no                    | yes        |
+|placeblock     |placing blocks                                                             | no                    | yes        |
+|pressureplate  |triggering pressure plates                                                 | no                    | no         |
+|repeater       |changing the repeater delays                                               | no                    | no         |
+|shear          |shearing animals                                                           | no                    | no         |
+|sneak          |sneaking (hiding the name above his head                                   | no                    | no         |
+|spam           |spam                                                                       | no                    | no         |
+|swear          |swearing                                                                   | no                    | no         |
+|tame           |taming animals                                                             | no                    | no         |
+|vehicle        |using vehicles (entering, placing, destroying, pushing)                    | no                    | no         |
+|waterbucket    |using water buckets                                                        | no                    | no         |
+|workbench      |accessing workbenches                                                      | no                    | no         |
+
+
+===== Filtering =====
+
+====== How does filtering work? ======
+
+Filtered prevention allow you to filter the action which will be prevented.
+
+For example the command preventions which can either prevent the usage of all commands or just a specific set of commands based on a whitelist or blacklist
+
+====== Filter configuration ======
+
+* mode:
+** none: everything will be prevented (aliases: -1, nolist, all)
+** whitelist: the listed entries are **//NOT//** prevented (aliases: 0, white, positivlist)
+** blacklist: only the listed entries will be prevented (aliases: 1, black, negativlist)
+* list:
+** the list of entries. this might be commands, item names or anything else depending on what the prevention does
+** this list will be ignored if the mode is set to none
+
+----
+
+=== Commands ===
+
+General syntax: **/antiguest <command>** or **/ag <command>**
+
+|=Command                           |=Description                                                       |
+|help                               |prints a help text                                                 |
+|can [player] <preventionname>      |checks whether the player (or another player) passes a prevention  |
+|list [-a]                          |lists the active or all registered preventions                     |
+|reload [prevention]                |reloads the plugin                                                 |
+|setmessage <prevention> <message>  |sets the message of a prevention                                   |
+|language [language]                |shows or sets the language                                         |
+|badword <word>                     |adds a badword to the swear prevention                             |
+|disable <prevention> [-t]          |disables a prevention                                              |
+|enable <prevention> [-t]           |enables a prevention                                               |
+|disableall [-t]                    |disables all preventions                                           |
+|enableall [-t]                     |enables all preventions                                            |
+|reset                              |resets all configurations                                          |
+
+
+=== Installation ===
+
+**AntiGuest 3 needs at least Bukkit 1.1-R5!**
+
+===== Steps =====
+
+* Just put the AntiGuest into your plugins folder
+* If you're upgrading from an older version you might remove you config to get a fresh one
+* restart/reload your server
+* The configuration file will be generated/updated as soon as the plugin gets enabled
+
+----
+
+=== Permissions ===
+
+|=Permission node                   |=Description                                       |
+|antiguest.*                        |Allows the player to do everything                 |
+|antiguest.commands.*               |Allows the player to run all commands              |
+|antiguest.commands.<command>       |Allows the player to run the specific command      |
+|antiguest.preventions.*            |Allows the player to pass all preventions          |
+|antiguest.preventions.<prevention> |Allows the player to pass the specific prevention  |
+
+--
+
+=== Developer Notice ===
+
+Plugin developed by Quick_Wango - [[http://cubeisland.de|Cube Island]]
+
+* You want new features?
+* You want the plugin to be always up to date?
+* You want good support?
+
+I'm doing this for literally nothing in my freetime, so keep me interessted in my plugins and help pay my bills by simply donating a few bucks.
+
+[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QU7NLJW3W58A|{{https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif|Donate}}]]
+
+Thanks in advance!
+
+**//[[http://webchat.esper.net/?channels=cubeisland-dev&nick=|Talk to the developers]]//** (#cubeisland-dev on EsperNet)
+
+**//[[https://github.com/CubeIsland/AntiGuest|Source on Github]]//**
