@@ -117,6 +117,8 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new WaterbucketPrevention(this))
             .registerPrevention(new WorkbenchPrevention(this))
             .enablePreventions();
+
+        this.convertPreventionConfigs();
     }
 
     @Override
@@ -130,9 +132,9 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     {
         final String PREVENTIONS_KEY = "preventions";
         ConfigurationSection section = config.getConfigurationSection(PREVENTIONS_KEY);
+        PreventionManager mgr = PreventionManager.getInstance();
         if (section != null)
         {
-            PreventionManager mgr = PreventionManager.getInstance();
             Prevention currentPrevention;
             PreventionConfiguration preventionConfig;
             ConfigurationSection currentSection;
@@ -170,6 +172,22 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
                 error("Failed to write the old configuration file", e);
             }
             config.set(PREVENTIONS_KEY, null);
+        }
+    }
+
+    private void convertPreventionConfigs()
+    {
+        final String MESSAGE_DELAY_KEY = "messageDelay";
+        PreventionConfiguration prevConfig;
+        for (Prevention prevention : PreventionManager.getInstance().getPreventions())
+        {
+            prevConfig = prevention.getConfig();
+            if (prevConfig.contains(MESSAGE_DELAY_KEY))
+            {
+                prevConfig.set("throttleDelay", prevConfig.get(MESSAGE_DELAY_KEY));
+                prevConfig.set(MESSAGE_DELAY_KEY, null);
+                prevention.saveConfig();
+            }
         }
     }
 
