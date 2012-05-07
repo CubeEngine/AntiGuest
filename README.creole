@@ -129,8 +129,6 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 |badword <word>                     |adds a badword to the swear prevention                             |
 |disable <prevention> [-t]          |disables a prevention                                              |
 |enable <prevention> [-t]           |enables a prevention                                               |
-|disableall [-t]                    |disables all preventions                                           |
-|enableall [-t]                     |enables all preventions                                            |
 |reset                              |resets all configurations                                          |
 
 
