@@ -14,8 +14,6 @@ import org.bukkit.event.player.PlayerChatEvent;
  */
 public class ChatPrevention extends Prevention
 {
-    private boolean ignoreWorldeditCUIMessages;
-
     public ChatPrevention(PreventionPlugin plugin)
     {
         super("chat", plugin);
@@ -40,17 +38,10 @@ public class ChatPrevention extends Prevention
         return config;
     }
 
-    @Override
-    public void enable()
-    {
-        super.enable();
-        this.ignoreWorldeditCUIMessages = getConfig().getBoolean("ignoreWorldeditCUIMessages");
-    }
-
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerChatEvent event)
     {
-        if (this.ignoreWorldeditCUIMessages || !event.getMessage().startsWith("u00a74u00a75u00a73u00a74"))
+        if (getConfig().getBoolean("ignoreWorldeditCUIMessages") || !event.getMessage().startsWith("u00a74u00a75u00a73u00a74"))
         {
             prevent(event, event.getPlayer());
         }

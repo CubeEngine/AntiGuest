@@ -3,6 +3,7 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,10 +26,13 @@ public class MonsterPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(EntityTargetEvent event)
     {
-        final Entity target = event.getTarget();
-        if (target instanceof Player)
+        if (event.getEntity() instanceof Monster)
         {
-            prevent(event, (Player)target);
+            final Entity target = event.getTarget();
+            if (target instanceof Player)
+            {
+                prevent(event, (Player)target);
+            }
         }
     }
 }
