@@ -49,6 +49,7 @@ and even more complex setups, it's completely up to you.
 |fight          |damaging other players                                                     | yes                   | no            | yes           |
 |fish           |fishing                                                                    | no                    | no            | yes           |
 |furnace        |accessing furnaces                                                         | no                    | no            | yes           |
+|guestlimit     |getting too many guests                                                    | no                    | no            | no            |
 |hunger         |starvation                                                                 | yes                   | no            | no            |
 |item           |using specific items                                                       | no                    | yes           | yes           |
 |jukebox        |using jukeboxes                                                            | no                    | no            | yes           |

@@ -1,7 +1,8 @@
 == Changes ==
 
-=== Version 3.3.1 ===
+=== Version 3.4.0 ===
 * fixed the punishment configuration defaults to be set all the time
+* added a Guestlimit prevention that will limit the number of guests on your server
 
 === Version 3.3.0 ===
 * added fully per-prevention configurable punishments
