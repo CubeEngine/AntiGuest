@@ -188,6 +188,11 @@ public abstract class Prevention implements Listener
     {
         this.loaded = true;
         this.config = PreventionConfiguration.get(this.plugin.getConfigurationFolder(), this);
+        if (this.allowPunishing && this.config.contains("punishments"))
+        {
+            this.config.getDefaultSection().set("punishments", null);
+        }
+        this.config.safeSave();
     }
 
     /**
