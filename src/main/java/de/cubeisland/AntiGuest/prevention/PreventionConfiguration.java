@@ -29,7 +29,7 @@ public class PreventionConfiguration extends YamlConfiguration
     {
         if (dir == null || prevention == null)
         {
-            throw new IllegalArgumentException("dir or prevention both must not be null!");
+            throw new IllegalArgumentException("dir and prevention both must not be null!");
         }
         dir.mkdirs();
         if (!dir.isDirectory())
@@ -58,14 +58,6 @@ public class PreventionConfiguration extends YamlConfiguration
         }
         config.options().copyDefaults(true);
         config.setDefaults(prevention.getDefaultConfig());
-        try
-        {
-            config.save();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace(System.err);
-        }
         return config;
     }
 
@@ -77,6 +69,20 @@ public class PreventionConfiguration extends YamlConfiguration
 
     public void save() throws IOException
     {
-        this.save(file);
+        this.save(this.file);
+    }
+
+    public boolean safeSave()
+    {
+        try
+        {
+            this.save();
+            return false;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace(System.err);
+        }
+        return false;
     }
 }
