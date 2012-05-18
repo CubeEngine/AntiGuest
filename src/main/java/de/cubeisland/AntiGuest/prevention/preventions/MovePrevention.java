@@ -45,14 +45,6 @@ public class MovePrevention extends Prevention
 
         return config;
     }
-    
-    @Override
-    public void enable()
-    {
-        super.enable();
-        int tmpWidth = getConfig().getInt("width");
-        this.width = new Vector2(tmpWidth, tmpWidth);
-    }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void handle(PlayerMoveEvent event)
@@ -71,7 +63,7 @@ public class MovePrevention extends Prevention
         {
             // create a square around the spawn
             final Square spawnSquare = new Square(
-                Convert.toBlockVector2(player.getWorld().getSpawnLocation()).substract(this.width),
+                Convert.toBlockVector2(player.getWorld().getSpawnLocation()).substract(getConfig().getInt("width")),
                 this.width.x * 2
             );
 
