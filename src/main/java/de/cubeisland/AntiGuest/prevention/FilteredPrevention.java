@@ -107,12 +107,12 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
     }
 
     /**
-     * Decodes a object list into the type specific item set
+     * Decodes a string list into the type specific item set
      *
      * @param list the list
      * @return the set
      */
-    public abstract Set<T> decodeList(List list);
+    public abstract Set<T> decodeList(List<String> list);
 
     /**
      * This method reads the additional entries "mode" and "list"
@@ -126,7 +126,7 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
         super.enable();
 
         this.filterMode = FilterMode.getByAlias(getConfig().getString("mode"));
-        List items = getConfig().getList("list");
+        List<String> items = getConfig().getStringList("list");
         if (items != null)
         {
             this.filterItems = this.decodeList(items);

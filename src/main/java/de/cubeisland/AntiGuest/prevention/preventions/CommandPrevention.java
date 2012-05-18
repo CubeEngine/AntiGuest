@@ -26,12 +26,12 @@ public class CommandPrevention extends FilteredPrevention<String>
     }
 
     @Override
-    public Set<String> decodeList(List list)
+    public Set<String> decodeList(List<String> list)
     {
         Set<String> commands = new THashSet<String>(list.size());
-        for (Object entry : list)
+        for (String entry : list)
         {
-            commands.add(String.valueOf(entry).trim().toLowerCase());
+            commands.add(entry.trim().toLowerCase());
         }
         return commands;
     }

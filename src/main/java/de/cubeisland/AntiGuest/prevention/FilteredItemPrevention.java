@@ -60,13 +60,13 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
     }
 
     @Override
-    public Set<Material> decodeList(List list)
+    public Set<Material> decodeList(List<String> list)
     {
         Set<Material> materials = EnumSet.noneOf(Material.class);
 
-        for (Object entry : list)
+        for (String entry : list)
         {
-            Material material = Material.matchMaterial(String.valueOf(entry));
+            Material material = Material.matchMaterial(entry);
             if (material != null)
             {
                 materials.add(material);

@@ -73,14 +73,14 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     }
 
     @Override
-    public Set<DamageCause> decodeList(List list)
+    public Set<DamageCause> decodeList(List<String> list)
     {
         Set<DamageCause> damageCauses = EnumSet.noneOf(DamageCause.class);
-        for (Object entry : list)
+        for (String entry : list)
         {
             try
             {
-                damageCauses.add(DamageCause.valueOf(String.valueOf(entry).trim().replace(" ", "_").toUpperCase()));
+                damageCauses.add(DamageCause.valueOf(entry.trim().replace(" ", "_").toUpperCase()));
             }
             catch (IllegalArgumentException e)
             {}
