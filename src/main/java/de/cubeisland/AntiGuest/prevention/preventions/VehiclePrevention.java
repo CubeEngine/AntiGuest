@@ -3,6 +3,7 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.Material;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,6 +21,10 @@ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
  */
 public class VehiclePrevention extends Prevention
 {
+    private boolean preventAccess;
+    private boolean preventDestruction;
+    private boolean preventCollision;
+    private boolean preventCreation;
 
     public VehiclePrevention(PreventionPlugin plugin)
     {
@@ -27,9 +32,37 @@ public class VehiclePrevention extends Prevention
         setThrottleDelay(3);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(VehicleEnterEvent event)
+    @Override
+    public void enable()
     {
+        super.enable();
+
+        this.preventAccess      = getConfig().getBoolean("preventAccess");
+        this.preventDestruction = getConfig().getBoolean("preventDestruction");
+        this.preventCollision   = getConfig().getBoolean("preventCollision");
+        this.preventCreation    = getConfig().getBoolean("preventCreation");
+    }
+
+    @Override
+    public Configuration getDefaultConfig()
+    {
+        Configuration defaultConfig = super.getDefaultConfig();
+
+        defaultConfig.set("preventAccess", true);
+        defaultConfig.set("preventDestruction", true);
+        defaultConfig.set("preventCollision", true);
+        defaultConfig.set("preventCreation", true);
+
+        return defaultConfig;
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void enter(VehicleEnterEvent event)
+    {
+        if (!this.preventAccess)
+        {
+            return;
+        }
         final Entity entered = event.getEntered();
         if (entered instanceof Player)
         {
@@ -38,8 +71,12 @@ public class VehiclePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(VehicleDestroyEvent event)
+    public void destroy(VehicleDestroyEvent event)
     {
+        if (!this.preventDestruction)
+        {
+            return;
+        }
         final Entity attacker = event.getAttacker();
         if (attacker instanceof Player)
         {
@@ -48,8 +85,12 @@ public class VehiclePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(VehicleEntityCollisionEvent event)
+    public void entityCollision(VehicleEntityCollisionEvent event)
     {
+        if (!this.preventCollision)
+        {
+            return;
+        }
         final Entity collider = event.getEntity();
         if (collider instanceof Player)
         {
@@ -62,8 +103,12 @@ public class VehiclePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerInteractEvent event)
+    public void interact(PlayerInteractEvent event)
     {
+        if (!this.preventCreation)
+        {
+            return;
+        }
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             final Material clickedMaterial = event.getClickedBlock().getType();
