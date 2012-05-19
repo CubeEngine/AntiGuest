@@ -30,6 +30,7 @@ public class GuestlimitPrevention extends Prevention
     public GuestlimitPrevention(PreventionPlugin plugin)
     {
         super("guestlimit", plugin, false);
+        this.server = plugin.getServer();
     }
 
     @Override
@@ -66,8 +67,9 @@ public class GuestlimitPrevention extends Prevention
     {
         Configuration defaultConfig =  super.getDefaultConfig();
 
-        defaultConfig.set("mnimumPlayers", Math.round(getPlugin().getServer().getMaxPlayers() * .7));
+        defaultConfig.set("minimumPlayers", Math.round(getPlugin().getServer().getMaxPlayers() * .7));
         defaultConfig.set("guestLimit", Math.round(getPlugin().getServer().getMaxPlayers() * .3));
+        defaultConfig.set("kickGuests", false);
 
         return defaultConfig;
     }
@@ -87,7 +89,7 @@ public class GuestlimitPrevention extends Prevention
     {
         final Player player = event.getPlayer();
         final List<Player> guests = getGuests();
-        final int onlinePlayers = this.server.getOnlinePlayers().length;
+        final int onlinePlayers = this.server.getOnlinePlayers().length - 1;
         final boolean serverIsFull = onlinePlayers >= this.server.getMaxPlayers();
 
         // guest ?
