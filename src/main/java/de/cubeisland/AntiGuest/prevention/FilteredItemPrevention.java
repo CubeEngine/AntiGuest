@@ -24,6 +24,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
     {
         super(name, plugin, allowPunishing);
         setFilterItems(EnumSet.of(Material.DIRT));
+        setFilterMode(FilterMode.NONE);
     }
 
     /**

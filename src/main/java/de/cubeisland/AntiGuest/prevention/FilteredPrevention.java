@@ -144,8 +144,6 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
     {
         if (!can(player))
         {
-            //AntiGuest.debug("Filter mode: " + this.mode.name());
-
             switch (this.filterMode)
             {
                 case NONE:

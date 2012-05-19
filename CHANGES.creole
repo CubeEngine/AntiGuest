@@ -3,6 +3,8 @@
 === Version 3.4.0 ===
 * fixed the punishment configuration defaults to be set all the time
 * added a Guestlimit prevention that will limit the number of guests on your server
+* added a spawnegg prevention that prevents guests from using the spawneggs
+* changed the monster prevention to be filterable
 
 === Version 3.3.0 ===
 * added fully per-prevention configurable punishments

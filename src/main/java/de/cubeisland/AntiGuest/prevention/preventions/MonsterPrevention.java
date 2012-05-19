@@ -1,5 +1,6 @@
 package de.cubeisland.AntiGuest.prevention.preventions;
 
+import de.cubeisland.AntiGuest.prevention.FilteredEntityPrevention;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.entity.Entity;
@@ -14,7 +15,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
  *
  * @author Phillip Schichtel
  */
-public class MonsterPrevention extends Prevention
+public class MonsterPrevention extends FilteredEntityPrevention
 {
     public MonsterPrevention(PreventionPlugin plugin)
     {
@@ -31,7 +32,7 @@ public class MonsterPrevention extends Prevention
             final Entity target = event.getTarget();
             if (target instanceof Player)
             {
-                prevent(event, (Player)target);
+                prevent(event, (Player)target, event.getEntityType());
             }
         }
     }
