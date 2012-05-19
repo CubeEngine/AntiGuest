@@ -21,10 +21,10 @@ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
  */
 public class VehiclePrevention extends Prevention
 {
-    private boolean preventAccess;
-    private boolean preventDestruction;
-    private boolean preventCollision;
-    private boolean preventCreation;
+    private boolean access;
+    private boolean destruction;
+    private boolean collision;
+    private boolean creation;
 
     public VehiclePrevention(PreventionPlugin plugin)
     {
@@ -37,10 +37,10 @@ public class VehiclePrevention extends Prevention
     {
         super.enable();
 
-        this.preventAccess      = getConfig().getBoolean("preventAccess");
-        this.preventDestruction = getConfig().getBoolean("preventDestruction");
-        this.preventCollision   = getConfig().getBoolean("preventCollision");
-        this.preventCreation    = getConfig().getBoolean("preventCreation");
+        this.access      = getConfig().getBoolean("prevent.access");
+        this.destruction = getConfig().getBoolean("prevent.destruction");
+        this.collision   = getConfig().getBoolean("prevent.collision");
+        this.creation    = getConfig().getBoolean("prevent.creation");
     }
 
     @Override
@@ -48,10 +48,10 @@ public class VehiclePrevention extends Prevention
     {
         Configuration defaultConfig = super.getDefaultConfig();
 
-        defaultConfig.set("preventAccess", true);
-        defaultConfig.set("preventDestruction", true);
-        defaultConfig.set("preventCollision", true);
-        defaultConfig.set("preventCreation", true);
+        defaultConfig.set("prevent.access", true);
+        defaultConfig.set("prevent.destruction", true);
+        defaultConfig.set("prevent.collision", true);
+        defaultConfig.set("prevent.creation", true);
 
         return defaultConfig;
     }
@@ -59,7 +59,7 @@ public class VehiclePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void enter(VehicleEnterEvent event)
     {
-        if (!this.preventAccess)
+        if (!this.access)
         {
             return;
         }
@@ -73,7 +73,7 @@ public class VehiclePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void destroy(VehicleDestroyEvent event)
     {
-        if (!this.preventDestruction)
+        if (!this.destruction)
         {
             return;
         }
@@ -87,7 +87,7 @@ public class VehiclePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void entityCollision(VehicleEntityCollisionEvent event)
     {
-        if (!this.preventCollision)
+        if (!this.collision)
         {
             return;
         }
@@ -105,7 +105,7 @@ public class VehiclePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEvent event)
     {
-        if (!this.preventCreation)
+        if (!this.creation)
         {
             return;
         }
