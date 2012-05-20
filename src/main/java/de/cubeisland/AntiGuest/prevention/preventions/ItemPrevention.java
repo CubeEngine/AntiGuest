@@ -22,7 +22,8 @@ public class ItemPrevention extends FilteredItemPrevention
     {
         super("item", plugin);
         setIgnoreBlocks(true);
-        setFilterItems(EnumSet.of(Material.DIAMOND_SWORD));
+        setFilterItems(EnumSet.of(Material.FLINT_AND_STEEL));
+        setFilterMode(FilterMode.BLACKLIST);
     }
 
     @Override
