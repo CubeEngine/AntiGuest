@@ -102,7 +102,7 @@ You can specify multiple punishments per violation, you can look at the default 
 |=Punishment    |=Description                               |=Configuration                             |
 | ban           | Bans the player                           | reason: the ban reason                    |
 | burn          | Sets the player on fire                   | duration: the burn duration in seconds    |
-| dropitem      | Drops the held item                       | none                                      |
+| dropitem      | Drops the held item                       | pickupDelay: the pickup delay in seconds  |
 | explosion     | Creates a fake explosion and damages      | damage: the damage to deal                |
 | kick          | Kicks the player                          | reason: the kick reason                   |
 | kill          | Kills the player                          | none                                      |
