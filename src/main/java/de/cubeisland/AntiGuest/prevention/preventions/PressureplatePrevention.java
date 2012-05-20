@@ -22,7 +22,7 @@ public class PressureplatePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerInteractEvent event)
+    public void pressure(PlayerInteractEvent event)
     {
         if (event.getAction() == Action.PHYSICAL)
         {

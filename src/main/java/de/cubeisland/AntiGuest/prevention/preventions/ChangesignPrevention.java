@@ -21,7 +21,7 @@ public class ChangesignPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(SignChangeEvent event)
+    public void change(SignChangeEvent event)
     {
         prevent(event, event.getPlayer());
     }

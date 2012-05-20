@@ -22,7 +22,7 @@ public class BowPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(EntityShootBowEvent event)
+    public void shootBow(EntityShootBowEvent event)
     {
         final Entity shooter = event.getEntity();
         if (shooter instanceof Player)

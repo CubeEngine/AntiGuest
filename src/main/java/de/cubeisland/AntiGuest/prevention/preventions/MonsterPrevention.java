@@ -1,7 +1,6 @@
 package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.FilteredEntityPrevention;
-import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
@@ -25,7 +24,7 @@ public class MonsterPrevention extends FilteredEntityPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(EntityTargetEvent event)
+    public void target(EntityTargetEvent event)
     {
         if (event.getEntity() instanceof Monster)
         {

@@ -10,6 +10,7 @@
 * changed the vehicle prevention to be more configurable
 * changed the fight prevention to be more configurable
 * changed the dropitem punishment to have a configurable pickup delay
+* changed the default filter settings of the item prevention
 
 === Version 3.3.0 ===
 * added fully per-prevention configurable punishments

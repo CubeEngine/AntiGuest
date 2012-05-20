@@ -21,7 +21,7 @@ public class DispenserPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(InventoryOpenEvent event)
+    public void open(InventoryOpenEvent event)
     {
         if (event.getInventory().getType() == InventoryType.DISPENSER)
         {

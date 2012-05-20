@@ -21,7 +21,7 @@ public class TamePrevention extends Prevention
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(EntityTameEvent event)
+    public void tame(EntityTameEvent event)
     {
         if (event.getOwner() instanceof Player)
         {

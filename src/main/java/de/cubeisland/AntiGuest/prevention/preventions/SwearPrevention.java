@@ -83,7 +83,7 @@ public class SwearPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void handle(PlayerChatEvent event)
+    public void chat(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))

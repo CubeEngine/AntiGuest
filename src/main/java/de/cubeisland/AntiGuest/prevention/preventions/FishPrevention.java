@@ -19,7 +19,7 @@ public class FishPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerFishEvent event)
+    public void fish(PlayerFishEvent event)
     {
         prevent(event, event.getPlayer());
     }

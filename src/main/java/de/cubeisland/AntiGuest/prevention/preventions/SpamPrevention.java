@@ -60,7 +60,7 @@ public class SpamPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void handle(PlayerChatEvent event)
+    public void chat(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))

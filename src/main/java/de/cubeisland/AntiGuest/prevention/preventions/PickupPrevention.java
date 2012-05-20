@@ -20,7 +20,7 @@ public class PickupPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerPickupItemEvent event)
+    public void pickupItem(PlayerPickupItemEvent event)
     {
         prevent(event, event.getPlayer(), event.getItem().getItemStack().getType());
     }

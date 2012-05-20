@@ -54,7 +54,7 @@ public class FightPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(EntityDamageByEntityEvent event)
+    public void damageByEntity(EntityDamageByEntityEvent event)
     {
         final Entity damager = event.getDamager();
         if (damager instanceof Player)

@@ -21,7 +21,7 @@ public class ButtonPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerInteractEvent event)
+    public void interact(PlayerInteractEvent event)
     {
         final Action action = event.getAction();
         if (action == Action.LEFT_CLICK_BLOCK || action == Action.RIGHT_CLICK_BLOCK)

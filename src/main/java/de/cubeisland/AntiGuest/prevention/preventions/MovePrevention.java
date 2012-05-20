@@ -47,7 +47,7 @@ public class MovePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerMoveEvent event)
+    public void move(PlayerMoveEvent event)
     {
         final Location from = event.getFrom();
         final Location to = event.getTo();

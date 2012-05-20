@@ -33,7 +33,7 @@ public class ItemPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void handle(PlayerInteractEvent event)
+    public void interact(PlayerInteractEvent event)
     {
         if (event.getAction() != Action.PHYSICAL)
         {

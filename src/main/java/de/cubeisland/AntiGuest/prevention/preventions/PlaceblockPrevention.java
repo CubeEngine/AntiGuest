@@ -23,13 +23,13 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(BlockPlaceEvent event)
+    public void place(BlockPlaceEvent event)
     {
         prevent(event, event.getPlayer(), event.getBlockPlaced().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PaintingPlaceEvent event)
+    public void place(PaintingPlaceEvent event)
     {
         prevent(event, event.getPlayer());
     }

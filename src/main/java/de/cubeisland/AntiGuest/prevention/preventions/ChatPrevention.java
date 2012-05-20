@@ -39,7 +39,7 @@ public class ChatPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerChatEvent event)
+    public void chat(PlayerChatEvent event)
     {
         if (getConfig().getBoolean("ignoreWorldeditCUIMessages") || !event.getMessage().startsWith("u00a74u00a75u00a73u00a74"))
         {

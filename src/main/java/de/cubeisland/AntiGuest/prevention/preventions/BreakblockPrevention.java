@@ -30,13 +30,13 @@ public class BreakblockPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(BlockBreakEvent event)
+    public void blockBreak(BlockBreakEvent event)
     {
         prevent(event, event.getPlayer(), event.getBlock().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PaintingBreakByEntityEvent event)
+    public void paintingBreak(PaintingBreakByEntityEvent event)
     {
         final Entity remover = event.getRemover();
         if (remover instanceof Player)
@@ -46,7 +46,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerInteractEvent event)
+    public void fireBreak(PlayerInteractEvent event)
     {
         if (event.getAction() == Action.LEFT_CLICK_BLOCK)
         {

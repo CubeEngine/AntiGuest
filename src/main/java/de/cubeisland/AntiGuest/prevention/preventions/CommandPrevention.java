@@ -37,7 +37,7 @@ public class CommandPrevention extends FilteredPrevention<String>
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PlayerCommandPreprocessEvent event)
+    public void commandPreprocess(PlayerCommandPreprocessEvent event)
     {
         String message = event.getMessage();
         if (message.startsWith("/"))

@@ -28,7 +28,7 @@ public class HungerPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(FoodLevelChangeEvent event)
+    public void foodlevelChange(FoodLevelChangeEvent event)
     {
         final Entity entity = event.getEntity();
         if (entity instanceof Player)

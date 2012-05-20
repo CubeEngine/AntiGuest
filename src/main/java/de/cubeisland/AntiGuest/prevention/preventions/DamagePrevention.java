@@ -108,7 +108,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(EntityDamageEvent event)
+    public void damage(EntityDamageEvent event)
     {
         final Entity entity = event.getEntity();
         if (entity instanceof Player)
@@ -130,7 +130,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void handle(PotionSplashEvent event)
+    public void splash(PotionSplashEvent event)
     {
         if (!this.preventPotions)
         {
