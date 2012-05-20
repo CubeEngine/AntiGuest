@@ -5,6 +5,9 @@
 * added a Guestlimit prevention that will limit the number of guests on your server
 * added a spawnegg prevention that prevents guests from using the spawneggs
 * changed the monster prevention to be filterable
+* changed the door prevention to be filterable
+* changed the vehicle prevention to be more configurable
+* changed the fight prevention to be more configurable
 
 === Version 3.3.0 ===
 * added fully per-prevention configurable punishments

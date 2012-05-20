@@ -43,7 +43,7 @@ and even more complex setups, it's completely up to you.
 |command        |using specific commands                                                    | yes                   | yes           | yes           |
 |damage         |getting damaged                                                            | no                    | yes           | no            |
 |dispenser      |accessing dispensers                                                       | no                    | no            | yes           |
-|door           |opening or closing doors (including fence gates)                           | yes                   | no            | yes           |
+|door           |opening or closing doors (including fence gates)                           | yes                   | yes           | yes           |
 |drop           |dropping specific items                                                    | no                    | yes           | yes           |
 |enchant        |accessing enchantment tables                                               | no                    | no            | yes           |
 |fight          |damaging other players                                                     | yes                   | no            | yes           |
@@ -129,8 +129,8 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 |setmessage <prevention> <message>  |sets the message of a prevention                                   |
 |language [language]                |shows or sets the language                                         |
 |badword <word>                     |adds a badword to the swear prevention                             |
-|disable <prevention> [-t]          |disables a prevention                                              |
-|enable <prevention> [-t]           |enables a prevention                                               |
+|disable <prevention|*> [-t]        |disables a specific prevention or all at once                      |
+|enable <prevention|*> [-t]         |enables a specific prevention or all at once                       |
 |reset                              |resets all configurations                                          |
 
 
