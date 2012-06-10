@@ -129,8 +129,8 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 |setmessage <prevention> <message>  |sets the message of a prevention                                   |
 |language [language]                |shows or sets the language                                         |
 |badword <word>                     |adds a badword to the swear prevention                             |
-|disable <prevention|*> [-t]        |disables a specific prevention or all at once                      |
-|enable <prevention|*> [-t]         |enables a specific prevention or all at once                       |
+|{{{disable <prevention|*> [-t]}}}  |disables a specific prevention or all at once                      |
+|{{{enable <prevention|*> [-t]}}}   |enables a specific prevention or all at once                       |
 |reset                              |resets all configurations                                          |
 
 
