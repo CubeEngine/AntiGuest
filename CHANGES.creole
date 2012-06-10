@@ -5,6 +5,7 @@
 * added a Guestlimit prevention that will limit the number of guests on your server
 * added a spawnegg prevention that prevents guests from using the spawneggs
 * added the french translation (fr), thanks to Jamesst20 and Faithcaio!
+* added a global config option to disable punishments, defaults to true (enabled)
 * changed the monster prevention to be filterable
 * changed the door prevention to be filterable
 * changed the vehicle prevention to be more configurable

@@ -31,4 +31,11 @@ public interface PreventionPlugin extends TranslatablePlugin
      * @return the base string for the permissions
      */
     public String getPermissionBase();
+
+    /**
+     * Returns whether punishments are enabled for this plugin
+     *
+     * @return true if punishments are enabled
+     */
+    public boolean allowPunishments();
 }

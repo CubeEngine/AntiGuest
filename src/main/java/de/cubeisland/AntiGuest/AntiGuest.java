@@ -32,6 +32,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     private File preventionConfigFolder;
     private static Translation translation;
     private BaseCommand baseCommand;
+    private boolean punishments;
 
     @Override
     public void onEnable()
@@ -54,6 +55,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             config.set("language", "en");
         }
         saveConfig();
+        this.punishments = config.getBoolean("punishments");
 
         this.baseCommand = new BaseCommand(this, "antiguest.commands.");
         this.baseCommand.registerCommands(new BasicCommands(this))
@@ -242,5 +244,10 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     public String getPermissionBase()
     {
         return "antiguest.preventions.";
+    }
+
+    public boolean allowPunishments()
+    {
+        return this.punishments;
     }
 }

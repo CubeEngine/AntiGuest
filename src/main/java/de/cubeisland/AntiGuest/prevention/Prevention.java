@@ -71,7 +71,7 @@ public abstract class Prevention implements Listener
         this.name = name;
         this.permission = new Permission(plugin.getPermissionBase() + name, PermissionDefault.OP);
         this.plugin = plugin;
-        this.allowPunishing = allowPunishing;
+        this.allowPunishing = allowPunishing && plugin.allowPunishments();
 
         this.loaded = false;
         this.message = null;
