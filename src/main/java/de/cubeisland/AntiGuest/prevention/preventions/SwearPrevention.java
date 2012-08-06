@@ -8,7 +8,6 @@ import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
 import gnu.trove.set.hash.THashSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -17,7 +16,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 
 /**
  *
@@ -25,7 +24,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public class SwearPrevention extends Prevention
 {
-    private Set<Pattern> swearPatterns;
+    private Set<BadWord> swearPatterns;
 
     public SwearPrevention(PreventionPlugin plugin)
     {
@@ -65,17 +64,10 @@ public class SwearPrevention extends Prevention
     public void enable()
     {
         super.enable();
-        this.swearPatterns = Collections.synchronizedSet(new THashSet<Pattern>());
+        this.swearPatterns = new THashSet<BadWord>();
         for (String word : getConfig().getStringList("words"))
         {
-            if (word.startsWith("regex:"))
-            {
-                this.swearPatterns.add(Pattern.compile(word.substring(6)));
-            }
-            else
-            {
-                this.swearPatterns.add(compile(word));
-            }
+            this.swearPatterns.add(this.compile(word));
         }
 
         getPlugin().getBaseCommand().registerCommands(this);
@@ -90,29 +82,40 @@ public class SwearPrevention extends Prevention
         getPlugin().getBaseCommand().unregisterCommands(this);
     }
 
-    private static Pattern compile(String string)
+    private BadWord compile(String string)
     {
-        String[] parts = StringUtils.explode("*", string, false);
-        string = "\\b" + Pattern.quote(parts[0]);
-        for (int i = 1; i < parts.length; ++i)
+        if (string.startsWith("regex:"))
         {
-            string += ".*?" + Pattern.quote(parts[i]);
+            return new RegexBadWord(Pattern.compile(string.substring(6)));
         }
-        string += "\\b";
-        
-        return Pattern.compile(string, Pattern.CASE_INSENSITIVE);
+        else if (string.contains("*"))
+        {
+            String[] parts = StringUtils.explode("*", string, false);
+            string = "\\b" + Pattern.quote(parts[0]);
+            for (int i = 1; i < parts.length; ++i)
+            {
+                string += ".*?" + Pattern.quote(parts[i]);
+            }
+            string += "\\b";
+
+            return new RegexBadWord(Pattern.compile(string, Pattern.CASE_INSENSITIVE));
+        }
+        else
+        {
+            return new PlainBadWord(string);
+        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void chat(AsyncPlayerChatEvent event)
+    public void chat(PlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))
         {
             final String message = event.getMessage();
-            for (Pattern regex : this.swearPatterns)
+            for (BadWord badword : this.swearPatterns)
             {
-                if (regex.matcher(message).find())
+                if (badword.test(message))
                 {
                     sendMessage(player);
                     punish(player);
@@ -136,13 +139,48 @@ public class SwearPrevention extends Prevention
             config.set("words", words);
             saveConfig();
             
-            this.swearPatterns.add(compile(word));
+            this.swearPatterns.add(this.compile(word));
 
             sender.sendMessage(getPlugin().getTranslation().translate("wordAdded"));
         }
         else
         {
             sender.sendMessage(getPlugin().getTranslation().translate("noWord"));
+        }
+    }
+    
+    private interface BadWord
+    {
+        public boolean test(String string);
+    }
+    
+    private class PlainBadWord implements BadWord
+    {
+        private final String word;
+        
+        public PlainBadWord(String word)
+        {
+            this.word = word;
+        }
+        
+        public boolean test(String string)
+        {
+            return string.contains(word);
+        }
+    }
+    
+    public class RegexBadWord implements BadWord
+    {
+        private final Pattern regex;
+        
+        public RegexBadWord(Pattern regex)
+        {
+            this.regex = regex;
+        }
+
+        public boolean test(String string)
+        {
+            return this.regex.matcher(string).find();
         }
     }
 }
