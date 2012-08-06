@@ -1,5 +1,13 @@
 == Changes ==
 
+=== Version 3.4.1 ===
+* fixed the example punishment config sections not being created
+* improved the swear prevention:
+** better performance by using regexs only when needed
+** 'regex:' prefix to add regexes
+** \* wildcard
+* removed the option to ignore WorldEdit CUI's messages as it doesn't use them anymore
+
 === Version 3.4.0 ===
 * fixed the punishment configuration defaults to be set all the time
 * added a Guestlimit prevention that will limit the number of guests on your server
