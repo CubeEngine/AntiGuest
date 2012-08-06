@@ -13,7 +13,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  *
@@ -83,7 +83,7 @@ public class SwearPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void chat(PlayerChatEvent event)
+    public void chat(AsyncPlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))

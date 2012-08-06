@@ -7,7 +7,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * Prevents spamming
@@ -60,7 +60,7 @@ public class SpamPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void chat(PlayerChatEvent event)
+    public void chat(AsyncPlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))
