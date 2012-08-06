@@ -1,5 +1,6 @@
 package de.cubeisland.AntiGuest.prevention;
 
+import de.cubeisland.AntiGuest.AntiGuest;
 import de.cubeisland.libMinecraft.ChatColor;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
@@ -71,7 +72,7 @@ public abstract class Prevention implements Listener
         this.name = name;
         this.permission = new Permission(plugin.getPermissionBase() + name, PermissionDefault.OP);
         this.plugin = plugin;
-        this.allowPunishing = allowPunishing && plugin.allowPunishments();
+        this.allowPunishing = allowPunishing;
 
         this.loaded = false;
         this.message = null;
@@ -188,7 +189,7 @@ public abstract class Prevention implements Listener
     {
         this.loaded = true;
         this.config = PreventionConfiguration.get(this.plugin.getConfigurationFolder(), this);
-        if (this.allowPunishing && this.config.contains("punishments"))
+        if (this.allowPunishing && this.config.get("punishments", null) != null)
         {
             this.config.getDefaultSection().set("punishments", null);
         }
@@ -490,7 +491,7 @@ public abstract class Prevention implements Listener
 
     public void punish(final Player player)
     {
-        if (!this.allowPunishing || !this.enablePunishing)
+        if (!plugin.allowPunishments() || !this.allowPunishing || !this.enablePunishing)
         {
             return;
         }
@@ -523,6 +524,7 @@ public abstract class Prevention implements Listener
         
         PUNISHMENT_PROCEDURE.player = player;
         punishments.forEachEntry(PUNISHMENT_PROCEDURE);
+        PUNISHMENT_PROCEDURE.player = null;
     }
 
     /**
