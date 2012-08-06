@@ -2,11 +2,15 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
+import de.cubeisland.libMinecraft.StringUtils;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
+import gnu.trove.set.hash.THashSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
@@ -21,7 +25,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public class SwearPrevention extends Prevention
 {
-    private List<Pattern> swearPatterns;
+    private Set<Pattern> swearPatterns;
 
     public SwearPrevention(PreventionPlugin plugin)
     {
@@ -59,10 +63,17 @@ public class SwearPrevention extends Prevention
     public void enable()
     {
         super.enable();
-        this.swearPatterns = new ArrayList<Pattern>();
+        this.swearPatterns = Collections.synchronizedSet(new THashSet<Pattern>());
         for (String word : getConfig().getStringList("words"))
         {
-            this.swearPatterns.add(compile(word));
+            if (word.startsWith("regex:"))
+            {
+                this.swearPatterns.add(Pattern.compile(word.substring(6)));
+            }
+            else
+            {
+                this.swearPatterns.add(compile(word));
+            }
         }
 
         getPlugin().getBaseCommand().registerCommands(this);
@@ -79,7 +90,15 @@ public class SwearPrevention extends Prevention
 
     private static Pattern compile(String string)
     {
-        return Pattern.compile("\\b" + Pattern.quote(string) + "\\b", Pattern.CASE_INSENSITIVE);
+        String[] parts = StringUtils.explode("*", string, false);
+        string = "\\b" + Pattern.quote(parts[0]);
+        for (int i = 1; i < parts.length; ++i)
+        {
+            string += ".*?" + Pattern.quote(parts[i]);
+        }
+        string += "\\b";
+        
+        return Pattern.compile(string, Pattern.CASE_INSENSITIVE);
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -114,8 +133,8 @@ public class SwearPrevention extends Prevention
             words.add(word);
             config.set("words", words);
             saveConfig();
-            disable();
-            enable();
+            
+            this.swearPatterns.add(compile(word));
 
             sender.sendMessage(getPlugin().getTranslation().translate("wordAdded"));
         }

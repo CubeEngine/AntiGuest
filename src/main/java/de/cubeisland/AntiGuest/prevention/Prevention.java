@@ -1,6 +1,5 @@
 package de.cubeisland.AntiGuest.prevention;
 
-import de.cubeisland.AntiGuest.AntiGuest;
 import de.cubeisland.libMinecraft.ChatColor;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
