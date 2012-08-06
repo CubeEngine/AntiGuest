@@ -40,7 +40,9 @@ public class SwearPrevention extends Prevention
         return super.getConfigHeader() + "\n" +
                 "Every message a guest sends will be checked for the words listed under words.\n" +
                 "More words will result in more time to check the message. Even though the words\n" +
-                "get compiled on startup, an extreme list may lag the chat for guests.\n";
+                "get compiled on startup, an extreme list may lag the chat for guests.\n" +
+                "The words may contain wildcards (* character) which matches any number of any character.\n" +
+                "You can also add regular expressions by prefixing the words with 'regex:'\n";
     }
 
     @Override
