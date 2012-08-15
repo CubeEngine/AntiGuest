@@ -16,7 +16,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  *
@@ -24,6 +24,7 @@ import org.bukkit.event.player.PlayerChatEvent;
  */
 public class SwearPrevention extends Prevention
 {
+    private static final String REGEX_PREFIX = "regex:";
     private Set<BadWord> swearPatterns;
 
     public SwearPrevention(PreventionPlugin plugin)
@@ -84,9 +85,9 @@ public class SwearPrevention extends Prevention
 
     private BadWord compile(String string)
     {
-        if (string.startsWith("regex:"))
+        if (string.startsWith(REGEX_PREFIX))
         {
-            return new RegexBadWord(Pattern.compile(string.substring(6)));
+            return new RegexBadWord(Pattern.compile(string.substring(REGEX_PREFIX.length())));
         }
         else if (string.contains("*"))
         {
@@ -107,20 +108,23 @@ public class SwearPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void chat(PlayerChatEvent event)
+    public void chat(AsyncPlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))
         {
             final String message = event.getMessage();
-            for (BadWord badword : this.swearPatterns)
+            synchronized(this)
             {
-                if (badword.test(message))
+                for (BadWord badword : this.swearPatterns)
                 {
-                    sendMessage(player);
-                    punish(player);
-                    event.setCancelled(true);
-                    return;
+                    if (badword.test(message))
+                    {
+                        sendMessage(player);
+                        punish(player);
+                        event.setCancelled(true);
+                        return;
+                    }
                 }
             }
         }
@@ -139,7 +143,10 @@ public class SwearPrevention extends Prevention
             config.set("words", words);
             saveConfig();
             
-            this.swearPatterns.add(this.compile(word));
+            synchronized(this)
+            {
+                this.swearPatterns.add(this.compile(word));
+            }
 
             sender.sendMessage(getPlugin().getTranslation().translate("wordAdded"));
         }

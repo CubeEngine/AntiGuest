@@ -7,7 +7,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * Prevents spamming
@@ -60,7 +60,7 @@ public class SpamPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void chat(PlayerChatEvent event)
+    public void chat(AsyncPlayerChatEvent event)
     {
         final Player player = event.getPlayer();
         if (!can(player))
@@ -78,12 +78,12 @@ public class SpamPrevention extends Prevention
         }
     }
 
-    private void setChatLock(final Player player)
+    private synchronized void setChatLock(final Player player)
     {
         this.chatTimestamps.put(player, System.currentTimeMillis() + this.spamLockDuration);
     }
     
-    private boolean isChatLocked(final Player player)
+    private synchronized boolean isChatLocked(final Player player)
     {
         final long nextPossible = this.chatTimestamps.get(player);
         if (nextPossible == 0)

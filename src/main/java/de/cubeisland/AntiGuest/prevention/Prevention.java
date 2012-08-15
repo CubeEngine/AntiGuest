@@ -488,7 +488,7 @@ public abstract class Prevention implements Listener
         return false;
     }
 
-    public void punish(final Player player)
+    public synchronized void punish(final Player player)
     {
         if (!plugin.allowPunishments() || !this.allowPunishing || !this.enablePunishing)
         {

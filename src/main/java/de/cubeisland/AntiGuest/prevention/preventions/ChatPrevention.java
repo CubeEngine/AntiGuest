@@ -4,7 +4,7 @@ import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
  * Prevents chatting
@@ -20,7 +20,7 @@ public class ChatPrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void chat(PlayerChatEvent event)
+    public void chat(AsyncPlayerChatEvent event)
     {
         prevent(event, event.getPlayer());
     }
