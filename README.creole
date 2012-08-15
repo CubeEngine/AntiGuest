@@ -69,6 +69,7 @@ and even more complex setups, it's completely up to you.
 |spawnegg       |using spawneggs                                                            | no                    | yes           | yes           |
 |swear          |swearing                                                                   | yes                   | no            | yes           |
 |tame           |taming animals                                                             | no                    | no            | yes           |
+|trample        |trampling crops                                                            | no                    | no            | yes           |
 |vehicle        |using vehicles (entering, placing, destroying, pushing)                    | no                    | no            | yes           |
 |waterbucket    |using water buckets                                                        | yes                   | no            | yes           |
 |workbench      |accessing workbenches                                                      | no                    | no            | yes           |

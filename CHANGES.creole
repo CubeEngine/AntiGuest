@@ -7,6 +7,7 @@
 ** 'regex:' prefix to add regexes
 ** \* wildcard
 * removed the option to ignore WorldEdit CUI's messages as it doesn't use them anymore
+* added trample prevention
 
 === Version 3.4.0 ===
 * fixed the punishment configuration defaults to be set all the time
