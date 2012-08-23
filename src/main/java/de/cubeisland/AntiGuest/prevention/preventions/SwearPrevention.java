@@ -89,17 +89,62 @@ public class SwearPrevention extends Prevention
         {
             return new RegexBadWord(Pattern.compile(string.substring(REGEX_PREFIX.length())));
         }
-        else if (string.contains("*"))
+        else if (string.contains("*") || string.contains("?"))
         {
-            String[] parts = StringUtils.explode("*", string, false);
-            string = "\\b" + Pattern.quote(parts[0]);
-            for (int i = 1; i < parts.length; ++i)
+            char current;
+            boolean ignoreNext = false;
+            StringBuilder pattern = new StringBuilder("\\b");
+            StringBuilder part = null;
+            for (int i = 0; i < string.length(); ++i)
             {
-                string += ".*?" + Pattern.quote(parts[i]);
-            }
-            string += "\\b";
+                current = string.charAt(i);
+                if (!ignoreNext)
+                {
+                    if (current == '\\')
+                    {
+                        ignoreNext = true;
+                    }
+                    else
+                    {
+                        pattern.append(Pattern.quote(part.toString()));
+                        part = null;
+                        if (current == '*')
+                        {
+                            pattern.append(".*?");
+                        }
+                        else if (current == '?')
+                        {
+                            pattern.append(".?");
+                        }
+                        else if (current == '{')
+                        {
+                            part = new StringBuilder("(");
+                        }
+                        else if (current == '}')
+                        {
+                            pattern.append(part.append(")"));
+                            part = null;
+                        }
+                        else if (current == ',')
+                        {
 
-            return new RegexBadWord(Pattern.compile(string, Pattern.CASE_INSENSITIVE));
+                        }
+                    }
+                    continue;
+                }
+                if (ignoreNext)
+                {
+                    ignoreNext = false;
+                }
+                if (part == null)
+                {
+                    part = new StringBuilder();
+                }
+                part.append(current);
+            }
+            pattern.append("\\b");
+
+            return new RegexBadWord(Pattern.compile(pattern.toString(), Pattern.CASE_INSENSITIVE));
         }
         else
         {
