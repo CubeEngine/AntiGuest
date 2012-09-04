@@ -93,54 +93,59 @@ public class SwearPrevention extends Prevention
         {
             char current;
             boolean ignoreNext = false;
+            boolean inGroup = false;
             StringBuilder pattern = new StringBuilder("\\b");
-            StringBuilder part = null;
+            StringBuilder plain = null;
             for (int i = 0; i < string.length(); ++i)
             {
                 current = string.charAt(i);
+                ignore:
                 if (!ignoreNext)
                 {
                     if (current == '\\')
                     {
                         ignoreNext = true;
                     }
+                    else if (current == '*')
+                    {
+                        pattern.append(".*?");
+                    }
+                    else if (current == '?')
+                    {
+                        pattern.append(".?");
+                    }
+                    else if (current == '{')
+                    {
+                        inGroup = true;
+                        pattern.append('(');
+                    }
+                    else if (inGroup && current == ',')
+                    {
+                        pattern.append('|');
+                    }
+                    else if (inGroup && current == '}')
+                    {
+                        inGroup = false;
+                        pattern.append(')');
+                    }
                     else
                     {
-                        pattern.append(Pattern.quote(part.toString()));
-                        part = null;
-                        if (current == '*')
-                        {
-                            pattern.append(".*?");
-                        }
-                        else if (current == '?')
-                        {
-                            pattern.append(".?");
-                        }
-                        else if (current == '{')
-                        {
-                            part = new StringBuilder("(");
-                        }
-                        else if (current == '}')
-                        {
-                            pattern.append(part.append(")"));
-                            part = null;
-                        }
-                        else if (current == ',')
-                        {
-
-                        }
+                        ignoreNext = true;
+                        break ignore;
                     }
-                    continue;
+                    
+                    pattern.append(Pattern.quote(plain.toString()));
+                    plain = null;
                 }
-                if (ignoreNext)
+                else
                 {
                     ignoreNext = false;
                 }
-                if (part == null)
+                if (plain == null)
                 {
-                    part = new StringBuilder();
+                    plain = new StringBuilder();
                 }
-                part.append(current);
+                plain.append(current);
             }
             pattern.append("\\b");
 

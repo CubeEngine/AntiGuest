@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
  */
 public class MovePrevention extends Prevention
 {
-    private Vector2 width;
+    private Vector2 width; // TODO initialized??
 
     public MovePrevention(PreventionPlugin plugin)
     {
