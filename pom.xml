@@ -35,7 +35,7 @@
         </dependency>
         <dependency>
             <groupId>de.cubeisland</groupId>
-            <artifactId>libminecraft</artifactId>
+            <artifactId>libMinecraft</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
@@ -118,7 +118,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>de.cubeisland:libminecraft</include>
+                                    <include>de.cubeisland:libMinecraft</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
