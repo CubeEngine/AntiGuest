@@ -1,2 +1,4 @@
 language: java
-install: "mvn -X clean install"
+install:
+- "cat ~/.m2/settings.xml"
+- "mvn -q clean install"
