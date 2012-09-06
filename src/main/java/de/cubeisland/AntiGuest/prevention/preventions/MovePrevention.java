@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
  */
 public class MovePrevention extends Prevention
 {
-    private Vector2 width; // TODO initialized??
+    private int width;
 
     public MovePrevention(PreventionPlugin plugin)
     {
@@ -34,6 +34,13 @@ public class MovePrevention extends Prevention
         return super.getConfigHeader() + "\n" +
                 "Configuration info:\n" +
                 "    width: the number of blocks a player can move awy from the spawn\n";
+    }
+
+    @Override
+    public void enable()
+    {
+        super.enable();
+        this.width = getConfig().getInt("width");
     }
 
     @Override
@@ -63,8 +70,8 @@ public class MovePrevention extends Prevention
         {
             // create a square around the spawn
             final Square spawnSquare = new Square(
-                Convert.toBlockVector2(player.getWorld().getSpawnLocation()).substract(getConfig().getInt("width")),
-                this.width.x * 2
+                Convert.toBlockVector2(player.getWorld().getSpawnLocation()).substract(this.width),
+                this.width * 2
             );
 
             // is the new location inside the spawn square?
