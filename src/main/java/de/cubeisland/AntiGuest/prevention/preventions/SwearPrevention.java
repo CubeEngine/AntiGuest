@@ -88,12 +88,13 @@ public class SwearPrevention extends Prevention
         {
             return new RegexBadWord(Pattern.compile(string.substring(REGEX_PREFIX.length())));
         }
-        else if (string.contains("*") || string.contains("?"))
+        else
         {
             char current;
             boolean ignoreNext = false;
             boolean inGroup = false;
-            StringBuilder pattern = new StringBuilder("\\b");
+            boolean isPattern = false;
+            StringBuilder pattern = new StringBuilder();
             StringBuilder plain = null;
             for (int i = 0; i < string.length(); ++i)
             {
@@ -133,6 +134,7 @@ public class SwearPrevention extends Prevention
                         break ignore;
                     }
                     
+                    isPattern = true;
                     pattern.append(Pattern.quote(plain.toString()));
                     plain = null;
                 }
@@ -146,13 +148,18 @@ public class SwearPrevention extends Prevention
                 }
                 plain.append(current);
             }
-            pattern.append("\\b");
-
-            return new RegexBadWord(Pattern.compile(pattern.toString(), Pattern.CASE_INSENSITIVE));
-        }
-        else
-        {
-            return new PlainBadWord(string);
+            
+            if (plain != null)
+            {
+                pattern.append(plain);
+            }
+            
+            if (isPattern)
+            {
+                return new RegexBadWord(Pattern.compile("\\b" + pattern.append("\\b").toString(), Pattern.CASE_INSENSITIVE));
+            }
+            
+            return new PlainBadWord(pattern.toString());
         }
     }
 
