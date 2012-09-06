@@ -4,7 +4,6 @@ import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import de.cubeisland.libMinecraft.Convert;
 import de.cubeisland.libMinecraft.math.Square;
-import de.cubeisland.libMinecraft.math.Vector2;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
