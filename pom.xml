@@ -11,25 +11,25 @@
     
     <distributionManagement>
         <repository>
-            <id>cubeisland-nexus</id>
+            <id>cubeisland-repo</id>
             <name>Release</name>
-            <url>http://cubeisland.de:8081/nexus/content/repositories/releases</url>
+            <url>http://nexus.cubeisland.de/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
-            <id>cubeisland-nexus</id>
+            <id>cubeisland-repo</id>
             <name>Release</name>
-            <url>http://cubeisland.de:8081/nexus/content/repositories/snapshots</url>
+            <url>http://nexus.cubeisland.de/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
   
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
+            <id>cubeisland-repo</id>
+            <url>http://repo.cubeisland.de/</url>
         </repository>
     </repositories>
 
