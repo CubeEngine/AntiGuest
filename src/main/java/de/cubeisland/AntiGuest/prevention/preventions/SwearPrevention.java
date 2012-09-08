@@ -18,8 +18,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
+ * Prevents the user from swearing
  *
- * @author CodeInfection
+ * @author Phillip Schichtel
  */
 public class SwearPrevention extends Prevention
 {
@@ -40,8 +41,8 @@ public class SwearPrevention extends Prevention
                 "Every message a guest sends will be checked for the words listed under words.\n" +
                 "More words will result in more time to check the message. Even though the words\n" +
                 "get compiled on startup, an extreme list may lag the chat for guests.\n" +
-                "The words may contain wildcards (* character) which matches any number of any character.\n" +
-                "You can also add regular expressions by prefixing the words with 'regex:'\n";
+                "The words may contain usual filesystem patterns.\n" +
+                "Words prefixed with 'regex:' are interpreted as a Java regular expression\n";
     }
 
     @Override
