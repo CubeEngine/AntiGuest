@@ -15,6 +15,11 @@
             <name>Release</name>
             <url>http://cubeisland.de:8081/nexus/content/repositories/releases</url>
         </repository>
+        <snapshotRepository>
+            <id>cubeisland-nexus</id>
+            <name>Release</name>
+            <url>http://cubeisland.de:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <properties>
