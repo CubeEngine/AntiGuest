@@ -85,12 +85,15 @@ public class SwearPrevention extends Prevention
 
     private BadWord compile(String string)
     {
+        System.out.println("String: " + string);
         if (string.startsWith(REGEX_PREFIX))
         {
+            System.out.println("Will be compiled to a regex...");
             return new RegexBadWord(Pattern.compile(string.substring(REGEX_PREFIX.length())));
         }
         else
         {
+            System.out.println("Will be parsed...");
             char current;
             boolean ignoreNext = false;
             boolean inGroup = false;
@@ -155,11 +158,15 @@ public class SwearPrevention extends Prevention
                 pattern.append(plain);
             }
             
+            System.out.println("Final pattern: " + pattern.toString());
+            
             if (isPattern)
             {
+                System.out.println("Will be compiled to a regex...");
                 return new RegexBadWord(Pattern.compile("\\b" + pattern.append("\\b").toString(), Pattern.CASE_INSENSITIVE));
             }
             
+            System.out.println("This seems to be a static word");
             return new PlainBadWord(pattern.toString());
         }
     }
