@@ -191,25 +191,28 @@ public class SwearPrevention extends Prevention
     @RequiresPermission
     public void badword(CommandSender sender, CommandArgs args)
     {
-        String word = args.getString(0);
-        if (word != null)
+        if (args.size() > 0)
         {
-            Configuration config = getConfig();
-            List<String> words = new ArrayList<String>(config.getStringList("words"));
-            words.add(word);
-            config.set("words", words);
-            saveConfig();
-            
-            synchronized(this)
+            String word = args.getString(0);
+            if (word != null)
             {
-                this.swearPatterns.add(this.compile(word));
-            }
+                Configuration config = getConfig();
+                List<String> words = new ArrayList<String>(config.getStringList("words"));
+                words.add(word);
+                config.set("words", words);
+                saveConfig();
 
-            sender.sendMessage(getPlugin().getTranslation().translate("wordAdded"));
-        }
-        else
-        {
-            sender.sendMessage(getPlugin().getTranslation().translate("noWord"));
+                synchronized(this)
+                {
+                    this.swearPatterns.add(this.compile(word));
+                }
+
+                sender.sendMessage(getPlugin().getTranslation().translate("wordAdded"));
+            }
+            else
+            {
+                sender.sendMessage(getPlugin().getTranslation().translate("noWord"));
+            }
         }
     }
     
