@@ -25,7 +25,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class SwearPrevention extends Prevention
 {
     private static final String REGEX_PREFIX = "regex:";
-    private Set<BadWord> swearPatterns;
+    private Set<Pattern> swearPatterns;
 
     public SwearPrevention(PreventionPlugin plugin)
     {
@@ -65,7 +65,7 @@ public class SwearPrevention extends Prevention
     public void enable()
     {
         super.enable();
-        this.swearPatterns = new THashSet<BadWord>();
+        this.swearPatterns = new THashSet<Pattern>();
         for (String word : getConfig().getStringList("words"))
         {
             this.swearPatterns.add(this.compile(word));
@@ -83,13 +83,13 @@ public class SwearPrevention extends Prevention
         getPlugin().getBaseCommand().unregisterCommands(this);
     }
 
-    private BadWord compile(String string)
+    private Pattern compile(String string)
     {
         System.out.println("String: " + string);
         if (string.startsWith(REGEX_PREFIX))
         {
             System.out.println("Will be compiled to a regex...");
-            return new RegexBadWord(Pattern.compile(string.substring(REGEX_PREFIX.length())));
+            return Pattern.compile(string.substring(REGEX_PREFIX.length()));
         }
         else
         {
@@ -97,9 +97,9 @@ public class SwearPrevention extends Prevention
             char current;
             boolean ignoreNext = false;
             boolean inGroup = false;
-            boolean isPattern = false;
             StringBuilder pattern = new StringBuilder();
             StringBuilder plain = null;
+            String replacement = null;
             for (int i = 0; i < string.length(); ++i)
             {
                 current = string.charAt(i);
@@ -112,25 +112,30 @@ public class SwearPrevention extends Prevention
                     }
                     else if (current == '*')
                     {
-                        pattern.append(".*?");
+                        replacement = ".*?";
                     }
                     else if (current == '?')
                     {
-                        pattern.append(".?");
+                        replacement = ".?";
                     }
                     else if (current == '{')
                     {
+                        if (string.indexOf('}') <= i)
+                        {
+                            ignoreNext = true;
+                            break ignore;
+                        }
                         inGroup = true;
-                        pattern.append('(');
+                        replacement = "(";
                     }
                     else if (inGroup && current == ',')
                     {
-                        pattern.append('|');
+                        replacement = "|";
                     }
                     else if (inGroup && current == '}')
                     {
                         inGroup = false;
-                        pattern.append(')');
+                        replacement = ")";
                     }
                     else
                     {
@@ -138,11 +143,18 @@ public class SwearPrevention extends Prevention
                         break ignore;
                     }
                     
-                    isPattern = true;
                     pattern.append(Pattern.quote(plain.toString()));
                     plain = null;
+                    
+                    if (replacement != null)
+                    {
+                        pattern.append(replacement);
+                        replacement = null;
+                    }
+                    
+                    continue;
                 }
-                else
+                if (ignoreNext)
                 {
                     ignoreNext = false;
                 }
@@ -155,19 +167,12 @@ public class SwearPrevention extends Prevention
             
             if (plain != null)
             {
-                pattern.append(plain);
+                pattern.append(Pattern.quote(plain.toString()));
             }
             
             System.out.println("Final pattern: " + pattern.toString());
             
-            if (isPattern)
-            {
-                System.out.println("Will be compiled to a regex...");
-                return new RegexBadWord(Pattern.compile("\\b" + pattern.append("\\b").toString(), Pattern.CASE_INSENSITIVE));
-            }
-            
-            System.out.println("This seems to be a static word");
-            return new PlainBadWord(pattern.toString());
+            return Pattern.compile("\\b" + pattern.append("\\b").toString(), Pattern.CASE_INSENSITIVE);
         }
     }
 
@@ -180,9 +185,9 @@ public class SwearPrevention extends Prevention
             final String message = event.getMessage();
             synchronized(this)
             {
-                for (BadWord badword : this.swearPatterns)
+                for (Pattern badword : this.swearPatterns)
                 {
-                    if (badword.test(message))
+                    if (badword.matcher(message).find())
                     {
                         sendMessage(player);
                         punish(player);
@@ -220,41 +225,6 @@ public class SwearPrevention extends Prevention
             {
                 sender.sendMessage(getPlugin().getTranslation().translate("noWord"));
             }
-        }
-    }
-    
-    private interface BadWord
-    {
-        public boolean test(String string);
-    }
-    
-    private class PlainBadWord implements BadWord
-    {
-        private final String word;
-        
-        public PlainBadWord(String word)
-        {
-            this.word = word;
-        }
-        
-        public boolean test(String string)
-        {
-            return string.contains(word);
-        }
-    }
-    
-    public class RegexBadWord implements BadWord
-    {
-        private final Pattern regex;
-        
-        public RegexBadWord(Pattern regex)
-        {
-            this.regex = regex;
-        }
-
-        public boolean test(String string)
-        {
-            return this.regex.matcher(string).find();
         }
     }
 }
