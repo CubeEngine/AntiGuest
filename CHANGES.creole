@@ -1,11 +1,11 @@
 == Changes ==
 
-=== Version 3.4.1 ===
+=== Version 3.5.0 ===
 * fixed the example punishment config sections not being created
 * improved the swear prevention:
 ** better performance by using regexs only when needed
 ** 'regex:' prefix to add regexes
-** \* wildcard
+** file system patterns
 * removed the option to ignore WorldEdit CUI's messages as it doesn't use them anymore
 * added trample prevention
 * updated to the new AsyncPlayerChatEvent and added some synchronization
