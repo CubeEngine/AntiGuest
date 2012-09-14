@@ -37,12 +37,17 @@ public class SwearPrevention extends Prevention
     @Override
     public String getConfigHeader()
     {
-        return super.getConfigHeader() + "\n" +
-                "Every message a guest sends will be checked for the words listed under words.\n" +
-                "More words will result in more time to check the message. Even though the words\n" +
-                "get compiled on startup, an extreme list may lag the chat for guests.\n" +
-                "The words may contain usual filesystem patterns.\n" +
-                "Words prefixed with 'regex:' are interpreted as a Java regular expression\n";
+        return super.getConfigHeader() + "\n"
+                + "Every message a guest sends will be checked for the words listed under words.\n"
+                + "More words will result in more time to check the message. Even though the words\n"
+                + "get compiled on startup, an extreme list may lag the chat for guests.\n"
+                + "The words may contain usual filesystem patterns.\n"
+                + "Words prefixed with 'regex:' are interpreted as a Java regular expression\n"
+                + "\nFilesystem patterns:\n"
+                + " * -> any number (including none) of any character\n"
+                + " ? -> one or none of any character\n"
+                + " { , , } -> a group of strings of which one must match\n"
+                + " \\ -> escape character to write the above character as a normal character";
     }
 
     @Override
