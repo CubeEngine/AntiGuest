@@ -22,6 +22,13 @@
         </snapshotRepository>
     </distributionManagement>
     
+    <scm>
+        <connection>scm:git:git://github.com/CubeIsland/AntiGuest.git</connection>
+        <url>scm:git:https://github.com/CubeIsland/AntiGuest</url>
+        <tag>master</tag>
+        <developerConnection>scm:git:git@github.com:CubeIsland/AntiGuest.git</developerConnection>
+    </scm>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -43,7 +50,7 @@
         <dependency>
             <groupId>de.cubeisland</groupId>
             <artifactId>libminecraft</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -131,6 +138,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
             </plugin>
         </plugins>
     </build>
