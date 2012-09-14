@@ -1,6 +1,7 @@
 == Changes ==
 
 === Version 3.5.0 ===
+* fixed the move prevention throwing errors
 * fixed the example punishment config sections not being created
 * improved the swear prevention:
 ** better performance by using regexs only when needed
