@@ -117,6 +117,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new SpawneggPrevention(this))
             .registerPrevention(new SwearPrevention(this))
             .registerPrevention(new TamePrevention(this))
+            .registerPrevention(new TradingPrevention(this))
             .registerPrevention(new TramplePrevention(this))
             .registerPrevention(new VehiclePrevention(this))
             .registerPrevention(new WaterbucketPrevention(this))
