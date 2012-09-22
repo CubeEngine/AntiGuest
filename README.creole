@@ -37,6 +37,7 @@ and even more complex setups, it's completely up to you.
 |brew           |brewing                                                                    | no                    | no            | yes           |
 |button         |pushing buttons                                                            | no                    | no            | yes           |
 |cake           |eating cakes                                                               | no                    | no            | yes           |
+|caps           |writing all-caps messages                                                  | no                    | no            | yes           |
 |changesign     |changing signs                                                             | yes                   | no            | yes           |
 |chat           |chatting                                                                   | no                    | no            | yes           |
 |chest          |accessing chests                                                           | yes                   | no            | yes           |
@@ -69,6 +70,7 @@ and even more complex setups, it's completely up to you.
 |spawnegg       |using spawneggs                                                            | no                    | yes           | yes           |
 |swear          |swearing                                                                   | yes                   | no            | yes           |
 |tame           |taming animals                                                             | no                    | no            | yes           |
+|trading        |trading with villagers                                                     | no                    | no            | yes           |
 |trample        |trampling crops                                                            | no                    | no            | yes           |
 |vehicle        |using vehicles (entering, placing, destroying, pushing)                    | no                    | no            | yes           |
 |waterbucket    |using water buckets                                                        | yes                   | no            | yes           |
