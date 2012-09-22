@@ -111,7 +111,7 @@ You can specify multiple punishments per violation, you can look at the default 
 | kill          | Kills the player                          | none                                      |
 | lightning     | Strikes a fkae lightning on the player    | damage: the damage to deal                |
 | message       | Makes the player send an awkward message  | message: the message to send              |
-| poison        | Poisons the player                        | duration: the effect durection in seconds |
+| potion        | Poisons the player                        | duration: effect durection, effect: type  |
 | rocket        | Shoots the player in the air              | height: the number of blocks              |
 | slap          | Slaps the player                          | damage: the damage to deal                |
 | starvation    | Lets the player starve                    | none                                      |

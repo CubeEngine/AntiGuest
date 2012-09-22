@@ -4,6 +4,7 @@
 * removed the debug output from the swear prevention
 * added a villager trading prevention
 * added a all-caps prevention
+* chanegd PoisonPunishment to PotionPunishment
 
 === Version 3.5.0 ===
 * fixed the move prevention throwing errors

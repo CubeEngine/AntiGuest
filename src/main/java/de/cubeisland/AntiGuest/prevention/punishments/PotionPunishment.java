@@ -1,6 +1,7 @@
 package de.cubeisland.AntiGuest.prevention.punishments;
 
 import de.cubeisland.AntiGuest.prevention.Punishment;
+import java.util.Locale;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -11,15 +12,15 @@ import org.bukkit.potion.PotionEffectType;
  *
  * @author Phillip Schichtel
  */
-public class PoisonPunishment implements Punishment
+public class PotionPunishment implements Punishment
 {
     public String getName()
     {
-        return "poison";
+        return "potion";
     }
 
     public void punish(Player player, ConfigurationSection config)
     {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, config.getInt("duration", 3) * 20, config.getInt("amplifier", 1)));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("effect").toUpperCase(Locale.ENGLISH)), config.getInt("duration", 3) * 20, config.getInt("amplifier", 1)));
     }
 }
