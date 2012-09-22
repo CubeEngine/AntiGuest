@@ -1,5 +1,0 @@
-language: java
-install:
-- "cat ~/.m2/settings.xml"
-- "find ~/.m2/"
-- "mvn -q clean install"
