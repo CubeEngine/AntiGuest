@@ -176,7 +176,7 @@ public class SwearPrevention extends Prevention
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void chat(AsyncPlayerChatEvent event)
     {
         final Player player = event.getPlayer();

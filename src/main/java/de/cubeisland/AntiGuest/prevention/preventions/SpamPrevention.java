@@ -3,6 +3,7 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import gnu.trove.map.hash.TObjectLongHashMap;
+import java.util.concurrent.TimeUnit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public class SpamPrevention extends Prevention
 {
-    private int spamLockDuration;
+    private long spamLockDuration;
     private TObjectLongHashMap<Player> chatTimestamps;
 
     public SpamPrevention(PreventionPlugin plugin)
@@ -48,7 +49,7 @@ public class SpamPrevention extends Prevention
     public void enable()
     {
         super.enable();
-        this.spamLockDuration = getConfig().getInt("lockDuration") * 1000;
+        this.spamLockDuration = TimeUnit.SECONDS.toMillis(getConfig().getLong("lockDuration"));
         this.chatTimestamps = new TObjectLongHashMap<Player>();
     }
 
@@ -59,7 +60,7 @@ public class SpamPrevention extends Prevention
         this.chatTimestamps = null;
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void chat(AsyncPlayerChatEvent event)
     {
         final Player player = event.getPlayer();
