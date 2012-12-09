@@ -6,16 +6,17 @@ import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
 import gnu.trove.set.hash.THashSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Prevents the user from swearing
@@ -189,9 +190,7 @@ public class SwearPrevention extends Prevention
                 {
                     if (badword.matcher(message).find())
                     {
-                        sendMessage(player);
-                        punish(player);
-                        event.setCancelled(true);
+                        prevent(event, player);
                         return;
                     }
                 }

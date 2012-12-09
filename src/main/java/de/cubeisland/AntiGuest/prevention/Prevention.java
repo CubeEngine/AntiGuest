@@ -18,6 +18,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
+import java.util.concurrent.TimeUnit;
+
+import static java.util.logging.Level.INFO;
+
 /**
  * This class represents a prevention
  *
@@ -31,19 +35,22 @@ public abstract class Prevention implements Listener
     private final Permission permission;
     private final PreventionPlugin plugin;
     private final boolean allowPunishing;
+    private final boolean allowViolationLogging;
 
     private boolean loaded;
     private String message;
-    private int throttleDelay;
+    private long throttleDelay;
     private boolean enabled;
     private boolean enableByDefault;
     private PreventionConfiguration config;
-    private TObjectLongMap<Player> messageThrottleTimestamps;
+    private TObjectLongMap<String> messageThrottleTimestamps;
+    private boolean logViolations;
+    private TObjectLongMap<String> logThrottleTimestamps;
 
     private boolean enablePunishing;
     private TIntObjectMap<THashMap<Punishment, ConfigurationSection>> violationPunishmentMap;
-    private TObjectIntMap<Player> playerViolationMap;
-    private TObjectLongMap<Player> punishThrottleTimestamps;
+    private TObjectIntMap<String> playerViolationMap;
+    private TObjectLongMap<String> punishThrottleTimestamps;
     private int highestPunishmentViolation;
 
     /**
@@ -68,10 +75,24 @@ public abstract class Prevention implements Listener
      */
     public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing)
     {
+        this(name, plugin, allowPunishing, allowPunishing);
+    }
+
+    /**
+     * Initializes the prevention with its name, the corresponding plugin and
+     * whether to allow punishing.
+     *
+     * @param name the name of the prevention
+     * @param plugin the plugin
+     * @param allowPunishing whether to allow punishing
+     */
+    public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing, final boolean allowViolationLogging)
+    {
         this.name = name;
         this.permission = new Permission(plugin.getPermissionBase() + name, PermissionDefault.OP);
         this.plugin = plugin;
         this.allowPunishing = allowPunishing;
+        this.allowViolationLogging = allowViolationLogging;
 
         this.loaded = false;
         this.message = null;
@@ -81,6 +102,7 @@ public abstract class Prevention implements Listener
         this.config = null;
         this.highestPunishmentViolation = 0;
         this.enablePunishing = false;
+        this.logViolations = true;
     }
 
     /**
@@ -152,17 +174,21 @@ public abstract class Prevention implements Listener
     {
         Configuration defaultConfig = new MemoryConfiguration();
 
-        defaultConfig.set("enable", this.enableByDefault);
-        // TODO perperly solve the color code problem
-        defaultConfig.set("message", this.plugin.getTranslation().translate("message_" + this.name));
-        if (this.throttleDelay > 0)
+        defaultConfig.set("enable", this.getEnableByDefault());
+        defaultConfig.set("message", this.getPlugin().getTranslation().translate("message_" + this.name));
+        if (this.getThrottleDelay() > 0)
         {
-            defaultConfig.set("throttleDelay", getThrottleDelay());
+            defaultConfig.set("throttleDelay", getThrottleDelay(TimeUnit.SECONDS));
         }
 
-        if (this.allowPunishing)
+        if (this.getAllowViolationLogging())
         {
-            defaultConfig.set("punish", this.enablePunishing);
+            defaultConfig.set("log-violations", this.getLogViolations());
+        }
+
+        if (this.getAllowPunishing())
+        {
+            defaultConfig.set("punish", this.getEnablePunishing());
             defaultConfig.set("punishments.3.slap.damage", 4);
             defaultConfig.set("punishments.5.kick.reason", this.plugin.getTranslation().translate("defaultKickReason"));
         }
@@ -188,7 +214,7 @@ public abstract class Prevention implements Listener
     {
         this.loaded = true;
         this.config = PreventionConfiguration.get(this.plugin.getConfigurationFolder(), this);
-        if (this.allowPunishing && this.config.get("punishments", null) != null)
+        if (this.getAllowPunishing() && this.config.get("punishments", null) != null)
         {
             this.config.getDefaultSection().set("punishments", null);
         }
@@ -198,26 +224,32 @@ public abstract class Prevention implements Listener
     /**
      * Enables the prevention.
      * This method should be overridden for custom configs.
-     *
-     * @param server an Server instance
-     * @param config the configuration of this prevention
      */
     public void enable()
     {
-        this.messageThrottleTimestamps = new TObjectLongHashMap<Player>();
+        this.messageThrottleTimestamps = new TObjectLongHashMap<String>();
         this.throttleDelay = config.getInt("throttleDelay", 0) * 1000;
         this.setMessage(config.getString("message"));
-
-        if (this.allowPunishing)
+        if (this.allowViolationLogging)
         {
-            this.punishThrottleTimestamps = new TObjectLongHashMap<Player>();
-            this.violationPunishmentMap = new TIntObjectHashMap<THashMap<Punishment, ConfigurationSection>>();
-            this.playerViolationMap = new TObjectIntHashMap<Player>();
+            this.logViolations = config.getBoolean("log-violations");
 
+            if (this.getLogViolations())
+            {
+                this.logThrottleTimestamps = new TObjectLongHashMap<String>();
+            }
+        }
+
+        if (this.getAllowPunishing())
+        {
             this.enablePunishing = config.getBoolean("punish", this.enablePunishing);
 
-            if (this.enablePunishing)
+            if (this.getEnablePunishing())
             {
+                this.punishThrottleTimestamps = new TObjectLongHashMap<String>();
+                this.violationPunishmentMap = new TIntObjectHashMap<THashMap<Punishment, ConfigurationSection>>();
+                this.playerViolationMap = new TObjectIntHashMap<String>();
+
                 ConfigurationSection punishmentsSection = config.getConfigurationSection("punishments");
                 if (punishmentsSection != null)
                 {
@@ -274,7 +306,7 @@ public abstract class Prevention implements Listener
         this.messageThrottleTimestamps.clear();
         this.messageThrottleTimestamps = null;
 
-        if (this.allowPunishing)
+        if (this.getAllowPunishing() && this.getEnablePunishing())
         {
             this.playerViolationMap.clear();
             this.playerViolationMap = null;
@@ -284,6 +316,12 @@ public abstract class Prevention implements Listener
             
             this.violationPunishmentMap.clear();
             this.violationPunishmentMap = null;
+        }
+
+        if (this.getAllowViolationLogging() && this.getLogViolations())
+        {
+            this.logThrottleTimestamps.clear();
+            this.logThrottleTimestamps = null;
         }
     }
 
@@ -392,9 +430,14 @@ public abstract class Prevention implements Listener
      *
      * @return the delay
      */
-    public int getThrottleDelay()
+    public long getThrottleDelay()
     {
-        return this.throttleDelay / 1000;
+        return this.throttleDelay;
+    }
+
+    public long getThrottleDelay(TimeUnit unit)
+    {
+        return TimeUnit.MILLISECONDS.convert(this.getThrottleDelay(), unit);
     }
 
     /**
@@ -402,9 +445,14 @@ public abstract class Prevention implements Listener
      *
      * @return the delay
      */
-    public void setThrottleDelay(int delay)
+    public void setThrottleDelay(long delay)
     {
-        this.throttleDelay = delay * 1000;
+        this.throttleDelay = delay;
+    }
+
+    public void setThrottleDelay(long delay, TimeUnit unit)
+    {
+        this.setThrottleDelay(unit.toMillis(delay));
     }
 
     /**
@@ -418,6 +466,16 @@ public abstract class Prevention implements Listener
     }
 
     /**
+     * Returns whether this prevention may use punishments
+     *
+     * @return true if punishing is allowed
+     */
+    public boolean getAllowPunishing()
+    {
+        return this.allowPunishing;
+    }
+
+    /**
      * Returns whether this prevention enables punishing
      *
      * @return true if it enables it
@@ -425,6 +483,36 @@ public abstract class Prevention implements Listener
     public boolean getEnablePunishing()
     {
         return this.enablePunishing;
+    }
+
+    /**
+     * Sets whether this preventions should log violations
+     *
+     * @param allow true to allow it
+     */
+    public void setLogViolations(boolean allow)
+    {
+        this.logViolations = allow;
+    }
+
+    /**
+     * Returns whether this preventions logs violations
+     *
+     * @return true if it logs violations
+     */
+    public boolean getLogViolations()
+    {
+        return this.logViolations;
+    }
+
+    /**
+     * Returns whether this prevention allows to log violations
+     *
+     * @return true if violation logging is allowed
+     */
+    public boolean getAllowViolationLogging()
+    {
+        return this.allowViolationLogging;
     }
 
     /**
@@ -438,6 +526,24 @@ public abstract class Prevention implements Listener
         return player.hasPermission(this.permission);
     }
 
+    public boolean checkAndSetThrottleTimestamp(final Player player, final TObjectLongMap<String> timestamps)
+    {
+        if (this.getThrottleDelay() > 0)
+        {
+            final long next = timestamps.get(player.getName());
+            final long current = System.currentTimeMillis();
+            if (next < current)
+            {
+                timestamps.put(player.getName(), current + this.getThrottleDelay());
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Does the same as sendMessage(Player), except that this method throttles the messages sending
      * 
@@ -445,61 +551,60 @@ public abstract class Prevention implements Listener
      */
     public void sendMessage(final Player player)
     {
-        if (this.message == null)
+        if (this.getMessage() == null)
         {
             return;
         }
-        if (this.throttleDelay > 0)
+
+        if (this.checkAndSetThrottleTimestamp(player, this.messageThrottleTimestamps))
         {
-            final long next = this.messageThrottleTimestamps.get(player);
-            final long current = System.currentTimeMillis();
-            if (next < current)
-            {
-                this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
-            }
-            else
-            {
-                return;
-            }
+            player.sendMessage(this.getMessage());
         }
-        
-        player.sendMessage(this.message);
     }
 
     /**
-     * This method combines can(Player) and sendMessage(Player),
-     * by first checking whether player can pass the prevention and if not,
-     * the given cancellable event gets cancelled and the message is sent to the
-     * player.
+     * This method combines prevent() and can()
      *
      * @param event a cancellable event
      * @param player the player
      * @return true if the action was prevented
      */
-    public boolean prevent(final Cancellable event, final Player player)
+    public boolean checkAndPrevent(final Cancellable event, final Player player)
     {
         if (!this.can(player))
         {
-            event.setCancelled(true);
-            sendMessage(player);
-            punish(player);
+            prevent(event, player);
             return true;
         }
         return false;
     }
 
+    /**
+     * This methods cancels the event and handles notifications, punishing and logging
+     *
+     * @param event a cancellable event
+     * @param player the player
+     */
+    public void prevent(final Cancellable event, final Player player)
+    {
+        event.setCancelled(true);
+        sendMessage(player);
+        punish(player);
+        logViolation(player);
+    }
+
     public synchronized void punish(final Player player)
     {
-        if (!plugin.allowPunishments() || !this.allowPunishing || !this.enablePunishing)
+        if (!this.getPlugin().allowPunishments() || !this.getAllowPunishing() || !this.getEnablePunishing())
         {
             return;
         }
-        Integer violations = this.playerViolationMap.get(player);
-        if (violations == null || violations >= this.highestPunishmentViolation)
+        int violations = this.playerViolationMap.get(player.getName());
+        if (violations >= this.highestPunishmentViolation)
         {
             violations = 0;
         }
-        this.playerViolationMap.put(player, ++violations);
+        this.playerViolationMap.put(player.getName(), ++violations);
 
         THashMap<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
         if (punishments == null)
@@ -507,23 +612,27 @@ public abstract class Prevention implements Listener
             return;
         }
 
-        if (this.throttleDelay > 0)
+        if (this.checkAndSetThrottleTimestamp(player, this.punishThrottleTimestamps))
         {
-            final long next = this.messageThrottleTimestamps.get(player);
-            final long current = System.currentTimeMillis();
-            if (next < current)
-            {
-                this.messageThrottleTimestamps.put(player, current + this.throttleDelay);
-            }
-            else
-            {
-                return;
-            }
+            PUNISHMENT_PROCEDURE.player = player;
+            punishments.forEachEntry(PUNISHMENT_PROCEDURE);
+            PUNISHMENT_PROCEDURE.player = null;
         }
-        
-        PUNISHMENT_PROCEDURE.player = player;
-        punishments.forEachEntry(PUNISHMENT_PROCEDURE);
-        PUNISHMENT_PROCEDURE.player = null;
+    }
+
+    public void logViolation(Player player)
+    {
+        if (!this.getPlugin().logViolations() || !this.getAllowViolationLogging() || !this.getLogViolations())
+        {
+            return;
+        }
+
+        if (this.checkAndSetThrottleTimestamp(player, this.logThrottleTimestamps))
+        {
+            String message = this.getPlugin().getTranslation().translate("prevention_violated", player.getName(), this.getName());
+            this.getPlugin().getLogger().log(INFO, ChatColor.stripColors(message));
+            this.getPlugin().getServer().broadcast(message, "antiguest.violation-notification");
+        }
     }
 
     /**
@@ -557,7 +666,6 @@ public abstract class Prevention implements Listener
 
         public boolean execute(Punishment punishment, ConfigurationSection config)
         {
-            System.err.println("Punishment: " + punishment.getName());
             punishment.punish(this.player, config);
             return true;
         }

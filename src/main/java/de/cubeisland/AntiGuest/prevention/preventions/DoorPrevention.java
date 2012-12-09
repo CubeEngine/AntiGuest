@@ -2,14 +2,15 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.FilteredItemPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Prevents door usage
@@ -52,7 +53,7 @@ public class DoorPrevention extends FilteredItemPrevention
             final Material material = event.getClickedBlock().getType();
             if (DOORS.contains(material))
             {
-                prevent(event, event.getPlayer(), material);
+                checkAndPrevent(event, event.getPlayer(), material);
             }
         }
     }

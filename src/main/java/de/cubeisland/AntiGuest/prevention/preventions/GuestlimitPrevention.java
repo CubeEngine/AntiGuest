@@ -3,9 +3,6 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import gnu.trove.map.hash.THashMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -14,20 +11,24 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * This prevention limits the number of guests that can join the server
  *
  * @author Phillip Schichtel
  */
-public class GuestlimitPrevention extends Prevention
+public class GuestLimitPrevention extends Prevention
 {
-    private Map<Player, String> kickMessages;
+    private Map<String, String> kickMessages;
     private int minimumPlayers;
     private int guestLimit;
     private boolean kickGuests;
     private Server server;
 
-    public GuestlimitPrevention(PreventionPlugin plugin)
+    public GuestLimitPrevention(PreventionPlugin plugin)
     {
         super("guestlimit", plugin, false);
         this.server = plugin.getServer();
@@ -37,7 +38,7 @@ public class GuestlimitPrevention extends Prevention
     public void enable()
     {
         super.enable();
-        this.kickMessages = new THashMap<Player, String>();
+        this.kickMessages = new THashMap<String, String>();
 
         this.minimumPlayers = getConfig().getInt("minimumPlayers");
         this.guestLimit = getConfig().getInt("guestLimit");
@@ -80,7 +81,7 @@ public class GuestlimitPrevention extends Prevention
         if (event.getResult() == PlayerLoginEvent.Result.KICK_FULL)
         {
             event.allow();
-            this.kickMessages.put(event.getPlayer(), event.getKickMessage());
+            this.kickMessages.put(event.getPlayer().getName(), event.getKickMessage());
         }
     }
 
@@ -100,7 +101,7 @@ public class GuestlimitPrevention extends Prevention
             // server full or too many guests?
             if (serverIsFull || tooManyGuests)
             {
-                player.kickPlayer(this.kickMessages.remove(player));
+                player.kickPlayer(this.kickMessages.remove(player.getName()));
             }
         }
         else
@@ -117,7 +118,7 @@ public class GuestlimitPrevention extends Prevention
                 }
                 else
                 {
-                    player.kickPlayer(this.kickMessages.remove(player));
+                    player.kickPlayer(this.kickMessages.remove(player.getName()));
                 }
             }
         }

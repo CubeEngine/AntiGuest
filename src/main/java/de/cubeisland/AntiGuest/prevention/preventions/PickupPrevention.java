@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Prevents picking up items
  *
@@ -15,13 +17,13 @@ public class PickupPrevention extends FilteredItemPrevention
 {
     public PickupPrevention(PreventionPlugin plugin)
     {
-        super("pickup", plugin);
-        setThrottleDelay(3);
+        super("pickup", plugin, false);
+        setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void pickupItem(PlayerPickupItemEvent event)
     {
-        prevent(event, event.getPlayer(), event.getItem().getItemStack().getType());
+        checkAndPrevent(event, event.getPlayer(), event.getItem().getItemStack().getType());
     }
 }

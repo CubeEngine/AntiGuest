@@ -8,6 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Prevents pressureplate usage
  *
@@ -18,7 +20,7 @@ public class PressureplatePrevention extends Prevention
     public PressureplatePrevention(PreventionPlugin plugin)
     {
         super("pressureplate", plugin);
-        setThrottleDelay(3);
+        setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -29,7 +31,7 @@ public class PressureplatePrevention extends Prevention
             final Material material = event.getClickedBlock().getType();
             if (material == Material.STONE_PLATE || material == Material.WOOD_PLATE)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

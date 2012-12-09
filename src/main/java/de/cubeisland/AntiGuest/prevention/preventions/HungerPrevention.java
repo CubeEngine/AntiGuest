@@ -33,7 +33,7 @@ public class HungerPrevention extends Prevention
         final Entity entity = event.getEntity();
         if (entity instanceof Player)
         {
-            prevent(event, (Player)entity);
+            checkAndPrevent(event, (Player)entity);
         }
     }
 }

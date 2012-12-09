@@ -4,16 +4,20 @@
 * removed the debug output from the swear prevention
 * added a villager trading prevention
 * added a all-caps prevention
-* chanegd PoisonPunishment to PotionPunishment
+* changed PoisonPunishment to PotionPunishment
 * updated to Bukkit-1.4.5-R0.3
 * added a item frame prevention
 * fixed some wrong french translation keys
+* added violation logging
+* improved performance a bit
+* changed the command prevention to be disabled by default (you should use permissions where possible!)
+* changed the pickup prevention to not be punishable anymore
 
 === Version 3.5.0 ===
 * fixed the move prevention throwing errors
 * fixed the example punishment config sections not being created
 * improved the swear prevention:
-** better performance by using regexs only when needed
+** better performance by using regexes only when needed
 ** 'regex:' prefix to add regexes
 ** file system patterns
 * removed the option to ignore WorldEdit CUI's messages as it doesn't use them anymore
@@ -22,7 +26,7 @@
 
 === Version 3.4.0 ===
 * fixed the punishment configuration defaults to be set all the time
-* added a Guestlimit prevention that will limit the number of guests on your server
+* added a guestlimit prevention that will limit the number of guests on your server
 * added a spawnegg prevention that prevents guests from using the spawneggs
 * added the french translation (fr), thanks to Jamesst20 and Faithcaio!
 * added a global config option to disable punishments, defaults to true (enabled)
@@ -46,7 +50,7 @@
 === Version 3.2.0 ===
 * fixed disabling preventions via command
 * added temporary enabling/disabling
-* add 6 new command
+* add 6 new commands
 ** enableall - enables all preventions
 ** disableall - disables all preventions
 ** setmessage - sets the message of a prevention
@@ -99,7 +103,7 @@
 ** dynamic permission registration
 ** permissions are all lowercased
 ** prevention permissions are: antiguest.preventions.<preventionname\>
-* command permissions are: antiguest.commands.<command\>
+** command permissions are: antiguest.commands.<command\>
 * added a API for other plugins (currently undocumented)
 * plugin is reloadable now
 * added filtered preventions (item, pickup, drop and enchant)
@@ -111,7 +115,7 @@
 * added a damage prevention
 * added a milking prevention
 * changed following preventions to use the new inventory API: chest, furnace, enchant, dispenser, brew, workbench
-* changed the hungerprevention to prevent the hunger value from changing
+* changed the hunger prevention to prevent the hunger value from changing
 * renamed the pvp prevention to fight
 * added commands /antiguest <command\> (alias: /ag <command\>)
 **commands: help, list, can, reload, debug

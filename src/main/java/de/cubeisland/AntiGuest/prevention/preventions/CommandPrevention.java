@@ -3,12 +3,13 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.FilteredPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import gnu.trove.set.hash.THashSet;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Prevents command usage
@@ -20,7 +21,6 @@ public class CommandPrevention extends FilteredPrevention<String>
     public CommandPrevention(PreventionPlugin plugin)
     {
         super("command", plugin);
-        setEnableByDefault(true);
         setEnablePunishing(true);
         setFilterItems(new THashSet<String>(Arrays.asList("plugins", "pl", "version")));
     }
@@ -50,7 +50,7 @@ public class CommandPrevention extends FilteredPrevention<String>
             }
             if (message.length() > 0)
             {
-                prevent(event, event.getPlayer(), message);
+                checkAndPrevent(event, event.getPlayer(), message);
             }
         }
     }

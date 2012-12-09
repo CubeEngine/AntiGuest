@@ -27,7 +27,7 @@ public class CakePrevention extends Prevention
         {
             if (event.getClickedBlock().getType() == Material.CAKE_BLOCK)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

@@ -38,4 +38,11 @@ public interface PreventionPlugin extends TranslatablePlugin
      * @return true if punishments are enabled
      */
     public boolean allowPunishments();
+
+    /**
+     * Returns whether prevention violations can be logged
+     *
+     * @return true if punishments may log violations
+     */
+    public boolean logViolations();
 }

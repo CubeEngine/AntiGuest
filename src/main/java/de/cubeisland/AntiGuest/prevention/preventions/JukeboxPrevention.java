@@ -27,7 +27,7 @@ public class JukeboxPrevention extends Prevention
         {
             if (event.getClickedBlock().getType() == Material.JUKEBOX)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

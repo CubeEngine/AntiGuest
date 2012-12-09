@@ -32,7 +32,7 @@ public class LavabucketPrevention extends Prevention
     {
         if (event.getBucket() == Material.LAVA_BUCKET)
         {
-            prevent(event, event.getPlayer());
+            checkAndPrevent(event, event.getPlayer());
         }
     }
 
@@ -41,7 +41,7 @@ public class LavabucketPrevention extends Prevention
     {
         if (event.getItemStack().getType() == Material.LAVA_BUCKET)
         {
-            prevent(event, event.getPlayer());
+            checkAndPrevent(event, event.getPlayer());
         }
     }
 }

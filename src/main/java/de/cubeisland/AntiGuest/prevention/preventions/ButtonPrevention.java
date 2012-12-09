@@ -28,7 +28,7 @@ public class ButtonPrevention extends Prevention
         {
             if (event.getClickedBlock().getType() == Material.STONE_BUTTON)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

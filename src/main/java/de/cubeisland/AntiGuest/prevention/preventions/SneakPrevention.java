@@ -2,7 +2,6 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,7 +22,7 @@ public class SneakPrevention extends Prevention
     @Override
     public String getConfigHeader()
     {
-        return super.getConfigHeader() + "\nThis prevention doesn't prevent crouching!\n";
+        return super.getConfigHeader() + "\nThis prevention doesn't checkAndPrevent crouching!\n";
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -32,15 +31,7 @@ public class SneakPrevention extends Prevention
         final Player player = event.getPlayer();
         if (event.isSneaking())
         {
-            if (!can(player))
-            {
-                if (!player.getGameMode().equals(GameMode.CREATIVE))
-                {
-                    sendMessage(player);
-                    punish(player);
-                }
-                event.setCancelled(true);
-            }
+            checkAndPrevent(event, player);
         }
     }
 }

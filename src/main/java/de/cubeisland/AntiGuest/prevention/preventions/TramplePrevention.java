@@ -26,7 +26,7 @@ public class TramplePrevention extends Prevention
     {
         if (event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.SOIL)
         {
-            if (prevent(event, event.getPlayer()))
+            if (checkAndPrevent(event, event.getPlayer()))
             {
                 event.setUseInteractedBlock(Result.DENY);
             }

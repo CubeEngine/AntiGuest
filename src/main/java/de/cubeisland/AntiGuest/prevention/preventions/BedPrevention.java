@@ -21,6 +21,6 @@ public class BedPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void bedEnter(PlayerBedEnterEvent event)
     {
-        prevent(event, event.getPlayer());
+        checkAndPrevent(event, event.getPlayer());
     }
 }

@@ -27,7 +27,7 @@ public class ChestPrevention extends Prevention
     {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType() == Material.CHEST)
         {
-            if (prevent(event, event.getPlayer()))
+            if (checkAndPrevent(event, event.getPlayer()))
             {
                 event.setUseInteractedBlock(Result.DENY);
             }

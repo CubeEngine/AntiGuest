@@ -11,9 +11,9 @@ import org.bukkit.event.block.SignChangeEvent;
  *
  * @author Phillip Schichtel
  */
-public class ChangesignPrevention extends Prevention
+public class ChangeSignPrevention extends Prevention
 {
-    public ChangesignPrevention(PreventionPlugin plugin)
+    public ChangeSignPrevention(PreventionPlugin plugin)
     {
         super("changesign", plugin);
         setEnableByDefault(true);
@@ -23,6 +23,6 @@ public class ChangesignPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void change(SignChangeEvent event)
     {
-        prevent(event, event.getPlayer());
+        checkAndPrevent(event, event.getPlayer());
     }
 }

@@ -13,6 +13,9 @@ commands:
     aliases:
       - "ag"
 permissions:
+  antiguest.violation-notification:
+    description: "Allows the player to get the violation notice"
+    default: op
   antiguest.*:
     description: "Allows the player to do everything"
     default: op

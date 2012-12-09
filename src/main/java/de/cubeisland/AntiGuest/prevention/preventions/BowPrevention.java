@@ -27,7 +27,7 @@ public class BowPrevention extends Prevention
         final Entity shooter = event.getEntity();
         if (shooter instanceof Player)
         {
-            prevent(event, (Player)shooter);
+            checkAndPrevent(event, (Player)shooter);
         }
     }
 }

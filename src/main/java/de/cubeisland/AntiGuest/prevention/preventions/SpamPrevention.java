@@ -3,12 +3,13 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import gnu.trove.map.hash.TObjectLongHashMap;
-import java.util.concurrent.TimeUnit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Prevents spamming
@@ -18,7 +19,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class SpamPrevention extends Prevention
 {
     private long spamLockDuration;
-    private TObjectLongHashMap<Player> chatTimestamps;
+    private TObjectLongHashMap<String> chatTimestamps;
 
     public SpamPrevention(PreventionPlugin plugin)
     {
@@ -50,13 +51,14 @@ public class SpamPrevention extends Prevention
     {
         super.enable();
         this.spamLockDuration = TimeUnit.SECONDS.toMillis(getConfig().getLong("lockDuration"));
-        this.chatTimestamps = new TObjectLongHashMap<Player>();
+        this.chatTimestamps = new TObjectLongHashMap<String>();
     }
 
     @Override
     public void disable()
     {
         super.disable();
+        this.chatTimestamps.clear();
         this.chatTimestamps = null;
     }
 
@@ -68,9 +70,7 @@ public class SpamPrevention extends Prevention
         {
             if (isChatLocked(player))
             {
-                sendMessage(player);
-                punish(player);
-                event.setCancelled(true);
+                prevent(event, player);
             }
             else
             {
@@ -81,12 +81,12 @@ public class SpamPrevention extends Prevention
 
     private synchronized void setChatLock(final Player player)
     {
-        this.chatTimestamps.put(player, System.currentTimeMillis() + this.spamLockDuration);
+        this.chatTimestamps.put(player.getName(), System.currentTimeMillis() + this.spamLockDuration);
     }
     
     private synchronized boolean isChatLocked(final Player player)
     {
-        final long nextPossible = this.chatTimestamps.get(player);
+        final long nextPossible = this.chatTimestamps.get(player.getName());
         if (nextPossible == 0)
         {
             return false;
@@ -97,6 +97,7 @@ public class SpamPrevention extends Prevention
         {
             return false;
         }
+        this.chatTimestamps.remove(player.getName());
         return true;
     }
 }

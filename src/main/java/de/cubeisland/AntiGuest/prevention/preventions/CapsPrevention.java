@@ -54,7 +54,7 @@ public class CapsPrevention extends Prevention
     {
         if (!can(event.getPlayer()))
         {
-            String message = event.getMessage();
+            final String message = event.getMessage();
             final int length = message.length();
             
             int caps = 0;

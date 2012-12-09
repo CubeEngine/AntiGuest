@@ -11,11 +11,11 @@ import org.bukkit.event.Cancellable;
 
 /**
  * This base class represents a prevention that can be filtered.
- * That means it is able to prevent only a subset of actions based an a whitelist or blacklist
+ * That means it is able to checkAndPrevent only a subset of actions based an a whitelist or blacklist
  *
  * @author Phillip Schichtel
  */
-public abstract class FilteredPrevention<T extends Object> extends Prevention
+public abstract class FilteredPrevention<T> extends Prevention
 {
     private Set<T> filterItems;
     private FilterMode filterMode;
@@ -27,7 +27,12 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
 
     public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
     {
-        super(name, plugin, allowPunishing);
+        this(name, plugin, allowPunishing, allowPunishing);
+    }
+
+    public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing, boolean allowViolationLogging)
+    {
+        super(name, plugin, allowPunishing, allowViolationLogging);
         this.filterMode = FilterMode.BLACKLIST;
         this.filterItems = new THashSet<T>(0);
     }
@@ -165,13 +170,11 @@ public abstract class FilteredPrevention<T extends Object> extends Prevention
      * @param item the item representing the subaction
      * @return true if the action was prevented
      */
-    public boolean prevent(final Cancellable event, final Player player, final T item)
+    public boolean checkAndPrevent(final Cancellable event, final Player player, final T item)
     {
         if (!this.can(player, item))
         {
-            event.setCancelled(true);
-            sendMessage(player);
-            punish(player);
+            prevent(event, player);
             return true;
         }
         return false;

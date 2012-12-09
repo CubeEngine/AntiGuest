@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Phillip Schichtel
  */
-public class SpawneggPrevention extends FilteredEntityPrevention
+public class SpawnEggPrevention extends FilteredEntityPrevention
 {
-    public SpawneggPrevention(PreventionPlugin plugin)
+    public SpawnEggPrevention(PreventionPlugin plugin)
     {
         super("spawnegg", plugin, true);
         setEnablePunishing(true);
@@ -32,7 +32,7 @@ public class SpawneggPrevention extends FilteredEntityPrevention
             ItemStack item = event.getItem();
             if (item != null && item.getType() == Material.MONSTER_EGG)
             {
-                if (prevent(event, event.getPlayer(), EntityType.fromId(item.getData().getData())))
+                if (checkAndPrevent(event, event.getPlayer(), EntityType.fromId(item.getData().getData())))
                 {
                     event.setUseInteractedBlock(Event.Result.DENY);
                     event.setUseItemInHand(Event.Result.DENY);

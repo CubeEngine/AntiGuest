@@ -2,15 +2,16 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.FilteredPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * Prevents users from trading
@@ -43,7 +44,7 @@ public class TradingPrevention extends FilteredPrevention<Profession>
     {
         if (event.getRightClicked() instanceof Villager && !can(event.getPlayer()))
         {
-            prevent(event, event.getPlayer(), ((Villager)event.getRightClicked()).getProfession());
+            checkAndPrevent(event, event.getPlayer(), ((Villager)event.getRightClicked()).getProfession());
         }
     }
 }

@@ -28,7 +28,7 @@ public class AfkPrevention extends Prevention
 
     public AfkPrevention(PreventionPlugin plugin)
     {
-        super("afk", plugin, false);
+        super("afk", plugin, false, true);
         this.trackerMap = null;
     }
 
@@ -129,6 +129,7 @@ public class AfkPrevention extends Prevention
         {
             if (!can(this.player))
             {
+                logViolation(this.player);
                 this.player.kickPlayer(getMessage());
             }
         }

@@ -29,7 +29,7 @@ public class NoteblockPrevention extends Prevention
         {
             if (event.getClickedBlock().getType() == Material.NOTE_BLOCK)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

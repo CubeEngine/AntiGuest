@@ -7,9 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-public class ItemframePrevention extends Prevention
+public class ItemFramePrevention extends Prevention
 {
-    public ItemframePrevention(PreventionPlugin plugin)
+    public ItemFramePrevention(PreventionPlugin plugin)
     {
         super("itemframe", plugin);
         setEnableByDefault(true);
@@ -17,11 +17,11 @@ public class ItemframePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
+    public void interactEntity(PlayerInteractEntityEvent event)
     {
         if (event.getRightClicked() instanceof Hanging)
         {
-            prevent(event, event.getPlayer());
+            checkAndPrevent(event, event.getPlayer());
         }
     }
 }

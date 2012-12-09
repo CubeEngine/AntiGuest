@@ -27,7 +27,7 @@ public class WorkbenchPrevention extends Prevention
         {
             if (event.getPlayer() instanceof Player)
             {
-                prevent(event, (Player)event.getPlayer());
+                checkAndPrevent(event, (Player)event.getPlayer());
             }
         }
     }

@@ -12,9 +12,9 @@ import org.bukkit.event.hanging.HangingPlaceEvent;
  *
  * @author Phillip Schichtel
  */
-public class PlaceblockPrevention extends FilteredItemPrevention
+public class PlaceBlockPrevention extends FilteredItemPrevention
 {
-    public PlaceblockPrevention(PreventionPlugin plugin)
+    public PlaceBlockPrevention(PreventionPlugin plugin)
     {
         super("placeblock", plugin);
         setEnableByDefault(true);
@@ -25,12 +25,12 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void place(BlockPlaceEvent event)
     {
-        prevent(event, event.getPlayer(), event.getBlockPlaced().getType());
+        checkAndPrevent(event, event.getPlayer(), event.getBlockPlaced().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void place(HangingPlaceEvent event)
     {
-        prevent(event, event.getPlayer());
+        checkAndPrevent(event, event.getPlayer());
     }
 }

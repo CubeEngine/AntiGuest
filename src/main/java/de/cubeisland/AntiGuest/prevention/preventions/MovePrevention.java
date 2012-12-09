@@ -12,6 +12,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Prevents movement
  *
@@ -24,7 +26,7 @@ public class MovePrevention extends Prevention
     public MovePrevention(PreventionPlugin plugin)
     {
         super("move", plugin, false);
-        setThrottleDelay(3);
+        setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @Override

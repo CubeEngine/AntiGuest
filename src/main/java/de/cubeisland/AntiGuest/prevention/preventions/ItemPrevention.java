@@ -2,7 +2,6 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.FilteredItemPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import java.util.EnumSet;
 import org.bukkit.Material;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
@@ -10,6 +9,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.EnumSet;
 
 /**
  * Prevents item usage
@@ -40,7 +41,7 @@ public class ItemPrevention extends FilteredItemPrevention
             final ItemStack itemInHand = event.getItem();
             if (itemInHand != null)
             {
-                if (prevent(event, event.getPlayer(), event.getItem().getType()))
+                if (checkAndPrevent(event, event.getPlayer(), event.getItem().getType()))
                 {
                     event.setUseInteractedBlock(Result.DENY);
                     event.setUseItemInHand(Result.DENY);

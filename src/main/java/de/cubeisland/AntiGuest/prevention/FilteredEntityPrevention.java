@@ -1,9 +1,10 @@
 package de.cubeisland.AntiGuest.prevention;
 
+import org.bukkit.entity.EntityType;
+
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.entity.EntityType;
 
 /**
  * This class represents a filterable Prevention related to Materials
@@ -19,7 +20,12 @@ public abstract class FilteredEntityPrevention extends FilteredPrevention<Entity
 
     public FilteredEntityPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
     {
-        super(name, plugin, allowPunishing);
+        this(name, plugin, allowPunishing, allowPunishing);
+    }
+
+    public FilteredEntityPrevention(String name, PreventionPlugin plugin, boolean allowPunishing, boolean allowViolationLogging)
+    {
+        super(name, plugin, allowPunishing, allowViolationLogging);
         setFilterItems(EnumSet.of(EntityType.CREEPER));
         setFilterMode(FilterMode.NONE);
     }

@@ -24,7 +24,7 @@ public class MilkingPrevention extends Prevention
     {
         if (event.getItemStack().getType() == Material.MILK_BUCKET)
         {
-            prevent(event, event.getPlayer());
+            checkAndPrevent(event, event.getPlayer());
         }
     }
 }

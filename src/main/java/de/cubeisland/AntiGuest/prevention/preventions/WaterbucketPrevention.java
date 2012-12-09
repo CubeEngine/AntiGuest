@@ -32,7 +32,7 @@ public class WaterbucketPrevention extends Prevention
     {
         if (event.getBucket() == Material.WATER_BUCKET)
         {
-            prevent(event, event.getPlayer());
+            checkAndPrevent(event, event.getPlayer());
         }
     }
 
@@ -41,7 +41,7 @@ public class WaterbucketPrevention extends Prevention
     {
         if (event.getItemStack().getType() == Material.WATER_BUCKET)
         {
-            prevent(event, event.getPlayer());
+            checkAndPrevent(event, event.getPlayer());
         }
     }
 }

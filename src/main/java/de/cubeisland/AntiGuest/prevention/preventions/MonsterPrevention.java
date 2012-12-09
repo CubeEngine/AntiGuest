@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityTargetEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Prevents targeting by monsters
  *
@@ -20,7 +22,7 @@ public class MonsterPrevention extends FilteredEntityPrevention
     {
         super("monster", plugin, false);
         setEnableByDefault(true);
-        setThrottleDelay(3);
+        setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -31,7 +33,7 @@ public class MonsterPrevention extends FilteredEntityPrevention
             final Entity target = event.getTarget();
             if (target instanceof Player)
             {
-                prevent(event, (Player)target, event.getEntityType());
+                checkAndPrevent(event, (Player)target, event.getEntityType());
             }
         }
     }

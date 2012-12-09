@@ -28,12 +28,13 @@ import java.util.logging.Logger;
 public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 {
     private static Logger logger = null;
-    
-    private File dataFolder;
-    private File preventionConfigFolder;
+
+    private        File        dataFolder;
+    private        File        preventionConfigFolder;
     private static Translation translation;
-    private BaseCommand baseCommand;
-    private boolean punishments;
+    private        BaseCommand baseCommand;
+    private        boolean     punishments;
+    private        boolean     logViolations;
 
     @Override
     public void onEnable()
@@ -42,13 +43,13 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         this.dataFolder = this.getDataFolder();
         this.dataFolder.mkdirs();
         this.preventionConfigFolder = new File(this.dataFolder, "preventions");
-        
+
         reloadConfig();
         Configuration config = getConfig();
         this.convertConfig((FileConfiguration)config);
         config.addDefault("language", System.getProperty("user.language", "en"));
         config.options().copyDefaults(true);
-        
+
         translation = Translation.get(this.getClass(), getConfig().getString("language"));
         if (translation == null)
         {
@@ -57,10 +58,10 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         }
         saveConfig();
         this.punishments = config.getBoolean("punishments");
+        this.logViolations = config.getBoolean("log-violations");
 
         this.baseCommand = new BaseCommand(this, "antiguest.commands.");
-        this.baseCommand.registerCommands(new BasicCommands(this))
-                        .registerCommands(new PreventionManagementCommands());
+        this.baseCommand.registerCommands(new BasicCommands(this)).registerCommands(new PreventionManagementCommands());
 
         getCommand("antiguest").setExecutor(baseCommand);
 
@@ -82,12 +83,12 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new AfkPrevention(this))
             .registerPrevention(new BedPrevention(this))
             .registerPrevention(new BowPrevention(this))
-            .registerPrevention(new BreakblockPrevention(this))
+            .registerPrevention(new BreakBlockPrevention(this))
             .registerPrevention(new BrewPrevention(this))
             .registerPrevention(new ButtonPrevention(this))
             .registerPrevention(new CakePrevention(this))
             .registerPrevention(new CapsPrevention(this))
-            .registerPrevention(new ChangesignPrevention(this))
+            .registerPrevention(new ChangeSignPrevention(this))
             .registerPrevention(new ChatPrevention(this))
             .registerPrevention(new ChestPrevention(this))
             .registerPrevention(new CommandPrevention(this))
@@ -99,9 +100,9 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new FightPrevention(this))
             .registerPrevention(new FishPrevention(this))
             .registerPrevention(new FurnacePrevention(this))
-            .registerPrevention(new GuestlimitPrevention(this))
+            .registerPrevention(new GuestLimitPrevention(this))
             .registerPrevention(new HungerPrevention(this))
-            .registerPrevention(new ItemframePrevention(this))
+            .registerPrevention(new ItemFramePrevention(this))
             .registerPrevention(new ItemPrevention(this))
             .registerPrevention(new JukeboxPrevention(this))
             .registerPrevention(new LavabucketPrevention(this))
@@ -111,13 +112,13 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new MovePrevention(this))
             .registerPrevention(new NoteblockPrevention(this))
             .registerPrevention(new PickupPrevention(this))
-            .registerPrevention(new PlaceblockPrevention(this))
+            .registerPrevention(new PlaceBlockPrevention(this))
             .registerPrevention(new PressureplatePrevention(this))
             .registerPrevention(new RepeaterPrevention(this))
             .registerPrevention(new ShearPrevention(this))
             .registerPrevention(new SneakPrevention(this))
             .registerPrevention(new SpamPrevention(this))
-            .registerPrevention(new SpawneggPrevention(this))
+            .registerPrevention(new SpawnEggPrevention(this))
             .registerPrevention(new SwearPrevention(this))
             .registerPrevention(new TamePrevention(this))
             .registerPrevention(new TradingPrevention(this))
@@ -255,5 +256,10 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     public boolean allowPunishments()
     {
         return this.punishments;
+    }
+
+    public boolean logViolations()
+    {
+        return this.logViolations;
     }
 }

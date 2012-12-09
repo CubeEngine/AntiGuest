@@ -28,7 +28,7 @@ public class LeverPrevention extends Prevention
         {
             if (event.getClickedBlock().getType() == Material.LEVER)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

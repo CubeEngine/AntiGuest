@@ -29,7 +29,7 @@ public class RepeaterPrevention extends Prevention
             final Material material = event.getClickedBlock().getType();
             if (material == Material.DIODE_BLOCK_ON || material == Material.DIODE_BLOCK_OFF)
             {
-                prevent(event, event.getPlayer());
+                checkAndPrevent(event, event.getPlayer());
             }
         }
     }

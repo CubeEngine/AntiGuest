@@ -22,6 +22,6 @@ public class ChatPrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void chat(AsyncPlayerChatEvent event)
     {
-        prevent(event, event.getPlayer());
+        checkAndPrevent(event, event.getPlayer());
     }
 }

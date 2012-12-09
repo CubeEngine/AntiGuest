@@ -29,53 +29,53 @@ and even more complex setups, it's completely up to you.
 
 === Preventions ===
 
-|=Name          |=Prevents from ...                                                         |=Enabled by default    |=Filterable    |=Punishable    |
-|afk            |idling players by kicking them after a configured time                     | no                    | no            | no            |
-|bed            |sleeping                                                                   | no                    | no            | yes           |
-|bow            |shooting bows                                                              | yes                   | no            | yes           |
-|breakblock     |breaking blocks                                                            | yes                   | yes           | yes           |
-|brew           |brewing                                                                    | no                    | no            | yes           |
-|button         |pushing buttons                                                            | no                    | no            | yes           |
-|cake           |eating cakes                                                               | no                    | no            | yes           |
-|caps           |writing all-caps messages                                                  | no                    | no            | yes           |
-|changesign     |changing signs                                                             | yes                   | no            | yes           |
-|chat           |chatting                                                                   | no                    | no            | yes           |
-|chest          |accessing chests                                                           | yes                   | no            | yes           |
-|command        |using specific commands                                                    | yes                   | yes           | yes           |
-|damage         |getting damaged                                                            | no                    | yes           | no            |
-|dispenser      |accessing dispensers                                                       | no                    | no            | yes           |
-|door           |opening or closing doors (including fence gates)                           | yes                   | yes           | yes           |
-|drop           |dropping specific items                                                    | no                    | yes           | yes           |
-|enchant        |accessing enchantment tables                                               | no                    | no            | yes           |
-|fight          |damaging other players                                                     | yes                   | no            | yes           |
-|fish           |fishing                                                                    | no                    | no            | yes           |
-|furnace        |accessing furnaces                                                         | no                    | no            | yes           |
-|guestlimit     |getting too many guests                                                    | no                    | no            | no            |
-|hunger         |starvation                                                                 | yes                   | no            | no            |
-|hunger         |changing item frames                                                       | yes                   | no            | yes           |
-|item           |using specific items                                                       | no                    | yes           | yes           |
-|jukebox        |using jukeboxes                                                            | no                    | no            | yes           |
-|lavabucket     |using lava buckets                                                         | yes                   | no            | yes           |
-|lever          |using levers                                                               | no                    | no            | yes           |
-|milking        |milking cows                                                               | no                    | no            | yes           |
-|monster        |getting targeted by mosters                                                | yes                   | yes           | yes           |
-|move           |moving too far                                                             | yes                   | no            | yes           |
-|noteblock      |using noteblocks                                                           | no                    | no            | yes           |
-|pickup         |picking up specific items                                                  | no                    | yes           | yes           |
-|placeblock     |placing blocks                                                             | yes                   | yes           | yes           |
-|pressureplate  |triggering pressure plates                                                 | no                    | no            | yes           |
-|repeater       |changing the repeater delays                                               | no                    | no            | yes           |
-|shear          |shearing animals                                                           | no                    | no            | yes           |
-|sneak          |sneaking (hiding the name above his head)                                  | no                    | no            | yes           |
-|spam           |spam                                                                       | yes                   | no            | yes           |
-|spawnegg       |using spawneggs                                                            | no                    | yes           | yes           |
-|swear          |swearing                                                                   | yes                   | no            | yes           |
-|tame           |taming animals                                                             | no                    | no            | yes           |
-|trading        |trading with villagers                                                     | no                    | no            | yes           |
-|trample        |trampling crops                                                            | no                    | no            | yes           |
-|vehicle        |using vehicles (entering, placing, destroying, pushing)                    | no                    | no            | yes           |
-|waterbucket    |using water buckets                                                        | yes                   | no            | yes           |
-|workbench      |accessing workbenches                                                      | no                    | no            | yes           |
+|=Name           |=Prevents from ...                                                          |=On by default    |=Filterable    |=Punishable    |=Loggable |
+| afk            | idling players by kicking them after a configured time                     | no               | no            | no            | yes      |
+| bed            | sleeping                                                                   | no               | no            | yes           | yes      |
+| bow            | shooting bows                                                              | yes              | no            | yes           | yes      |
+| breakblock     | breaking blocks                                                            | yes              | yes           | yes           | yes      |
+| brew           | brewing                                                                    | no               | no            | yes           | yes      |
+| button         | pushing buttons                                                            | no               | no            | yes           | yes      |
+| cake           | eating cakes                                                               | no               | no            | yes           | yes      |
+| caps           | writing all-caps messages                                                  | no               | no            | yes           | yes      |
+| changesign     | changing signs                                                             | yes              | no            | yes           | yes      |
+| chat           | chatting                                                                   | no               | no            | yes           | yes      |
+| chest          | accessing chests                                                           | yes              | no            | yes           | yes      |
+| command        | using specific commands                                                    | no               | yes           | yes           | yes      |
+| damage         | getting damaged                                                            | no               | yes           | no            | no       |
+| dispenser      | accessing dispensers                                                       | no               | no            | yes           | yes      |
+| door           | opening or closing doors (including fence gates)                           | yes              | yes           | yes           | yes      |
+| drop           | dropping specific items                                                    | no               | yes           | yes           | yes      |
+| enchant        | accessing enchantment tables                                               | no               | no            | yes           | yes      |
+| fight          | damaging other players                                                     | yes              | no            | yes           | yes      |
+| fish           | fishing                                                                    | no               | no            | yes           | yes      |
+| furnace        | accessing furnaces                                                         | no               | no            | yes           | yes      |
+| guestlimit     | getting too many guests                                                    | no               | no            | no            | no       |
+| hunger         | starvation                                                                 | yes              | no            | no            | no       |
+| itemframe      | changing item frames                                                       | yes              | no            | yes           | yes      |
+| item           | using specific items                                                       | no               | yes           | yes           | yes      |
+| jukebox        | using jukeboxes                                                            | no               | no            | yes           | yes      |
+| lavabucket     | using lava buckets                                                         | yes              | no            | yes           | yes      |
+| lever          | using levers                                                               | no               | no            | yes           | yes      |
+| milking        | milking cows                                                               | no               | no            | yes           | yes      |
+| monster        | getting targeted by mosters                                                | yes              | yes           | yes           | no       |
+| move           | moving too far                                                             | yes              | no            | yes           | no       |
+| noteblock      | using noteblocks                                                           | no               | no            | yes           | yes      |
+| pickup         | picking up specific items                                                  | no               | yes           | no            | no       |
+| placeblock     | placing blocks                                                             | yes              | yes           | yes           | yes      |
+| pressureplate  | triggering pressure plates                                                 | no               | no            | yes           | yes      |
+| repeater       | changing the repeater delays                                               | no               | no            | yes           | yes      |
+| shear          | shearing animals                                                           | no               | no            | yes           | yes      |
+| sneak          | sneaking (hiding the name above his head)                                  | no               | no            | yes           | yes      |
+| spam           | spam                                                                       | yes              | no            | yes           | yes      |
+| spawnegg       | using spawneggs                                                            | no               | yes           | yes           | yes      |
+| swear          | swearing                                                                   | yes              | no            | yes           | yes      |
+| tame           | taming animals                                                             | no               | no            | yes           | yes      |
+| trading        | trading with villagers                                                     | no               | no            | yes           | yes      |
+| trample        | trampling crops                                                            | no               | no            | yes           | yes      |
+| vehicle        | using vehicles (entering, placing, destroying, pushing)                    | no               | no            | yes           | yes      |
+| waterbucket    | using water buckets                                                        | yes              | no            | yes           | yes      |
+| workbench      | accessing workbenches                                                      | no               | no            | yes           | yes      |
 
 
 ===== Filtering =====
@@ -125,17 +125,17 @@ No configuration is specified as {}
 
 General syntax: **/antiguest <command>** or **/ag <command>**
 
-|=Command                           |=Description                                                       |
-|help                               |prints a help text                                                 |
-|can [player] <preventionname>      |checks whether the player (or another player) passes a prevention  |
-|list [-a]                          |lists the active or all registered preventions                     |
-|reload [prevention]                |reloads the plugin                                                 |
-|setmessage <prevention> <message>  |sets the message of a prevention                                   |
-|language [language]                |shows or sets the language                                         |
-|badword <word>                     |adds a badword to the swear prevention                             |
-|{{{disable <prevention|*> [-t]}}}  |disables a specific prevention or all at once                      |
-|{{{enable <prevention|*> [-t]}}}   |enables a specific prevention or all at once                       |
-|reset                              |resets all configurations                                          |
+|=Command                            |=Description                                                        |
+| help                               | prints a help text                                                 |
+| can [player] <preventionname>      | checks whether the player (or another player) passes a prevention  |
+| list [-a]                          | lists the active or all registered preventions                     |
+| reload [prevention]                | reloads the plugin                                                 |
+| setmessage <prevention> <message>  | sets the message of a prevention                                   |
+| language [language]                | shows or sets the language                                         |
+| badword <word>                     | adds a badword to the swear prevention                             |
+| {{{disable <prevention|*> [-t]}}}  | disables a specific prevention or all at once                      |
+| {{{enable <prevention|*> [-t]}}}   | enables a specific prevention or all at once                       |
+| reset                              | resets all configurations                                          |
 
 
 === Installation ===
@@ -153,12 +153,13 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 
 === Permissions ===
 
-|=Permission node                   |=Description                                       |
-|antiguest.*                        |Allows the player to do everything                 |
-|antiguest.commands.*               |Allows the player to run all commands              |
-|antiguest.commands.<command>       |Allows the player to run the specific command      |
-|antiguest.preventions.*            |Allows the player to pass all preventions          |
-|antiguest.preventions.<prevention> |Allows the player to pass the specific prevention  |
+|=Permission node                    |=Description                                        |=Default      |
+| antiguest,violation-notification   | The player will receive violation notifications    | not assigned |
+| antiguest.*                        | Allows the player to do everything                 | operators    |
+| antiguest.commands.*               | Allows the player to run all commands              | operators    |
+| antiguest.commands.<command>       | Allows the player to run the specific command      | operators    |
+| antiguest.preventions.*            | Allows the player to pass all preventions          | operators    |
+| antiguest.preventions.<prevention> | Allows the player to pass the specific prevention  | operators    |
 
 ----
 

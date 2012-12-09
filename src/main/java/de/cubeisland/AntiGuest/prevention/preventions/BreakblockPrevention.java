@@ -19,9 +19,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  *
  * @author Phillip Schichtel
  */
-public class BreakblockPrevention extends FilteredItemPrevention
+public class BreakBlockPrevention extends FilteredItemPrevention
 {
-    public BreakblockPrevention(PreventionPlugin plugin)
+    public BreakBlockPrevention(PreventionPlugin plugin)
     {
         super("breakblock", plugin);
         setEnableByDefault(true);
@@ -32,7 +32,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void blockBreak(BlockBreakEvent event)
     {
-        prevent(event, event.getPlayer(), event.getBlock().getType());
+        checkAndPrevent(event, event.getPlayer(), event.getBlock().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -41,7 +41,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
         final Entity remover = event.getRemover();
         if (remover instanceof Player)
         {
-            prevent(event, (Player)remover, Material.PAINTING);
+            checkAndPrevent(event, (Player)remover, Material.PAINTING);
         }
     }
 
@@ -52,7 +52,7 @@ public class BreakblockPrevention extends FilteredItemPrevention
         {
             if (event.getClickedBlock().getRelative(BlockFace.UP).getType() == Material.FIRE)
             {
-                if (prevent(event, event.getPlayer(), Material.FIRE))
+                if (checkAndPrevent(event, event.getPlayer(), Material.FIRE))
                 {
                     event.setUseInteractedBlock(Event.Result.DENY);
                     event.setUseItemInHand(Event.Result.DENY);

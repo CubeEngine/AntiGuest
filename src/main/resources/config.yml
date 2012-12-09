@@ -1,3 +1,4 @@
 debug: false
 language: en
 punishments: true
+log-violations: false

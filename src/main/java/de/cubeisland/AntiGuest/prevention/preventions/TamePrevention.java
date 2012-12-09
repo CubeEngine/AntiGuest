@@ -25,7 +25,7 @@ public class TamePrevention extends Prevention
     {
         if (event.getOwner() instanceof Player)
         {
-            prevent(event, (Player)event.getOwner());
+            checkAndPrevent(event, (Player)event.getOwner());
         }
     }
 }

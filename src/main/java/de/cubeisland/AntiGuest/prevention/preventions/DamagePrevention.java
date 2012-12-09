@@ -2,10 +2,6 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.FilteredPrevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -16,6 +12,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PotionSplashEvent;
+
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Prevents damage
@@ -31,7 +33,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     public DamagePrevention(PreventionPlugin plugin)
     {
         super("damage", plugin, false);
-        setThrottleDelay(3);
+        setThrottleDelay(3, TimeUnit.SECONDS);
         setFilterMode(FilterMode.WHITELIST);
         setFilterItems(EnumSet.of(DamageCause.VOID));
         this.damagerMessage = null;
@@ -114,7 +116,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         if (entity instanceof Player)
         {
             final Player player = (Player)entity;
-            if (prevent(event, player, event.getCause()) && this.damagerMessage != null)
+            if (checkAndPrevent(event, player, event.getCause()) && this.damagerMessage != null)
             {
                 player.setFireTicks(0);
                 if (event instanceof EntityDamageByEntityEvent)

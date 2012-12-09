@@ -14,6 +14,8 @@ import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Prevents vehicle usage
  *
@@ -29,7 +31,7 @@ public class VehiclePrevention extends Prevention
     public VehiclePrevention(PreventionPlugin plugin)
     {
         super("vehicle", plugin);
-        setThrottleDelay(3);
+        setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @Override
@@ -37,10 +39,10 @@ public class VehiclePrevention extends Prevention
     {
         super.enable();
 
-        this.access      = getConfig().getBoolean("prevent.access");
-        this.destruction = getConfig().getBoolean("prevent.destruction");
-        this.collision   = getConfig().getBoolean("prevent.collision");
-        this.creation    = getConfig().getBoolean("prevent.creation");
+        this.access      = getConfig().getBoolean("checkAndPrevent.access");
+        this.destruction = getConfig().getBoolean("checkAndPrevent.destruction");
+        this.collision   = getConfig().getBoolean("checkAndPrevent.collision");
+        this.creation    = getConfig().getBoolean("checkAndPrevent.creation");
     }
 
     @Override
@@ -48,10 +50,10 @@ public class VehiclePrevention extends Prevention
     {
         Configuration defaultConfig = super.getDefaultConfig();
 
-        defaultConfig.set("prevent.access", true);
-        defaultConfig.set("prevent.destruction", true);
-        defaultConfig.set("prevent.collision", true);
-        defaultConfig.set("prevent.creation", true);
+        defaultConfig.set("checkAndPrevent.access", true);
+        defaultConfig.set("checkAndPrevent.destruction", true);
+        defaultConfig.set("checkAndPrevent.collision", true);
+        defaultConfig.set("checkAndPrevent.creation", true);
 
         return defaultConfig;
     }
@@ -66,7 +68,7 @@ public class VehiclePrevention extends Prevention
         final Entity entered = event.getEntered();
         if (entered instanceof Player)
         {
-            prevent(event, (Player)entered);
+            checkAndPrevent(event, (Player)entered);
         }
     }
 
@@ -80,7 +82,7 @@ public class VehiclePrevention extends Prevention
         final Entity attacker = event.getAttacker();
         if (attacker instanceof Player)
         {
-            prevent(event, (Player)attacker);
+            checkAndPrevent(event, (Player)attacker);
         }
     }
 
@@ -94,7 +96,7 @@ public class VehiclePrevention extends Prevention
         final Entity collider = event.getEntity();
         if (collider instanceof Player)
         {
-            if (prevent(event, (Player)collider))
+            if (checkAndPrevent(event, (Player)collider))
             {
                 event.setCollisionCancelled(true);
                 event.setPickupCancelled(true);
@@ -118,14 +120,14 @@ public class VehiclePrevention extends Prevention
             {
                 if (materialInHand == Material.MINECART || materialInHand == Material.POWERED_MINECART || materialInHand == Material.STORAGE_MINECART)
                 {
-                    prevent(event, player);
+                    checkAndPrevent(event, player);
                 }
             }
             else
             {
                 if (materialInHand == Material.BOAT)
                 {
-                    prevent(event, player);
+                    checkAndPrevent(event, player);
                 }
             }
         }
