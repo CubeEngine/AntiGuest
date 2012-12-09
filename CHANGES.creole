@@ -5,6 +5,9 @@
 * added a villager trading prevention
 * added a all-caps prevention
 * chanegd PoisonPunishment to PotionPunishment
+* updated to Bukkit-1.4.5-R0.3
+* added a item frame prevention
+* fixed some wrong french translation keys
 
 === Version 3.5.0 ===
 * fixed the move prevention throwing errors

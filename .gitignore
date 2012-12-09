@@ -1,6 +1,9 @@
+.idea/
+.settings/
 build/
 dist/
 nbproject/
 target/
 nb*.xml
 *.properties
+*.iml

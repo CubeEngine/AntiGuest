@@ -5,7 +5,7 @@ import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.painting.PaintingPlaceEvent;
+import org.bukkit.event.hanging.HangingPlaceEvent;
 
 /**
  * Prevents placing blocks
@@ -29,7 +29,7 @@ public class PlaceblockPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void place(PaintingPlaceEvent event)
+    public void place(HangingPlaceEvent event)
     {
         prevent(event, event.getPlayer());
     }

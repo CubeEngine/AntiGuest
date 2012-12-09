@@ -10,11 +10,6 @@ import de.cubeisland.AntiGuest.prevention.preventions.*;
 import de.cubeisland.AntiGuest.prevention.punishments.*;
 import de.cubeisland.libMinecraft.command.BaseCommand;
 import de.cubeisland.libMinecraft.translation.Translation;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,6 +18,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 {
@@ -100,6 +101,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new FurnacePrevention(this))
             .registerPrevention(new GuestlimitPrevention(this))
             .registerPrevention(new HungerPrevention(this))
+            .registerPrevention(new ItemframePrevention(this))
             .registerPrevention(new ItemPrevention(this))
             .registerPrevention(new JukeboxPrevention(this))
             .registerPrevention(new LavabucketPrevention(this))

@@ -31,7 +31,7 @@ public class AfkPrevention extends Prevention
         super("afk", plugin, false);
         this.trackerMap = null;
     }
-    
+
     @Override
     public Configuration getDefaultConfig()
     {

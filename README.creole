@@ -52,6 +52,7 @@ and even more complex setups, it's completely up to you.
 |furnace        |accessing furnaces                                                         | no                    | no            | yes           |
 |guestlimit     |getting too many guests                                                    | no                    | no            | no            |
 |hunger         |starvation                                                                 | yes                   | no            | no            |
+|hunger         |changing item frames                                                       | yes                   | no            | yes           |
 |item           |using specific items                                                       | no                    | yes           | yes           |
 |jukebox        |using jukeboxes                                                            | no                    | no            | yes           |
 |lavabucket     |using lava buckets                                                         | yes                   | no            | yes           |
