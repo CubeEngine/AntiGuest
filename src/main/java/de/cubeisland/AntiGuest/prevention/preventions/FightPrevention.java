@@ -36,9 +36,25 @@ public class FightPrevention extends Prevention
     {
         super.enable();
 
-        this.players = getConfig().getBoolean("checkAndPrevent.players");
-        this.monsters = getConfig().getBoolean("checkAndPrevent.monsters");
-        this.animals = getConfig().getBoolean("checkAndPrevent.animals");
+        this.players = getConfig().getBoolean("prevent.players");
+        this.monsters = getConfig().getBoolean("prevent.monsters");
+        this.animals = getConfig().getBoolean("prevent.animals");
+
+        if (getConfig().contains("checkAndPrevent.players"))
+        {
+            this.players = getConfig().getBoolean("prevent.players");
+            getConfig().set("checkAndPrevent.players", null);
+        }
+        if (getConfig().contains("checkAndPrevent.monsters"))
+        {
+            this.players = getConfig().getBoolean("prevent.monsters");
+            getConfig().set("checkAndPrevent.players", null);
+        }
+        if (getConfig().contains("checkAndPrevent.animals"))
+        {
+            this.players = getConfig().getBoolean("prevent.animals");
+            getConfig().set("checkAndPrevent.players", null);
+        }
     }
 
     @Override
@@ -46,9 +62,9 @@ public class FightPrevention extends Prevention
     {
         Configuration defaultConfig = super.getDefaultConfig();
 
-        defaultConfig.set("checkAndPrevent.players", true);
-        defaultConfig.set("checkAndPrevent.monsters", true);
-        defaultConfig.set("checkAndPrevent.animals", true);
+        defaultConfig.set("prevent.players", true);
+        defaultConfig.set("prevent.monsters", true);
+        defaultConfig.set("prevent.animals", true);
 
         return defaultConfig;
     }
