@@ -1,5 +1,12 @@
 == Changes ==
 
+=== Version 3.7.0 ===
+* fixed the throttle delay conversion
+* added an anvil prevention
+* updated the french translations
+* fixed a ConcurrentModificationException in the damage prevention's splash potion handling
+* fixed a wrong configuration key introduced in the last version
+
 === Version 3.6.0 ===
 * removed the debug output from the swear prevention
 * added a villager trading prevention

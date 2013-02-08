@@ -31,6 +31,7 @@ and even more complex setups, it's completely up to you.
 
 |=Name           |=Prevents from ...                                                          |=On by default    |=Filterable    |=Punishable    |=Loggable |
 | afk            | idling players by kicking them after a configured time                     | no               | no            | no            | yes      |
+| anvil          | using anvils                                                               | no               | no            | yes           | yes      |
 | bed            | sleeping                                                                   | no               | no            | yes           | yes      |
 | bow            | shooting bows                                                              | yes              | no            | yes           | yes      |
 | breakblock     | breaking blocks                                                            | yes              | yes           | yes           | yes      |
