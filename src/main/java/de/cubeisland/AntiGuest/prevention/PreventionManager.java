@@ -2,14 +2,15 @@ package de.cubeisland.AntiGuest.prevention;
 
 import de.cubeisland.AntiGuest.AntiGuest;
 import gnu.trove.map.hash.THashMap;
-import java.util.ArrayList;
-import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This class manages the Prevention's.
@@ -94,7 +95,7 @@ public class PreventionManager
             {
                 this.pm.addPermission(perm);
             }
-            catch (IllegalArgumentException e)
+            catch (IllegalArgumentException ignored)
             {}
             perm.addParent(this.parentPermission, true);
         }
@@ -128,9 +129,7 @@ public class PreventionManager
      * Enables the named prevention if registered
      * 
      * @param prevention the preventions name
-     * @param server an Server instance
-     * @param config the prevention's configuration
-     * @return true if the intialization was successful
+     * @return true if the initialization was successful
      */
     public boolean enablePrevention(final Prevention prevention)
     {
@@ -155,8 +154,7 @@ public class PreventionManager
     /**
      * This method loads all registered preventions based on the given ConfigurationSection and the default configuraiton.
      * The given ConfigurationSection should have a key "preventions" on top level, otherwise this will fail
-     * 
-     * @param config the configuration
+     *
      * @return fluent interface
      */
     public PreventionManager enablePreventions()
@@ -279,7 +277,7 @@ public class PreventionManager
     /**
      * Unregisteres a punishment by its name
      *
-     * @param punishment the name of the punishment to unregister
+     * @param name the name of the punishment to unregister
      * @return fluent interface
      */
     public PreventionManager unregisterPunishment(String name)

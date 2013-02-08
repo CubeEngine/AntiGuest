@@ -289,7 +289,7 @@ public abstract class Prevention implements Listener
                                 }
                             }
                         }
-                        catch (NumberFormatException e)
+                        catch (NumberFormatException ignored)
                         {}
                     }
                 }
@@ -368,7 +368,7 @@ public abstract class Prevention implements Listener
     /**
      * Sets the enabled state of this prevention
      *
-     * @param enable
+     * @param enable the new enabled state
      */
     public final void setEnabled(boolean enable)
     {
@@ -442,8 +442,6 @@ public abstract class Prevention implements Listener
 
     /**
      * Sets the delay this preventions uses for throttled messages
-     *
-     * @return the delay
      */
     public void setThrottleDelay(long delay)
     {
