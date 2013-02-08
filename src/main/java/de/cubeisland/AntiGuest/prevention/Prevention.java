@@ -232,17 +232,15 @@ public abstract class Prevention implements Listener
     {
         this.setMessage(this.getConfig().getString("message"));
         this.setThrottleDelay(this.getConfig().getInt("throttleDelay", 0), TimeUnit.SECONDS);
-        if (this.getThrottleDelay() > 0)
-        {
-            this.messageThrottleTimestamps = new TObjectLongHashMap<String>();
-            if (this.allowViolationLogging)
-            {
-                this.logViolations = this.getConfig().getBoolean("log-violations");
 
-                if (this.getLogViolations())
-                {
-                    this.logThrottleTimestamps = new TObjectLongHashMap<String>();
-                }
+        this.messageThrottleTimestamps = new TObjectLongHashMap<String>();
+        if (this.allowViolationLogging)
+        {
+            this.logViolations = this.getConfig().getBoolean("log-violations");
+
+            if (this.getLogViolations())
+            {
+                this.logThrottleTimestamps = new TObjectLongHashMap<String>();
             }
         }
 
@@ -314,17 +312,26 @@ public abstract class Prevention implements Listener
 
         if (this.getAllowPunishing() && this.getEnablePunishing())
         {
-            this.playerViolationMap.clear();
-            this.playerViolationMap = null;
+            if (this.playerViolationMap != null)
+            {
+                this.playerViolationMap.clear();
+                this.playerViolationMap = null;
+            }
 
-            this.punishThrottleTimestamps.clear();
-            this.punishThrottleTimestamps = null;
-            
-            this.violationPunishmentMap.clear();
-            this.violationPunishmentMap = null;
+            if (this.punishThrottleTimestamps != null)
+            {
+                this.punishThrottleTimestamps.clear();
+                this.punishThrottleTimestamps = null;
+            }
+
+            if (this.violationPunishmentMap != null)
+            {
+                this.violationPunishmentMap.clear();
+                this.violationPunishmentMap = null;
+            }
         }
 
-        if (this.getAllowViolationLogging() && this.getLogViolations())
+        if (this.getAllowViolationLogging() && this.getLogViolations() && this.logThrottleTimestamps != null)
         {
             this.logThrottleTimestamps.clear();
             this.logThrottleTimestamps = null;
