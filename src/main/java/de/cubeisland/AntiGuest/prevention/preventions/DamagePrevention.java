@@ -139,7 +139,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         Player affectedPlayer;
         Entity shooter = event.getPotion().getShooter();
         int affectedCount = 0;
-        
+
         Iterator<LivingEntity> iter = affectedEntities.iterator();
         LivingEntity entity;
         while (iter.hasNext())

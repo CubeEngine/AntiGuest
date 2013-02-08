@@ -437,7 +437,7 @@ public abstract class Prevention implements Listener
 
     public long getThrottleDelay(TimeUnit unit)
     {
-        return TimeUnit.MILLISECONDS.convert(this.getThrottleDelay(), unit);
+        return unit.convert(this.getThrottleDelay(), TimeUnit.MILLISECONDS);
     }
 
     /**
