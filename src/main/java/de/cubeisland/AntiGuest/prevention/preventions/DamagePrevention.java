@@ -13,10 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PotionSplashEvent;
 
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -142,15 +139,19 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         Player affectedPlayer;
         Entity shooter = event.getPotion().getShooter();
         int affectedCount = 0;
-        for (LivingEntity entity : affectedEntities)
+        
+        Iterator<LivingEntity> iter = affectedEntities.iterator();
+        LivingEntity entity;
+        while (iter.hasNext())
         {
+            entity = iter.next();
             if (entity instanceof Player)
             {
                 affectedPlayer = (Player)entity;
                 if (!can(affectedPlayer))
                 {
                     ++affectedCount;
-                    affectedEntities.remove(entity);
+                    iter.remove();
                     if (this.potionMessage != null)
                     {
                         affectedPlayer.sendMessage(this.potionMessage);
