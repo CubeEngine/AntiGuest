@@ -3,7 +3,7 @@
 
     <groupId>de.cubeisland</groupId>
     <artifactId>antiguest</artifactId>
-    <version>3.7.0</version>
+    <version>3.7.1-SNAPSHOT</version>
     <name>AntiGuest</name>
     <url>http://cubeisland.de</url>
     <packaging>jar</packaging>
@@ -26,7 +26,7 @@
         <connection>scm:git:https://github.com/CubeIsland/AntiGuest</connection>
         <url>scm:git:https://github.com/CubeIsland/AntiGuest</url>
         <developerConnection>scm:git:https://github.com/CubeIsland/AntiGuest</developerConnection>
-      <tag>antiguest-3.7.0</tag>
+      <tag>HEAD</tag>
   </scm>
     
     <properties>
