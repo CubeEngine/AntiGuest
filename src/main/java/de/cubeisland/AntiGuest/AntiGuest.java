@@ -63,7 +63,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         this.baseCommand = new BaseCommand(this, "antiguest.commands.");
         this.baseCommand.registerCommands(new BasicCommands(this)).registerCommands(new PreventionManagementCommands());
 
-        getCommand("antiguest").setExecutor(baseCommand);
+        getCommand("antiguest").setExecutor(this.baseCommand);
 
 
         PreventionManager.getInstance()
@@ -92,6 +92,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new ChangeSignPrevention(this))
             .registerPrevention(new ChatPrevention(this))
             .registerPrevention(new ChestPrevention(this))
+            .registerPrevention(new CmdblockPrevention(this)) // TODO not possible yet
             .registerPrevention(new CommandPrevention(this))
             .registerPrevention(new DamagePrevention(this))
             .registerPrevention(new DispenserPrevention(this))
@@ -101,6 +102,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new FightPrevention(this))
             .registerPrevention(new FishPrevention(this))
             .registerPrevention(new FurnacePrevention(this))
+            .registerPrevention(new HotbarPrevention(this))
             .registerPrevention(new GuestLimitPrevention(this))
             .registerPrevention(new HungerPrevention(this))
             .registerPrevention(new ItemFramePrevention(this))

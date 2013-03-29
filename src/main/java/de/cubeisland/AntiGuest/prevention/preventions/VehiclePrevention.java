@@ -1,20 +1,16 @@
 package de.cubeisland.AntiGuest.prevention.preventions;
 
-import de.cubeisland.AntiGuest.prevention.Prevention;
-import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.vehicle.VehicleDestroyEvent;
-import org.bukkit.event.vehicle.VehicleEnterEvent;
-import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
+import de.cubeisland.AntiGuest.prevention.*;
 
-import java.util.concurrent.TimeUnit;
+import org.bukkit.*;
+import org.bukkit.configuration.*;
+import org.bukkit.entity.*;
+import org.bukkit.event.*;
+import org.bukkit.event.block.*;
+import org.bukkit.event.player.*;
+import org.bukkit.event.vehicle.*;
+
+import java.util.concurrent.*;
 
 /**
  * Prevents vehicle usage
@@ -39,10 +35,30 @@ public class VehiclePrevention extends Prevention
     {
         super.enable();
 
-        this.access      = getConfig().getBoolean("checkAndPrevent.access");
-        this.destruction = getConfig().getBoolean("checkAndPrevent.destruction");
-        this.collision   = getConfig().getBoolean("checkAndPrevent.collision");
-        this.creation    = getConfig().getBoolean("checkAndPrevent.creation");
+        if (getConfig().contains("checkAndPrevent.access"))
+        {
+            this.access = getConfig().getBoolean("checkAndPrevent.access");
+            getConfig().set("checkAndPrevent.access", null);
+        }
+        if (getConfig().contains("checkAndPrevent.destruction"))
+        {
+            this.access = getConfig().getBoolean("checkAndPrevent.destruction");
+            getConfig().set("checkAndPrevent.destruction", null);
+        }
+        if (getConfig().contains("checkAndPrevent.collision"))
+        {
+            this.access = getConfig().getBoolean("checkAndPrevent.collision");
+            getConfig().set("checkAndPrevent.collision", null);
+        }
+        if (getConfig().contains("checkAndPrevent.creation"))
+        {
+            this.access = getConfig().getBoolean("checkAndPrevent.creation");
+            getConfig().set("checkAndPrevent.creation", null);
+        }
+        this.access      = getConfig().getBoolean("prevent.access");
+        this.destruction = getConfig().getBoolean("prevent.destruction");
+        this.collision   = getConfig().getBoolean("prevent.collision");
+        this.creation    = getConfig().getBoolean("prevent.creation");
     }
 
     @Override
@@ -50,10 +66,10 @@ public class VehiclePrevention extends Prevention
     {
         Configuration defaultConfig = super.getDefaultConfig();
 
-        defaultConfig.set("checkAndPrevent.access", true);
-        defaultConfig.set("checkAndPrevent.destruction", true);
-        defaultConfig.set("checkAndPrevent.collision", true);
-        defaultConfig.set("checkAndPrevent.creation", true);
+        defaultConfig.set("prevent.access", true);
+        defaultConfig.set("prevent.destruction", true);
+        defaultConfig.set("prevent.collision", true);
+        defaultConfig.set("prevent.creation", true);
 
         return defaultConfig;
     }
@@ -104,6 +120,46 @@ public class VehiclePrevention extends Prevention
         }
     }
 
+    private static boolean isMinecart(Material material)
+    {
+        switch (material)
+        {
+            case MINECART:
+            case POWERED_MINECART:
+            case STORAGE_MINECART:
+            case EXPLOSIVE_MINECART:
+            case HOPPER_MINECART:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static boolean isRail(Material material)
+    {
+        switch (material)
+        {
+            case RAILS:
+            case POWERED_RAIL:
+            case DETECTOR_RAIL:
+            case ACTIVATOR_RAIL:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static boolean isBoat(Material material)
+    {
+        switch (material)
+        {
+            case BOAT:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEvent event)
     {
@@ -113,19 +169,20 @@ public class VehiclePrevention extends Prevention
         }
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
-            final Material clickedMaterial = event.getClickedBlock().getType();
+            final Material clicked = event.getClickedBlock().getType();
+            event.getClickedBlock().getState();
             final Player player = event.getPlayer();
-            final Material materialInHand = player.getItemInHand().getType();
-            if (clickedMaterial == Material.RAILS || clickedMaterial == Material.POWERED_RAIL || clickedMaterial == Material.DETECTOR_RAIL)
+            final Material inHand = player.getItemInHand().getType();
+            if (isRail(clicked))
             {
-                if (materialInHand == Material.MINECART || materialInHand == Material.POWERED_MINECART || materialInHand == Material.STORAGE_MINECART)
+                if (isMinecart(inHand))
                 {
                     checkAndPrevent(event, player);
                 }
             }
             else
             {
-                if (materialInHand == Material.BOAT)
+                if (isBoat(inHand))
                 {
                     checkAndPrevent(event, player);
                 }

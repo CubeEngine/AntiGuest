@@ -6,6 +6,9 @@
 * updated the french translations
 * fixed a ConcurrentModificationException in the damage prevention's splash potion handling
 * fixed a wrong configuration key introduced in the last version
+* updated to Bukkit-1.5.1-R2
+* added a hotbar prevention to prevent changing the selected hotbar slot
+* prepared a cmdblock prevention to prevent command block usage, but not yet enabled
 
 === Version 3.6.0 ===
 * removed the debug output from the swear prevention

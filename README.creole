@@ -52,6 +52,7 @@ and even more complex setups, it's completely up to you.
 | fish           | fishing                                                                    | no               | no            | yes           | yes      |
 | furnace        | accessing furnaces                                                         | no               | no            | yes           | yes      |
 | guestlimit     | getting too many guests                                                    | no               | no            | no            | no       |
+| hotbar         | changing the selected hotbar slot                                          | no               | no            | yes           | yes      |
 | hunger         | starvation                                                                 | yes              | no            | no            | no       |
 | itemframe      | changing item frames                                                       | yes              | no            | yes           | yes      |
 | item           | using specific items                                                       | no               | yes           | yes           | yes      |
