@@ -1,5 +1,9 @@
 == Changes ==
 
+=== Version 3.8.0 ===
+* added a link prevention to prevent guests from posting clickable links
+* added a ad prevention to prevent guests from posting server addresses (automatically enables the link prevention as well)
+
 === Version 3.7.1 ===
 * disable the cmdblock prevention (this time for real!)
 * fixed the color of some default messages

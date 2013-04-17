@@ -30,6 +30,7 @@ and even more complex setups, it's completely up to you.
 === Preventions ===
 
 |=Name           |=Prevents from ...                                                          |=On by default    |=Filterable    |=Punishable    |=Loggable |
+| ad             | posting server addresses (also enables link, see below)                    | yes              | no            | yes           | yes      |
 | afk            | idling players by kicking them after a configured time                     | no               | no            | no            | yes      |
 | anvil          | using anvils                                                               | no               | no            | yes           | yes      |
 | bed            | sleeping                                                                   | no               | no            | yes           | yes      |
@@ -59,6 +60,7 @@ and even more complex setups, it's completely up to you.
 | jukebox        | using jukeboxes                                                            | no               | no            | yes           | yes      |
 | lavabucket     | using lava buckets                                                         | yes              | no            | yes           | yes      |
 | lever          | using levers                                                               | no               | no            | yes           | yes      |
+| link           | posting clickable links                                                    | yes              | no            | yes           | yes      |
 | milking        | milking cows                                                               | no               | no            | yes           | yes      |
 | monster        | getting targeted by mosters                                                | yes              | yes           | yes           | no       |
 | move           | moving too far                                                             | yes              | no            | yes           | no       |

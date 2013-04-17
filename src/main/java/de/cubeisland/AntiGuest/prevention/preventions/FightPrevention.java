@@ -94,7 +94,7 @@ public class FightPrevention extends Prevention
             (damageTarget instanceof Monster && this.monsters) ||
             (damageTarget instanceof Animals && this.animals))
         {
-            return super.checkAndPrevent(event, player);
+            return checkAndPrevent(event, player);
         }
         return false;
     }

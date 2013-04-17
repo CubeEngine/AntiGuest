@@ -1,14 +1,16 @@
 package de.cubeisland.AntiGuest.commands;
 
-import static de.cubeisland.AntiGuest.AntiGuest._;
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionManager;
 import de.cubeisland.libMinecraft.ChatColor;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static de.cubeisland.AntiGuest.AntiGuest._;
 
 /**
  *
@@ -32,9 +34,9 @@ public class PreventionManagementCommands
             boolean temporary = args.hasFlag("t");
             if ("*".equals(args.getString(0)))
             {
-                for (Prevention prevention : pm.getPreventions())
+                for (Prevention prevention : this.pm.getPreventions())
                 {
-                    pm.enablePrevention(prevention);
+                    this.pm.enablePrevention(prevention);
                     if (!temporary)
                     {
                         prevention.getConfig().set("enable", true);
@@ -91,9 +93,9 @@ public class PreventionManagementCommands
             boolean temporary = args.hasFlag("t");
             if ("*".equals(args.getString(0)))
             {
-                for (Prevention prevention : pm.getPreventions())
+                for (Prevention prevention : this.pm.getPreventions())
                 {
-                    pm.disablePrevention(prevention);
+                    this.pm.disablePrevention(prevention);
                     if (!temporary)
                     {
                         prevention.getConfig().set("enable", false);
