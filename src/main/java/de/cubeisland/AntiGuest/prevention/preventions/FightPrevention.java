@@ -2,6 +2,7 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
+
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
@@ -40,20 +41,25 @@ public class FightPrevention extends Prevention
         this.monsters = getConfig().getBoolean("prevent.monsters");
         this.animals = getConfig().getBoolean("prevent.animals");
 
-        if (getConfig().contains("checkAndPrevent.players"))
+        if (getConfig().contains("checkAndPrevent"))
         {
-            this.players = getConfig().getBoolean("prevent.players");
-            getConfig().set("checkAndPrevent.players", null);
-        }
-        if (getConfig().contains("checkAndPrevent.monsters"))
-        {
-            this.players = getConfig().getBoolean("prevent.monsters");
-            getConfig().set("checkAndPrevent.players", null);
-        }
-        if (getConfig().contains("checkAndPrevent.animals"))
-        {
-            this.players = getConfig().getBoolean("prevent.animals");
-            getConfig().set("checkAndPrevent.players", null);
+            if (getConfig().contains("checkAndPrevent.players"))
+            {
+                this.players = getConfig().getBoolean("checkAndPrevent.players");
+                getConfig().set("prevent.players", this.players);
+            }
+            if (getConfig().contains("checkAndPrevent.monsters"))
+            {
+                this.monsters = getConfig().getBoolean("checkAndPrevent.monsters");
+                getConfig().set("prevent.players", this.monsters);
+            }
+            if (getConfig().contains("checkAndPrevent.animals"))
+            {
+                this.animals = getConfig().getBoolean("checkAndPrevent.animals");
+                getConfig().set("prevent.players", this.animals);
+            }
+            getConfig().set("checkAndPrevent", null);
+            getConfig().safeSave();
         }
     }
 
@@ -75,19 +81,19 @@ public class FightPrevention extends Prevention
         final Entity damager = event.getDamager();
         if (damager instanceof Player)
         {
-            prevent(event, (Player)damager);
+            preventDamage(event, (Player) damager);
         }
         else if (damager instanceof Projectile)
         {
             final LivingEntity shooter = ((Projectile)damager).getShooter();
             if (shooter instanceof Player)
             {
-                prevent(event, (Player)shooter);
+                preventDamage(event, (Player) shooter);
             }
         }
     }
 
-    public boolean prevent(EntityDamageByEntityEvent event, Player player)
+    public boolean preventDamage(EntityDamageByEntityEvent event, Player player)
     {
         Entity damageTarget = event.getEntity();
         if ((damageTarget instanceof Player && this.players) ||
