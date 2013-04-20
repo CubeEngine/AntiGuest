@@ -148,7 +148,7 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 
 ===== Steps =====
 
-* Just put the AntiGuest into your plugins folder
+* Just put the AntiGuest Jar-File into your plugins folder
 * If you're upgrading from an older version you might remove you config to get a fresh one
 * restart/reload your server
 * The configuration file will be generated/updated as soon as the plugin gets enabled
