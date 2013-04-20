@@ -1,5 +1,8 @@
 == Changes ==
 
+=== Version 3.8.1 ===
+* fixed the fix for the wrong configuration key introduced in 3.7.0
+
 === Version 3.8.0 ===
 * added a link prevention to prevent guests from posting clickable links
 * added a ad prevention to prevent guests from posting server addresses (automatically enables the link prevention as well)
