@@ -4,6 +4,7 @@ import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Ambient;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -95,10 +96,10 @@ public class FightPrevention extends Prevention
 
     public boolean preventDamage(EntityDamageByEntityEvent event, Player player)
     {
-        Entity damageTarget = event.getEntity();
-        if ((damageTarget instanceof Player && this.players) ||
-            (damageTarget instanceof Monster && this.monsters) ||
-            (damageTarget instanceof Animals && this.animals))
+        Entity target = event.getEntity();
+        if ((target instanceof Player && this.players) ||
+            (target instanceof Monster && this.monsters) ||
+            ((target instanceof Animals || target instanceof Ambient) && this.animals))
         {
             return checkAndPrevent(event, player);
         }
