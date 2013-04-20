@@ -2,6 +2,7 @@
 
 === Version 3.8.1 ===
 * fixed the fix for the wrong configuration key introduced in 3.7.0
+* fixed the fight prevention ignoring bats (ambient mobs)
 
 === Version 3.8.0 ===
 * added a link prevention to prevent guests from posting clickable links
