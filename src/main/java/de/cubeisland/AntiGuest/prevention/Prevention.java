@@ -9,9 +9,12 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
 import gnu.trove.procedure.TObjectObjectProcedure;
+
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.NPC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Listener;
@@ -526,6 +529,11 @@ public abstract class Prevention implements Listener
         return this.allowViolationLogging;
     }
 
+    protected static boolean isNPC(Entity entity)
+    {
+        return ((entity instanceof NPC) || entity.hasMetadata("NPC"));
+    }
+
     /**
      * Checks whether a player can pass a prevention
      *
@@ -534,6 +542,10 @@ public abstract class Prevention implements Listener
      */
     public boolean can(final Player player)
     {
+        if (isNPC(player) && !getPlugin().getConfig().getBoolean("prevent-npc"))
+        {
+            return true;
+        }
         return player.hasPermission(this.permission);
     }
 
