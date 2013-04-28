@@ -100,6 +100,8 @@ For example the command preventions which can either prevent the usage of all co
 ** the list of entries. this might be commands, item names or anything else depending on what the prevention does
 ** this list will be ignored if the mode is set to none
 
+----
+
 ===== Punishments =====
 
 Since version 3.3, AntiGuest allows to automaticly punish players.
@@ -141,6 +143,7 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 | {{{enable <prevention|*> [-t]}}}   | enables a specific prevention or all at once                       |
 | reset                              | resets all configurations                                          |
 
+----
 
 === Installation ===
 
