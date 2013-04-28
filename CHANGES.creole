@@ -1,5 +1,8 @@
 == Changes ==
 
+=== Version 3.8.2 ===
+* improved the compatibility with NPC plugins like Citizens
+
 === Version 3.8.1 ===
 * fixed the fix for the wrong configuration key introduced in 3.7.0
 * fixed the fight prevention ignoring bats (ambient mobs)

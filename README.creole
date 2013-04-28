@@ -167,6 +167,16 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 
 ----
 
+=== Base configuration ===
+|=Entry                              |=Default value |=Description                                       |
+| debug                              | false         | Enables or disables debug output                  |
+| language                           | system value  | Sets the language of all texts                    |
+| punishments                        | true          | Globally disables or enables punishing            |
+| log-violations                     | false         | Globally enables violation logging                |
+| prevent-npc                        | false         | Enables the preventions for NPCs                  |
+
+----
+
 === Developer Notice ===
 
 Plugin developed by Quick_Wango - [[http://cubeisland.de|Cube Island]]
