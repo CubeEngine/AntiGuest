@@ -21,6 +21,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.logging.Level.INFO;
@@ -32,8 +34,6 @@ import static java.util.logging.Level.INFO;
  */
 public abstract class Prevention implements Listener
 {
-    private static final PunishmentProcedure PUNISHMENT_PROCEDURE = new PunishmentProcedure();
-
     private final String name;
     private final Permission permission;
     private final PreventionPlugin plugin;
@@ -51,7 +51,7 @@ public abstract class Prevention implements Listener
     private TObjectLongMap<String> logThrottleTimestamps;
 
     private boolean enablePunishing;
-    private TIntObjectMap<THashMap<Punishment, ConfigurationSection>> violationPunishmentMap;
+    private TIntObjectMap<Map<Punishment, ConfigurationSection>> violationPunishmentMap;
     private TObjectIntMap<String> playerViolationMap;
     private TObjectLongMap<String> punishThrottleTimestamps;
     private int highestPunishmentViolation;
@@ -254,14 +254,14 @@ public abstract class Prevention implements Listener
             if (this.getEnablePunishing())
             {
                 this.punishThrottleTimestamps = new TObjectLongHashMap<String>();
-                this.violationPunishmentMap = new TIntObjectHashMap<THashMap<Punishment, ConfigurationSection>>();
+                this.violationPunishmentMap = new TIntObjectHashMap<Map<Punishment, ConfigurationSection>>();
                 this.playerViolationMap = new TObjectIntHashMap<String>();
 
                 ConfigurationSection punishmentsSection = this.getConfig().getConfigurationSection("punishments");
                 if (punishmentsSection != null)
                 {
                     int violation;
-                    THashMap<Punishment, ConfigurationSection> punishments;
+                    Map<Punishment, ConfigurationSection> punishments;
                     ConfigurationSection violationSection;
                     ConfigurationSection punishmentSection;
                     PreventionManager pm = PreventionManager.getInstance();
@@ -286,7 +286,7 @@ public abstract class Prevention implements Listener
                                         {
                                             if (punishments == null)
                                             {
-                                                punishments = new THashMap<Punishment, ConfigurationSection>();
+                                                punishments = new HashMap<Punishment, ConfigurationSection>(1);
                                                 this.violationPunishmentMap.put(violation, punishments);
                                                 this.highestPunishmentViolation = Math.max(this.highestPunishmentViolation, violation);
                                             }
@@ -629,7 +629,7 @@ public abstract class Prevention implements Listener
         }
         this.playerViolationMap.put(player.getName(), ++violations);
 
-        THashMap<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
+        Map<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
         if (punishments == null)
         {
             return;
@@ -637,9 +637,10 @@ public abstract class Prevention implements Listener
 
         if (this.checkAndSetThrottleTimestamp(player, this.punishThrottleTimestamps))
         {
-            PUNISHMENT_PROCEDURE.player = player;
-            punishments.forEachEntry(PUNISHMENT_PROCEDURE);
-            PUNISHMENT_PROCEDURE.player = null;
+            for (Map.Entry<Punishment, ConfigurationSection> entry : punishments.entrySet())
+            {
+                entry.getKey().punish(player, entry.getValue());
+            }
         }
     }
 
@@ -681,17 +682,6 @@ public abstract class Prevention implements Listener
     public String toString()
     {
         return this.getClass().getSimpleName() + "{name=" + this.name + ", permission=" + this.permission.toString() + ", plugin=" + this.plugin.toString() + "}";
-    }
-
-    private static final class PunishmentProcedure implements TObjectObjectProcedure<Punishment, ConfigurationSection>
-    {
-        public Player player;
-
-        public boolean execute(Punishment punishment, ConfigurationSection config)
-        {
-            punishment.punish(this.player, config);
-            return true;
-        }
     }
 }
 
