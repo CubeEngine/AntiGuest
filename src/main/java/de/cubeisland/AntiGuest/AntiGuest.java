@@ -58,6 +58,7 @@ import de.cubeisland.AntiGuest.prevention.preventions.WaterbucketPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.WorkbenchPrevention;
 import de.cubeisland.AntiGuest.prevention.punishments.BanPunishment;
 import de.cubeisland.AntiGuest.prevention.punishments.BurnPunishment;
+import de.cubeisland.AntiGuest.prevention.punishments.CommandPunishment;
 import de.cubeisland.AntiGuest.prevention.punishments.DropitemPunishment;
 import de.cubeisland.AntiGuest.prevention.punishments.ExplosionPunishment;
 import de.cubeisland.AntiGuest.prevention.punishments.KickPunishment;
@@ -137,6 +138,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         PreventionManager.getInstance()
             .registerPunishment(new BanPunishment())
             .registerPunishment(new BurnPunishment())
+            .registerPunishment(new CommandPunishment())
             .registerPunishment(new DropitemPunishment())
             .registerPunishment(new ExplosionPunishment())
             .registerPunishment(new KickPunishment())
