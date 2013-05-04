@@ -4,11 +4,9 @@ import de.cubeisland.libMinecraft.ChatColor;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.TObjectLongMap;
-import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
-import gnu.trove.procedure.TObjectObjectProcedure;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -21,8 +19,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.logging.Level.INFO;
@@ -34,6 +33,7 @@ import static java.util.logging.Level.INFO;
  */
 public abstract class Prevention implements Listener
 {
+    private final Thread mainThread = Thread.currentThread();
     private final String name;
     private final Permission permission;
     private final PreventionPlugin plugin;
@@ -286,7 +286,7 @@ public abstract class Prevention implements Listener
                                         {
                                             if (punishments == null)
                                             {
-                                                punishments = new HashMap<Punishment, ConfigurationSection>(1);
+                                                punishments = new ConcurrentHashMap<Punishment, ConfigurationSection>(1);
                                                 this.violationPunishmentMap.put(violation, punishments);
                                                 this.highestPunishmentViolation = Math.max(this.highestPunishmentViolation, violation);
                                             }
@@ -637,10 +637,26 @@ public abstract class Prevention implements Listener
 
         if (this.checkAndSetThrottleTimestamp(player, this.punishThrottleTimestamps))
         {
-            for (Map.Entry<Punishment, ConfigurationSection> entry : punishments.entrySet())
-            {
-                entry.getKey().punish(player, entry.getValue());
-            }
+            this.doPunish(player, punishments);
+        }
+    }
+
+    private void doPunish(final Player player, final Map<Punishment, ConfigurationSection> punishments)
+    {
+        if (Thread.currentThread() != this.mainThread)
+        {
+            this.getPlugin().getServer().getScheduler().callSyncMethod(this.getPlugin(), new Callable<Void>() {
+                public Void call() throws Exception
+                {
+                    doPunish(player, punishments);
+                    return null;
+                }
+            });
+            return;
+        }
+        for (Map.Entry<Punishment, ConfigurationSection> entry : punishments.entrySet())
+        {
+            entry.getKey().punish(player, entry.getValue());
         }
     }
 
