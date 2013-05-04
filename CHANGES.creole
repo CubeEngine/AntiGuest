@@ -1,5 +1,9 @@
 == Changes ==
 
+=== Version 3.8.3 ===
+* fixed an exception on Spigot servers
+* improved the swear prevention to also check sign texts
+
 === Version 3.8.2 ===
 * improved the compatibility with NPC plugins like Citizens
 

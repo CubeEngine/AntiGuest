@@ -11,6 +11,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.ArrayList;
@@ -177,6 +178,18 @@ public class SwearPrevention extends Prevention
         }
     }
 
+    private synchronized boolean containsBadword(String string)
+    {
+        for (Pattern badword : this.swearPatterns)
+        {
+            if (badword.matcher(string).find())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void chat(AsyncPlayerChatEvent event)
     {
@@ -184,15 +197,25 @@ public class SwearPrevention extends Prevention
         if (!can(player))
         {
             final String message = event.getMessage();
-            synchronized(this)
+            if (containsBadword(message))
             {
-                for (Pattern badword : this.swearPatterns)
+                prevent(event, player);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void signChange(SignChangeEvent event)
+    {
+        final Player player = event.getPlayer();
+        if (!can(player))
+        {
+            for (String line : event.getLines())
+            {
+                if (containsBadword(line))
                 {
-                    if (badword.matcher(message).find())
-                    {
-                        prevent(event, player);
-                        return;
-                    }
+                    prevent(event, event.getPlayer());
+                    break;
                 }
             }
         }
