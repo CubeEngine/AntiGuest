@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class SwearPrevention extends Prevention
 {
     private static final String REGEX_PREFIX = "regex:";
     private Set<Pattern> swearPatterns;
+    private boolean checkCommands;
 
     public SwearPrevention(PreventionPlugin plugin)
     {
@@ -40,16 +42,16 @@ public class SwearPrevention extends Prevention
     public String getConfigHeader()
     {
         return super.getConfigHeader() + "\n"
-                + "Every message a guest sends will be checked for the words listed under words.\n"
+                + "Every message, signtext or (optionally) command a guest sends will be checked for the words listed under words.\n"
                 + "More words will result in more time to check the message. Even though the words\n"
-                + "get compiled on startup, an extreme list may lag the chat for guests.\n"
+                + "get compiled on startup, an extreme list may lag the chat for guests. Non-guests are unaffected!\n"
                 + "The words may contain usual filesystem patterns.\n"
                 + "Words prefixed with 'regex:' are interpreted as a Java regular expression\n"
                 + "\nFilesystem patterns:\n"
                 + " * -> any number (including none) of any character\n"
                 + " ? -> one or none of any character\n"
                 + " { , , } -> a group of strings of which one must match\n"
-                + " \\ -> escape character to write the above character as a normal character";
+                + " \\ -> escape character to write the above characters as a normal character";
     }
 
     @Override
@@ -57,6 +59,7 @@ public class SwearPrevention extends Prevention
     {
         Configuration config = super.getDefaultConfig();
 
+        config.set("check-commands", false);
         config.set("words", new String[] {
             "hitler",
             "nazi",
@@ -72,6 +75,7 @@ public class SwearPrevention extends Prevention
     public void enable()
     {
         super.enable();
+        this.checkCommands = getConfig().getBoolean("check-commands");
         this.swearPatterns = new THashSet<Pattern>();
         for (String word : getConfig().getStringList("words"))
         {
@@ -198,6 +202,23 @@ public class SwearPrevention extends Prevention
         {
             final String message = event.getMessage();
             if (containsBadword(message))
+            {
+                prevent(event, player);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void commandPreProcess(PlayerCommandPreprocessEvent event)
+    {
+        if (!this.checkCommands)
+        {
+            return;
+        }
+        final Player player = event.getPlayer();
+        if (!can(player))
+        {
+            if (containsBadword(event.getMessage()))
             {
                 prevent(event, player);
             }
