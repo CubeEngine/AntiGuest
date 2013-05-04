@@ -628,6 +628,10 @@ public abstract class Prevention implements Listener
             violations = 0;
         }
         this.playerViolationMap.put(player.getName(), ++violations);
+        if (getPlugin().getConfig().getBoolean("debug", false))
+        {
+            player.sendMessage("Your current violation count for '" + getName() + "': " + violations);
+        }
 
         Map<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
         if (punishments == null)

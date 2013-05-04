@@ -28,19 +28,18 @@ public class CommandPunishment implements Punishment
     public void punish(Player player, ConfigurationSection config)
     {
         final Server server = player.getServer();
-        final List commands = config.getList("commands", Collections.emptyList());
+        final List<String> commands = config.getStringList("commands");
 
-        String command;
-        for (Object entry : commands)
+        for (String command : commands)
         {
-            if (entry == null)
+            if (command == null)
             {
                 continue;
             }
-            command = String.valueOf(entry);
+            command = String.valueOf(command);
             if (command.contains("%s"))
             {
-                command = String.format(command, player, getName());
+                command = String.format(command, player.getName());
             }
             server.dispatchCommand(this.sender, command);
         }
