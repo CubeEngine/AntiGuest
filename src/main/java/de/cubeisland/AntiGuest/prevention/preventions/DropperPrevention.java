@@ -14,18 +14,18 @@ import org.bukkit.event.inventory.InventoryType;
  *
  * @author Phillip Schichtel
  */
-public class DispenserPrevention extends Prevention
+public class DropperPrevention extends Prevention
 {
-    public DispenserPrevention(PreventionPlugin plugin)
+    public DropperPrevention(PreventionPlugin plugin)
     {
-        super("dispenser", plugin);
+        super("dropper", plugin);
         setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void open(InventoryOpenEvent event)
     {
-        if (event.getInventory().getType() == InventoryType.DISPENSER)
+        if (event.getInventory().getType() == InventoryType.DROPPER)
         {
             if (event.getPlayer() instanceof Player)
             {

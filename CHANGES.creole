@@ -1,9 +1,14 @@
 == Changes ==
 
-=== Version 3.8.3 ===
+=== Version 3.9.0 ===
 * fixed an exception on Spigot servers
 * improved the swear prevention to also check sign texts and optionally commands
 * added the command punishment to run commands as a punishment
+* changed the dispenser prevention to be on by default
+* added a hopper prevention
+* added a dropper prevention
+* added a beacon prevention (inventory only)
+* fixed the chest prevention to also include trapped and locked chests
 
 === Version 3.8.2 ===
 * improved the compatibility with NPC plugins like Citizens

@@ -2,7 +2,10 @@ package de.cubeisland.AntiGuest.prevention.preventions;
 
 import de.cubeisland.AntiGuest.prevention.Prevention;
 import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
-import org.bukkit.Material;
+
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,10 +25,15 @@ public class ChestPrevention extends Prevention
         setEnableByDefault(true);
     }
 
+    protected static boolean isChest(BlockState state)
+    {
+        return state instanceof Chest || state instanceof DoubleChest;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEvent event)
     {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType() == Material.CHEST)
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && isChest(event.getClickedBlock().getState()))
         {
             if (checkAndPrevent(event, event.getPlayer()))
             {

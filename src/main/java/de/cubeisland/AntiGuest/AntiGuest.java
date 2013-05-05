@@ -9,6 +9,7 @@ import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import de.cubeisland.AntiGuest.prevention.preventions.AdPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.AfkPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.AnvilPrevention;
+import de.cubeisland.AntiGuest.prevention.preventions.BeaconPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.BedPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.BowPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.BreakBlockPrevention;
@@ -24,11 +25,13 @@ import de.cubeisland.AntiGuest.prevention.preventions.DamagePrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.DispenserPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.DoorPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.DropPrevention;
+import de.cubeisland.AntiGuest.prevention.preventions.DropperPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.EnchantPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.FightPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.FishPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.FurnacePrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.GuestLimitPrevention;
+import de.cubeisland.AntiGuest.prevention.preventions.HopperPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.HotbarPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.HungerPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.ItemFramePrevention;
@@ -153,6 +156,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new AdPrevention(this))
             .registerPrevention(new AfkPrevention(this))
             .registerPrevention(new AnvilPrevention(this))
+            .registerPrevention(new BeaconPrevention(this))
             .registerPrevention(new BedPrevention(this))
             .registerPrevention(new BowPrevention(this))
             .registerPrevention(new BreakBlockPrevention(this))
@@ -168,6 +172,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new DamagePrevention(this))
             .registerPrevention(new DispenserPrevention(this))
             .registerPrevention(new DoorPrevention(this))
+            .registerPrevention(new DropperPrevention(this))
             .registerPrevention(new DropPrevention(this))
             .registerPrevention(new EnchantPrevention(this))
             .registerPrevention(new FightPrevention(this))
@@ -175,6 +180,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new FurnacePrevention(this))
             .registerPrevention(new HotbarPrevention(this))
             .registerPrevention(new GuestLimitPrevention(this))
+            .registerPrevention(new HopperPrevention(this))
             .registerPrevention(new HungerPrevention(this))
             .registerPrevention(new ItemFramePrevention(this))
             .registerPrevention(new ItemPrevention(this))
@@ -246,7 +252,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
                 {
                     preventionConfig.save();
                 }
-                catch (IOException e)
+                catch (IOException ignored)
                 {}
             }
             try

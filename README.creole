@@ -33,6 +33,7 @@ and even more complex setups, it's completely up to you.
 | ad             | posting server addresses (also enables link, see below)                    | yes              | no            | yes           | yes      |
 | afk            | idling players by kicking them after a configured time                     | no               | no            | no            | yes      |
 | anvil          | using anvils                                                               | no               | no            | yes           | yes      |
+| beacon         | opening beacon inventories                                                 | yes              | no            | yes           | yes      |
 | bed            | sleeping                                                                   | no               | no            | yes           | yes      |
 | bow            | shooting bows                                                              | yes              | no            | yes           | yes      |
 | breakblock     | breaking blocks                                                            | yes              | yes           | yes           | yes      |
@@ -45,14 +46,16 @@ and even more complex setups, it's completely up to you.
 | chest          | accessing chests                                                           | yes              | no            | yes           | yes      |
 | command        | using specific commands                                                    | no               | yes           | yes           | yes      |
 | damage         | getting damaged                                                            | no               | yes           | no            | no       |
-| dispenser      | accessing dispensers                                                       | no               | no            | yes           | yes      |
+| dispenser      | accessing dispensers                                                       | yes              | no            | yes           | yes      |
 | door           | opening or closing doors (including fence gates)                           | yes              | yes           | yes           | yes      |
+| dropper        | opening dropper inventories                                                | yes              | no            | yes           | yes      |
 | drop           | dropping specific items                                                    | no               | yes           | yes           | yes      |
 | enchant        | accessing enchantment tables                                               | no               | no            | yes           | yes      |
 | fight          | damaging other players                                                     | yes              | no            | yes           | yes      |
 | fish           | fishing                                                                    | no               | no            | yes           | yes      |
 | furnace        | accessing furnaces                                                         | no               | no            | yes           | yes      |
 | guestlimit     | getting too many guests                                                    | no               | no            | no            | no       |
+| hopper         | opening hopper inventories                                                 | yes              | no            | yes           | yes      |
 | hotbar         | changing the selected hotbar slot                                          | no               | no            | yes           | yes      |
 | hunger         | starvation                                                                 | yes              | no            | no            | no       |
 | itemframe      | changing item frames                                                       | yes              | no            | yes           | yes      |
@@ -152,9 +155,9 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 ===== Steps =====
 
 * Just put the AntiGuest Jar-File into your plugins folder
-* If you're upgrading from an older version you might remove you config to get a fresh one
+* If you're upgrading from an older version you might remove your config to get a fresh one
 * restart/reload your server
-* The configuration file will be generated/updated as soon as the plugin gets enabled
+* The configuration files will be generated/updated as soon as the plugin gets enabled
 
 ----
 
