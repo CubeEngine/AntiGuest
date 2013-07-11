@@ -32,12 +32,14 @@ import de.cubeisland.AntiGuest.prevention.preventions.FishPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.FurnacePrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.GuestLimitPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.HopperPrevention;
+import de.cubeisland.AntiGuest.prevention.preventions.HorsePrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.HotbarPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.HungerPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.ItemFramePrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.ItemPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.JukeboxPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.LavabucketPrevention;
+import de.cubeisland.AntiGuest.prevention.preventions.LeadPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.LeverPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.LinkPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.MilkingPrevention;
@@ -207,6 +209,9 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new VehiclePrevention(this))
             .registerPrevention(new WaterbucketPrevention(this))
             .registerPrevention(new WorkbenchPrevention(this))
+
+            .registerPrevention(new HorsePrevention(this)) // TODO ride/access inventory
+            .registerPrevention(new LeadPrevention(this))
             .enablePreventions();
 
         logger.info(PreventionManager.getInstance().getPreventions().size() + " Prevention(s) have been registered!");
