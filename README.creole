@@ -56,12 +56,14 @@ and even more complex setups, it's completely up to you.
 | furnace        | accessing furnaces                                                         | no               | no            | yes           | yes      |
 | guestlimit     | getting too many guests                                                    | no               | no            | no            | no       |
 | hopper         | opening hopper inventories                                                 | yes              | no            | yes           | yes      |
+| horse          | interacting with horses/mules/donkeys                                      | no               | no            | yes           | yes      |
 | hotbar         | changing the selected hotbar slot                                          | no               | no            | yes           | yes      |
 | hunger         | starvation                                                                 | yes              | no            | no            | no       |
 | itemframe      | changing item frames                                                       | yes              | no            | yes           | yes      |
 | item           | using specific items                                                       | no               | yes           | yes           | yes      |
 | jukebox        | using jukeboxes                                                            | no               | no            | yes           | yes      |
 | lavabucket     | using lava buckets                                                         | yes              | no            | yes           | yes      |
+| lead           | using a leash                                                              | no               | no            | yes           | yes      |
 | lever          | using levers                                                               | no               | no            | yes           | yes      |
 | link           | posting clickable links                                                    | yes              | no            | yes           | yes      |
 | milking        | milking cows                                                               | no               | no            | yes           | yes      |
