@@ -9,6 +9,9 @@
 * added a dropper prevention
 * added a beacon prevention (inventory only)
 * fixed the chest prevention to also include trapped and locked chests
+* updated to 1.6.2
+  * added horse prevention
+  * added a lead prevention
 
 === Version 3.8.2 ===
 * improved the compatibility with NPC plugins like Citizens
