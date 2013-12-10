@@ -8,7 +8,7 @@
     <url>http://cubeisland.de</url>
     <packaging>jar</packaging>
     <description>Prevents guests from griefing.</description>
-    
+
     <distributionManagement>
         <repository>
             <id>cubeisland-repo</id>
@@ -21,18 +21,18 @@
             <url>http://nexus.cubeisland.de/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <scm>
         <connection>scm:git:https://github.com/CubeIsland/AntiGuest</connection>
         <url>scm:git:https://github.com/CubeIsland/AntiGuest</url>
         <developerConnection>scm:git:https://github.com/CubeIsland/AntiGuest</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
-    
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-  
+
     <repositories>
         <repository>
             <id>cubeisland-repo</id>
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.6.2-R0.1-SNAPSHOT</version>
+            <version>1.7.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -118,7 +118,7 @@
                 </includes>
             </resource>
         </resources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
