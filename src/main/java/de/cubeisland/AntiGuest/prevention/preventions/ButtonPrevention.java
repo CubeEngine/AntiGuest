@@ -26,7 +26,8 @@ public class ButtonPrevention extends Prevention
         final Action action = event.getAction();
         if (action == Action.LEFT_CLICK_BLOCK || action == Action.RIGHT_CLICK_BLOCK)
         {
-            if (event.getClickedBlock().getType() == Material.STONE_BUTTON)
+            final Material material = event.getClickedBlock().getType();
+            if (material == Material.STONE_BUTTON || material == Material.WOOD_BUTTON)
             {
                 checkAndPrevent(event, event.getPlayer());
             }

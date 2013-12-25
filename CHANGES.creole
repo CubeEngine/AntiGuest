@@ -6,6 +6,7 @@
 * added a trip wire prevention
 * added the new pressure plates to the pressure plate prevention
 * added the command minecart to the vehicle prevention
+* added the wood button to the button prevention
 
 === Version 3.9.0 ===
 * fixed an exception on Spigot servers
