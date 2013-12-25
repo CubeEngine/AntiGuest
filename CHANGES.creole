@@ -5,6 +5,7 @@
 * tested with Bukkit 1.7.2-R0.2
 * added a trip wire prevention
 * added the new pressure plates to the pressure plate prevention
+* added the command minecart to the vehicle prevention
 
 === Version 3.9.0 ===
 * fixed an exception on Spigot servers

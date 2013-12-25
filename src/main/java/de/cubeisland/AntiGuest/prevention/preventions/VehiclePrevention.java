@@ -129,6 +129,7 @@ public class VehiclePrevention extends Prevention
             case STORAGE_MINECART:
             case EXPLOSIVE_MINECART:
             case HOPPER_MINECART:
+            case COMMAND_MINECART:
                 return true;
             default:
                 return false;
