@@ -32,7 +32,7 @@ public class DoorPrevention extends FilteredItemPrevention
     {
         Set<Material> materials = super.decodeList(list);
 
-        EnumSet doors = EnumSet.noneOf(Material.class);
+        EnumSet<Material> doors = EnumSet.noneOf(Material.class);
         for (Material material : materials)
         {
             if (DOORS.contains(material))
