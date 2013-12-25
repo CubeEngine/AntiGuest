@@ -3,7 +3,7 @@
 
     <groupId>de.cubeisland</groupId>
     <artifactId>antiguest</artifactId>
-    <version>3.10.0-SNAPSHOT</version>
+    <version>3.10.0</version>
     <name>AntiGuest</name>
     <url>http://cubeisland.de</url>
     <packaging>jar</packaging>
