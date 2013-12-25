@@ -4,7 +4,7 @@
 * fixed the item frame prevention
 * tested with Bukkit 1.7.2-R0.2
 * added a trip wire prevention
-* added the new pressure plates to the pressure plate prevention
+* added the new pressure plates to the pressure plate prevention (won't actually work until BUKKIT-5053 is fixed)
 * added the command minecart to the vehicle prevention
 * added the wood button to the button prevention
 * added the missing dropper default messages
