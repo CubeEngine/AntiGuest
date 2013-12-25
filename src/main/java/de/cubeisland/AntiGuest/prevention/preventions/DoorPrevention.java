@@ -12,6 +12,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.bukkit.Material.*;
+
 /**
  * Prevents door usage
  *
@@ -19,7 +21,7 @@ import java.util.Set;
  */
 public class DoorPrevention extends FilteredItemPrevention
 {
-    private static final EnumSet<Material> DOORS = EnumSet.of(Material.WOODEN_DOOR, Material.IRON_DOOR, Material.IRON_DOOR_BLOCK, Material.TRAP_DOOR, Material.FENCE_GATE);
+    private static final EnumSet<Material> DOORS = EnumSet.of(WOODEN_DOOR, IRON_DOOR, IRON_DOOR_BLOCK, TRAP_DOOR, FENCE_GATE);
 
     public DoorPrevention(PreventionPlugin plugin)
     {
