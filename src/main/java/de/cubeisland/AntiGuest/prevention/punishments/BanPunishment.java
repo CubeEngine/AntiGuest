@@ -1,7 +1,7 @@
 package de.cubeisland.AntiGuest.prevention.punishments;
 
 import de.cubeisland.AntiGuest.prevention.Punishment;
-import de.cubeisland.libMinecraft.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

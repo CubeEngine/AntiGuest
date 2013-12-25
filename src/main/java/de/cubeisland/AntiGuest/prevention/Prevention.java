@@ -1,6 +1,5 @@
 package de.cubeisland.AntiGuest.prevention;
 
-import de.cubeisland.libMinecraft.ChatColor;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.TObjectLongMap;
@@ -8,6 +7,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -674,7 +674,7 @@ public abstract class Prevention implements Listener
         if (this.checkAndSetThrottleTimestamp(player, this.logThrottleTimestamps))
         {
             String message = this.getPlugin().getTranslation().translate("prevention_violated", player.getName(), this.getName());
-            this.getPlugin().getLogger().log(INFO, ChatColor.stripColors(message));
+            this.getPlugin().getLogger().log(INFO, ChatColor.stripColor(message));
             this.getPlugin().getServer().broadcast(message, "antiguest.violation-notification");
         }
     }
