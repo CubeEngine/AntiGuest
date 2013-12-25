@@ -1,5 +1,7 @@
-package de.cubeisland.AntiGuest.prevention;
+package de.cubeisland.AntiGuest.prevention.preventions;
 
+import de.cubeisland.AntiGuest.prevention.Prevention;
+import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

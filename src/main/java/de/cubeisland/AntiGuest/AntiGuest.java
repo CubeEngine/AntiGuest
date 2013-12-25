@@ -3,61 +3,7 @@ package de.cubeisland.AntiGuest;
 import de.cubeisland.AntiGuest.commands.BasicCommands;
 import de.cubeisland.AntiGuest.commands.PreventionManagementCommands;
 import de.cubeisland.AntiGuest.prevention.*;
-import de.cubeisland.AntiGuest.prevention.preventions.AdPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.AfkPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.AnvilPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.BeaconPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.BedPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.BowPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.BreakBlockPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.BrewPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ButtonPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.CakePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.CapsPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ChangeSignPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ChatPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ChestPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.CommandPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.DamagePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.DispenserPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.DoorPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.DropPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.DropperPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.EnchantPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.FightPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.FishPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.FurnacePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.GuestLimitPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.HopperPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.HorsePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.HotbarPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.HungerPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ItemFramePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ItemPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.JukeboxPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.LavabucketPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.LeadPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.LeverPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.LinkPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.MilkingPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.MonsterPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.MovePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.NoteblockPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.PickupPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.PlaceBlockPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.PressureplatePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.RepeaterPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.ShearPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.SneakPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.SpamPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.SpawnEggPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.SwearPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.TamePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.TradingPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.TramplePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.VehiclePrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.WaterbucketPrevention;
-import de.cubeisland.AntiGuest.prevention.preventions.WorkbenchPrevention;
+import de.cubeisland.AntiGuest.prevention.preventions.*;
 import de.cubeisland.AntiGuest.prevention.punishments.BanPunishment;
 import de.cubeisland.AntiGuest.prevention.punishments.BurnPunishment;
 import de.cubeisland.AntiGuest.prevention.punishments.CommandPunishment;
@@ -177,6 +123,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new FightPrevention(this))
             .registerPrevention(new FishPrevention(this))
             .registerPrevention(new FurnacePrevention(this))
+            .registerPrevention(new HorsePrevention(this)) // TODO ride/access inventory
             .registerPrevention(new HotbarPrevention(this))
             .registerPrevention(new GuestLimitPrevention(this))
             .registerPrevention(new HopperPrevention(this))
@@ -185,6 +132,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new ItemPrevention(this))
             .registerPrevention(new JukeboxPrevention(this))
             .registerPrevention(new LavabucketPrevention(this))
+            .registerPrevention(new LeadPrevention(this))
             .registerPrevention(new LeverPrevention(this))
             .registerPrevention(new LinkPrevention(this))
             .registerPrevention(new MilkingPrevention(this))
@@ -193,7 +141,6 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new NoteblockPrevention(this))
             .registerPrevention(new PickupPrevention(this))
             .registerPrevention(new PlaceBlockPrevention(this))
-            .registerPrevention(new TripwirePrevetion(this))
             .registerPrevention(new PressureplatePrevention(this))
             .registerPrevention(new RepeaterPrevention(this))
             .registerPrevention(new ShearPrevention(this))
@@ -204,12 +151,11 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new TamePrevention(this))
             .registerPrevention(new TradingPrevention(this))
             .registerPrevention(new TramplePrevention(this))
+            .registerPrevention(new TripwirePrevetion(this))
             .registerPrevention(new VehiclePrevention(this))
             .registerPrevention(new WaterbucketPrevention(this))
             .registerPrevention(new WorkbenchPrevention(this))
 
-            .registerPrevention(new HorsePrevention(this)) // TODO ride/access inventory
-            .registerPrevention(new LeadPrevention(this))
             .enablePreventions();
 
         logger.info(PreventionManager.getInstance().getPreventions().size() + " Prevention(s) have been registered!");
