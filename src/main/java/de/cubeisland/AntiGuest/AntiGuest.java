@@ -2,10 +2,7 @@ package de.cubeisland.AntiGuest;
 
 import de.cubeisland.AntiGuest.commands.BasicCommands;
 import de.cubeisland.AntiGuest.commands.PreventionManagementCommands;
-import de.cubeisland.AntiGuest.prevention.Prevention;
-import de.cubeisland.AntiGuest.prevention.PreventionConfiguration;
-import de.cubeisland.AntiGuest.prevention.PreventionManager;
-import de.cubeisland.AntiGuest.prevention.PreventionPlugin;
+import de.cubeisland.AntiGuest.prevention.*;
 import de.cubeisland.AntiGuest.prevention.preventions.AdPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.AfkPrevention;
 import de.cubeisland.AntiGuest.prevention.preventions.AnvilPrevention;
@@ -196,6 +193,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             .registerPrevention(new NoteblockPrevention(this))
             .registerPrevention(new PickupPrevention(this))
             .registerPrevention(new PlaceBlockPrevention(this))
+            .registerPrevention(new TripwirePrevetion(this))
             .registerPrevention(new PressureplatePrevention(this))
             .registerPrevention(new RepeaterPrevention(this))
             .registerPrevention(new ShearPrevention(this))

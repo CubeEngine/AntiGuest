@@ -119,12 +119,6 @@ public abstract class FilteredPrevention<T> extends Prevention
      */
     public abstract Set<T> decodeList(List<String> list);
 
-    /**
-     * This method reads the additional entries "mode" and "list"
-     * 
-     * @param server
-     * @param config
-     */
     @Override
     public void enable()
     {
@@ -134,7 +128,7 @@ public abstract class FilteredPrevention<T> extends Prevention
         List<String> items = getConfig().getStringList("list");
         if (items != null)
         {
-            this.filterItems = this.decodeList(items);
+            setFilterItems(decodeList(items));
         }
     }
 
@@ -149,14 +143,14 @@ public abstract class FilteredPrevention<T> extends Prevention
     {
         if (!can(player))
         {
-            switch (this.filterMode)
+            switch (getFilterMode())
             {
                 case NONE:
                     return false;
                 case WHITELIST:
-                    return this.filterItems.contains(item);
+                    return getFilterItems().contains(item);
                 case BLACKLIST:
-                    return !this.filterItems.contains(item);
+                    return !getFilterItems().contains(item);
             }
         }
         return true;
@@ -181,23 +175,13 @@ public abstract class FilteredPrevention<T> extends Prevention
     }
 
     /**
-     * Returns the mode this prevention currently uses
-     *
-     * @return the mode
-     */
-    public FilterMode getMode()
-    {
-        return this.filterMode;
-    }
-
-    /**
      * Represents the modes of a filtered prevention
      */
     public enum FilterMode
     {
         NONE("none", "-1", "nolist", "all"),
-        WHITELIST("whitelist", "0", "white", "positivlist"),
-        BLACKLIST("blacklist", "1", "black", "negativlist");
+        WHITELIST("whitelist", "0", "white"),
+        BLACKLIST("blacklist", "1", "black");
 
         private static final HashMap<String, FilterMode> ALIAS_MAP = new HashMap<String, FilterMode>(values().length);
 

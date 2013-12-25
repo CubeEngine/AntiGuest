@@ -67,17 +67,18 @@ and even more complex setups, it's completely up to you.
 | lever          | using levers                                                               | no               | no            | yes           | yes      |
 | link           | posting clickable links                                                    | yes              | no            | yes           | yes      |
 | milking        | milking cows                                                               | no               | no            | yes           | yes      |
-| monster        | getting targeted by mosters                                                | yes              | yes           | yes           | no       |
+| monster        | getting targeted by monsters                                               | yes              | yes           | yes           | no       |
 | move           | moving too far                                                             | yes              | no            | yes           | no       |
-| noteblock      | using noteblocks                                                           | no               | no            | yes           | yes      |
+| noteblock      | using note blocks                                                          | no               | no            | yes           | yes      |
 | pickup         | picking up specific items                                                  | no               | yes           | no            | no       |
 | placeblock     | placing blocks                                                             | yes              | yes           | yes           | yes      |
+| tripwire       | triggering trip wires                                                      | yes              | no            | yes           | yes      |
 | pressureplate  | triggering pressure plates                                                 | no               | no            | yes           | yes      |
 | repeater       | changing the repeater delays                                               | no               | no            | yes           | yes      |
 | shear          | shearing animals                                                           | no               | no            | yes           | yes      |
 | sneak          | sneaking (hiding the name above his head)                                  | no               | no            | yes           | yes      |
 | spam           | spam                                                                       | yes              | no            | yes           | yes      |
-| spawnegg       | using spawneggs                                                            | no               | yes           | yes           | yes      |
+| spawnegg       | using spawn eggs                                                           | no               | yes           | yes           | yes      |
 | swear          | swearing                                                                   | yes              | no            | yes           | yes      |
 | tame           | taming animals                                                             | no               | no            | yes           | yes      |
 | trading        | trading with villagers                                                     | no               | no            | yes           | yes      |
@@ -99,8 +100,8 @@ For example the command preventions which can either prevent the usage of all co
 
 * mode:
 ** none: everything will be prevented (aliases: -1, nolist, all)
-** whitelist: the listed entries are **//NOT//** prevented (aliases: 0, white, positivlist)
-** blacklist: only the listed entries will be prevented (aliases: 1, black, negativlist)
+** whitelist: the listed entries are **//NOT//** prevented (aliases: 0, white)
+** blacklist: only the listed entries will be prevented (aliases: 1, black)
 * list:
 ** the list of entries. this might be commands, item names or anything else depending on what the prevention does
 ** this list will be ignored if the mode is set to none
@@ -109,7 +110,7 @@ For example the command preventions which can either prevent the usage of all co
 
 ===== Punishments =====
 
-Since version 3.3, AntiGuest allows to automaticly punish players.
+Since version 3.3, AntiGuest allows to automatically punish players.
 These punishments are configurable per prevention.
 
 You can specify multiple punishments per violation, you can look at the default punishment values in the configs
@@ -121,9 +122,9 @@ You can specify multiple punishments per violation, you can look at the default 
 | explosion     | Creates a fake explosion and damages      | damage: the damage to deal                |
 | kick          | Kicks the player                          | reason: the kick reason                   |
 | kill          | Kills the player                          | none                                      |
-| lightning     | Strikes a fkae lightning on the player    | damage: the damage to deal                |
+| lightning     | Strikes a fake lightning on the player    | damage: the damage to deal                |
 | message       | Makes the player send an awkward message  | message: the message to send              |
-| potion        | Poisons the player                        | duration: effect durection, effect: type  |
+| potion        | Poisons the player                        | duration: effect duration, effect: type  |
 | rocket        | Shoots the player in the air              | height: the number of blocks              |
 | slap          | Slaps the player                          | damage: the damage to deal                |
 | starvation    | Lets the player starve                    | none                                      |
@@ -143,7 +144,7 @@ General syntax: **/antiguest <command>** or **/ag <command>**
 | reload [prevention]                | reloads the plugin                                                 |
 | setmessage <prevention> <message>  | sets the message of a prevention                                   |
 | language [language]                | shows or sets the language                                         |
-| badword <word>                     | adds a badword to the swear prevention                             |
+| badword <word>                     | adds a bad word to the swear prevention                             |
 | {{{disable <prevention|*> [-t]}}}  | disables a specific prevention or all at once                      |
 | {{{enable <prevention|*> [-t]}}}   | enables a specific prevention or all at once                       |
 | reset                              | resets all configurations                                          |
@@ -193,7 +194,7 @@ Plugin developed by Quick_Wango - [[http://cubeisland.de|Cube Island]]
 * You want the plugin to be always up to date?
 * You want good support?
 
-I'm doing this for literally nothing in my freetime, so keep me interessted in my plugins and help pay my bills by simply donating a few bucks.
+I'm doing this for literally nothing in my free time, so keep me interested in my plugins and help pay my bills by simply donating a few bucks.
 
 **//[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2QU7NLJW3W58A|Donate with PayPal]]//**
 

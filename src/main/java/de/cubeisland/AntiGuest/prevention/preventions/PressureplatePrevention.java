@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Prevents pressureplate usage
+ * Prevents pressure plate usage
  *
  * @author Phillip Schichtel
  */

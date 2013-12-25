@@ -1,5 +1,10 @@
 == Changes ==
 
+=== Version 3.10.0 ===
+* fixed the item frame prevention
+* tested with Bukkit 1.7.2-R0.2
+* added a trip wire prevention
+
 === Version 3.9.0 ===
 * fixed an exception on Spigot servers
 * improved the swear prevention to also check sign texts and optionally commands
