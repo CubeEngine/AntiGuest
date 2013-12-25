@@ -8,6 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Prevents the activation of trip wires
  *
@@ -18,6 +20,7 @@ public class TripwirePrevetion extends Prevention
     public TripwirePrevetion(PreventionPlugin plugin)
     {
         super("tripwire", plugin);
+        setThrottleDelay(3, TimeUnit.SECONDS);
         setEnableByDefault(true);
     }
 
