@@ -200,6 +200,6 @@ I'm doing this for literally nothing in my free time, so keep me interested in m
 
 Thanks in advance!
 
-**//[[http://webchat.esper.net/?channels=cubeisland-dev&nick=|Talk to the developers]]//** (#cubeisland-dev on EsperNet)
+**//[[http://webchat.esper.net/?channels=cubeengine&nick=|Talk to the developers]]//** (#cubeisland-dev on EsperNet)
 
 **//[[https://github.com/CubeIsland/AntiGuest|Source on Github]]//**
