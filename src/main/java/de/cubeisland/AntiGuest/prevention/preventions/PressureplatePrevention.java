@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.bukkit.Material.*;
+
 /**
  * Prevents pressure plate usage
  *
@@ -28,8 +30,8 @@ public class PressureplatePrevention extends Prevention
     {
         if (event.getAction() == Action.PHYSICAL)
         {
-            final Material material = event.getClickedBlock().getType();
-            if (material == Material.STONE_PLATE || material == Material.WOOD_PLATE)
+            final Material m = event.getClickedBlock().getType();
+            if (m == STONE_PLATE || m == WOOD_PLATE || m == GOLD_PLATE || m == IRON_PLATE)
             {
                 checkAndPrevent(event, event.getPlayer());
             }
