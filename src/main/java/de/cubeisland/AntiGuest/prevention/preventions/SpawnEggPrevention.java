@@ -25,6 +25,7 @@ public class SpawnEggPrevention extends FilteredEntityPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
+    @SuppressWarnings("deprecation")
     public void interact(PlayerInteractEvent event)
     {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)

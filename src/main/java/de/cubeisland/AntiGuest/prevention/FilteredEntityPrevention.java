@@ -44,6 +44,7 @@ public abstract class FilteredEntityPrevention extends FilteredPrevention<Entity
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public Set<EntityType> decodeList(List<String> list)
     {
         Set<EntityType> types = EnumSet.noneOf(EntityType.class);

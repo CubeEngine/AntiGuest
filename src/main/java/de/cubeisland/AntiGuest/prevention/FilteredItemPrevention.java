@@ -91,6 +91,7 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
      * @return true if he can
      */
     @Override
+    @SuppressWarnings("deprecation")
     public boolean can(final Player player, final Material material)
     {
         if (this.ignoreBlocks && material.getId() <= 256)
