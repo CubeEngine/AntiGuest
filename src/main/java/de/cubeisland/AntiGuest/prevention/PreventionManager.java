@@ -143,9 +143,9 @@ public class PreventionManager
                 prevention.setEnabled(true);
                 return true;
             }
-            catch (Throwable t)
+            catch (RuntimeException e)
             {
-                AntiGuest.error("Failed to enable the prevention '" + prevention.getName() + "'...", t);
+                AntiGuest.error("Failed to enable the prevention '" + prevention.getName() + "'...", e);
             }
         }
         return false;
@@ -202,9 +202,9 @@ public class PreventionManager
             {
                 prevention.disable();
             }
-            catch (Throwable t)
+            catch (RuntimeException e)
             {
-                AntiGuest.error("Failed to disable the prevention '" + prevention.getName() + "'...", t);
+                AntiGuest.error("Failed to disable the prevention '" + prevention.getName() + "'...", e);
             }
         }
         return this;

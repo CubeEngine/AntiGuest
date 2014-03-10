@@ -10,6 +10,7 @@ import gnu.trove.map.hash.TObjectLongHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.NPC;
@@ -19,12 +20,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
 
 /**
  * This class represents a prevention
@@ -144,9 +148,13 @@ public abstract class Prevention implements Listener
             this.config.load();
             return true;
         }
-        catch (Throwable e)
+        catch (InvalidConfigurationException e)
         {
-            e.printStackTrace(System.err);
+            this.getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
+        }
+        catch (IOException e)
+        {
+            this.getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
         }
         return false;
     }
@@ -163,9 +171,9 @@ public abstract class Prevention implements Listener
             this.config.save();
             return true;
         }
-        catch (Throwable e)
+        catch (IOException e)
         {
-            e.printStackTrace(System.err);
+            this.getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
         }
         return false;
     }

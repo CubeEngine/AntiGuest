@@ -171,8 +171,8 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 
     private void convertConfig(FileConfiguration config)
     {
-        final String PREVENTIONS_KEY = "preventions";
-        ConfigurationSection section = config.getConfigurationSection(PREVENTIONS_KEY);
+        final String preventionsKey = "preventions";
+        ConfigurationSection section = config.getConfigurationSection(preventionsKey);
         PreventionManager mgr = PreventionManager.getInstance();
         if (section != null)
         {
@@ -212,21 +212,21 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             {
                 error("Failed to write the old configuration file", e);
             }
-            config.set(PREVENTIONS_KEY, null);
+            config.set(preventionsKey, null);
         }
     }
 
     private void convertPreventionConfigs()
     {
-        final String MESSAGE_DELAY_KEY = "messageDelay";
+        final String messageDelayKey = "messageDelay";
         PreventionConfiguration prevConfig;
         for (Prevention prevention : PreventionManager.getInstance().getPreventions())
         {
             prevConfig = prevention.getConfig();
-            if (prevConfig.contains(MESSAGE_DELAY_KEY))
+            if (prevConfig.contains(messageDelayKey))
             {
-                prevConfig.set("throttleDelay", prevConfig.get(MESSAGE_DELAY_KEY));
-                prevConfig.set(MESSAGE_DELAY_KEY, null);
+                prevConfig.set("throttleDelay", prevConfig.get(messageDelayKey));
+                prevConfig.set(messageDelayKey, null);
                 prevention.saveConfig();
             }
         }

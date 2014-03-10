@@ -16,33 +16,33 @@ public interface PreventionPlugin extends TranslatablePlugin
      *
      * @return the folder as a File object
      */
-    public File getConfigurationFolder();
+    File getConfigurationFolder();
 
     /**
      * Returns the plugins base command
      *
      * @return the plugins base command
      */
-    public BaseCommand getBaseCommand();
+    BaseCommand getBaseCommand();
 
     /**
      * Returns the base string for the prevention permissions
      *
      * @return the base string for the permissions
      */
-    public String getPermissionBase();
+    String getPermissionBase();
 
     /**
      * Returns whether punishments are enabled for this plugin
      *
      * @return true if punishments are enabled
      */
-    public boolean allowPunishments();
+    boolean allowPunishments();
 
     /**
      * Returns whether prevention violations can be logged
      *
      * @return true if punishments may log violations
      */
-    public boolean logViolations();
+    boolean logViolations();
 }

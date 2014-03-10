@@ -15,12 +15,12 @@ public interface Punishment
      *
      * @return the name
      */
-    public String getName();
+    String getName();
 
     /**
      * Punishes a player
      *
      * @param player the player to punish
      */
-    public void punish(Player player, ConfigurationSection config);
+    void punish(Player player, ConfigurationSection config);
 }

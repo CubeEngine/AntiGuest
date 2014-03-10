@@ -81,7 +81,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
             {
                 damageCauses.add(DamageCause.valueOf(entry.trim().replace(" ", "_").toUpperCase()));
             }
-            catch (IllegalArgumentException e)
+            catch (IllegalArgumentException ignored)
             {}
         }
         return damageCauses;
