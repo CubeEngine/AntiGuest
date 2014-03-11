@@ -19,6 +19,7 @@ import de.cubeisland.antiguest.prevention.punishments.SlapPunishment;
 import de.cubeisland.antiguest.prevention.punishments.StarvationPunishment;
 import de.cubeisland.libMinecraft.command.BaseCommand;
 import de.cubeisland.libMinecraft.translation.Translation;
+import org.reflections.Reflections;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -31,6 +32,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -82,81 +86,63 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 
         getCommand("antiguest").setExecutor(this.baseCommand);
 
+        PreventionManager manager = PreventionManager.getInstance();
 
-        PreventionManager.getInstance()
-            .registerPunishment(new BanPunishment())
-            .registerPunishment(new BurnPunishment())
-            .registerPunishment(new CommandPunishment())
-            .registerPunishment(new DropitemPunishment())
-            .registerPunishment(new ExplosionPunishment())
-            .registerPunishment(new KickPunishment())
-            .registerPunishment(new KillPunishment())
-            .registerPunishment(new LightningPunishment())
-            .registerPunishment(new MessagePunishment())
-            .registerPunishment(new PotionPunishment())
-            .registerPunishment(new RocketPunishment())
-            .registerPunishment(new SlapPunishment())
-            .registerPunishment(new StarvationPunishment())
-            
-            .registerPrevention(new AdPrevention(this))
-            .registerPrevention(new AfkPrevention(this))
-            .registerPrevention(new AnvilPrevention(this))
-            .registerPrevention(new BeaconPrevention(this))
-            .registerPrevention(new BedPrevention(this))
-            .registerPrevention(new BowPrevention(this))
-            .registerPrevention(new BreakBlockPrevention(this))
-            .registerPrevention(new BrewPrevention(this))
-            .registerPrevention(new ButtonPrevention(this))
-            .registerPrevention(new CakePrevention(this))
-            .registerPrevention(new CapsPrevention(this))
-            .registerPrevention(new ChangeSignPrevention(this))
-            .registerPrevention(new ChatPrevention(this))
-            .registerPrevention(new ChestPrevention(this))
-            //.registerPrevention(new CmdblockPrevention(this)) // TODO not possible yet
-            .registerPrevention(new CommandPrevention(this))
-            .registerPrevention(new DamagePrevention(this))
-            .registerPrevention(new DispenserPrevention(this))
-            .registerPrevention(new DoorPrevention(this))
-            .registerPrevention(new DropperPrevention(this))
-            .registerPrevention(new DropPrevention(this))
-            .registerPrevention(new EnchantPrevention(this))
-            .registerPrevention(new FightPrevention(this))
-            .registerPrevention(new FishPrevention(this))
-            .registerPrevention(new FurnacePrevention(this))
-            .registerPrevention(new HorsePrevention(this)) // TODO ride/access inventory
-            .registerPrevention(new HotbarPrevention(this))
-            .registerPrevention(new GuestLimitPrevention(this))
-            .registerPrevention(new HopperPrevention(this))
-            .registerPrevention(new HungerPrevention(this))
-            .registerPrevention(new ItemFramePrevention(this))
-            .registerPrevention(new ItemPrevention(this))
-            .registerPrevention(new JukeboxPrevention(this))
-            .registerPrevention(new LavabucketPrevention(this))
-            .registerPrevention(new LeadPrevention(this))
-            .registerPrevention(new LeverPrevention(this))
-            .registerPrevention(new LinkPrevention(this))
-            .registerPrevention(new MilkingPrevention(this))
-            .registerPrevention(new MonsterPrevention(this))
-            .registerPrevention(new MovePrevention(this))
-            .registerPrevention(new NoteblockPrevention(this))
-            .registerPrevention(new PickupPrevention(this))
-            .registerPrevention(new PlaceBlockPrevention(this))
-            .registerPrevention(new PressureplatePrevention(this))
-            .registerPrevention(new RepeaterPrevention(this))
-            .registerPrevention(new ShearPrevention(this))
-            .registerPrevention(new SneakPrevention(this))
-            .registerPrevention(new SpamPrevention(this))
-            .registerPrevention(new SpawnEggPrevention(this))
-            .registerPrevention(new SwearPrevention(this))
-            .registerPrevention(new TamePrevention(this))
-            .registerPrevention(new TradingPrevention(this))
-            .registerPrevention(new TramplePrevention(this))
-            .registerPrevention(new TripwirePrevetion(this))
-            .registerPrevention(new VehiclePrevention(this))
-            .registerPrevention(new WaterbucketPrevention(this))
-            .registerPrevention(new WorkbenchPrevention(this))
+        Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 
-            .enablePreventions();
+        for (Class<? extends Punishment> punishmentClass : reflections.getSubTypesOf(Punishment.class))
+        {
+            try
+            {
+                manager.registerPunishment(punishmentClass.newInstance());
+            }
+            catch (InstantiationException e)
+            {
+                error("Failed to create the instance of the " + punishmentClass
+                    .getSimpleName() + " (instantiation failed)!", e);
+            }
+            catch (IllegalAccessException e)
+            {
+                error("Failed to create the instance of the " + punishmentClass
+                    .getSimpleName() + " (access failed)!", e);
+            }
+        }
+
+        for (Class<? extends Prevention> preventionClass : reflections.getSubTypesOf(Prevention.class))
+        {
+            if (preventionClass.isInterface() || Modifier.isAbstract(preventionClass.getModifiers()))
+            {
+                continue;
+            }
+            try
+            {
+                Constructor<? extends Prevention> constructor = preventionClass.getConstructor(this.getClass());
+                constructor.setAccessible(true);
+                manager.registerPrevention(constructor.newInstance(this));
+            }
+            catch (InstantiationException e)
+            {
+                error("Failed to create the instance of the " + preventionClass
+                    .getSimpleName() + " (instantiation failed)!", e);
+            }
+            catch (IllegalAccessException e)
+            {
+                error("Failed to create the instance of the " + preventionClass
+                    .getSimpleName() + " (access failed)!", e);
+            }
+            catch (NoSuchMethodException e)
+            {
+                error("Failed to create the instance of the " + preventionClass
+                    .getSimpleName() + " (missing/invalid constructor)!", e);
+            }
+            catch (InvocationTargetException e)
+            {
+                error("Failed to create the instance of the " + preventionClass
+                    .getSimpleName() + " (error in constroctor)!", e.getCause());
+            }
+        }
+
+        manager.enablePreventions();
 
         logger.info(PreventionManager.getInstance().getPreventions().size() + " Prevention(s) have been registered!");
         this.convertPreventionConfigs();
