@@ -45,7 +45,6 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 {
     private static Logger logger = null;
 
-    private        File        dataFolder;
     private        File        preventionConfigFolder;
     private static Translation translation;
     private        BaseCommand baseCommand;
@@ -56,18 +55,17 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     public void onEnable()
     {
         logger = this.getLogger();
-        this.dataFolder = this.getDataFolder();
-        if (!this.dataFolder.exists() && !this.dataFolder.mkdirs())
+        File dataFolder = this.getDataFolder();
+        if (!dataFolder.exists() && !dataFolder.mkdirs())
         {
             logger.log(SEVERE, "Failed to create the data folder!");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        this.preventionConfigFolder = new File(this.dataFolder, "preventions");
+        this.preventionConfigFolder = new File(dataFolder, "preventions");
 
         reloadConfig();
         Configuration config = getConfig();
-        this.convertConfig((FileConfiguration)config);
         config.addDefault("language", System.getProperty("user.language", "en"));
         config.options().copyDefaults(true);
 
@@ -138,7 +136,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             catch (InvocationTargetException e)
             {
                 error("Failed to create the instance of the " + preventionClass
-                    .getSimpleName() + " (error in constroctor)!", e.getCause());
+                    .getSimpleName() + " (error in constructor)!", e);
             }
         }
 
@@ -153,53 +151,6 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     {
         translation = null;
         PreventionManager.getInstance().disablePreventions();
-    }
-
-    private void convertConfig(FileConfiguration config)
-    {
-        final String preventionsKey = "preventions";
-        ConfigurationSection section = config.getConfigurationSection(preventionsKey);
-        PreventionManager mgr = PreventionManager.getInstance();
-        if (section != null)
-        {
-            Prevention currentPrevention;
-            PreventionConfiguration preventionConfig;
-            ConfigurationSection currentSection;
-            for (String key : section.getKeys(false))
-            {
-                currentPrevention = mgr.getPrevention(key);
-                if (currentPrevention == null)
-                {
-                    continue;
-                }
-                currentSection = section.getConfigurationSection(key);
-                if (currentSection == null)
-                {
-                    continue;
-                }
-                preventionConfig = currentPrevention.getConfig();
-
-                for (Map.Entry<String, Object> entry : currentSection.getValues(true).entrySet())
-                {
-                    preventionConfig.set(entry.getKey(), entry.getValue());
-                }
-                try
-                {
-                    preventionConfig.save();
-                }
-                catch (IOException ignored)
-                {}
-            }
-            try
-            {
-                config.save(new File(this.dataFolder, "config.yml.old"));
-            }
-            catch (IOException e)
-            {
-                error("Failed to write the old configuration file", e);
-            }
-            config.set(preventionsKey, null);
-        }
     }
 
     private void convertPreventionConfigs()
