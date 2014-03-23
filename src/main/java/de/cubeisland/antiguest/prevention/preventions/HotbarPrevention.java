@@ -1,9 +1,11 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 
-import org.bukkit.event.*;
-import org.bukkit.event.player.*;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents changing the hotbar of the player

@@ -1,11 +1,11 @@
 package de.cubeisland.antiguest.prevention;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 /**
  * This class represents a filterable Prevention related to Materials
@@ -86,8 +86,9 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
     /**
      * This method checks whether the player can do the subaction
      *
-     * @param player the player
+     * @param player   the player
      * @param material the material
+     *
      * @return true if he can
      */
     @Override

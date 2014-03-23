@@ -1,9 +1,5 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.AntiGuest;
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-import gnu.trove.map.hash.THashMap;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -14,6 +10,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import de.cubeisland.antiguest.AntiGuest;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import gnu.trove.map.hash.THashMap;
 
 /**
  * Prevents idling players
@@ -98,7 +99,8 @@ public class AfkPrevention extends Prevention
     {
         final Location from = event.getFrom();
         final Location to = event.getTo();
-        if (from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY() && from.getBlockZ() == to.getBlockZ())
+        if (from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY() && from.getBlockZ() == to
+            .getBlockZ())
         {
             return;
         }

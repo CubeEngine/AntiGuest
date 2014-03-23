@@ -1,14 +1,15 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.concurrent.TimeUnit;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 import static org.bukkit.Material.*;
 

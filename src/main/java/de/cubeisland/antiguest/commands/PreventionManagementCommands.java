@@ -1,5 +1,8 @@
 package de.cubeisland.antiguest.commands;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import de.cubeisland.antiguest.prevention.Prevention;
 import de.cubeisland.antiguest.prevention.PreventionManager;
 import de.cubeisland.libMinecraft.ChatColor;
@@ -7,13 +10,9 @@ import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import static de.cubeisland.antiguest.AntiGuest._;
 
 /**
- *
  * @author CodeInfection
  */
 public class PreventionManagementCommands
@@ -176,7 +175,9 @@ public class PreventionManagementCommands
             sender.sendMessage("");
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
             {
-                sender.sendMessage(" - " + (prevention.isEnabled() ? ChatColor.BRIGHT_GREEN : ChatColor.RED) + prevention.getName());
+                sender
+                    .sendMessage(" - " + (prevention.isEnabled() ? ChatColor.BRIGHT_GREEN : ChatColor.RED) + prevention
+                        .getName());
             }
             sender.sendMessage("");
         }

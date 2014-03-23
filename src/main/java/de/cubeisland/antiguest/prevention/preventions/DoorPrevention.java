@@ -1,16 +1,17 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 import static org.bukkit.Material.*;
 
@@ -21,7 +22,8 @@ import static org.bukkit.Material.*;
  */
 public class DoorPrevention extends FilteredItemPrevention
 {
-    private static final EnumSet<Material> DOORS = EnumSet.of(WOODEN_DOOR, IRON_DOOR, IRON_DOOR_BLOCK, TRAP_DOOR, FENCE_GATE);
+    private static final EnumSet<Material> DOORS = EnumSet
+        .of(WOODEN_DOOR, IRON_DOOR, IRON_DOOR_BLOCK, TRAP_DOOR, FENCE_GATE);
 
     public DoorPrevention(PreventionPlugin plugin)
     {

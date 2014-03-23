@@ -1,10 +1,11 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.SignChangeEvent;
+
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents sign changing

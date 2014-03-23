@@ -1,9 +1,7 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-import de.cubeisland.libMinecraft.Convert;
-import de.cubeisland.libMinecraft.math.Square;
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -12,7 +10,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.util.concurrent.TimeUnit;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import de.cubeisland.libMinecraft.Convert;
+import de.cubeisland.libMinecraft.math.Square;
 
 /**
  * Prevents movement
@@ -33,8 +34,8 @@ public class MovePrevention extends Prevention
     public String getConfigHeader()
     {
         return super.getConfigHeader() + "\n" +
-                "Configuration info:\n" +
-                "    width: the number of blocks a player can move awy from the spawn\n";
+            "Configuration info:\n" +
+            "    width: the number of blocks a player can move awy from the spawn\n";
     }
 
     @Override
@@ -65,15 +66,13 @@ public class MovePrevention extends Prevention
         {
             return;
         }
-        
+
         final Player player = event.getPlayer();
         if (!can(player))
         {
             // create a square around the spawn
-            final Square spawnSquare = new Square(
-                Convert.toBlockVector2(player.getWorld().getSpawnLocation()).substract(this.width),
-                this.width * 2
-            );
+            final Square spawnSquare = new Square(Convert.toBlockVector2(player.getWorld().getSpawnLocation())
+                                                         .substract(this.width), this.width * 2);
 
             // is the new location inside the spawn square?
             if (!spawnSquare.contains(Convert.toBlockVector2(to)))

@@ -1,11 +1,10 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-import de.cubeisland.libMinecraft.command.Command;
-import de.cubeisland.libMinecraft.command.CommandArgs;
-import de.cubeisland.libMinecraft.command.RequiresPermission;
-import gnu.trove.set.hash.THashSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -15,10 +14,12 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import de.cubeisland.libMinecraft.command.Command;
+import de.cubeisland.libMinecraft.command.CommandArgs;
+import de.cubeisland.libMinecraft.command.RequiresPermission;
+import gnu.trove.set.hash.THashSet;
 
 /**
  * Prevents the user from swearing
@@ -41,17 +42,8 @@ public class SwearPrevention extends Prevention
     @Override
     public String getConfigHeader()
     {
-        return super.getConfigHeader() + "\n"
-                + "Every message, signtext or (optionally) command a guest sends will be checked for the words listed under words.\n"
-                + "More words will result in more time to check the message. Even though the words\n"
-                + "get compiled on startup, an extreme list may lag the chat for guests. Non-guests are unaffected!\n"
-                + "The words may contain usual filesystem patterns.\n"
-                + "Words prefixed with 'regex:' are interpreted as a Java regular expression\n"
-                + "\nFilesystem patterns:\n"
-                + " * -> any number (including none) of any character\n"
-                + " ? -> one or none of any character\n"
-                + " { , , } -> a group of strings of which one must match\n"
-                + " \\ -> escape character to write the above characters as a normal character";
+        return super
+            .getConfigHeader() + "\n" + "Every message, signtext or (optionally) command a guest sends will be checked for the words listed under words.\n" + "More words will result in more time to check the message. Even though the words\n" + "get compiled on startup, an extreme list may lag the chat for guests. Non-guests are unaffected!\n" + "The words may contain usual filesystem patterns.\n" + "Words prefixed with 'regex:' are interpreted as a Java regular expression\n" + "\nFilesystem patterns:\n" + " * -> any number (including none) of any character\n" + " ? -> one or none of any character\n" + " { , , } -> a group of strings of which one must match\n" + " \\ -> escape character to write the above characters as a normal character";
     }
 
     @Override
@@ -60,12 +52,8 @@ public class SwearPrevention extends Prevention
         Configuration config = super.getDefaultConfig();
 
         config.set("check-commands", false);
-        config.set("words", new String[] {
-            "hitler",
-            "nazi",
-            "asshole",
-            "shit",
-            "fuck"
+        config.set("words", new String[]{
+            "hitler", "nazi", "asshole", "shit", "fuck"
         });
 
         return config;
@@ -150,16 +138,16 @@ public class SwearPrevention extends Prevention
                         ignoreNext = true;
                         break ignore;
                     }
-                    
+
                     pattern.append(Pattern.quote(plain.toString()));
                     plain = null;
-                    
+
                     if (replacement != null)
                     {
                         pattern.append(replacement);
                         replacement = null;
                     }
-                    
+
                     continue;
                 }
                 if (ignoreNext)
@@ -172,12 +160,12 @@ public class SwearPrevention extends Prevention
                 }
                 plain.append(current);
             }
-            
+
             if (plain != null)
             {
                 pattern.append(Pattern.quote(plain.toString()));
             }
-            
+
             return Pattern.compile("\\b" + pattern.append("\\b").toString(), Pattern.CASE_INSENSITIVE);
         }
     }
@@ -257,7 +245,7 @@ public class SwearPrevention extends Prevention
                 config.set("words", words);
                 saveConfig();
 
-                synchronized(this)
+                synchronized (this)
                 {
                     this.swearPatterns.add(this.compile(word));
                 }

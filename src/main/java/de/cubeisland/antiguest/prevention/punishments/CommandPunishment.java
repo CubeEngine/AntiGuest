@@ -1,6 +1,8 @@
 package de.cubeisland.antiguest.prevention.punishments;
 
-import de.cubeisland.antiguest.prevention.Punishment;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -12,9 +14,7 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import de.cubeisland.antiguest.prevention.Punishment;
 
 public class CommandPunishment implements Punishment
 {
@@ -48,10 +48,12 @@ public class CommandPunishment implements Punishment
     private static final class CommandPunishmentSender implements CommandSender
     {
         public void sendMessage(String message)
-        {}
+        {
+        }
 
         public void sendMessage(String[] messages)
-        {}
+        {
+        }
 
         public Server getServer()
         {
@@ -104,10 +106,12 @@ public class CommandPunishment implements Punishment
         }
 
         public void removeAttachment(PermissionAttachment attachment)
-        {}
+        {
+        }
 
         public void recalculatePermissions()
-        {}
+        {
+        }
 
         public Set<PermissionAttachmentInfo> getEffectivePermissions()
         {
@@ -120,6 +124,7 @@ public class CommandPunishment implements Punishment
         }
 
         public void setOp(boolean value)
-        {}
+        {
+        }
     }
 }

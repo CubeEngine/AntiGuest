@@ -1,42 +1,28 @@
 package de.cubeisland.antiguest;
 
-import de.cubeisland.antiguest.commands.BasicCommands;
-import de.cubeisland.antiguest.commands.PreventionManagementCommands;
-import de.cubeisland.antiguest.prevention.*;
-import de.cubeisland.antiguest.prevention.preventions.*;
-import de.cubeisland.antiguest.prevention.punishments.BanPunishment;
-import de.cubeisland.antiguest.prevention.punishments.BurnPunishment;
-import de.cubeisland.antiguest.prevention.punishments.CommandPunishment;
-import de.cubeisland.antiguest.prevention.punishments.DropitemPunishment;
-import de.cubeisland.antiguest.prevention.punishments.ExplosionPunishment;
-import de.cubeisland.antiguest.prevention.punishments.KickPunishment;
-import de.cubeisland.antiguest.prevention.punishments.KillPunishment;
-import de.cubeisland.antiguest.prevention.punishments.LightningPunishment;
-import de.cubeisland.antiguest.prevention.punishments.MessagePunishment;
-import de.cubeisland.antiguest.prevention.punishments.PotionPunishment;
-import de.cubeisland.antiguest.prevention.punishments.RocketPunishment;
-import de.cubeisland.antiguest.prevention.punishments.SlapPunishment;
-import de.cubeisland.antiguest.prevention.punishments.StarvationPunishment;
-import de.cubeisland.libMinecraft.command.BaseCommand;
-import de.cubeisland.libMinecraft.translation.Translation;
-import org.reflections.Reflections;
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.util.logging.Logger;
 
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
-import java.util.Map;
-import java.util.logging.Logger;
+import de.cubeisland.antiguest.commands.BasicCommands;
+import de.cubeisland.antiguest.commands.PreventionManagementCommands;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionConfiguration;
+import de.cubeisland.antiguest.prevention.PreventionManager;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import de.cubeisland.antiguest.prevention.Punishment;
+import de.cubeisland.libMinecraft.command.BaseCommand;
+import de.cubeisland.libMinecraft.translation.Translation;
+import org.reflections.Reflections;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
@@ -45,11 +31,11 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
 {
     private static Logger logger = null;
 
-    private        File        preventionConfigFolder;
+    private File preventionConfigFolder;
     private static Translation translation;
-    private        BaseCommand baseCommand;
-    private        boolean     punishments;
-    private        boolean     logViolations;
+    private BaseCommand baseCommand;
+    private boolean punishments;
+    private boolean logViolations;
 
     @Override
     public void onEnable()

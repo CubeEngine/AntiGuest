@@ -1,7 +1,5 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -13,6 +11,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents block breaking

@@ -1,7 +1,7 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.EnumSet;
+
 import org.bukkit.Material;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
@@ -10,7 +10,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.EnumSet;
+import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents item usage

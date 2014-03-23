@@ -1,10 +1,10 @@
 package de.cubeisland.antiguest.prevention;
 
-import org.bukkit.entity.EntityType;
-
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+
+import org.bukkit.entity.EntityType;
 
 /**
  * This class represents a filterable Prevention related to Materials

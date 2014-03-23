@@ -1,12 +1,13 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
+
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents lava bucket usage
@@ -24,7 +25,8 @@ public class LavabucketPrevention extends Prevention
     @Override
     public String getConfigHeader()
     {
-        return super.getConfigHeader() + "\nThis prevention works, even though the client shows that lava was placed!\n";
+        return super
+            .getConfigHeader() + "\nThis prevention works, even though the client shows that lava was placed!\n";
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

@@ -1,15 +1,16 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-import gnu.trove.set.hash.THashSet;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import de.cubeisland.antiguest.prevention.FilteredPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import gnu.trove.set.hash.THashSet;
 
 /**
  * Prevents command usage

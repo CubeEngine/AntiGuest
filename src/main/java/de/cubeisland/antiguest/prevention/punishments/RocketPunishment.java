@@ -1,9 +1,10 @@
 package de.cubeisland.antiguest.prevention.punishments;
 
-import de.cubeisland.antiguest.prevention.Punishment;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import de.cubeisland.antiguest.prevention.Punishment;
 
 /**
  * Shoots a player into the skys

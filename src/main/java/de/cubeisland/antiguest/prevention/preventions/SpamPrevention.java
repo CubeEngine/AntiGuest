@@ -1,15 +1,16 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-import gnu.trove.map.hash.TObjectLongHashMap;
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.concurrent.TimeUnit;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import gnu.trove.map.hash.TObjectLongHashMap;
 
 /**
  * Prevents spamming
@@ -32,8 +33,8 @@ public class SpamPrevention extends Prevention
     public String getConfigHeader()
     {
         return super.getConfigHeader() +
-                "Configuration info:\n" +
-                "    lockDuration: the time in seconds a player has to wait between messages";
+            "Configuration info:\n" +
+            "    lockDuration: the time in seconds a player has to wait between messages";
     }
 
     @Override
@@ -45,7 +46,7 @@ public class SpamPrevention extends Prevention
 
         return config;
     }
-    
+
     @Override
     public void enable()
     {
@@ -83,7 +84,7 @@ public class SpamPrevention extends Prevention
     {
         this.chatTimestamps.put(player.getName(), System.currentTimeMillis() + this.spamLockDuration);
     }
-    
+
     private synchronized boolean isChatLocked(final Player player)
     {
         final long nextPossible = this.chatTimestamps.get(player.getName());

@@ -1,8 +1,9 @@
 package de.cubeisland.antiguest.prevention.punishments;
 
-import de.cubeisland.antiguest.prevention.Punishment;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+
+import de.cubeisland.antiguest.prevention.Punishment;
 
 /**
  * Kills a player

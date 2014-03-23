@@ -1,11 +1,10 @@
 package de.cubeisland.antiguest.prevention;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.TObjectLongMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
-import gnu.trove.map.hash.TObjectLongHashMap;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
@@ -20,11 +19,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.TObjectLongMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.map.hash.TObjectLongHashMap;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
@@ -63,7 +63,7 @@ public abstract class Prevention implements Listener
      * Initializes the prevention with its name, the corresponding plugin and
      * allowed punishing.
      *
-     * @param name the name of the prevention
+     * @param name   the name of the prevention
      * @param plugin the plugin
      */
     public Prevention(final String name, final PreventionPlugin plugin)
@@ -75,8 +75,8 @@ public abstract class Prevention implements Listener
      * Initializes the prevention with its name, the corresponding plugin and
      * whether to allow punishing.
      *
-     * @param name the name of the prevention
-     * @param plugin the plugin
+     * @param name           the name of the prevention
+     * @param plugin         the plugin
      * @param allowPunishing whether to allow punishing
      */
     public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing)
@@ -88,8 +88,8 @@ public abstract class Prevention implements Listener
      * Initializes the prevention with its name, the corresponding plugin and
      * whether to allow punishing.
      *
-     * @param name the name of the prevention
-     * @param plugin the plugin
+     * @param name           the name of the prevention
+     * @param plugin         the plugin
      * @param allowPunishing whether to allow punishing
      */
     public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing, final boolean allowViolationLogging)
@@ -295,7 +295,8 @@ public abstract class Prevention implements Listener
                                             {
                                                 punishments = new ConcurrentHashMap<Punishment, ConfigurationSection>(1);
                                                 this.violationPunishmentMap.put(violation, punishments);
-                                                this.highestPunishmentViolation = Math.max(this.highestPunishmentViolation, violation);
+                                                this.highestPunishmentViolation = Math
+                                                    .max(this.highestPunishmentViolation, violation);
                                             }
                                             punishments.put(punishment, punishmentSection);
                                         }
@@ -304,7 +305,8 @@ public abstract class Prevention implements Listener
                             }
                         }
                         catch (NumberFormatException ignored)
-                        {}
+                        {
+                        }
                     }
                 }
             }
@@ -400,7 +402,7 @@ public abstract class Prevention implements Listener
 
     /**
      * Returns the prevention's name
-     * 
+     *
      * @return the name
      */
     public final String getName()
@@ -478,7 +480,7 @@ public abstract class Prevention implements Listener
 
     /**
      * Sets whether this prevention enables punishing
-     * 
+     *
      * @param enable true to enable it
      */
     public void setEnablePunishing(boolean enable)
@@ -545,6 +547,7 @@ public abstract class Prevention implements Listener
      * Checks whether a player can pass a prevention
      *
      * @param player the player
+     *
      * @return true if the player can pass the prevention
      */
     public boolean can(final Player player)
@@ -576,7 +579,7 @@ public abstract class Prevention implements Listener
 
     /**
      * Does the same as sendMessage(Player), except that this method throttles the messages sending
-     * 
+     *
      * @param player hte player to send to
      */
     public void sendMessage(final Player player)
@@ -595,8 +598,9 @@ public abstract class Prevention implements Listener
     /**
      * This method combines prevent() and can()
      *
-     * @param event a cancellable event
+     * @param event  a cancellable event
      * @param player the player
+     *
      * @return true if the action was prevented
      */
     public boolean checkAndPrevent(final Cancellable event, final Player player)
@@ -612,7 +616,7 @@ public abstract class Prevention implements Listener
     /**
      * This methods cancels the event and handles notifications, punishing and logging
      *
-     * @param event a cancellable event
+     * @param event  a cancellable event
      * @param player the player
      */
     public void prevent(final Cancellable event, final Player player)
@@ -656,7 +660,8 @@ public abstract class Prevention implements Listener
     {
         if (Thread.currentThread() != this.mainThread)
         {
-            this.getPlugin().getServer().getScheduler().callSyncMethod(this.getPlugin(), new Callable<Void>() {
+            this.getPlugin().getServer().getScheduler().callSyncMethod(this.getPlugin(), new Callable<Void>()
+            {
                 public Void call() throws Exception
                 {
                     doPunish(player, punishments);
@@ -680,7 +685,8 @@ public abstract class Prevention implements Listener
 
         if (this.checkAndSetThrottleTimestamp(player, this.logThrottleTimestamps))
         {
-            String message = this.getPlugin().getTranslation().translate("prevention_violated", player.getName(), this.getName());
+            String message = this.getPlugin().getTranslation()
+                                 .translate("prevention_violated", player.getName(), this.getName());
             this.getPlugin().getLogger().log(INFO, ChatColor.stripColor(message));
             this.getPlugin().getServer().broadcast(message, "antiguest.violation-notification");
         }
@@ -690,6 +696,7 @@ public abstract class Prevention implements Listener
      * Parses a message
      *
      * @param message the message to parse
+     *
      * @return null if message is null or empty, otherwise the parsed message
      */
     public static String parseMessage(final String message)
@@ -708,7 +715,8 @@ public abstract class Prevention implements Listener
     @Override
     public String toString()
     {
-        return this.getClass().getSimpleName() + "{name=" + this.name + ", permission=" + this.permission.toString() + ", plugin=" + this.plugin.toString() + "}";
+        return this.getClass().getSimpleName() + "{name=" + this.name + ", permission=" + this.permission
+            .toString() + ", plugin=" + this.plugin.toString() + "}";
     }
 }
 

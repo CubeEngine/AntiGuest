@@ -1,7 +1,7 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredEntityPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
@@ -9,7 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-import java.util.concurrent.TimeUnit;
+import de.cubeisland.antiguest.prevention.FilteredEntityPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents targeting by monsters

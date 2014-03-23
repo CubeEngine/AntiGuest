@@ -1,20 +1,22 @@
 package de.cubeisland.antiguest.commands;
 
+import java.util.Set;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+
 import de.cubeisland.antiguest.AntiGuest;
-import static de.cubeisland.antiguest.AntiGuest._;
 import de.cubeisland.antiguest.prevention.Prevention;
 import de.cubeisland.antiguest.prevention.PreventionManager;
 import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
 import gnu.trove.set.hash.THashSet;
-import java.util.Set;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
+
+import static de.cubeisland.antiguest.AntiGuest._;
 
 /**
- *
  * @author CodeInfection
  */
 public class BasicCommands

@@ -1,8 +1,9 @@
 package de.cubeisland.antiguest.prevention;
 
+import java.io.File;
+
 import de.cubeisland.libMinecraft.command.BaseCommand;
 import de.cubeisland.libMinecraft.translation.TranslatablePlugin;
-import java.io.File;
 
 /**
  * Represents a prevention plugin

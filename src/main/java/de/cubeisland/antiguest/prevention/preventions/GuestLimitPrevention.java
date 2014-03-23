@@ -1,8 +1,9 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-import gnu.trove.map.hash.THashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -11,9 +12,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import gnu.trove.map.hash.THashMap;
 
 /**
  * This prevention limits the number of guests that can join the server
@@ -55,18 +56,17 @@ public class GuestLimitPrevention extends Prevention
     public String getConfigHeader()
     {
         return super.getConfigHeader() + "\n" +
-                "Configuration info:\n" +
-                "    minimumPlayer: the number of players on the server to enable the guest limit\n" +
-                "    guestLimit: the number of guests that can join the server\n" +
-                "    kickGuests: whether to kick a guest from hte full server if a member wants to join\n";
+            "Configuration info:\n" +
+            "    minimumPlayer: the number of players on the server to enable the guest limit\n" +
+            "    guestLimit: the number of guests that can join the server\n" +
+            "    kickGuests: whether to kick a guest from hte full server if a member wants to join\n";
     }
-
 
 
     @Override
     public Configuration getDefaultConfig()
     {
-        Configuration defaultConfig =  super.getDefaultConfig();
+        Configuration defaultConfig = super.getDefaultConfig();
 
         defaultConfig.set("minimumPlayers", Math.round(getPlugin().getServer().getMaxPlayers() * .7));
         defaultConfig.set("guestLimit", Math.round(getPlugin().getServer().getMaxPlayers() * .3));
@@ -97,7 +97,7 @@ public class GuestLimitPrevention extends Prevention
         if (!can(player))
         {
             final boolean tooManyGuests = guests.size() >= this.guestLimit && onlinePlayers > minimumPlayers;
-            
+
             // server full or too many guests?
             if (serverIsFull || tooManyGuests)
             {

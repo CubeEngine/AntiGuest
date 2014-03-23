@@ -1,17 +1,18 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import de.cubeisland.antiguest.prevention.FilteredPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents users from trading
@@ -28,17 +29,18 @@ public class TradingPrevention extends FilteredPrevention<Profession>
     }
 
     @Override
-    public Set<Profession> decodeList(List<String> list) {
+    public Set<Profession> decodeList(List<String> list)
+    {
         Set<Profession> professions = EnumSet.noneOf(Profession.class);
-        
+
         for (String name : list)
         {
             professions.add(Profession.valueOf(name.trim().toUpperCase(Locale.ENGLISH)));
         }
-        
+
         return professions;
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onEntityInteract(PlayerInteractEntityEvent event)
     {

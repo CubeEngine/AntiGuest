@@ -1,13 +1,15 @@
 package de.cubeisland.antiguest.prevention;
 
-import gnu.trove.set.hash.THashSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+
+import gnu.trove.set.hash.THashSet;
 
 /**
  * This base class represents a prevention that can be filtered.
@@ -97,6 +99,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      * Encodes the type specific set into a string list
      *
      * @param set the set
+     *
      * @return the string list
      */
     public List<String> encodeSet(Set<T> set)
@@ -115,6 +118,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      * Decodes a string list into the type specific item set
      *
      * @param list the list
+     *
      * @return the set
      */
     public abstract Set<T> decodeList(List<String> list);
@@ -136,7 +140,8 @@ public abstract class FilteredPrevention<T> extends Prevention
      * This method checks whether the player can do the subaction
      *
      * @param player the player
-     * @param item the item representing the subaction
+     * @param item   the item representing the subaction
+     *
      * @return true if he can
      */
     public boolean can(final Player player, final T item)
@@ -158,10 +163,11 @@ public abstract class FilteredPrevention<T> extends Prevention
 
     /**
      * Prevents the action if the player can't pass it
-     * 
-     * @param event a cancellable event
+     *
+     * @param event  a cancellable event
      * @param player the player
-     * @param item the item representing the subaction
+     * @param item   the item representing the subaction
+     *
      * @return true if the action was prevented
      */
     public boolean checkAndPrevent(final Cancellable event, final Player player, final T item)
@@ -187,7 +193,7 @@ public abstract class FilteredPrevention<T> extends Prevention
 
         private final String name;
         private final String[] aliases;
-        
+
         FilterMode(String name, String... aliases)
         {
             this.name = name;

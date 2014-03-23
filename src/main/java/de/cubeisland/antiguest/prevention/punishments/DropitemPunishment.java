@@ -1,8 +1,9 @@
 package de.cubeisland.antiguest.prevention.punishments;
 
-import de.cubeisland.antiguest.prevention.Punishment;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+
+import de.cubeisland.antiguest.prevention.Punishment;
 
 /**
  * Drops the player players held item
@@ -18,7 +19,8 @@ public class DropitemPunishment implements Punishment
 
     public void punish(Player player, ConfigurationSection config)
     {
-        player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand()).setPickupDelay(config.getInt("pickupDelay", 4) * 20);
+        player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand())
+              .setPickupDelay(config.getInt("pickupDelay", 4) * 20);
         player.getInventory().clear(player.getInventory().getHeldItemSlot());
     }
 }

@@ -1,7 +1,8 @@
 package de.cubeisland.antiguest.prevention;
 
-import de.cubeisland.antiguest.AntiGuest;
-import gnu.trove.map.hash.THashMap;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.permissions.Permission;
@@ -9,8 +10,8 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import de.cubeisland.antiguest.AntiGuest;
+import gnu.trove.map.hash.THashMap;
 
 /**
  * This class manages the Prevention's.
@@ -26,7 +27,7 @@ public class PreventionManager
 
     private final PluginManager pm;
     private final Permission parentPermission;
-    
+
     private PreventionManager()
     {
         this.pm = Bukkit.getPluginManager();
@@ -54,6 +55,7 @@ public class PreventionManager
      * Returns the named prevention or null if not available
      *
      * @param name the name of the prevention
+     *
      * @return the prevention or null
      */
     public Prevention getPrevention(String name)
@@ -75,6 +77,7 @@ public class PreventionManager
      * Registeres a prevention
      *
      * @param prevention the prevention to register
+     *
      * @return fluent interface
      */
     public PreventionManager registerPrevention(Prevention prevention)
@@ -96,10 +99,11 @@ public class PreventionManager
                 this.pm.addPermission(perm);
             }
             catch (IllegalArgumentException ignored)
-            {}
+            {
+            }
             perm.addParent(this.parentPermission, true);
         }
-        
+
         return this;
     }
 
@@ -107,6 +111,7 @@ public class PreventionManager
      * Unregisteres a prevention if registered
      *
      * @param name the name of the prevention
+     *
      * @return fluent interface
      */
     public PreventionManager unregisterPrevention(String name)
@@ -127,8 +132,9 @@ public class PreventionManager
 
     /**
      * Enables the named prevention if registered
-     * 
+     *
      * @param prevention the preventions name
+     *
      * @return true if the initialization was successful
      */
     public boolean enablePrevention(final Prevention prevention)
@@ -174,6 +180,7 @@ public class PreventionManager
      * Disables the named prevention
      *
      * @param name name of the prevention
+     *
      * @return fluent interface
      */
     public PreventionManager disablePrevention(String name)
@@ -190,6 +197,7 @@ public class PreventionManager
      * Disables the named prevention
      *
      * @param prevention name of the prevention
+     *
      * @return fluent interface
      */
     public PreventionManager disablePrevention(Prevention prevention)
@@ -228,6 +236,7 @@ public class PreventionManager
      * Disables all preventions of a plugin
      *
      * @param plugin the plugin that registered the preventions
+     *
      * @return fluent interface
      */
     public PreventionManager disablePreventions(Plugin plugin)
@@ -247,6 +256,7 @@ public class PreventionManager
      * Registeres a punishment
      *
      * @param punishment the punishment
+     *
      * @return fluent interface
      */
     public PreventionManager registerPunishment(Punishment punishment)
@@ -263,6 +273,7 @@ public class PreventionManager
      * Unregisteres a punishment
      *
      * @param punishment the punishment to unregister
+     *
      * @return fluent interface
      */
     public PreventionManager unregisterPunishment(Punishment punishment)
@@ -278,6 +289,7 @@ public class PreventionManager
      * Unregisteres a punishment by its name
      *
      * @param name the name of the punishment to unregister
+     *
      * @return fluent interface
      */
     public PreventionManager unregisterPunishment(String name)
@@ -290,6 +302,7 @@ public class PreventionManager
      * Returns a punishment by its name
      *
      * @param name the name of the punishment
+     *
      * @return the punishment
      */
     public Punishment getPunishment(String name)

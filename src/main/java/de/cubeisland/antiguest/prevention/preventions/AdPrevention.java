@@ -1,19 +1,20 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionManager;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.regex.Pattern;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.regex.Pattern;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionManager;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 public class AdPrevention extends Prevention
 {
     private final Pattern ipv4Regex = Pattern.compile("(^|\\s)\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}($|\\s)");
-    private final Pattern hostRegex = Pattern.compile("(^|\\s)[\\w\\d-]+\\.[a-z]{2,4}($|\\s)", Pattern.CASE_INSENSITIVE);
+    private final Pattern hostRegex = Pattern
+        .compile("(^|\\s)[\\w\\d-]+\\.[a-z]{2,4}($|\\s)", Pattern.CASE_INSENSITIVE);
 
     public AdPrevention(PreventionPlugin plugin)
     {

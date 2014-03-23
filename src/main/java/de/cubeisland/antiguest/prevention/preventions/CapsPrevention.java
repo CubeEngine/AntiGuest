@@ -1,11 +1,12 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents users from writing with too many capital letters
@@ -15,7 +16,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class CapsPrevention extends Prevention
 {
     private double maxCapsRatio;
-    
+
     public CapsPrevention(PreventionPlugin plugin)
     {
         super("caps", plugin);
@@ -26,8 +27,8 @@ public class CapsPrevention extends Prevention
     public String getConfigHeader()
     {
         return super.getConfigHeader() +
-                "Configuration info:\n" +
-                "    max-caps-ratio: the rate of capital letters compared to the length of the message in percent (0 - 100)\n";
+            "Configuration info:\n" +
+            "    max-caps-ratio: the rate of capital letters compared to the length of the message in percent (0 - 100)\n";
     }
 
     @Override
@@ -41,14 +42,13 @@ public class CapsPrevention extends Prevention
     public Configuration getDefaultConfig()
     {
         Configuration config = super.getDefaultConfig();
-        
+
         config.set("max-caps-ratio", (int)(this.maxCapsRatio * 100));
-        
+
         return config;
     }
-    
-    
-    
+
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event)
     {
@@ -56,7 +56,7 @@ public class CapsPrevention extends Prevention
         {
             final String message = event.getMessage();
             final int length = message.length();
-            
+
             int caps = 0;
             for (int i = 0; i < message.length(); ++i)
             {
@@ -65,7 +65,7 @@ public class CapsPrevention extends Prevention
                     ++caps;
                 }
             }
-            
+
             if ((double)caps / (double)length > this.maxCapsRatio)
             {
                 prevent(event, event.getPlayer());

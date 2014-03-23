@@ -1,7 +1,12 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -13,8 +18,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PotionSplashEvent;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import de.cubeisland.antiguest.prevention.FilteredPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents damage
@@ -40,10 +45,10 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
     public String getConfigHeader()
     {
         return super.getConfigHeader() + "\n" +
-                "Configuration info:\n" +
-                "    damagerMessage: this message will be send to the player who attacked a guest\n" +
-                "    preventPostions: if this is enabled potion effects also get prevented\n" +
-                "    postionMessage: this will be send to players protected from postions\n";
+            "Configuration info:\n" +
+            "    damagerMessage: this message will be send to the player who attacked a guest\n" +
+            "    preventPostions: if this is enabled potion effects also get prevented\n" +
+            "    postionMessage: this will be send to players protected from postions\n";
     }
 
     @Override
@@ -82,7 +87,8 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
                 damageCauses.add(DamageCause.valueOf(entry.trim().replace(" ", "_").toUpperCase()));
             }
             catch (IllegalArgumentException ignored)
-            {}
+            {
+            }
         }
         return damageCauses;
     }
@@ -96,7 +102,6 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         this.damagerMessage = parseMessage(config.getString("damagerMessage"));
         this.preventPotions = config.getBoolean("preventPotions");
         this.potionMessage = parseMessage(config.getString("potionMessage"));
-
     }
 
     @Override

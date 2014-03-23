@@ -1,10 +1,12 @@
 package de.cubeisland.antiguest.prevention.punishments;
 
-import de.cubeisland.antiguest.prevention.Punishment;
 import java.util.Random;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import de.cubeisland.antiguest.prevention.Punishment;
 
 /**
  * Slaps a player

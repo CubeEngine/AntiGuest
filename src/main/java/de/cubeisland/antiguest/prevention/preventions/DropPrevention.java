@@ -1,10 +1,11 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerDropItemEvent;
+
+import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents item dropping
@@ -18,7 +19,7 @@ public class DropPrevention extends FilteredItemPrevention
         super("drop", plugin);
         setEnablePunishing(true);
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void dropItem(PlayerDropItemEvent event)
     {

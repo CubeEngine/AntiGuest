@@ -1,16 +1,21 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.*;
+import java.util.concurrent.TimeUnit;
 
-import org.bukkit.*;
-import org.bukkit.configuration.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.block.*;
-import org.bukkit.event.player.*;
-import org.bukkit.event.vehicle.*;
+import org.bukkit.Material;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
-import java.util.concurrent.*;
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents vehicle usage
@@ -55,10 +60,10 @@ public class VehiclePrevention extends Prevention
             this.access = getConfig().getBoolean("checkAndPrevent.creation");
             getConfig().set("checkAndPrevent.creation", null);
         }
-        this.access      = getConfig().getBoolean("prevent.access");
+        this.access = getConfig().getBoolean("prevent.access");
         this.destruction = getConfig().getBoolean("prevent.destruction");
-        this.collision   = getConfig().getBoolean("prevent.collision");
-        this.creation    = getConfig().getBoolean("prevent.creation");
+        this.collision = getConfig().getBoolean("prevent.collision");
+        this.creation = getConfig().getBoolean("prevent.creation");
     }
 
     @Override
@@ -189,5 +194,5 @@ public class VehiclePrevention extends Prevention
                 }
             }
         }
-    }    
+    }
 }

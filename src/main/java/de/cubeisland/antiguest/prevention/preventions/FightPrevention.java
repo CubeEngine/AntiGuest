@@ -1,8 +1,5 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import de.cubeisland.antiguest.prevention.Prevention;
-import de.cubeisland.antiguest.prevention.PreventionPlugin;
-
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Ambient;
 import org.bukkit.entity.Animals;
@@ -14,6 +11,9 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+import de.cubeisland.antiguest.prevention.Prevention;
+import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
 /**
  * Prevents PVP
@@ -82,14 +82,14 @@ public class FightPrevention extends Prevention
         final Entity damager = event.getDamager();
         if (damager instanceof Player)
         {
-            preventDamage(event, (Player) damager);
+            preventDamage(event, (Player)damager);
         }
         else if (damager instanceof Projectile)
         {
             final LivingEntity shooter = ((Projectile)damager).getShooter();
             if (shooter instanceof Player)
             {
-                preventDamage(event, (Player) shooter);
+                preventDamage(event, (Player)shooter);
             }
         }
     }

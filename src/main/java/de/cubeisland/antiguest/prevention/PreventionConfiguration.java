@@ -3,11 +3,11 @@ package de.cubeisland.antiguest.prevention;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
- *
  * @author CodeInfection
  */
 public class PreventionConfiguration extends YamlConfiguration
@@ -37,7 +37,8 @@ public class PreventionConfiguration extends YamlConfiguration
             throw new IllegalArgumentException("dir must represent a directory!");
         }
 
-        final PreventionConfiguration config = new PreventionConfiguration(new File(dir, prevention.getName() + FILE_EXTENTION));
+        final PreventionConfiguration config = new PreventionConfiguration(new File(dir, prevention
+            .getName() + FILE_EXTENTION));
         config.options().header(prevention.getConfigHeader());
         if (load)
         {
@@ -46,7 +47,8 @@ public class PreventionConfiguration extends YamlConfiguration
                 config.load();
             }
             catch (FileNotFoundException e)
-            {}
+            {
+            }
             catch (IOException e)
             {
                 e.printStackTrace(System.err);
