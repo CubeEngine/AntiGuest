@@ -100,7 +100,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
             }
             try
             {
-                Constructor<? extends Prevention> constructor = preventionClass.getConstructor(this.getClass());
+                Constructor<? extends Prevention> constructor = preventionClass.getConstructor(PreventionPlugin.class);
                 constructor.setAccessible(true);
                 manager.registerPrevention(constructor.newInstance(this));
             }
