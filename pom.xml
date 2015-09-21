@@ -13,12 +13,12 @@
         <repository>
             <id>cubeisland-repo</id>
             <name>Release</name>
-            <url>http://nexus.cubeisland.de/content/repositories/releases</url>
+            <url>http://maven.cubeisland.de/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>cubeisland-repo</id>
             <name>Release</name>
-            <url>http://nexus.cubeisland.de/content/repositories/snapshots</url>
+            <url>http://maven.cubeisland.de/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
