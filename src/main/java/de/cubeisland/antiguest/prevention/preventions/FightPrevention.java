@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import de.cubeisland.antiguest.prevention.Prevention;
 import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import org.bukkit.projectiles.ProjectileSource;
 
 /**
  * Prevents PVP
@@ -86,7 +87,7 @@ public class FightPrevention extends Prevention
         }
         else if (damager instanceof Projectile)
         {
-            final LivingEntity shooter = ((Projectile)damager).getShooter();
+            final ProjectileSource shooter = ((Projectile)damager).getShooter();
             if (shooter instanceof Player)
             {
                 preventDamage(event, (Player)shooter);

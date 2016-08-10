@@ -13,12 +13,12 @@
         <repository>
             <id>cubeisland-repo</id>
             <name>Release</name>
-            <url>http://maven.cubeisland.de/content/repositories/releases</url>
+            <url>http://maven.cubyte.org/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>cubeisland-repo</id>
             <name>Snapshot</name>
-            <url>http://maven.cubeisland.de/content/repositories/snapshots</url>
+            <url>http://maven.cubyte.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -36,7 +36,11 @@
     <repositories>
         <repository>
             <id>cubeisland-repo</id>
-            <url>http://repo.cubeisland.de/</url>
+            <url>http://repo.cubyte.org/</url>
+        </repository>
+        <repository>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -44,7 +48,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.10.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>

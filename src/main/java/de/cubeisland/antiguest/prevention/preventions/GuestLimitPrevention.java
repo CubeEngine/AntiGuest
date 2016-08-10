@@ -90,7 +90,7 @@ public class GuestLimitPrevention extends Prevention
     {
         final Player player = event.getPlayer();
         final List<Player> guests = getGuests();
-        final int onlinePlayers = this.server.getOnlinePlayers().length - 1;
+        final int onlinePlayers = this.server.getOnlinePlayers().size() - 1;
         final boolean serverIsFull = onlinePlayers >= this.server.getMaxPlayers();
 
         // guest ?

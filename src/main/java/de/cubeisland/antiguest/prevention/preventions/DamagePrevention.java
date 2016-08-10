@@ -20,6 +20,7 @@ import org.bukkit.event.entity.PotionSplashEvent;
 
 import de.cubeisland.antiguest.prevention.FilteredPrevention;
 import de.cubeisland.antiguest.prevention.PreventionPlugin;
+import org.bukkit.projectiles.ProjectileSource;
 
 /**
  * Prevents damage
@@ -142,7 +143,7 @@ public class DamagePrevention extends FilteredPrevention<DamageCause>
         }
         Collection<LivingEntity> affectedEntities = event.getAffectedEntities();
         Player affectedPlayer;
-        Entity shooter = event.getPotion().getShooter();
+        ProjectileSource shooter = event.getPotion().getShooter();
         int affectedCount = 0;
 
         Iterator<LivingEntity> iter = affectedEntities.iterator();

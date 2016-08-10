@@ -1,5 +1,8 @@
 == Changes ==
 
+=== Version 3.11.0 ===
+* updated to latest Bukkit 1.10
+
 === Version 3.10.0 ===
 * fixed the item frame prevention
 * tested with Bukkit 1.7.2-R0.2
