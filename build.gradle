@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = uri('https://maven.cubyte.org/repository/public/')
+    }
+
+    maven {
+        url = uri('https://hub.spigotmc.org/nexus/content/groups/public/')
+    }
+}
+
+dependencies {
+    implementation 'org.reflections:reflections:0.9.9-RC1'
+    testImplementation 'junit:junit:4.10'
+    testImplementation 'org.powermock:powermock-module-junit4:1.4.12'
+    testImplementation 'org.powermock:powermock-api-mockito:1.4.12'
+    compileOnly 'org.bukkit:bukkit:1.10.2-R0.1-SNAPSHOT'
+    compileOnly 'net.sf.trove4j:trove4j:3.0.3'
+}
+
+group = 'de.cubeisland'
+version = '4.0.0-SNAPSHOT'
+description = 'AntiGuest'
+sourceCompatibility = '1.8'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
