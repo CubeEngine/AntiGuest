@@ -12,16 +12,13 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class ShearPrevention extends Prevention
-{
-    public ShearPrevention(PreventionPlugin plugin)
-    {
+public class ShearPrevention extends Prevention {
+    public ShearPrevention(PreventionPlugin plugin) {
         super("shear", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void shearEntity(PlayerShearEntityEvent event)
-    {
+    public void shearEntity(PlayerShearEntityEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

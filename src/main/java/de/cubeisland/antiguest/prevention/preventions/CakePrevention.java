@@ -14,22 +14,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class CakePrevention extends Prevention
-{
-    public CakePrevention(PreventionPlugin plugin)
-    {
+public class CakePrevention extends Prevention {
+    public CakePrevention(PreventionPlugin plugin) {
         super("cake", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
             if (event.getClickedBlock().getType() == Material.CAKE_BLOCK)
-            {
                 checkAndPrevent(event, event.getPlayer());
-            }
-        }
     }
 }

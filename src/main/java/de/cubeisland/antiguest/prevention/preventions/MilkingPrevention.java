@@ -13,19 +13,14 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class MilkingPrevention extends Prevention
-{
-    public MilkingPrevention(PreventionPlugin plugin)
-    {
+public class MilkingPrevention extends Prevention {
+    public MilkingPrevention(PreventionPlugin plugin) {
         super("milking", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void fill(PlayerBucketFillEvent event)
-    {
+    public void fill(PlayerBucketFillEvent event) {
         if (event.getItemStack().getType() == Material.MILK_BUCKET)
-        {
             checkAndPrevent(event, event.getPlayer());
-        }
     }
 }

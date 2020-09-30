@@ -14,22 +14,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class EnchantPrevention extends Prevention
-{
-    public EnchantPrevention(PreventionPlugin plugin)
-    {
+public class EnchantPrevention extends Prevention {
+    public EnchantPrevention(PreventionPlugin plugin) {
         super("enchant", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void open(InventoryOpenEvent event)
-    {
+    public void open(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.ENCHANTING)
-        {
             if (event.getPlayer() instanceof Player)
-            {
-                checkAndPrevent(event, (Player)event.getPlayer());
-            }
-        }
+                checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

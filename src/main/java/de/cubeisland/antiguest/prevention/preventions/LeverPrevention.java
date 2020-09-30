@@ -14,23 +14,16 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class LeverPrevention extends Prevention
-{
-    public LeverPrevention(PreventionPlugin plugin)
-    {
+public class LeverPrevention extends Prevention {
+    public LeverPrevention(PreventionPlugin plugin) {
         super("lever", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         final Action action = event.getAction();
         if (action == Action.LEFT_CLICK_BLOCK || action == Action.RIGHT_CLICK_BLOCK)
-        {
             if (event.getClickedBlock().getType() == Material.LEVER)
-            {
                 checkAndPrevent(event, event.getPlayer());
-            }
-        }
     }
 }

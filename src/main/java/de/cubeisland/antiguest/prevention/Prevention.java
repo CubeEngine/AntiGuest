@@ -1,8 +1,10 @@
 package de.cubeisland.antiguest.prevention;
 
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
+
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -26,16 +28,12 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.map.hash.TObjectLongHashMap;
 
-import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.SEVERE;
-
 /**
  * This class represents a prevention
  *
  * @author Phillip Schichtel
  */
-public abstract class Prevention implements Listener
-{
+public abstract class Prevention implements Listener {
     private final Thread mainThread = Thread.currentThread();
     private final String name;
     private final Permission permission;
@@ -66,8 +64,7 @@ public abstract class Prevention implements Listener
      * @param name   the name of the prevention
      * @param plugin the plugin
      */
-    public Prevention(final String name, final PreventionPlugin plugin)
-    {
+    public Prevention(final String name, final PreventionPlugin plugin) {
         this(name, plugin, true);
     }
 
@@ -79,8 +76,7 @@ public abstract class Prevention implements Listener
      * @param plugin         the plugin
      * @param allowPunishing whether to allow punishing
      */
-    public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing)
-    {
+    public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing) {
         this(name, plugin, allowPunishing, allowPunishing);
     }
 
@@ -92,26 +88,25 @@ public abstract class Prevention implements Listener
      * @param plugin         the plugin
      * @param allowPunishing whether to allow punishing
      */
-    public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing, final boolean allowViolationLogging)
-    {
+    public Prevention(final String name, final PreventionPlugin plugin, final boolean allowPunishing, final boolean allowViolationLogging) {
         this.name = name;
-        this.permission = new Permission(plugin.getPermissionBase() + name, PermissionDefault.OP);
+        permission = new Permission(plugin.getPermissionBase() + name, PermissionDefault.OP);
         this.plugin = plugin;
         this.allowPunishing = allowPunishing;
         this.allowViolationLogging = allowViolationLogging;
 
-        this.loaded = false;
-        this.setMessage(null);
+        loaded = false;
+        setMessage(null);
         this.setThrottleDelay(0L);
-        this.enabled = false;
-        this.setEnableByDefault(false);
-        this.config = null;
-        this.highestPunishmentViolation = 0;
-        this.setEnablePunishing(false);
-        this.setLogViolations(true);
+        enabled = false;
+        setEnableByDefault(false);
+        config = null;
+        highestPunishmentViolation = 0;
+        setEnablePunishing(false);
+        setLogViolations(true);
 
-        this.messageThrottleTimestamps = null;
-        this.logThrottleTimestamps = null;
+        messageThrottleTimestamps = null;
+        logThrottleTimestamps = null;
     }
 
     /**
@@ -119,9 +114,8 @@ public abstract class Prevention implements Listener
      *
      * @return the config
      */
-    public final PreventionConfiguration getConfig()
-    {
-        return this.config;
+    public final PreventionConfiguration getConfig() {
+        return config;
     }
 
     /**
@@ -129,9 +123,8 @@ public abstract class Prevention implements Listener
      *
      * @return true on success
      */
-    public final boolean resetConfig()
-    {
-        this.config = PreventionConfiguration.get(getPlugin().getConfigurationFolder(), this, false);
+    public final boolean resetConfig() {
+        config = PreventionConfiguration.get(getPlugin().getConfigurationFolder(), this, false);
         return saveConfig();
     }
 
@@ -140,20 +133,14 @@ public abstract class Prevention implements Listener
      *
      * @return true on success
      */
-    public final boolean reloadConfig()
-    {
-        try
-        {
-            this.config.load();
+    public final boolean reloadConfig() {
+        try {
+            config.load();
             return true;
-        }
-        catch (InvalidConfigurationException e)
-        {
-            this.getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
-        }
-        catch (IOException e)
-        {
-            this.getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
+        } catch (InvalidConfigurationException e) {
+            getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
+        } catch (IOException e) {
+            getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
         }
         return false;
     }
@@ -163,47 +150,37 @@ public abstract class Prevention implements Listener
      *
      * @return true on success
      */
-    public final boolean saveConfig()
-    {
-        try
-        {
-            this.config.save();
+    public final boolean saveConfig() {
+        try {
+            config.save();
             return true;
-        }
-        catch (IOException e)
-        {
-            this.getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
+        } catch (IOException e) {
+            getPlugin().getLogger().log(SEVERE, e.getLocalizedMessage(), e);
         }
         return false;
     }
 
     /**
-     * Generates the default configuration of this prevention.
-     * This method should be overridden for custom configs.
+     * Generates the default configuration of this prevention. This method should be
+     * overridden for custom configs.
      *
      * @return the default config
      */
-    public Configuration getDefaultConfig()
-    {
+    public Configuration getDefaultConfig() {
         Configuration defaultConfig = new MemoryConfiguration();
 
-        defaultConfig.set("enable", this.getEnableByDefault());
-        defaultConfig.set("message", this.getPlugin().getTranslation().translate("message_" + this.name));
+        defaultConfig.set("enable", getEnableByDefault());
+        defaultConfig.set("message", getPlugin().getTranslation().translate("message_" + name));
         if (this.getThrottleDelay() > 0)
-        {
             defaultConfig.set("throttleDelay", this.getThrottleDelay(TimeUnit.SECONDS));
-        }
 
-        if (this.getAllowViolationLogging())
-        {
-            defaultConfig.set("log-violations", this.getLogViolations());
-        }
+        if (getAllowViolationLogging())
+            defaultConfig.set("log-violations", getLogViolations());
 
-        if (this.getAllowPunishing())
-        {
-            defaultConfig.set("punish", this.getEnablePunishing());
+        if (getAllowPunishing()) {
+            defaultConfig.set("punish", getEnablePunishing());
             defaultConfig.set("punishments.3.slap.damage", 4);
-            defaultConfig.set("punishments.5.kick.reason", this.plugin.getTranslation().translate("defaultKickReason"));
+            defaultConfig.set("punishments.5.kick.reason", plugin.getTranslation().translate("defaultKickReason"));
         }
 
         return defaultConfig;
@@ -214,59 +191,47 @@ public abstract class Prevention implements Listener
      *
      * @return the lines
      */
-    public String getConfigHeader()
-    {
-        return "This is the configuration file of the " + this.name + " configuration.\n";
+    public String getConfigHeader() {
+        return "This is the configuration file of the " + name + " configuration.\n";
     }
 
     /**
-     * Loads the configuration of the prevention.
-     * this method should be called right after the object got constructed.
+     * Loads the configuration of the prevention. this method should be called right
+     * after the object got constructed.
      */
-    public void load()
-    {
-        this.loaded = true;
-        this.config = PreventionConfiguration.get(this.getPlugin().getConfigurationFolder(), this);
-        if (this.getAllowPunishing() && this.getConfig().get("punishments", null) != null)
-        {
-            this.getConfig().getDefaultSection().set("punishments", null);
-        }
-        this.getConfig().safeSave();
+    public void load() {
+        loaded = true;
+        config = PreventionConfiguration.get(getPlugin().getConfigurationFolder(), this);
+        if (getAllowPunishing() && getConfig().get("punishments", null) != null)
+            getConfig().getDefaultSection().set("punishments", null);
+        getConfig().safeSave();
     }
 
     /**
-     * Enables the prevention.
-     * This method should be overridden for custom configs.
+     * Enables the prevention. This method should be overridden for custom configs.
      */
-    public void enable()
-    {
-        this.setMessage(this.getConfig().getString("message"));
-        this.setThrottleDelay(this.getConfig().getInt("throttleDelay", 0), TimeUnit.SECONDS);
+    public void enable() {
+        setMessage(getConfig().getString("message"));
+        this.setThrottleDelay(getConfig().getInt("throttleDelay", 0), TimeUnit.SECONDS);
 
-        this.messageThrottleTimestamps = new TObjectLongHashMap<String>();
-        if (this.allowViolationLogging)
-        {
-            this.logViolations = this.getConfig().getBoolean("log-violations");
+        messageThrottleTimestamps = new TObjectLongHashMap<String>();
+        if (allowViolationLogging) {
+            logViolations = getConfig().getBoolean("log-violations");
 
-            if (this.getLogViolations())
-            {
-                this.logThrottleTimestamps = new TObjectLongHashMap<String>();
-            }
+            if (getLogViolations())
+                logThrottleTimestamps = new TObjectLongHashMap<String>();
         }
 
-        if (this.getAllowPunishing())
-        {
-            this.setEnablePunishing(this.getConfig().getBoolean("punish", this.getEnablePunishing()));
+        if (getAllowPunishing()) {
+            setEnablePunishing(getConfig().getBoolean("punish", getEnablePunishing()));
 
-            if (this.getEnablePunishing())
-            {
-                this.punishThrottleTimestamps = new TObjectLongHashMap<String>();
-                this.violationPunishmentMap = new TIntObjectHashMap<Map<Punishment, ConfigurationSection>>();
-                this.playerViolationMap = new TObjectIntHashMap<String>();
+            if (getEnablePunishing()) {
+                punishThrottleTimestamps = new TObjectLongHashMap<String>();
+                violationPunishmentMap = new TIntObjectHashMap<Map<Punishment, ConfigurationSection>>();
+                playerViolationMap = new TObjectIntHashMap<String>();
 
-                ConfigurationSection punishmentsSection = this.getConfig().getConfigurationSection("punishments");
-                if (punishmentsSection != null)
-                {
+                ConfigurationSection punishmentsSection = getConfig().getConfigurationSection("punishments");
+                if (punishmentsSection != null) {
                     int violation;
                     Map<Punishment, ConfigurationSection> punishments;
                     ConfigurationSection violationSection;
@@ -275,78 +240,60 @@ public abstract class Prevention implements Listener
                     Punishment punishment;
 
                     for (String violationString : punishmentsSection.getKeys(false))
-                    {
-                        try
-                        {
+                        try {
                             violation = Integer.parseInt(violationString);
-                            punishments = this.violationPunishmentMap.get(violation);
+                            punishments = violationPunishmentMap.get(violation);
                             violationSection = punishmentsSection.getConfigurationSection(violationString);
                             if (violationSection != null)
-                            {
-                                for (String punishmentName : violationSection.getKeys(false))
-                                {
+                                for (String punishmentName : violationSection.getKeys(false)) {
                                     punishment = pm.getPunishment(punishmentName);
-                                    if (punishment != null)
-                                    {
+                                    if (punishment != null) {
                                         punishmentSection = violationSection.getConfigurationSection(punishmentName);
-                                        if (punishmentSection != null)
-                                        {
-                                            if (punishments == null)
-                                            {
+                                        if (punishmentSection != null) {
+                                            if (punishments == null) {
                                                 punishments = new ConcurrentHashMap<Punishment, ConfigurationSection>(1);
-                                                this.violationPunishmentMap.put(violation, punishments);
-                                                this.highestPunishmentViolation = Math
-                                                    .max(this.highestPunishmentViolation, violation);
+                                                violationPunishmentMap.put(violation, punishments);
+                                                highestPunishmentViolation = Math.max(highestPunishmentViolation, violation);
                                             }
                                             punishments.put(punishment, punishmentSection);
                                         }
                                     }
                                 }
-                            }
+                        } catch (NumberFormatException ignored) {
                         }
-                        catch (NumberFormatException ignored)
-                        {
-                        }
-                    }
                 }
             }
         }
     }
 
     /**
-     * Disables the prevention.
-     * This method should be overridden to cleanup customized preventions
+     * Disables the prevention. This method should be overridden to cleanup
+     * customized preventions
      */
-    public void disable()
-    {
-        this.messageThrottleTimestamps.clear();
-        this.messageThrottleTimestamps = null;
+    public void disable() {
+        messageThrottleTimestamps.clear();
+        messageThrottleTimestamps = null;
 
-        if (this.getAllowPunishing() && this.getEnablePunishing())
-        {
-            if (this.playerViolationMap != null)
-            {
-                this.playerViolationMap.clear();
-                this.playerViolationMap = null;
+        if (getAllowPunishing() && getEnablePunishing()) {
+            if (playerViolationMap != null) {
+                playerViolationMap.clear();
+                playerViolationMap = null;
             }
 
-            if (this.punishThrottleTimestamps != null)
-            {
-                this.punishThrottleTimestamps.clear();
-                this.punishThrottleTimestamps = null;
+            if (punishThrottleTimestamps != null) {
+                punishThrottleTimestamps.clear();
+                punishThrottleTimestamps = null;
             }
 
-            if (this.violationPunishmentMap != null)
-            {
-                this.violationPunishmentMap.clear();
-                this.violationPunishmentMap = null;
+            if (violationPunishmentMap != null) {
+                violationPunishmentMap.clear();
+                violationPunishmentMap = null;
             }
         }
 
-        if (this.getAllowViolationLogging() && this.getLogViolations() && this.logThrottleTimestamps != null)
-        {
-            this.logThrottleTimestamps.clear();
-            this.logThrottleTimestamps = null;
+        if (getAllowViolationLogging() && getLogViolations() && logThrottleTimestamps != null) {
+            logThrottleTimestamps.clear();
+            logThrottleTimestamps = null;
         }
     }
 
@@ -355,9 +302,8 @@ public abstract class Prevention implements Listener
      *
      * @param enable true to enable it by default
      */
-    public final void setEnableByDefault(boolean enable)
-    {
-        this.enableByDefault = enable;
+    public final void setEnableByDefault(boolean enable) {
+        enableByDefault = enable;
     }
 
     /**
@@ -365,9 +311,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if it will be enabled by default
      */
-    public final boolean getEnableByDefault()
-    {
-        return this.enableByDefault;
+    public final boolean getEnableByDefault() {
+        return enableByDefault;
     }
 
     /**
@@ -375,9 +320,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if loaded
      */
-    public final boolean isLoaded()
-    {
-        return this.loaded;
+    public final boolean isLoaded() {
+        return loaded;
     }
 
     /**
@@ -385,9 +329,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if this prevention is enabled
      */
-    public final boolean isEnabled()
-    {
-        return this.enabled;
+    public final boolean isEnabled() {
+        return enabled;
     }
 
     /**
@@ -395,9 +338,8 @@ public abstract class Prevention implements Listener
      *
      * @param enable the new enabled state
      */
-    public final void setEnabled(boolean enable)
-    {
-        this.enabled = enable;
+    public final void setEnabled(boolean enable) {
+        enabled = enable;
     }
 
     /**
@@ -405,9 +347,8 @@ public abstract class Prevention implements Listener
      *
      * @return the name
      */
-    public final String getName()
-    {
-        return this.name;
+    public final String getName() {
+        return name;
     }
 
     /**
@@ -415,9 +356,8 @@ public abstract class Prevention implements Listener
      *
      * @return the permission
      */
-    public final Permission getPermission()
-    {
-        return this.permission;
+    public final Permission getPermission() {
+        return permission;
     }
 
     /**
@@ -425,9 +365,8 @@ public abstract class Prevention implements Listener
      *
      * @return the plugin
      */
-    public final PreventionPlugin getPlugin()
-    {
-        return this.plugin;
+    public final PreventionPlugin getPlugin() {
+        return plugin;
     }
 
     /**
@@ -435,9 +374,8 @@ public abstract class Prevention implements Listener
      *
      * @return the message
      */
-    public String getMessage()
-    {
-        return this.message;
+    public String getMessage() {
+        return message;
     }
 
     /**
@@ -445,8 +383,7 @@ public abstract class Prevention implements Listener
      *
      * @param message the new message
      */
-    public void setMessage(String message)
-    {
+    public void setMessage(String message) {
         this.message = parseMessage(message);
     }
 
@@ -455,26 +392,22 @@ public abstract class Prevention implements Listener
      *
      * @return the delay
      */
-    public long getThrottleDelay()
-    {
-        return this.throttleDelay;
+    public long getThrottleDelay() {
+        return throttleDelay;
     }
 
-    public long getThrottleDelay(TimeUnit unit)
-    {
+    public long getThrottleDelay(TimeUnit unit) {
         return unit.convert(this.getThrottleDelay(), TimeUnit.MILLISECONDS);
     }
 
     /**
      * Sets the delay this preventions uses for throttled messages
      */
-    public void setThrottleDelay(long delay)
-    {
-        this.throttleDelay = delay;
+    public void setThrottleDelay(long delay) {
+        throttleDelay = delay;
     }
 
-    public void setThrottleDelay(long delay, TimeUnit unit)
-    {
+    public void setThrottleDelay(long delay, TimeUnit unit) {
         this.setThrottleDelay(unit.toMillis(delay));
     }
 
@@ -483,9 +416,8 @@ public abstract class Prevention implements Listener
      *
      * @param enable true to enable it
      */
-    public void setEnablePunishing(boolean enable)
-    {
-        this.enablePunishing = enable;
+    public void setEnablePunishing(boolean enable) {
+        enablePunishing = enable;
     }
 
     /**
@@ -493,9 +425,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if punishing is allowed
      */
-    public boolean getAllowPunishing()
-    {
-        return this.allowPunishing;
+    public boolean getAllowPunishing() {
+        return allowPunishing;
     }
 
     /**
@@ -503,9 +434,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if it enables it
      */
-    public boolean getEnablePunishing()
-    {
-        return this.enablePunishing;
+    public boolean getEnablePunishing() {
+        return enablePunishing;
     }
 
     /**
@@ -513,9 +443,8 @@ public abstract class Prevention implements Listener
      *
      * @param allow true to allow it
      */
-    public void setLogViolations(boolean allow)
-    {
-        this.logViolations = allow;
+    public void setLogViolations(boolean allow) {
+        logViolations = allow;
     }
 
     /**
@@ -523,9 +452,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if it logs violations
      */
-    public boolean getLogViolations()
-    {
-        return this.logViolations;
+    public boolean getLogViolations() {
+        return logViolations;
     }
 
     /**
@@ -533,14 +461,12 @@ public abstract class Prevention implements Listener
      *
      * @return true if violation logging is allowed
      */
-    public boolean getAllowViolationLogging()
-    {
-        return this.allowViolationLogging;
+    public boolean getAllowViolationLogging() {
+        return allowViolationLogging;
     }
 
-    protected static boolean isNPC(Entity entity)
-    {
-        return ((entity instanceof NPC) || entity.hasMetadata("NPC"));
+    protected static boolean isNPC(Entity entity) {
+        return entity instanceof NPC || entity.hasMetadata("NPC");
     }
 
     /**
@@ -550,49 +476,36 @@ public abstract class Prevention implements Listener
      *
      * @return true if the player can pass the prevention
      */
-    public boolean can(final Player player)
-    {
+    public boolean can(final Player player) {
         if (isNPC(player) && !getPlugin().getConfig().getBoolean("prevent-npc"))
-        {
             return true;
-        }
-        return player.hasPermission(this.permission);
+        return player.hasPermission(permission);
     }
 
-    public boolean checkAndSetThrottleTimestamp(final Player player, final TObjectLongMap<String> timestamps)
-    {
-        if (this.getThrottleDelay() > 0)
-        {
+    public boolean checkAndSetThrottleTimestamp(final Player player, final TObjectLongMap<String> timestamps) {
+        if (this.getThrottleDelay() > 0) {
             final long next = timestamps.get(player.getName());
             final long current = System.currentTimeMillis();
             if (next < current)
-            {
                 timestamps.put(player.getName(), current + this.getThrottleDelay());
-            }
             else
-            {
                 return false;
-            }
         }
         return true;
     }
 
     /**
-     * Does the same as sendMessage(Player), except that this method throttles the messages sending
+     * Does the same as sendMessage(Player), except that this method throttles the
+     * messages sending
      *
      * @param player hte player to send to
      */
-    public void sendMessage(final Player player)
-    {
-        if (this.getMessage() == null)
-        {
+    public void sendMessage(final Player player) {
+        if (getMessage() == null)
             return;
-        }
 
-        if (this.checkAndSetThrottleTimestamp(player, this.messageThrottleTimestamps))
-        {
-            player.sendMessage(this.getMessage());
-        }
+        if (checkAndSetThrottleTimestamp(player, messageThrottleTimestamps))
+            player.sendMessage(getMessage());
     }
 
     /**
@@ -603,10 +516,8 @@ public abstract class Prevention implements Listener
      *
      * @return true if the action was prevented
      */
-    public boolean checkAndPrevent(final Cancellable event, final Player player)
-    {
-        if (!this.can(player))
-        {
+    public boolean checkAndPrevent(final Cancellable event, final Player player) {
+        if (!can(player)) {
             prevent(event, player);
             return true;
         }
@@ -614,81 +525,57 @@ public abstract class Prevention implements Listener
     }
 
     /**
-     * This methods cancels the event and handles notifications, punishing and logging
+     * This methods cancels the event and handles notifications, punishing and
+     * logging
      *
      * @param event  a cancellable event
      * @param player the player
      */
-    public void prevent(final Cancellable event, final Player player)
-    {
+    public void prevent(final Cancellable event, final Player player) {
         event.setCancelled(true);
         sendMessage(player);
         punish(player);
         logViolation(player);
     }
 
-    public synchronized void punish(final Player player)
-    {
-        if (!this.getPlugin().allowPunishments() || !this.getAllowPunishing() || !this.getEnablePunishing())
-        {
+    public synchronized void punish(final Player player) {
+        if (!getPlugin().allowPunishments() || !getAllowPunishing() || !getEnablePunishing())
             return;
-        }
-        int violations = this.playerViolationMap.get(player.getName());
-        if (violations >= this.highestPunishmentViolation)
-        {
+        int violations = playerViolationMap.get(player.getName());
+        if (violations >= highestPunishmentViolation)
             violations = 0;
-        }
-        this.playerViolationMap.put(player.getName(), ++violations);
+        playerViolationMap.put(player.getName(), ++violations);
         if (getPlugin().getConfig().getBoolean("debug", false))
-        {
             player.sendMessage("Your current violation count for '" + getName() + "': " + violations);
-        }
 
-        Map<Punishment, ConfigurationSection> punishments = this.violationPunishmentMap.get(violations);
+        Map<Punishment, ConfigurationSection> punishments = violationPunishmentMap.get(violations);
         if (punishments == null)
-        {
             return;
-        }
 
-        if (this.checkAndSetThrottleTimestamp(player, this.punishThrottleTimestamps))
-        {
-            this.doPunish(player, punishments);
-        }
+        if (checkAndSetThrottleTimestamp(player, punishThrottleTimestamps))
+            doPunish(player, punishments);
     }
 
-    private void doPunish(final Player player, final Map<Punishment, ConfigurationSection> punishments)
-    {
-        if (Thread.currentThread() != this.mainThread)
-        {
-            this.getPlugin().getServer().getScheduler().callSyncMethod(this.getPlugin(), new Callable<Void>()
-            {
-                public Void call() throws Exception
-                {
-                    doPunish(player, punishments);
-                    return null;
-                }
+    private void doPunish(final Player player, final Map<Punishment, ConfigurationSection> punishments) {
+        if (Thread.currentThread() != mainThread) {
+            getPlugin().getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
+                doPunish(player, punishments);
+                return null;
             });
             return;
         }
         for (Map.Entry<Punishment, ConfigurationSection> entry : punishments.entrySet())
-        {
             entry.getKey().punish(player, entry.getValue());
-        }
     }
 
-    public void logViolation(Player player)
-    {
-        if (!this.getPlugin().logViolations() || !this.getAllowViolationLogging() || !this.getLogViolations())
-        {
+    public void logViolation(Player player) {
+        if (!getPlugin().logViolations() || !getAllowViolationLogging() || !getLogViolations())
             return;
-        }
 
-        if (this.checkAndSetThrottleTimestamp(player, this.logThrottleTimestamps))
-        {
-            String message = this.getPlugin().getTranslation()
-                                 .translate("prevention_violated", player.getName(), this.getName());
-            this.getPlugin().getLogger().log(INFO, ChatColor.stripColor(message));
-            this.getPlugin().getServer().broadcast(message, "antiguest.violation-notification");
+        if (checkAndSetThrottleTimestamp(player, logThrottleTimestamps)) {
+            String message = getPlugin().getTranslation().translate("prevention_violated", player.getName(), getName());
+            getPlugin().getLogger().log(INFO, ChatColor.stripColor(message));
+            getPlugin().getServer().broadcast(message, "antiguest.violation-notification");
         }
     }
 
@@ -699,24 +586,16 @@ public abstract class Prevention implements Listener
      *
      * @return null if message is null or empty, otherwise the parsed message
      */
-    public static String parseMessage(final String message)
-    {
+    public static String parseMessage(final String message) {
         if (message == null)
-        {
             return null;
-        }
         if (message.length() == 0)
-        {
             return null;
-        }
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     @Override
-    public String toString()
-    {
-        return this.getClass().getSimpleName() + "{name=" + this.name + ", permission=" + this.permission
-            .toString() + ", plugin=" + this.plugin.toString() + "}";
+    public String toString() {
+        return this.getClass().getSimpleName() + "{name=" + name + ", permission=" + permission.toString() + ", plugin=" + plugin.toString() + "}";
     }
 }
-

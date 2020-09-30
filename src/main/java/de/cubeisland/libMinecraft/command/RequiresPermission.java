@@ -4,6 +4,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 import org.bukkit.permissions.PermissionDefault;
 
 /**
@@ -13,9 +14,10 @@ import org.bukkit.permissions.PermissionDefault;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface RequiresPermission
-{
+public @interface RequiresPermission {
     public String value() default "";
+
     public PermissionDefault def() default PermissionDefault.OP;
+
     public boolean addParent() default true;
 }

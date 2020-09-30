@@ -12,16 +12,13 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class BedPrevention extends Prevention
-{
-    public BedPrevention(PreventionPlugin plugin)
-    {
+public class BedPrevention extends Prevention {
+    public BedPrevention(PreventionPlugin plugin) {
         super("bed", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void bedEnter(PlayerBedEnterEvent event)
-    {
+    public void bedEnter(PlayerBedEnterEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

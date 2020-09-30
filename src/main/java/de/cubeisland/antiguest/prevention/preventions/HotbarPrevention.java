@@ -10,17 +10,14 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
 /**
  * Prevents changing the hotbar of the player
  */
-public class HotbarPrevention extends Prevention
-{
-    public HotbarPrevention(PreventionPlugin plugin)
-    {
+public class HotbarPrevention extends Prevention {
+    public HotbarPrevention(PreventionPlugin plugin) {
         super("hotbar", plugin);
         setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onSlotChange(PlayerItemHeldEvent event)
-    {
+    public void onSlotChange(PlayerItemHeldEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

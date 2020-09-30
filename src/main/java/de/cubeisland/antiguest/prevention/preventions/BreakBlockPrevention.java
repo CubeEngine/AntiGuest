@@ -20,10 +20,8 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class BreakBlockPrevention extends FilteredItemPrevention
-{
-    public BreakBlockPrevention(PreventionPlugin plugin)
-    {
+public class BreakBlockPrevention extends FilteredItemPrevention {
+    public BreakBlockPrevention(PreventionPlugin plugin) {
         super("breakblock", plugin);
         setEnableByDefault(true);
         setEnablePunishing(true);
@@ -31,34 +29,24 @@ public class BreakBlockPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void blockBreak(BlockBreakEvent event)
-    {
+    public void blockBreak(BlockBreakEvent event) {
         checkAndPrevent(event, event.getPlayer(), event.getBlock().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void paintingBreak(HangingBreakByEntityEvent event)
-    {
+    public void paintingBreak(HangingBreakByEntityEvent event) {
         final Entity remover = event.getRemover();
         if (remover instanceof Player)
-        {
-            checkAndPrevent(event, (Player)remover, Material.PAINTING);
-        }
+            checkAndPrevent(event, (Player) remover, Material.PAINTING);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void fireBreak(PlayerInteractEvent event)
-    {
+    public void fireBreak(PlayerInteractEvent event) {
         if (event.getAction() == Action.LEFT_CLICK_BLOCK)
-        {
             if (event.getClickedBlock().getRelative(BlockFace.UP).getType() == Material.FIRE)
-            {
-                if (checkAndPrevent(event, event.getPlayer(), Material.FIRE))
-                {
+                if (checkAndPrevent(event, event.getPlayer(), Material.FIRE)) {
                     event.setUseInteractedBlock(Event.Result.DENY);
                     event.setUseItemInHand(Event.Result.DENY);
                 }
-            }
-        }
     }
 }

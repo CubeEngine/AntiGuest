@@ -12,16 +12,13 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class FishPrevention extends Prevention
-{
-    public FishPrevention(PreventionPlugin plugin)
-    {
+public class FishPrevention extends Prevention {
+    public FishPrevention(PreventionPlugin plugin) {
         super("fish", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void fish(PlayerFishEvent event)
-    {
+    public void fish(PlayerFishEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

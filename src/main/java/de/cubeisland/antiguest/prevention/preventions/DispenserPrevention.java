@@ -14,23 +14,16 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class DispenserPrevention extends Prevention
-{
-    public DispenserPrevention(PreventionPlugin plugin)
-    {
+public class DispenserPrevention extends Prevention {
+    public DispenserPrevention(PreventionPlugin plugin) {
         super("dispenser", plugin);
         setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void open(InventoryOpenEvent event)
-    {
+    public void open(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.DISPENSER)
-        {
             if (event.getPlayer() instanceof Player)
-            {
-                checkAndPrevent(event, (Player)event.getPlayer());
-            }
-        }
+                checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

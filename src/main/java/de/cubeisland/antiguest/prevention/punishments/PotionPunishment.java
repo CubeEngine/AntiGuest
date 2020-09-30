@@ -14,17 +14,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class PotionPunishment implements Punishment
-{
-    public String getName()
-    {
+public class PotionPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "potion";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("effect")
-                                                                                 .toUpperCase(Locale.ENGLISH)), config
-                                                    .getInt("duration", 3) * 20, config.getInt("amplifier", 1)));
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("effect").toUpperCase(Locale.ENGLISH)), config.getInt("duration", 3) * 20, config.getInt("amplifier", 1)));
     }
 }

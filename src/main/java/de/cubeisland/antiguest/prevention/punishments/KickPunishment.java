@@ -11,16 +11,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class KickPunishment implements Punishment
-{
-    public String getName()
-    {
+public class KickPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "kick";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
-        player.kickPlayer(ChatColor.translateAlternateColorCodes('&', config
-            .getString("reason", "&cYou were kicked as a punishment!")));
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
+        player.kickPlayer(ChatColor.translateAlternateColorCodes('&', config.getString("reason", "&cYou were kicked as a punishment!")));
     }
 }

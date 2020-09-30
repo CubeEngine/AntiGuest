@@ -14,22 +14,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class BrewPrevention extends Prevention
-{
-    public BrewPrevention(PreventionPlugin plugin)
-    {
+public class BrewPrevention extends Prevention {
+    public BrewPrevention(PreventionPlugin plugin) {
         super("brew", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void open(InventoryOpenEvent event)
-    {
+    public void open(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.BREWING)
-        {
             if (event.getPlayer() instanceof Player)
-            {
-                checkAndPrevent(event, (Player)event.getPlayer());
-            }
-        }
+                checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

@@ -16,21 +16,16 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class TripwirePrevetion extends Prevention
-{
-    public TripwirePrevetion(PreventionPlugin plugin)
-    {
+public class TripwirePrevetion extends Prevention {
+    public TripwirePrevetion(PreventionPlugin plugin) {
         super("tripwire", plugin);
         setThrottleDelay(3, TimeUnit.SECONDS);
         setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.TRIPWIRE)
-        {
             checkAndPrevent(event, event.getPlayer());
-        }
     }
 }

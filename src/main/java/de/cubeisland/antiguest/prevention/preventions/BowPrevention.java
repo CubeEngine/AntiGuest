@@ -14,21 +14,16 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class BowPrevention extends Prevention
-{
-    public BowPrevention(PreventionPlugin plugin)
-    {
+public class BowPrevention extends Prevention {
+    public BowPrevention(PreventionPlugin plugin) {
         super("bow", plugin);
         setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void shootBow(EntityShootBowEvent event)
-    {
+    public void shootBow(EntityShootBowEvent event) {
         final Entity shooter = event.getEntity();
         if (shooter instanceof Player)
-        {
-            checkAndPrevent(event, (Player)shooter);
-        }
+            checkAndPrevent(event, (Player) shooter);
     }
 }

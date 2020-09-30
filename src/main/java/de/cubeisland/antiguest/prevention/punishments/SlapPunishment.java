@@ -13,22 +13,20 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class SlapPunishment implements Punishment
-{
+public class SlapPunishment implements Punishment {
     private final Random rand;
 
-    public SlapPunishment()
-    {
-        this.rand = new Random();
+    public SlapPunishment() {
+        rand = new Random();
     }
 
-    public String getName()
-    {
+    @Override
+    public String getName() {
         return "slap";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.damage(config.getInt("damage", 3));
         player.setVelocity(player.getVelocity().add(new Vector(-rand.nextInt(5), rand.nextInt(2), -rand.nextInt(5))));
     }

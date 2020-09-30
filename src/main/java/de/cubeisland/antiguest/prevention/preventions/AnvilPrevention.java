@@ -9,19 +9,14 @@ import org.bukkit.event.inventory.InventoryType;
 import de.cubeisland.antiguest.prevention.Prevention;
 import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
-public class AnvilPrevention extends Prevention
-{
-    public AnvilPrevention(PreventionPlugin plugin)
-    {
+public class AnvilPrevention extends Prevention {
+    public AnvilPrevention(PreventionPlugin plugin) {
         super("anvil", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onInventoryOpen(InventoryOpenEvent event)
-    {
+    public void onInventoryOpen(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.ANVIL && event.getPlayer() instanceof Player)
-        {
-            checkAndPrevent(event, (Player)event.getPlayer());
-        }
+            checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

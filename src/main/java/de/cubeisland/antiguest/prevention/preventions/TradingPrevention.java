@@ -19,34 +19,26 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class TradingPrevention extends FilteredPrevention<Profession>
-{
-    public TradingPrevention(PreventionPlugin plugin)
-    {
+public class TradingPrevention extends FilteredPrevention<Profession> {
+    public TradingPrevention(PreventionPlugin plugin) {
         super("trading", plugin);
         setFilterMode(FilterMode.NONE);
         setFilterItems(EnumSet.allOf(Profession.class));
     }
 
     @Override
-    public Set<Profession> decodeList(List<String> list)
-    {
+    public Set<Profession> decodeList(List<String> list) {
         Set<Profession> professions = EnumSet.noneOf(Profession.class);
 
         for (String name : list)
-        {
             professions.add(Profession.valueOf(name.trim().toUpperCase(Locale.ENGLISH)));
-        }
 
         return professions;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onEntityInteract(PlayerInteractEntityEvent event)
-    {
+    public void onEntityInteract(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Villager && !can(event.getPlayer()))
-        {
-            checkAndPrevent(event, event.getPlayer(), ((Villager)event.getRightClicked()).getProfession());
-        }
+            checkAndPrevent(event, event.getPlayer(), ((Villager) event.getRightClicked()).getProfession());
     }
 }

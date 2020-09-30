@@ -14,22 +14,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class WorkbenchPrevention extends Prevention
-{
-    public WorkbenchPrevention(PreventionPlugin plugin)
-    {
+public class WorkbenchPrevention extends Prevention {
+    public WorkbenchPrevention(PreventionPlugin plugin) {
         super("workbench", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(InventoryOpenEvent event)
-    {
+    public void interact(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.WORKBENCH)
-        {
             if (event.getPlayer() instanceof Player)
-            {
-                checkAndPrevent(event, (Player)event.getPlayer());
-            }
-        }
+                checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

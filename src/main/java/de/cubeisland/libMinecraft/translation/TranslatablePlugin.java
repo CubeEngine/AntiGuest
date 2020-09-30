@@ -7,8 +7,8 @@ import org.bukkit.plugin.Plugin;
  *
  * @author Phillip Schichtel
  */
-public interface TranslatablePlugin extends Plugin
-{
+public interface TranslatablePlugin extends Plugin {
     public Translation getTranslation();
+
     public void setTranslation(Translation translation);
 }

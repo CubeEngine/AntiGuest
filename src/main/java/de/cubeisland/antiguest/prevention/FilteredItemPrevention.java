@@ -12,22 +12,18 @@ import org.bukkit.entity.Player;
  *
  * @author Phillip Schichtel
  */
-public abstract class FilteredItemPrevention extends FilteredPrevention<Material>
-{
+public abstract class FilteredItemPrevention extends FilteredPrevention<Material> {
     private boolean ignoreBlocks = false;
 
-    public FilteredItemPrevention(final String name, final PreventionPlugin plugin)
-    {
+    public FilteredItemPrevention(final String name, final PreventionPlugin plugin) {
         this(name, plugin, true);
     }
 
-    public FilteredItemPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
-    {
+    public FilteredItemPrevention(String name, PreventionPlugin plugin, boolean allowPunishing) {
         this(name, plugin, allowPunishing, allowPunishing);
     }
 
-    public FilteredItemPrevention(String name, PreventionPlugin plugin, boolean allowPunishing, boolean allowViolationLogging)
-    {
+    public FilteredItemPrevention(String name, PreventionPlugin plugin, boolean allowPunishing, boolean allowViolationLogging) {
         super(name, plugin, allowPunishing, allowViolationLogging);
         setFilterItems(EnumSet.of(Material.DIRT));
         setFilterMode(FilterMode.NONE);
@@ -38,9 +34,8 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
      *
      * @param ignore true to ignore blocks
      */
-    public final void setIgnoreBlocks(boolean ignore)
-    {
-        this.ignoreBlocks = ignore;
+    public final void setIgnoreBlocks(boolean ignore) {
+        ignoreBlocks = ignore;
     }
 
     /**
@@ -48,36 +43,28 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
      *
      * @return true if it ignores blocks
      */
-    public final boolean getIgnoreBlocks()
-    {
-        return this.ignoreBlocks;
+    public final boolean getIgnoreBlocks() {
+        return ignoreBlocks;
     }
 
     @Override
-    public List<String> encodeSet(Set<Material> set)
-    {
+    public List<String> encodeSet(Set<Material> set) {
         List<String> materials = super.encodeSet(set);
 
         for (int i = 0; i < materials.size(); ++i)
-        {
             materials.set(i, materials.get(i).toLowerCase().replace('_', ' '));
-        }
 
         return materials;
     }
 
     @Override
-    public Set<Material> decodeList(List<String> list)
-    {
+    public Set<Material> decodeList(List<String> list) {
         Set<Material> materials = EnumSet.noneOf(Material.class);
 
-        for (String entry : list)
-        {
+        for (String entry : list) {
             Material material = Material.matchMaterial(entry);
             if (material != null)
-            {
                 materials.add(material);
-            }
         }
 
         return materials;
@@ -93,15 +80,10 @@ public abstract class FilteredItemPrevention extends FilteredPrevention<Material
      */
     @Override
     @SuppressWarnings("deprecation")
-    public boolean can(final Player player, final Material material)
-    {
-        if (this.ignoreBlocks && material.getId() <= 256)
-        {
+    public boolean can(final Player player, final Material material) {
+        if (ignoreBlocks && material.getId() <= 256)
             return true;
-        }
         else
-        {
             return super.can(player, material);
-        }
     }
 }

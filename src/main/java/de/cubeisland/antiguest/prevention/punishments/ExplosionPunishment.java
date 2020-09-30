@@ -10,15 +10,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class ExplosionPunishment implements Punishment
-{
-    public String getName()
-    {
+public class ExplosionPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "explosion";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.getWorld().createExplosion(player.getLocation(), 0);
         player.damage(config.getInt("damage", 3));
     }

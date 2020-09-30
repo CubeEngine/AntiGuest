@@ -10,17 +10,15 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class DropitemPunishment implements Punishment
-{
-    public String getName()
-    {
+public class DropitemPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "dropitem";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
-        player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand())
-              .setPickupDelay(config.getInt("pickupDelay", 4) * 20);
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
+        player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand()).setPickupDelay(config.getInt("pickupDelay", 4) * 20);
         player.getInventory().clear(player.getInventory().getHeldItemSlot());
     }
 }

@@ -17,28 +17,20 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class ChestPrevention extends Prevention
-{
-    public ChestPrevention(PreventionPlugin plugin)
-    {
+public class ChestPrevention extends Prevention {
+    public ChestPrevention(PreventionPlugin plugin) {
         super("chest", plugin);
         setEnableByDefault(true);
     }
 
-    protected static boolean isChest(BlockState state)
-    {
+    protected static boolean isChest(BlockState state) {
         return state instanceof Chest || state instanceof DoubleChest;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && isChest(event.getClickedBlock().getState()))
-        {
             if (checkAndPrevent(event, event.getPlayer()))
-            {
                 event.setUseInteractedBlock(Result.DENY);
-            }
-        }
     }
 }

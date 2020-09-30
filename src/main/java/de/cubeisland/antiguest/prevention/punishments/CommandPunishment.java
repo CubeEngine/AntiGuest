@@ -16,115 +16,108 @@ import org.bukkit.plugin.Plugin;
 
 import de.cubeisland.antiguest.prevention.Punishment;
 
-public class CommandPunishment implements Punishment
-{
+public class CommandPunishment implements Punishment {
     private final CommandSender sender = new CommandPunishmentSender();
 
-    public String getName()
-    {
+    @Override
+    public String getName() {
         return "command";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         final Server server = player.getServer();
         final List<String> commands = config.getStringList("commands");
 
-        for (String command : commands)
-        {
+        for (String command : commands) {
             if (command == null)
-            {
                 continue;
-            }
             command = String.valueOf(command);
             if (command.contains("%s"))
-            {
                 command = String.format(command, player.getName());
-            }
-            server.dispatchCommand(this.sender, command);
+            server.dispatchCommand(sender, command);
         }
     }
 
-    private static final class CommandPunishmentSender implements CommandSender
-    {
-        public void sendMessage(String message)
-        {
+    private static final class CommandPunishmentSender implements CommandSender {
+        @Override
+        public void sendMessage(String message) {
         }
 
-        public void sendMessage(String[] messages)
-        {
+        @Override
+        public void sendMessage(String[] messages) {
         }
 
-        public Server getServer()
-        {
+        @Override
+        public Server getServer() {
             return Bukkit.getServer();
         }
 
-        public String getName()
-        {
+        @Override
+        public String getName() {
             return "AntiGuest";
         }
 
-        public boolean isPermissionSet(String name)
-        {
+        @Override
+        public boolean isPermissionSet(String name) {
             return true;
         }
 
-        public boolean isPermissionSet(Permission perm)
-        {
+        @Override
+        public boolean isPermissionSet(Permission perm) {
             return true;
         }
 
-        public boolean hasPermission(String name)
-        {
+        @Override
+        public boolean hasPermission(String name) {
             return true;
         }
 
-        public boolean hasPermission(Permission perm)
-        {
+        @Override
+        public boolean hasPermission(Permission perm) {
             return true;
         }
 
-        public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value)
-        {
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
             return null;
         }
 
-        public PermissionAttachment addAttachment(Plugin plugin)
-        {
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin) {
             return null;
         }
 
-        public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks)
-        {
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
             return null;
         }
 
-        public PermissionAttachment addAttachment(Plugin plugin, int ticks)
-        {
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
             return null;
         }
 
-        public void removeAttachment(PermissionAttachment attachment)
-        {
+        @Override
+        public void removeAttachment(PermissionAttachment attachment) {
         }
 
-        public void recalculatePermissions()
-        {
+        @Override
+        public void recalculatePermissions() {
         }
 
-        public Set<PermissionAttachmentInfo> getEffectivePermissions()
-        {
+        @Override
+        public Set<PermissionAttachmentInfo> getEffectivePermissions() {
             return Collections.emptySet();
         }
 
-        public boolean isOp()
-        {
+        @Override
+        public boolean isOp() {
             return false;
         }
 
-        public void setOp(boolean value)
-        {
+        @Override
+        public void setOp(boolean value) {
         }
     }
 }

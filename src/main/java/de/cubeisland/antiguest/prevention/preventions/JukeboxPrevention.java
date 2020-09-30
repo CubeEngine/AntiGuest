@@ -14,22 +14,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class JukeboxPrevention extends Prevention
-{
-    public JukeboxPrevention(PreventionPlugin plugin)
-    {
+public class JukeboxPrevention extends Prevention {
+    public JukeboxPrevention(PreventionPlugin plugin) {
         super("jukebox", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
             if (event.getClickedBlock().getType() == Material.JUKEBOX)
-            {
                 checkAndPrevent(event, event.getPlayer());
-            }
-        }
     }
 }

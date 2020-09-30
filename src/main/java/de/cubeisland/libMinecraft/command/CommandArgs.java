@@ -11,8 +11,7 @@ import java.util.Set;
  *
  * @author Phillip Schichtel
  */
-public class CommandArgs
-{
+public class CommandArgs {
     private final BaseCommand baseCommand;
     private final String baseLabel;
     private final SubCommand subCommand;
@@ -26,120 +25,87 @@ public class CommandArgs
      * Initializes the CommandArgs object with an array of arguments
      *
      * @param baseCommand the base command
-     * @param baseLabel  the base label
-     * @param subCommand the sub command
-     * @param args the arguments
+     * @param baseLabel   the base label
+     * @param subCommand  the sub command
+     * @param args        the arguments
      * @throws IllegalArgumentException if the args array is empty
      */
-    public CommandArgs(BaseCommand baseCommand, String baseLabel, SubCommand subCommand, String[] args)
-    {
+    public CommandArgs(BaseCommand baseCommand, String baseLabel, SubCommand subCommand, String[] args) {
         this.baseCommand = baseCommand;
         this.baseLabel = baseLabel;
         this.subCommand = subCommand;
-        this.flags = new HashSet<String>();
-        this.params = new ArrayList<String>();
+        flags = new HashSet<String>();
+        params = new ArrayList<String>();
 
-        if (args.length > 0)
-        {
-            this.label = args[0];
+        if (args.length > 0) {
+            label = args[0];
 
             char firstChar;
             char quoteChar = '\0';
             int length;
             StringBuilder quotedArgBuilder = null;
-            
-            for (int i = 1; i < args.length; ++i)
-            {
+
+            for (int i = 1; i < args.length; ++i) {
                 firstChar = args[i].charAt(0);
                 length = args[i].length();
 
-                if (length < 1)
-                {
+                if (length < 1) {
                     if (quotedArgBuilder != null)
-                    {
                         quotedArgBuilder.append(' ');
-                    }
                     continue;
                 }
 
-                switch (firstChar)
-                {
+                switch (firstChar) {
                     case '\'':
                     case '"':
-                        if (quotedArgBuilder == null)
-                        {
+                        if (quotedArgBuilder == null) {
                             if (i + 1 >= args.length)
-                            {
-                                this.params.add(args[i].substring(1));
-                            }
-                            else
-                            {
+                                params.add(args[i].substring(1));
+                            else {
                                 quoteChar = firstChar;
                                 quotedArgBuilder = new StringBuilder(args[i].substring(1));
                             }
                             break;
                         }
                     case '-':
-                        if (quotedArgBuilder == null && args[i].matches("^\\-[A-Za-z]+$"))
-                        {
-                            this.flags.add(args[i].substring(1));
+                        if (quotedArgBuilder == null && args[i].matches("^\\-[A-Za-z]+$")) {
+                            flags.add(args[i].substring(1));
                             break;
                         }
                     default:
                         if (quotedArgBuilder == null)
-                        {
-                            this.params.add(args[i]);
-                        }
-                        else
-                        {
-                            if (quotedArgBuilder == null)
-                            {
-                                this.params.add(args[i]);
-                            }
-                            else
-                            {
-                                int quoteOffset = args[i].indexOf(quoteChar);
-                                if (quoteOffset >= 0)
-                                {
-                                    String before = args[i].substring(0, quoteOffset);
-                                    String after = "";
-                                    if (quoteOffset + 1 < length)
-                                    {
-                                        after = args[i].substring(quoteOffset + 1);
-                                    }
-                                    
-                                    if (before.length() > 0)
-                                    {
-                                        quotedArgBuilder.append(' ').append(before);
-                                    }
-                                    this.params.add(quotedArgBuilder.toString());
-                                    quotedArgBuilder = null;
+                            params.add(args[i]);
+                        else if (quotedArgBuilder == null)
+                            params.add(args[i]);
+                        else {
+                            int quoteOffset = args[i].indexOf(quoteChar);
+                            if (quoteOffset >= 0) {
+                                String before = args[i].substring(0, quoteOffset);
+                                String after = "";
+                                if (quoteOffset + 1 < length)
+                                    after = args[i].substring(quoteOffset + 1);
 
-                                    if (after.length() > 0)
-                                    {
-                                        this.params.add(after);
-                                    }
-                                }
-                                else
-                                {
-                                    quotedArgBuilder.append(' ').append(args[i]);
-                                    if (i + 1 >= args.length)
-                                    {
-                                        this.params.add(quotedArgBuilder.toString());
-                                        quotedArgBuilder = null;
-                                    }
+                                if (before.length() > 0)
+                                    quotedArgBuilder.append(' ').append(before);
+                                params.add(quotedArgBuilder.toString());
+                                quotedArgBuilder = null;
+
+                                if (after.length() > 0)
+                                    params.add(after);
+                            } else {
+                                quotedArgBuilder.append(' ').append(args[i]);
+                                if (i + 1 >= args.length) {
+                                    params.add(quotedArgBuilder.toString());
+                                    quotedArgBuilder = null;
                                 }
                             }
                         }
                 }
             }
-        }
-        else
-        {
+        } else
             throw new IllegalArgumentException("There need to be at least 1 argument!");
-        }
-        this.empty = this.params.isEmpty();
-        this.size = this.params.size();
+        empty = params.isEmpty();
+        size = params.size();
     }
 
     /**
@@ -147,9 +113,8 @@ public class CommandArgs
      *
      * @return true if empty
      */
-    public boolean isEmpty()
-    {
-        return this.empty;
+    public boolean isEmpty() {
+        return empty;
     }
 
     /**
@@ -157,9 +122,8 @@ public class CommandArgs
      *
      * @return the numbers of parameters
      */
-    public int size()
-    {
-        return this.size;
+    public int size() {
+        return size;
     }
 
     /**
@@ -167,9 +131,8 @@ public class CommandArgs
      *
      * @return the label
      */
-    public BaseCommand getBaseCommand()
-    {
-        return this.baseCommand;
+    public BaseCommand getBaseCommand() {
+        return baseCommand;
     }
 
     /**
@@ -177,9 +140,8 @@ public class CommandArgs
      *
      * @return the label
      */
-    public SubCommand getSubCommand()
-    {
-        return this.subCommand;
+    public SubCommand getSubCommand() {
+        return subCommand;
     }
 
     /**
@@ -187,9 +149,8 @@ public class CommandArgs
      *
      * @return the label
      */
-    public String getLabel()
-    {
-        return this.label;
+    public String getLabel() {
+        return label;
     }
 
     /**
@@ -197,9 +158,8 @@ public class CommandArgs
      *
      * @return the label
      */
-    public String getBaseLabel()
-    {
-        return this.baseLabel;
+    public String getBaseLabel() {
+        return baseLabel;
     }
 
     /**
@@ -208,9 +168,8 @@ public class CommandArgs
      * @param flag the flag name
      * @return true if it exists
      */
-    public boolean hasFlag(String flag)
-    {
-        return this.flags.contains(flag);
+    public boolean hasFlag(String flag) {
+        return flags.contains(flag);
     }
 
     /**
@@ -219,15 +178,10 @@ public class CommandArgs
      * @param flags the flags to check
      * @return true if all flags exist
      */
-    public boolean hasFlags(String... flags)
-    {
+    public boolean hasFlags(String... flags) {
         for (String flag : flags)
-        {
-            if (!this.hasFlag(flag))
-            {
+            if (!hasFlag(flag))
                 return false;
-            }
-        }
         return true;
     }
 
@@ -238,24 +192,20 @@ public class CommandArgs
      * @return the value as String
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public String getString(int i)
-    {
-        return this.params.get(i);
+    public String getString(int i) {
+        return params.get(i);
     }
 
     /**
      * Returns the requested value as a String
      *
-     * @param i the index of the flag
+     * @param i   the index of the flag
      * @param def the default value
      * @return the value as String or the given default value
      */
-    public String getString(int i, String def)
-    {
-        if (i >= 0 && this.size > i)
-        {
-            return this.params.get(i);
-        }
+    public String getString(int i, String def) {
+        if (i >= 0 && size > i)
+            return params.get(i);
         return def;
     }
 
@@ -265,8 +215,7 @@ public class CommandArgs
      * @param index the index
      * @return the value as int
      */
-    public int getInt(int index) throws NumberFormatException
-    {
+    public int getInt(int index) throws NumberFormatException {
         return Integer.parseInt(this.getString(index));
     }
 
@@ -276,8 +225,7 @@ public class CommandArgs
      * @param index the index
      * @return the value as double
      */
-    public double getDouble(int index) throws NumberFormatException
-    {
+    public double getDouble(int index) throws NumberFormatException {
         return Double.parseDouble(this.getString(index));
     }
 
@@ -287,57 +235,45 @@ public class CommandArgs
      * @param i the index
      * @return the value as long
      */
-    public long getLong(int index) throws NumberFormatException
-    {
+    public long getLong(int index) throws NumberFormatException {
         return Long.parseLong(this.getString(index));
     }
 
     /**
      * Returns the requested value as a boolean
      *
-     * enable --> true
-     * true --> true
-     * yes --> true
-     * on --> true
-     * 1 --> true
+     * enable --> true true --> true yes --> true on --> true 1 --> true
      *
      * everything else --> false
      *
      * @param i the index
      * @return true or false
      */
-    public boolean getBoolean(int index)
-    {
+    public boolean getBoolean(int index) {
         return this.getBoolean(index, "true", "yes", "on", "1", "enable");
     }
 
     /**
-     * Returns the value as true, when it equals (case insensitive) any of the given words.
+     * Returns the value as true, when it equals (case insensitive) any of the given
+     * words.
      *
-     * @param index the index
+     * @param index     the index
      * @param trueWords the words that indicate true
      * @return true if any of the words match
      */
-    public boolean getBoolean(int index, String... trueWords)
-    {
+    public boolean getBoolean(int index, String... trueWords) {
         String string = this.getString(index);
         for (String word : trueWords)
-        {
             if (string.equalsIgnoreCase(word))
-            {
                 return true;
-            }
-        }
         return false;
     }
 
-    public Set<String> getFlags()
-    {
-        return Collections.unmodifiableSet(this.flags);
+    public Set<String> getFlags() {
+        return Collections.unmodifiableSet(flags);
     }
 
-    public List<String> getParams()
-    {
-        return Collections.unmodifiableList(this.params);
+    public List<String> getParams() {
+        return Collections.unmodifiableList(params);
     }
 }

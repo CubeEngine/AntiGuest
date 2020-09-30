@@ -8,8 +8,7 @@ import org.bukkit.entity.Player;
  *
  * @author Phillip Schichtel
  */
-public interface Punishment
-{
+public interface Punishment {
     /**
      * Returns the name of the prevention
      *

@@ -1,20 +1,20 @@
 package de.cubeisland.libMinecraft;
 
-import de.cubeisland.libMinecraft.math.Vector2;
-import de.cubeisland.libMinecraft.math.Vector3;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import de.cubeisland.libMinecraft.math.Vector2;
+import de.cubeisland.libMinecraft.math.Vector3;
 
 /**
  * This is a util class to convert from and to Bukkit objects
  *
  * @author Phillip Schichtel
  */
-public final class Convert
-{
-    private Convert()
-    {}
+public final class Convert {
+    private Convert() {
+    }
 
     /**
      * Converts a Location to a Vector3
@@ -22,12 +22,9 @@ public final class Convert
      * @param loc the Location
      * @return the Vector3
      */
-    public static Vector3 toVector3(Location loc)
-    {
+    public static Vector3 toVector3(Location loc) {
         if (loc == null)
-        {
             return null;
-        }
         return new Vector3(loc.getX(), loc.getY(), loc.getZ());
     }
 
@@ -37,12 +34,9 @@ public final class Convert
      * @param loc the Location
      * @return the Vector3
      */
-    public static Vector3 toBlockVector3(Location loc)
-    {
+    public static Vector3 toBlockVector3(Location loc) {
         if (loc == null)
-        {
             return null;
-        }
         return new Vector3(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
 
@@ -52,12 +46,9 @@ public final class Convert
      * @param loc the Location
      * @return the Vector2
      */
-    public static Vector2 toVector2(Location loc)
-    {
+    public static Vector2 toVector2(Location loc) {
         if (loc == null)
-        {
             return null;
-        }
         return new Vector2(loc.getX(), loc.getZ());
     }
 
@@ -67,28 +58,22 @@ public final class Convert
      * @param loc the Location
      * @return the Vector2
      */
-    public static Vector2 toBlockVector2(Location loc)
-    {
+    public static Vector2 toBlockVector2(Location loc) {
         if (loc == null)
-        {
             return null;
-        }
         return new Vector2(loc.getBlockX(), loc.getBlockZ());
     }
 
     /**
      * Converts a World and a Vector3 to a Location
      *
-     * @param world the World
+     * @param world  the World
      * @param vector the Vector3
      * @return the Location
      */
-    public static Location toLocation(World world, Vector3 vector)
-    {
+    public static Location toLocation(World world, Vector3 vector) {
         if (world == null || vector == null)
-        {
             return null;
-        }
         return new Location(world, vector.x, vector.y, vector.z);
     }
 
@@ -99,12 +84,9 @@ public final class Convert
      * @param vector the Vector3
      * @return the Location
      */
-    public static Location toLocation(Player player, Vector3 vector)
-    {
+    public static Location toLocation(Player player, Vector3 vector) {
         if (player == null || vector == null)
-        {
             return null;
-        }
         return toLocation(player.getWorld(), vector);
     }
 }

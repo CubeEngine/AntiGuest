@@ -1,5 +1,8 @@
 package de.cubeisland.antiguest;
 
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -12,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
 import de.cubeisland.antiguest.commands.BasicCommands;
 import de.cubeisland.antiguest.commands.PreventionManagementCommands;
@@ -22,13 +26,8 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
 import de.cubeisland.antiguest.prevention.Punishment;
 import de.cubeisland.libMinecraft.command.BaseCommand;
 import de.cubeisland.libMinecraft.translation.Translation;
-import org.reflections.Reflections;
 
-import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.SEVERE;
-
-public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
-{
+public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin {
     private static Logger logger = null;
 
     private File preventionConfigFolder;
@@ -38,17 +37,15 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
     private boolean logViolations;
 
     @Override
-    public void onEnable()
-    {
-        logger = this.getLogger();
-        File dataFolder = this.getDataFolder();
-        if (!dataFolder.exists() && !dataFolder.mkdirs())
-        {
+    public void onEnable() {
+        logger = getLogger();
+        File dataFolder = getDataFolder();
+        if (!dataFolder.exists() && !dataFolder.mkdirs()) {
             logger.log(SEVERE, "Failed to create the data folder!");
-            this.getServer().getPluginManager().disablePlugin(this);
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        this.preventionConfigFolder = new File(dataFolder, "preventions");
+        preventionConfigFolder = new File(dataFolder, "preventions");
 
         reloadConfig();
         Configuration config = getConfig();
@@ -56,98 +53,68 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         config.options().copyDefaults(true);
 
         translation = Translation.get(this.getClass(), getConfig().getString("language"));
-        if (translation == null)
-        {
+        if (translation == null) {
             translation = Translation.get(this.getClass(), "en");
             config.set("language", "en");
         }
         saveConfig();
-        this.punishments = config.getBoolean("punishments");
-        this.logViolations = config.getBoolean("log-violations");
+        punishments = config.getBoolean("punishments");
+        logViolations = config.getBoolean("log-violations");
 
-        this.baseCommand = new BaseCommand(this, "antiguest.commands.");
-        this.baseCommand.registerCommands(new BasicCommands(this)).registerCommands(new PreventionManagementCommands());
+        baseCommand = new BaseCommand(this, "antiguest.commands.");
+        baseCommand.registerCommands(new BasicCommands(this)).registerCommands(new PreventionManagementCommands());
 
-        getCommand("antiguest").setExecutor(this.baseCommand);
+        getCommand("antiguest").setExecutor(baseCommand);
 
         PreventionManager manager = PreventionManager.getInstance();
 
         Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 
         for (Class<? extends Punishment> punishmentClass : reflections.getSubTypesOf(Punishment.class))
-        {
-            try
-            {
+            try {
                 manager.registerPunishment(punishmentClass.newInstance());
+            } catch (InstantiationException e) {
+                error("Failed to create the instance of the " + punishmentClass.getSimpleName() + " (instantiation failed)!", e);
+            } catch (IllegalAccessException e) {
+                error("Failed to create the instance of the " + punishmentClass.getSimpleName() + " (access failed)!", e);
             }
-            catch (InstantiationException e)
-            {
-                error("Failed to create the instance of the " + punishmentClass
-                    .getSimpleName() + " (instantiation failed)!", e);
-            }
-            catch (IllegalAccessException e)
-            {
-                error("Failed to create the instance of the " + punishmentClass
-                    .getSimpleName() + " (access failed)!", e);
-            }
-        }
 
-        for (Class<? extends Prevention> preventionClass : reflections.getSubTypesOf(Prevention.class))
-        {
+        for (Class<? extends Prevention> preventionClass : reflections.getSubTypesOf(Prevention.class)) {
             if (preventionClass.isInterface() || Modifier.isAbstract(preventionClass.getModifiers()))
-            {
                 continue;
-            }
-            try
-            {
+            try {
                 Constructor<? extends Prevention> constructor = preventionClass.getConstructor(PreventionPlugin.class);
                 constructor.setAccessible(true);
                 manager.registerPrevention(constructor.newInstance(this));
-            }
-            catch (InstantiationException e)
-            {
-                error("Failed to create the instance of the " + preventionClass
-                    .getSimpleName() + " (instantiation failed)!", e);
-            }
-            catch (IllegalAccessException e)
-            {
-                error("Failed to create the instance of the " + preventionClass
-                    .getSimpleName() + " (access failed)!", e);
-            }
-            catch (NoSuchMethodException e)
-            {
-                error("Failed to create the instance of the " + preventionClass
-                    .getSimpleName() + " (missing/invalid constructor)!", e);
-            }
-            catch (InvocationTargetException e)
-            {
-                error("Failed to create the instance of the " + preventionClass
-                    .getSimpleName() + " (error in constructor)!", e);
+            } catch (InstantiationException e) {
+                error("Failed to create the instance of the " + preventionClass.getSimpleName() + " (instantiation failed)!", e);
+            } catch (IllegalAccessException e) {
+                error("Failed to create the instance of the " + preventionClass.getSimpleName() + " (access failed)!", e);
+            } catch (NoSuchMethodException e) {
+                error("Failed to create the instance of the " + preventionClass.getSimpleName() + " (missing/invalid constructor)!", e);
+            } catch (InvocationTargetException e) {
+                error("Failed to create the instance of the " + preventionClass.getSimpleName() + " (error in constructor)!", e);
             }
         }
 
         manager.enablePreventions();
 
         logger.info(PreventionManager.getInstance().getPreventions().size() + " Prevention(s) have been registered!");
-        this.convertPreventionConfigs();
+        convertPreventionConfigs();
     }
 
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         translation = null;
         PreventionManager.getInstance().disablePreventions();
     }
 
-    private void convertPreventionConfigs()
-    {
+    private void convertPreventionConfigs() {
         final String messageDelayKey = "messageDelay";
         PreventionConfiguration prevConfig;
-        for (Prevention prevention : PreventionManager.getInstance().getPreventions())
-        {
+        for (Prevention prevention : PreventionManager.getInstance().getPreventions()) {
             prevConfig = prevention.getConfig();
-            if (prevConfig.contains(messageDelayKey))
-            {
+            if (prevConfig.contains(messageDelayKey)) {
                 prevConfig.set("throttleDelay", prevConfig.get(messageDelayKey));
                 prevConfig.set(messageDelayKey, null);
                 prevention.saveConfig();
@@ -155,64 +122,59 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin
         }
     }
 
-    public File getConfigurationFolder()
-    {
-        return this.preventionConfigFolder;
+    @Override
+    public File getConfigurationFolder() {
+        return preventionConfigFolder;
     }
 
-    public static void log(String msg)
-    {
+    public static void log(String msg) {
         logger.log(INFO, msg);
     }
 
-    public static void error(String msg)
-    {
+    public static void error(String msg) {
         logger.log(SEVERE, msg);
     }
 
-    public static void error(String msg, Throwable t)
-    {
+    public static void error(String msg, Throwable t) {
         logger.log(SEVERE, msg, t);
     }
 
-    public static String _(String message, Object... params)
-    {
+    public static String _(String message, Object... params) {
         return translation.translate(message, params);
     }
 
-    public Translation getTranslation()
-    {
+    @Override
+    public Translation getTranslation() {
         return translation;
     }
 
-    public void setTranslation(Translation newTranslation)
-    {
+    @Override
+    public void setTranslation(Translation newTranslation) {
         translation = newTranslation;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPluginDisable(PluginDisableEvent event)
-    {
+    public void onPluginDisable(PluginDisableEvent event) {
         PreventionManager.getInstance().disablePreventions(event.getPlugin());
     }
 
-    public BaseCommand getBaseCommand()
-    {
-        return this.baseCommand;
+    @Override
+    public BaseCommand getBaseCommand() {
+        return baseCommand;
     }
 
-    public String getPermissionBase()
-    {
+    @Override
+    public String getPermissionBase() {
         return "antiguest.preventions.";
     }
 
-    public boolean allowPunishments()
-    {
-        return this.punishments;
+    @Override
+    public boolean allowPunishments() {
+        return punishments;
     }
 
-    public boolean logViolations()
-    {
-        return this.logViolations;
+    @Override
+    public boolean logViolations() {
+        return logViolations;
     }
 }

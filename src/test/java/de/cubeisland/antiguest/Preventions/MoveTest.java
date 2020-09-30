@@ -1,17 +1,16 @@
 package de.cubeisland.antiguest.Preventions;
 
-import junit.framework.TestCase;
 import org.junit.Test;
+
+import junit.framework.TestCase;
 
 /**
  *
  * @author CodeInfection
  */
-public class MoveTest extends TestCase
-{
+public class MoveTest extends TestCase {
     @Test
-    public void testMove()
-    {
-        
+    public void testMove() {
+
     }
 }

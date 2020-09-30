@@ -17,29 +17,23 @@ import gnu.trove.map.hash.TObjectLongHashMap;
  *
  * @author Phillip Schichtel
  */
-public class SpamPrevention extends Prevention
-{
+public class SpamPrevention extends Prevention {
     private long spamLockDuration;
     private TObjectLongHashMap<String> chatTimestamps;
 
-    public SpamPrevention(PreventionPlugin plugin)
-    {
+    public SpamPrevention(PreventionPlugin plugin) {
         super("spam", plugin);
         setEnableByDefault(true);
         setEnablePunishing(true);
     }
 
     @Override
-    public String getConfigHeader()
-    {
-        return super.getConfigHeader() +
-            "Configuration info:\n" +
-            "    lockDuration: the time in seconds a player has to wait between messages";
+    public String getConfigHeader() {
+        return super.getConfigHeader() + "Configuration info:\n" + "    lockDuration: the time in seconds a player has to wait between messages";
     }
 
     @Override
-    public Configuration getDefaultConfig()
-    {
+    public Configuration getDefaultConfig() {
         Configuration config = super.getDefaultConfig();
 
         config.set("lockDuration", 2);
@@ -48,57 +42,42 @@ public class SpamPrevention extends Prevention
     }
 
     @Override
-    public void enable()
-    {
+    public void enable() {
         super.enable();
-        this.spamLockDuration = TimeUnit.SECONDS.toMillis(getConfig().getLong("lockDuration"));
-        this.chatTimestamps = new TObjectLongHashMap<String>();
+        spamLockDuration = TimeUnit.SECONDS.toMillis(getConfig().getLong("lockDuration"));
+        chatTimestamps = new TObjectLongHashMap<String>();
     }
 
     @Override
-    public void disable()
-    {
+    public void disable() {
         super.disable();
-        this.chatTimestamps.clear();
-        this.chatTimestamps = null;
+        chatTimestamps.clear();
+        chatTimestamps = null;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void chat(AsyncPlayerChatEvent event)
-    {
+    public void chat(AsyncPlayerChatEvent event) {
         final Player player = event.getPlayer();
         if (!can(player))
-        {
             if (isChatLocked(player))
-            {
                 prevent(event, player);
-            }
             else
-            {
                 setChatLock(player);
-            }
-        }
     }
 
-    private synchronized void setChatLock(final Player player)
-    {
-        this.chatTimestamps.put(player.getName(), System.currentTimeMillis() + this.spamLockDuration);
+    private synchronized void setChatLock(final Player player) {
+        chatTimestamps.put(player.getName(), System.currentTimeMillis() + spamLockDuration);
     }
 
-    private synchronized boolean isChatLocked(final Player player)
-    {
-        final long nextPossible = this.chatTimestamps.get(player.getName());
+    private synchronized boolean isChatLocked(final Player player) {
+        final long nextPossible = chatTimestamps.get(player.getName());
         if (nextPossible == 0)
-        {
             return false;
-        }
 
         final long currentTime = System.currentTimeMillis();
         if (nextPossible < currentTime)
-        {
             return false;
-        }
-        this.chatTimestamps.remove(player.getName());
+        chatTimestamps.remove(player.getName());
         return true;
     }
 }

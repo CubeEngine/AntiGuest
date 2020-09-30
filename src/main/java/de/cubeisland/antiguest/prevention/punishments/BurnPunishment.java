@@ -10,15 +10,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class BurnPunishment implements Punishment
-{
-    public String getName()
-    {
+public class BurnPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "burn";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.setFireTicks(config.getInt("duration", 3) * 20);
     }
 }

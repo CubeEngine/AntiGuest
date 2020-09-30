@@ -17,29 +17,22 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class SpawnEggPrevention extends FilteredEntityPrevention
-{
-    public SpawnEggPrevention(PreventionPlugin plugin)
-    {
+public class SpawnEggPrevention extends FilteredEntityPrevention {
+    public SpawnEggPrevention(PreventionPlugin plugin) {
         super("spawnegg", plugin, true);
         setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     @SuppressWarnings("deprecation")
-    public void interact(PlayerInteractEvent event)
-    {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
+    public void interact(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             ItemStack item = event.getItem();
             if (item != null && item.getType() == Material.MONSTER_EGG)
-            {
-                if (checkAndPrevent(event, event.getPlayer(), EntityType.fromId(item.getData().getData())))
-                {
+                if (checkAndPrevent(event, event.getPlayer(), EntityType.fromId(item.getData().getData()))) {
                     event.setUseInteractedBlock(Event.Result.DENY);
                     event.setUseItemInHand(Event.Result.DENY);
                 }
-            }
         }
     }
 }

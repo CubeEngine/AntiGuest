@@ -11,15 +11,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class RocketPunishment implements Punishment
-{
-    public String getName()
-    {
+public class RocketPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "rocket";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.setVelocity(player.getVelocity().add(new Vector(0, config.getInt("height", 50), 0)));
     }
 }

@@ -10,15 +10,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class LightningPunishment implements Punishment
-{
-    public String getName()
-    {
+public class LightningPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "lightning";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.getWorld().strikeLightningEffect(player.getLocation());
         player.damage(config.getInt("damage", 3));
     }

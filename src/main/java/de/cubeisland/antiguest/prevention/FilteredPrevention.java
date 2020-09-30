@@ -12,28 +12,25 @@ import org.bukkit.event.Cancellable;
 import gnu.trove.set.hash.THashSet;
 
 /**
- * This base class represents a prevention that can be filtered.
- * That means it is able to checkAndPrevent only a subset of actions based an a whitelist or blacklist
+ * This base class represents a prevention that can be filtered. That means it
+ * is able to checkAndPrevent only a subset of actions based an a whitelist or
+ * blacklist
  *
  * @author Phillip Schichtel
  */
-public abstract class FilteredPrevention<T> extends Prevention
-{
+public abstract class FilteredPrevention<T> extends Prevention {
     private Set<T> filterItems;
     private FilterMode filterMode;
 
-    public FilteredPrevention(String name, PreventionPlugin plugin)
-    {
+    public FilteredPrevention(String name, PreventionPlugin plugin) {
         this(name, plugin, true);
     }
 
-    public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing)
-    {
+    public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing) {
         this(name, plugin, allowPunishing, allowPunishing);
     }
 
-    public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing, boolean allowViolationLogging)
-    {
+    public FilteredPrevention(String name, PreventionPlugin plugin, boolean allowPunishing, boolean allowViolationLogging) {
         super(name, plugin, allowPunishing, allowViolationLogging);
         this.filterMode = FilterMode.BLACKLIST;
         this.filterItems = new THashSet<T>(0);
@@ -44,8 +41,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @return the filter mode
      */
-    public FilterMode getFilterMode()
-    {
+    public FilterMode getFilterMode() {
         return this.filterMode;
     }
 
@@ -54,8 +50,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @param mode the mode to filter in
      */
-    public void setFilterMode(FilterMode mode)
-    {
+    public void setFilterMode(FilterMode mode) {
         this.filterMode = mode;
     }
 
@@ -64,8 +59,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @param filterItems the filter items
      */
-    public void setFilterItems(Set<T> filterItems)
-    {
+    public void setFilterItems(Set<T> filterItems) {
         this.filterItems = filterItems;
     }
 
@@ -74,8 +68,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @return the filter items
      */
-    public Set<T> getFilterItems()
-    {
+    public Set<T> getFilterItems() {
         return this.filterItems;
     }
 
@@ -85,8 +78,7 @@ public abstract class FilteredPrevention<T> extends Prevention
      * @return the default config
      */
     @Override
-    public Configuration getDefaultConfig()
-    {
+    public Configuration getDefaultConfig() {
         Configuration defaultConfig = super.getDefaultConfig();
 
         defaultConfig.set("mode", this.filterMode.getName());
@@ -102,14 +94,11 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @return the string list
      */
-    public List<String> encodeSet(Set<T> set)
-    {
+    public List<String> encodeSet(Set<T> set) {
         List<String> stringList = new ArrayList<String>(set.size());
 
         for (T entry : set)
-        {
             stringList.add(String.valueOf(entry));
-        }
 
         return stringList;
     }
@@ -124,16 +113,13 @@ public abstract class FilteredPrevention<T> extends Prevention
     public abstract Set<T> decodeList(List<String> list);
 
     @Override
-    public void enable()
-    {
+    public void enable() {
         super.enable();
 
         this.filterMode = FilterMode.getByAlias(getConfig().getString("mode"));
         List<String> items = getConfig().getStringList("list");
         if (items != null)
-        {
             setFilterItems(decodeList(items));
-        }
     }
 
     /**
@@ -144,12 +130,9 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @return true if he can
      */
-    public boolean can(final Player player, final T item)
-    {
+    public boolean can(final Player player, final T item) {
         if (!can(player))
-        {
-            switch (getFilterMode())
-            {
+            switch (getFilterMode()) {
                 case NONE:
                     return false;
                 case WHITELIST:
@@ -157,7 +140,6 @@ public abstract class FilteredPrevention<T> extends Prevention
                 case BLACKLIST:
                     return !getFilterItems().contains(item);
             }
-        }
         return true;
     }
 
@@ -170,10 +152,8 @@ public abstract class FilteredPrevention<T> extends Prevention
      *
      * @return true if the action was prevented
      */
-    public boolean checkAndPrevent(final Cancellable event, final Player player, final T item)
-    {
-        if (!this.can(player, item))
-        {
+    public boolean checkAndPrevent(final Cancellable event, final Player player, final T item) {
+        if (!this.can(player, item)) {
             prevent(event, player);
             return true;
         }
@@ -183,47 +163,44 @@ public abstract class FilteredPrevention<T> extends Prevention
     /**
      * Represents the modes of a filtered prevention
      */
-    public enum FilterMode
-    {
-        NONE("none", "-1", "nolist", "all"),
-        WHITELIST("whitelist", "0", "white"),
-        BLACKLIST("blacklist", "1", "black");
+    public enum FilterMode {
+        NONE(
+                "none", "-1", "nolist", "all"
+        ),
+        WHITELIST(
+                "whitelist", "0", "white"
+        ),
+        BLACKLIST(
+                "blacklist", "1", "black"
+        );
 
         private static final HashMap<String, FilterMode> ALIAS_MAP = new HashMap<String, FilterMode>(values().length);
 
         private final String name;
         private final String[] aliases;
 
-        FilterMode(String name, String... aliases)
-        {
+        FilterMode(String name, String... aliases) {
             this.name = name;
             this.aliases = aliases;
         }
 
-        public String getName()
-        {
-            return this.name;
+        public String getName() {
+            return name;
         }
 
-        public String[] getAliases()
-        {
-            return this.aliases;
+        public String[] getAliases() {
+            return aliases;
         }
 
-        public static FilterMode getByAlias(String alias)
-        {
+        public static FilterMode getByAlias(String alias) {
             return ALIAS_MAP.get(alias.toLowerCase());
         }
 
-        static
-        {
-            for (FilterMode mode : values())
-            {
+        static {
+            for (FilterMode mode : values()) {
                 ALIAS_MAP.put(mode.getName(), mode);
                 for (String alias : mode.getAliases())
-                {
                     ALIAS_MAP.put(alias.toLowerCase(), mode);
-                }
             }
         }
     }

@@ -10,8 +10,7 @@ import de.cubeisland.libMinecraft.translation.TranslatablePlugin;
  *
  * @author Phillip Schichtel
  */
-public interface PreventionPlugin extends TranslatablePlugin
-{
+public interface PreventionPlugin extends TranslatablePlugin {
     /**
      * Returns the folder the prevention configurations should be in
      *

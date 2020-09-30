@@ -17,25 +17,19 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class MonsterPrevention extends FilteredEntityPrevention
-{
-    public MonsterPrevention(PreventionPlugin plugin)
-    {
+public class MonsterPrevention extends FilteredEntityPrevention {
+    public MonsterPrevention(PreventionPlugin plugin) {
         super("monster", plugin, false);
         setEnableByDefault(true);
         setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void target(EntityTargetEvent event)
-    {
-        if (event.getEntity() instanceof Monster)
-        {
+    public void target(EntityTargetEvent event) {
+        if (event.getEntity() instanceof Monster) {
             final Entity target = event.getTarget();
             if (target instanceof Player)
-            {
-                checkAndPrevent(event, (Player)target, event.getEntityType());
-            }
+                checkAndPrevent(event, (Player) target, event.getEntityType());
         }
     }
 }

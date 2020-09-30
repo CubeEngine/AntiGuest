@@ -10,18 +10,15 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class MessagePunishment implements Punishment
-{
-    public String getName()
-    {
+public class MessagePunishment implements Punishment {
+    @Override
+    public String getName() {
         return "message";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         if (config.contains("message"))
-        {
             player.chat(config.getString("message"));
-        }
     }
 }

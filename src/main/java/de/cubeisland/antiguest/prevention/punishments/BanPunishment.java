@@ -11,17 +11,15 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class BanPunishment implements Punishment
-{
-    public String getName()
-    {
+public class BanPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "ban";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.setBanned(true);
-        player.kickPlayer(ChatColor.translateAlternateColorCodes('&', config
-            .getString("reason", "&cYou were banned as a punishment!")));
+        player.kickPlayer(ChatColor.translateAlternateColorCodes('&', config.getString("reason", "&cYou were banned as a punishment!")));
     }
 }

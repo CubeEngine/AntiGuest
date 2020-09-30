@@ -5,52 +5,42 @@ package de.cubeisland.libMinecraft.bitmask;
  *
  * @author Phillip Schichtel
  */
-public class ByteBitMask
-{
+public class ByteBitMask {
     private byte mask;
 
-    public ByteBitMask()
-    {
-        this((byte)0);
+    public ByteBitMask() {
+        this((byte) 0);
     }
 
-    public ByteBitMask(byte mask)
-    {
+    public ByteBitMask(byte mask) {
         this.mask = mask;
     }
 
-    public byte get()
-    {
-        return this.mask;
+    public byte get() {
+        return mask;
     }
 
-    public byte set(byte bits)
-    {
-        return this.mask |= bits;
+    public byte set(byte bits) {
+        return mask |= bits;
     }
 
-    public byte reset()
-    {
-        return this.reset((byte)0);
+    public byte reset() {
+        return this.reset((byte) 0);
     }
 
-    public byte reset(byte mask)
-    {
+    public byte reset(byte mask) {
         return this.mask = mask;
     }
 
-    public byte unset(byte bits)
-    {
-        return this.mask &= ~bits;
+    public byte unset(byte bits) {
+        return mask &= ~bits;
     }
 
-    public byte toggle(byte bits)
-    {
-        return this.mask ^= bits;
+    public byte toggle(byte bits) {
+        return mask ^= bits;
     }
 
-    public boolean isset(byte bits)
-    {
-        return ((this.mask & bits) == bits);
+    public boolean isset(byte bits) {
+        return (mask & bits) == bits;
     }
 }

@@ -18,10 +18,8 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class ItemPrevention extends FilteredItemPrevention
-{
-    public ItemPrevention(PreventionPlugin plugin)
-    {
+public class ItemPrevention extends FilteredItemPrevention {
+    public ItemPrevention(PreventionPlugin plugin) {
         super("item", plugin);
         setIgnoreBlocks(true);
         setFilterItems(EnumSet.of(Material.FLINT_AND_STEEL));
@@ -29,25 +27,19 @@ public class ItemPrevention extends FilteredItemPrevention
     }
 
     @Override
-    public String getConfigHeader()
-    {
+    public String getConfigHeader() {
         return super.getConfigHeader() + "\nBlocks will not be count as items!\n";
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void interact(PlayerInteractEvent event)
-    {
-        if (event.getAction() != Action.PHYSICAL)
-        {
+    public void interact(PlayerInteractEvent event) {
+        if (event.getAction() != Action.PHYSICAL) {
             final ItemStack itemInHand = event.getItem();
             if (itemInHand != null)
-            {
-                if (checkAndPrevent(event, event.getPlayer(), event.getItem().getType()))
-                {
+                if (checkAndPrevent(event, event.getPlayer(), event.getItem().getType())) {
                     event.setUseInteractedBlock(Result.DENY);
                     event.setUseItemInHand(Result.DENY);
                 }
-            }
         }
     }
 }

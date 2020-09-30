@@ -14,23 +14,16 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class DropperPrevention extends Prevention
-{
-    public DropperPrevention(PreventionPlugin plugin)
-    {
+public class DropperPrevention extends Prevention {
+    public DropperPrevention(PreventionPlugin plugin) {
         super("dropper", plugin);
         setEnableByDefault(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void open(InventoryOpenEvent event)
-    {
+    public void open(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.DROPPER)
-        {
             if (event.getPlayer() instanceof Player)
-            {
-                checkAndPrevent(event, (Player)event.getPlayer());
-            }
-        }
+                checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

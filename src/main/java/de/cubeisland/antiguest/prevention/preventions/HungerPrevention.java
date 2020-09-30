@@ -14,27 +14,21 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class HungerPrevention extends Prevention
-{
-    public HungerPrevention(PreventionPlugin plugin)
-    {
+public class HungerPrevention extends Prevention {
+    public HungerPrevention(PreventionPlugin plugin) {
         super("hunger", plugin, false);
         setEnableByDefault(true);
     }
 
     @Override
-    public String getConfigHeader()
-    {
+    public String getConfigHeader() {
         return super.getConfigHeader() + "\nThis prevention conflicts with the starvation punishment!\n";
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void foodlevelChange(FoodLevelChangeEvent event)
-    {
+    public void foodlevelChange(FoodLevelChangeEvent event) {
         final Entity entity = event.getEntity();
         if (entity instanceof Player)
-        {
-            checkAndPrevent(event, (Player)entity);
-        }
+            checkAndPrevent(event, (Player) entity);
     }
 }

@@ -10,15 +10,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class KillPunishment implements Punishment
-{
-    public String getName()
-    {
+public class KillPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "kill";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.setHealth(0);
     }
 }

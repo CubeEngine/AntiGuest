@@ -18,8 +18,7 @@ import gnu.trove.map.hash.THashMap;
  *
  * @author Phillip Schichtel
  */
-public class PreventionManager
-{
+public class PreventionManager {
     private static PreventionManager instance = null;
 
     private final THashMap<String, Prevention> preventions;
@@ -28,13 +27,12 @@ public class PreventionManager
     private final PluginManager pm;
     private final Permission parentPermission;
 
-    private PreventionManager()
-    {
-        this.pm = Bukkit.getPluginManager();
-        this.parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
-        this.preventions = new THashMap<String, Prevention>();
-        this.punishments = new THashMap<String, Punishment>();
-        this.pm.addPermission(this.parentPermission);
+    private PreventionManager() {
+        pm = Bukkit.getPluginManager();
+        parentPermission = new Permission("antiguest.preventions.*", PermissionDefault.OP);
+        preventions = new THashMap<String, Prevention>();
+        punishments = new THashMap<String, Punishment>();
+        pm.addPermission(parentPermission);
     }
 
     /**
@@ -42,12 +40,9 @@ public class PreventionManager
      *
      * @return the instance
      */
-    public static PreventionManager getInstance()
-    {
+    public static PreventionManager getInstance() {
         if (instance == null)
-        {
             instance = new PreventionManager();
-        }
         return instance;
     }
 
@@ -58,9 +53,8 @@ public class PreventionManager
      *
      * @return the prevention or null
      */
-    public Prevention getPrevention(String name)
-    {
-        return this.preventions.get(name);
+    public Prevention getPrevention(String name) {
+        return preventions.get(name);
     }
 
     /**
@@ -68,9 +62,8 @@ public class PreventionManager
      *
      * @return a collection of all preventions
      */
-    public Collection<Prevention> getPreventions()
-    {
-        return new ArrayList<Prevention>(this.preventions.values());
+    public Collection<Prevention> getPreventions() {
+        return new ArrayList<Prevention>(preventions.values());
     }
 
     /**
@@ -80,28 +73,19 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager registerPrevention(Prevention prevention)
-    {
+    public PreventionManager registerPrevention(Prevention prevention) {
         if (prevention == null)
-        {
             throw new IllegalArgumentException("prevention must not be null!");
-        }
         if (!prevention.isLoaded())
-        {
             prevention.load();
-        }
-        if (!this.preventions.containsValue(prevention))
-        {
-            this.preventions.put(prevention.getName(), prevention);
+        if (!preventions.containsValue(prevention)) {
+            preventions.put(prevention.getName(), prevention);
             Permission perm = prevention.getPermission();
-            try
-            {
-                this.pm.addPermission(perm);
+            try {
+                pm.addPermission(perm);
+            } catch (IllegalArgumentException ignored) {
             }
-            catch (IllegalArgumentException ignored)
-            {
-            }
-            perm.addParent(this.parentPermission, true);
+            perm.addParent(parentPermission, true);
         }
 
         return this;
@@ -114,19 +98,15 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager unregisterPrevention(String name)
-    {
-        this.preventions.remove(name);
+    public PreventionManager unregisterPrevention(String name) {
+        preventions.remove(name);
         return this;
     }
 
-    public boolean enablePrevention(final String name)
-    {
-        final Prevention prevention = this.preventions.get(name);
+    public boolean enablePrevention(final String name) {
+        final Prevention prevention = preventions.get(name);
         if (prevention != null)
-        {
             return this.enablePrevention(prevention);
-        }
         return false;
     }
 
@@ -137,41 +117,32 @@ public class PreventionManager
      *
      * @return true if the initialization was successful
      */
-    public boolean enablePrevention(final Prevention prevention)
-    {
+    public boolean enablePrevention(final Prevention prevention) {
         if (prevention != null && !prevention.isEnabled())
-        {
-            try
-            {
+            try {
                 prevention.enable();
-                this.pm.registerEvents(prevention, prevention.getPlugin());
+                pm.registerEvents(prevention, prevention.getPlugin());
 
                 prevention.setEnabled(true);
                 return true;
-            }
-            catch (RuntimeException e)
-            {
+            } catch (RuntimeException e) {
                 AntiGuest.error("Failed to enable the prevention '" + prevention.getName() + "'...", e);
             }
-        }
         return false;
     }
 
     /**
-     * This method loads all registered preventions based on the given ConfigurationSection and the default configuraiton.
-     * The given ConfigurationSection should have a key "preventions" on top level, otherwise this will fail
+     * This method loads all registered preventions based on the given
+     * ConfigurationSection and the default configuraiton. The given
+     * ConfigurationSection should have a key "preventions" on top level, otherwise
+     * this will fail
      *
      * @return fluent interface
      */
-    public PreventionManager enablePreventions()
-    {
-        for (Prevention prevention : this.preventions.values())
-        {
+    public PreventionManager enablePreventions() {
+        for (Prevention prevention : preventions.values())
             if (prevention.getConfig().getBoolean("enable"))
-            {
                 this.enablePrevention(prevention);
-            }
-        }
 
         return this;
     }
@@ -183,13 +154,10 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager disablePrevention(String name)
-    {
-        final Prevention prevention = this.preventions.get(name);
+    public PreventionManager disablePrevention(String name) {
+        final Prevention prevention = preventions.get(name);
         if (prevention != null)
-        {
             this.enablePrevention(prevention);
-        }
         return this;
     }
 
@@ -200,18 +168,13 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager disablePrevention(Prevention prevention)
-    {
-        if (prevention != null && prevention.isEnabled())
-        {
+    public PreventionManager disablePrevention(Prevention prevention) {
+        if (prevention != null && prevention.isEnabled()) {
             prevention.setEnabled(false);
             HandlerList.unregisterAll(prevention);
-            try
-            {
+            try {
                 prevention.disable();
-            }
-            catch (RuntimeException e)
-            {
+            } catch (RuntimeException e) {
                 AntiGuest.error("Failed to disable the prevention '" + prevention.getName() + "'...", e);
             }
         }
@@ -223,12 +186,9 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager disablePreventions()
-    {
-        for (Prevention prevention : this.preventions.values())
-        {
+    public PreventionManager disablePreventions() {
+        for (Prevention prevention : preventions.values())
             this.disablePrevention(prevention);
-        }
         return this;
     }
 
@@ -239,15 +199,10 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager disablePreventions(Plugin plugin)
-    {
-        for (Prevention prevention : this.preventions.values())
-        {
+    public PreventionManager disablePreventions(Plugin plugin) {
+        for (Prevention prevention : preventions.values())
             if (prevention.getPlugin() == plugin)
-            {
                 this.disablePrevention(prevention);
-            }
-        }
 
         return this;
     }
@@ -259,13 +214,10 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager registerPunishment(Punishment punishment)
-    {
+    public PreventionManager registerPunishment(Punishment punishment) {
         if (punishment == null)
-        {
             throw new IllegalArgumentException("The punishment must not be null!");
-        }
-        this.punishments.put(punishment.getName(), punishment);
+        punishments.put(punishment.getName(), punishment);
         return this;
     }
 
@@ -276,12 +228,9 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager unregisterPunishment(Punishment punishment)
-    {
+    public PreventionManager unregisterPunishment(Punishment punishment) {
         if (punishment == null)
-        {
             throw new IllegalArgumentException("The punishment must not be null!");
-        }
         return this.unregisterPunishment(punishment.getName());
     }
 
@@ -292,9 +241,8 @@ public class PreventionManager
      *
      * @return fluent interface
      */
-    public PreventionManager unregisterPunishment(String name)
-    {
-        this.punishments.remove(name);
+    public PreventionManager unregisterPunishment(String name) {
+        punishments.remove(name);
         return this;
     }
 
@@ -305,8 +253,7 @@ public class PreventionManager
      *
      * @return the punishment
      */
-    public Punishment getPunishment(String name)
-    {
-        return this.punishments.get(name);
+    public Punishment getPunishment(String name) {
+        return punishments.get(name);
     }
 }

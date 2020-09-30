@@ -13,20 +13,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class TamePrevention extends Prevention
-{
+public class TamePrevention extends Prevention {
 
-    public TamePrevention(PreventionPlugin plugin)
-    {
+    public TamePrevention(PreventionPlugin plugin) {
         super("tame", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void tame(EntityTameEvent event)
-    {
+    public void tame(EntityTameEvent event) {
         if (event.getOwner() instanceof Player)
-        {
-            checkAndPrevent(event, (Player)event.getOwner());
-        }
+            checkAndPrevent(event, (Player) event.getOwner());
     }
 }

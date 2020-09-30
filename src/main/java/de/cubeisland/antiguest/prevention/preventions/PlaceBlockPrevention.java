@@ -13,10 +13,8 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class PlaceBlockPrevention extends FilteredItemPrevention
-{
-    public PlaceBlockPrevention(PreventionPlugin plugin)
-    {
+public class PlaceBlockPrevention extends FilteredItemPrevention {
+    public PlaceBlockPrevention(PreventionPlugin plugin) {
         super("placeblock", plugin);
         setEnableByDefault(true);
         setEnablePunishing(true);
@@ -24,14 +22,12 @@ public class PlaceBlockPrevention extends FilteredItemPrevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void place(BlockPlaceEvent event)
-    {
+    public void place(BlockPlaceEvent event) {
         checkAndPrevent(event, event.getPlayer(), event.getBlockPlaced().getType());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void place(HangingPlaceEvent event)
-    {
+    public void place(HangingPlaceEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

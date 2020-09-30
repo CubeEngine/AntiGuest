@@ -14,22 +14,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class FurnacePrevention extends Prevention
-{
-    public FurnacePrevention(PreventionPlugin plugin)
-    {
+public class FurnacePrevention extends Prevention {
+    public FurnacePrevention(PreventionPlugin plugin) {
         super("furnace", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void open(InventoryOpenEvent event)
-    {
+    public void open(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.FURNACE)
-        {
             if (event.getPlayer() instanceof Player)
-            {
-                checkAndPrevent(event, (Player)event.getPlayer());
-            }
-        }
+                checkAndPrevent(event, (Player) event.getPlayer());
     }
 }

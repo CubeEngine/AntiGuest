@@ -20,34 +20,27 @@ import de.cubeisland.libMinecraft.math.Square;
  *
  * @author Phillip Schichtel
  */
-public class MovePrevention extends Prevention
-{
+public class MovePrevention extends Prevention {
     private int width;
 
-    public MovePrevention(PreventionPlugin plugin)
-    {
+    public MovePrevention(PreventionPlugin plugin) {
         super("move", plugin, false);
         setThrottleDelay(3, TimeUnit.SECONDS);
     }
 
     @Override
-    public String getConfigHeader()
-    {
-        return super.getConfigHeader() + "\n" +
-            "Configuration info:\n" +
-            "    width: the number of blocks a player can move awy from the spawn\n";
+    public String getConfigHeader() {
+        return super.getConfigHeader() + "\n" + "Configuration info:\n" + "    width: the number of blocks a player can move awy from the spawn\n";
     }
 
     @Override
-    public void enable()
-    {
+    public void enable() {
         super.enable();
-        this.width = getConfig().getInt("width");
+        width = getConfig().getInt("width");
     }
 
     @Override
-    public Configuration getDefaultConfig()
-    {
+    public Configuration getDefaultConfig() {
         Configuration config = super.getDefaultConfig();
 
         config.set("width", Math.max(5, getPlugin().getServer().getSpawnRadius()));
@@ -56,32 +49,24 @@ public class MovePrevention extends Prevention
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void move(PlayerMoveEvent event)
-    {
+    public void move(PlayerMoveEvent event) {
         final Location from = event.getFrom();
         final Location to = event.getTo();
 
         // only check if the player really moved
         if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ())
-        {
             return;
-        }
 
         final Player player = event.getPlayer();
-        if (!can(player))
-        {
+        if (!can(player)) {
             // create a square around the spawn
-            final Square spawnSquare = new Square(Convert.toBlockVector2(player.getWorld().getSpawnLocation())
-                                                         .substract(this.width), this.width * 2);
+            final Square spawnSquare = new Square(Convert.toBlockVector2(player.getWorld().getSpawnLocation()).substract(width), width * 2);
 
             // is the new location inside the spawn square?
-            if (!spawnSquare.contains(Convert.toBlockVector2(to)))
-            {
+            if (!spawnSquare.contains(Convert.toBlockVector2(to))) {
                 Location fallback = from;
                 if (!spawnSquare.contains(Convert.toBlockVector2(fallback)))
-                {
                     fallback = player.getWorld().getSpawnLocation();
-                }
                 sendMessage(player);
                 player.teleport(fallback, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 event.setCancelled(true);

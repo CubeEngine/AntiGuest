@@ -12,17 +12,14 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class ChatPrevention extends Prevention
-{
-    public ChatPrevention(PreventionPlugin plugin)
-    {
+public class ChatPrevention extends Prevention {
+    public ChatPrevention(PreventionPlugin plugin) {
         super("chat", plugin);
         setEnablePunishing(false);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void chat(AsyncPlayerChatEvent event)
-    {
+    public void chat(AsyncPlayerChatEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

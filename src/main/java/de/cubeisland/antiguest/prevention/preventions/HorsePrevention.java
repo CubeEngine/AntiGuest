@@ -11,20 +11,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
 /**
  * Prevents interaction with a horse/donkey/mule
  */
-public class HorsePrevention extends Prevention
-{
-    public HorsePrevention(PreventionPlugin plugin)
-    {
+public class HorsePrevention extends Prevention {
+    public HorsePrevention(PreventionPlugin plugin) {
         super("horse", plugin);
         setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEntityEvent event)
-    {
+    public void interact(PlayerInteractEntityEvent event) {
         if (event.getRightClicked().getType().equals(EntityType.HORSE))
-        {
             checkAndPrevent(event, event.getPlayer());
-        }
     }
 }

@@ -10,15 +10,14 @@ import de.cubeisland.antiguest.prevention.Punishment;
  *
  * @author Phillip Schichtel
  */
-public class StarvationPunishment implements Punishment
-{
-    public String getName()
-    {
+public class StarvationPunishment implements Punishment {
+    @Override
+    public String getName() {
         return "starvation";
     }
 
-    public void punish(Player player, ConfigurationSection config)
-    {
+    @Override
+    public void punish(Player player, ConfigurationSection config) {
         player.setSaturation(0);
     }
 }

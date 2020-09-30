@@ -14,24 +14,18 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class ButtonPrevention extends Prevention
-{
-    public ButtonPrevention(PreventionPlugin plugin)
-    {
+public class ButtonPrevention extends Prevention {
+    public ButtonPrevention(PreventionPlugin plugin) {
         super("button", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         final Action action = event.getAction();
-        if (action == Action.LEFT_CLICK_BLOCK || action == Action.RIGHT_CLICK_BLOCK)
-        {
+        if (action == Action.LEFT_CLICK_BLOCK || action == Action.RIGHT_CLICK_BLOCK) {
             final Material material = event.getClickedBlock().getType();
             if (material == Material.STONE_BUTTON || material == Material.WOOD_BUTTON)
-            {
                 checkAndPrevent(event, event.getPlayer());
-            }
         }
     }
 }

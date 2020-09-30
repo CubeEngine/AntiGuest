@@ -12,18 +12,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class ChangeSignPrevention extends Prevention
-{
-    public ChangeSignPrevention(PreventionPlugin plugin)
-    {
+public class ChangeSignPrevention extends Prevention {
+    public ChangeSignPrevention(PreventionPlugin plugin) {
         super("changesign", plugin);
         setEnableByDefault(true);
         setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void change(SignChangeEvent event)
-    {
+    public void change(SignChangeEvent event) {
         checkAndPrevent(event, event.getPlayer());
     }
 }

@@ -12,17 +12,14 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class DropPrevention extends FilteredItemPrevention
-{
-    public DropPrevention(PreventionPlugin plugin)
-    {
+public class DropPrevention extends FilteredItemPrevention {
+    public DropPrevention(PreventionPlugin plugin) {
         super("drop", plugin);
         setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void dropItem(PlayerDropItemEvent event)
-    {
+    public void dropItem(PlayerDropItemEvent event) {
         checkAndPrevent(event, event.getPlayer(), event.getItemDrop().getItemStack().getType());
     }
 }

@@ -15,22 +15,15 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  *
  * @author Phillip Schichtel
  */
-public class TramplePrevention extends Prevention
-{
-    public TramplePrevention(PreventionPlugin plugin)
-    {
+public class TramplePrevention extends Prevention {
+    public TramplePrevention(PreventionPlugin plugin) {
         super("trample", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interact(PlayerInteractEvent event)
-    {
+    public void interact(PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.SOIL)
-        {
             if (checkAndPrevent(event, event.getPlayer()))
-            {
                 event.setUseInteractedBlock(Result.DENY);
-            }
-        }
     }
 }

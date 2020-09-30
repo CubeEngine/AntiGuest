@@ -10,30 +10,22 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import de.cubeisland.antiguest.prevention.Prevention;
 import de.cubeisland.antiguest.prevention.PreventionPlugin;
 
-public class ItemFramePrevention extends Prevention
-{
-    public ItemFramePrevention(PreventionPlugin plugin)
-    {
+public class ItemFramePrevention extends Prevention {
+    public ItemFramePrevention(PreventionPlugin plugin) {
         super("itemframe", plugin);
         setEnableByDefault(true);
         setEnablePunishing(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void interactEntity(PlayerInteractEntityEvent event)
-    {
+    public void interactEntity(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame)
-        {
             checkAndPrevent(event, event.getPlayer());
-        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void entityDamage(EntityDamageByEntityEvent event)
-    {
+    public void entityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof ItemFrame && event.getDamager() instanceof Player)
-        {
-            checkAndPrevent(event, (Player)event.getDamager());
-        }
+            checkAndPrevent(event, (Player) event.getDamager());
     }
 }

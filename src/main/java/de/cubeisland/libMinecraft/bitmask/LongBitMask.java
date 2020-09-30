@@ -5,52 +5,42 @@ package de.cubeisland.libMinecraft.bitmask;
  *
  * @author Phillip Schichtel
  */
-public class LongBitMask
-{
+public class LongBitMask {
     private long mask;
 
-    public LongBitMask()
-    {
+    public LongBitMask() {
         this(0);
     }
 
-    public LongBitMask(long mask)
-    {
+    public LongBitMask(long mask) {
         this.mask = mask;
     }
 
-    public long get()
-    {
-        return this.mask;
+    public long get() {
+        return mask;
     }
 
-    public long set(long bits)
-    {
-        return this.mask |= bits;
+    public long set(long bits) {
+        return mask |= bits;
     }
 
-    public long reset()
-    {
+    public long reset() {
         return this.reset(0);
     }
 
-    public long reset(long mask)
-    {
+    public long reset(long mask) {
         return this.mask = mask;
     }
 
-    public long unset(long bits)
-    {
-        return this.mask &= ~bits;
+    public long unset(long bits) {
+        return mask &= ~bits;
     }
 
-    public long toggle(long bits)
-    {
-        return this.mask ^= bits;
+    public long toggle(long bits) {
+        return mask ^= bits;
     }
 
-    public boolean isset(long bits)
-    {
-        return ((this.mask & bits) == bits);
+    public boolean isset(long bits) {
+        return (mask & bits) == bits;
     }
 }
