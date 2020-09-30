@@ -22,7 +22,7 @@ public class CakePrevention extends Prevention {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
-            if (event.getClickedBlock().getType() == Material.CAKE_BLOCK)
+            if (event.getClickedBlock().getType() == Material.CAKE)
                 checkAndPrevent(event, event.getPlayer());
     }
 }

@@ -75,8 +75,6 @@ public class CommandArgs {
                     default:
                         if (quotedArgBuilder == null)
                             params.add(args[i]);
-                        else if (quotedArgBuilder == null)
-                            params.add(args[i]);
                         else {
                             int quoteOffset = args[i].indexOf(quoteChar);
                             if (quoteOffset >= 0) {

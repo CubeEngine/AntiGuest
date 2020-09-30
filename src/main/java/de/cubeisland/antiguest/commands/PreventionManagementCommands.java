@@ -1,6 +1,6 @@
 package de.cubeisland.antiguest.commands;
 
-import static de.cubeisland.antiguest.AntiGuest._;
+import static de.cubeisland.antiguest.AntiGuest.translate;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,26 +36,26 @@ public class PreventionManagementCommands {
                     }
                 }
 
-                sender.sendMessage(_("preventionsEnabled"));
+                sender.sendMessage(translate("preventionsEnabled"));
             } else {
                 Prevention prevention = pm.getPrevention(args.getString(0));
                 if (prevention != null) {
                     if (!prevention.isEnabled()) {
                         if (PreventionManager.getInstance().enablePrevention(prevention)) {
-                            sender.sendMessage(_("preventionEnabled"));
+                            sender.sendMessage(translate("preventionEnabled"));
                             if (!temporary) {
                                 prevention.getConfig().set("enable", true);
                                 prevention.saveConfig();
                             }
                         } else
-                            sender.sendMessage(_("somethingFailed"));
+                            sender.sendMessage(translate("somethingFailed"));
                     } else
-                        sender.sendMessage(_("alreadyEnabled"));
+                        sender.sendMessage(translate("alreadyEnabled"));
                 } else
-                    sender.sendMessage(_("preventionNotFound"));
+                    sender.sendMessage(translate("preventionNotFound"));
             }
         } else
-            sender.sendMessage(_("noPrevention"));
+            sender.sendMessage(translate("noPrevention"));
     }
 
     @Command(usage = "<prevention> [-t]")
@@ -72,24 +72,24 @@ public class PreventionManagementCommands {
                     }
                 }
 
-                sender.sendMessage(_("preventionsDisabled"));
+                sender.sendMessage(translate("preventionsDisabled"));
             } else {
                 Prevention prevention = PreventionManager.getInstance().getPrevention(args.getString(0));
                 if (prevention != null) {
                     if (prevention.isEnabled()) {
                         PreventionManager.getInstance().disablePrevention(prevention);
-                        sender.sendMessage(_("preventionDisabled"));
+                        sender.sendMessage(translate("preventionDisabled"));
                         if (!temporary) {
                             prevention.getConfig().set("enable", false);
                             prevention.saveConfig();
                         }
                     } else
-                        sender.sendMessage(_("alreadyDisabled"));
+                        sender.sendMessage(translate("alreadyDisabled"));
                 } else
-                    sender.sendMessage(_("preventionNotFound"));
+                    sender.sendMessage(translate("preventionNotFound"));
             }
         } else
-            sender.sendMessage(_("noPrevention"));
+            sender.sendMessage(translate("noPrevention"));
     }
 
     @Command(usage = "<prevention>")
@@ -99,31 +99,29 @@ public class PreventionManagementCommands {
             Prevention prevention = PreventionManager.getInstance().getPrevention(args.getString(0));
             if (prevention != null) {
                 if (prevention.isEnabled())
-                    sender.sendMessage(_("enabled"));
+                    sender.sendMessage(translate("enabled"));
                 else
-                    sender.sendMessage(_("disabled"));
+                    sender.sendMessage(translate("disabled"));
             } else
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(translate("preventionNotFound"));
         } else
-            sender.sendMessage(_("noPrevention"));
+            sender.sendMessage(translate("noPrevention"));
     }
 
     @Command(usage = "[-a]")
     @RequiresPermission
     public void list(CommandSender sender, CommandArgs args) {
         if (args.hasFlag("a")) {
-            sender.sendMessage(_("registeredPreventions"));
+            sender.sendMessage(translate("registeredPreventions"));
             sender.sendMessage("");
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
                 sender.sendMessage(" - " + (prevention.isEnabled() ? ChatColor.BRIGHT_GREEN : ChatColor.RED) + prevention.getName());
             sender.sendMessage("");
         } else {
-            sender.sendMessage(_("activePreventions"));
+            sender.sendMessage(translate("activePreventions"));
             sender.sendMessage("");
-            int i = 0;
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
                 if (prevention.isEnabled()) {
-                    ++i;
                     sender.sendMessage(" - " + ChatColor.BRIGHT_GREEN + prevention.getName());
                 }
             sender.sendMessage("");
@@ -142,8 +140,8 @@ public class PreventionManagementCommands {
             player = (Player) sender;
             prevention = pm.getPrevention(args.getString(0));
         } else {
-            sender.sendMessage(_("tooFewArguments"));
-            sender.sendMessage(_("see", args.getBaseLabel() + " help"));
+            sender.sendMessage(translate("tooFewArguments"));
+            sender.sendMessage(translate("see", args.getBaseLabel() + " help"));
             return;
         }
 
@@ -151,17 +149,17 @@ public class PreventionManagementCommands {
             if (prevention != null) {
                 if (prevention.can(player)) {
                     if (sender == player)
-                        sender.sendMessage(_("you_ableToPass"));
+                        sender.sendMessage(translate("youtranslateableToPass"));
                     else
-                        sender.sendMessage(_("other_ableToPass"));
+                        sender.sendMessage(translate("othertranslateableToPass"));
                 } else if (sender == player)
-                    sender.sendMessage(_("you_unableToPass"));
+                    sender.sendMessage(translate("youtranslateunableToPass"));
                 else
-                    sender.sendMessage(_("other_unableToPass"));
+                    sender.sendMessage(translate("othertranslateunableToPass"));
             } else
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(translate("preventionNotFound"));
         } else
-            sender.sendMessage(_("playerNotFound"));
+            sender.sendMessage(translate("playerNotFound"));
     }
 
     @Command(usage = "<prevention> <message>")
@@ -175,10 +173,10 @@ public class PreventionManagementCommands {
                 prevention.getConfig().set("message", message);
                 prevention.saveConfig();
 
-                sender.sendMessage(_("messageSet"));
+                sender.sendMessage(translate("messageSet"));
             } else
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(translate("preventionNotFound"));
         } else
-            sender.sendMessage(_("tooFewArguments"));
+            sender.sendMessage(translate("tooFewArguments"));
     }
 }

@@ -2,9 +2,10 @@ package de.cubeisland.antiguest.prevention.preventions;
 
 import java.util.concurrent.TimeUnit;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 
 import de.cubeisland.antiguest.prevention.FilteredItemPrevention;
 import de.cubeisland.antiguest.prevention.PreventionPlugin;
@@ -21,7 +22,8 @@ public class PickupPrevention extends FilteredItemPrevention {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void pickupItem(PlayerPickupItemEvent event) {
-        checkAndPrevent(event, event.getPlayer(), event.getItem().getItemStack().getType());
+    public void pickupItem(EntityPickupItemEvent event) {
+        if (event.getEntity() instanceof Player)
+            checkAndPrevent(event, (Player) event.getEntity(), event.getItem().getItemStack().getType());
     }
 }

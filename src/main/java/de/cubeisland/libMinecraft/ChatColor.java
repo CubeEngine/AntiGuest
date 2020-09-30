@@ -133,8 +133,8 @@ public enum ChatColor {
 
     static {
         STRIP_COLOR_PATTERN = Pattern.compile(COLOR_CHAR + "[" + CHARS + "]");
-        BY_CODE = new HashMap(values().length);
-        BY_CHAR = new HashMap(values().length);
+        BY_CODE = new HashMap<Byte, ChatColor>(values().length);
+        BY_CHAR = new HashMap<Character, ChatColor>(values().length);
 
         for (ChatColor chatColor : values()) {
             BY_CHAR.put(Character.valueOf(chatColor.getChar()), chatColor);

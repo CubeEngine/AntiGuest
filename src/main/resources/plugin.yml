@@ -1,9 +1,11 @@
 name: "AntiGuest"
-version: "${project.version}"
+version: $version
 main: "de.cubeisland.antiguest.AntiGuest"
 dev-url: "http://dev.bukkit.org/server-mods/antiguest"
 authors:
   - "Quick_Wango"
+  - "SweetieBelle"
+api-version: 1.16
 description: "Prevents guests from griefing."
 website: "http://cubeisland.de"
 commands:

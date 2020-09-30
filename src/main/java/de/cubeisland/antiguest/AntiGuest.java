@@ -139,7 +139,7 @@ public class AntiGuest extends JavaPlugin implements Listener, PreventionPlugin 
         logger.log(SEVERE, msg, t);
     }
 
-    public static String _(String message, Object... params) {
+    public static String translate(String message, Object... params) {
         return translation.translate(message, params);
     }
 

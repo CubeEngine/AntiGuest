@@ -18,7 +18,7 @@ public class Translation {
     private static final String RESOURCE_PATH = "/language/";
     private static final String RESOURCE_EXT = ".ini";
 
-    public Translation(Class clazz, final String language) throws IOException {
+    public Translation(Class<?> clazz, final String language) throws IOException {
         if (clazz == null)
             throw new IllegalArgumentException("The class must not be null!");
         if (language == null)
@@ -79,7 +79,7 @@ public class Translation {
             return String.format(translation, params);
     }
 
-    public static Translation get(final Class clazz, final String language) {
+    public static Translation get(final Class<?> clazz, final String language) {
         try {
             return new Translation(clazz, language);
         } catch (Throwable t) {

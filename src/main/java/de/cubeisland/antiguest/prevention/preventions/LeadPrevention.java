@@ -18,13 +18,13 @@ public class LeadPrevention extends Prevention {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEvent event) {
-        if (event.getPlayer().getItemInHand().getType().equals(Material.LEASH) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.LEAD) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
             checkAndPrevent(event, event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEntityEvent event) {
-        if (event.getPlayer().getItemInHand().getType().equals(Material.LEASH))
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.LEAD))
             checkAndPrevent(event, event.getPlayer());
     }
 }

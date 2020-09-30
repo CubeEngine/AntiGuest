@@ -62,7 +62,7 @@ public class BaseCommand implements CommandExecutor {
 
     }
 
-    private String _(String key, Object... params) {
+    private String translate(String key, Object... params) {
         return plugin.getTranslation().translate(key, params);
     }
 
@@ -79,7 +79,7 @@ public class BaseCommand implements CommandExecutor {
         if (subCommand != null) {
             Permission permission = subCommand.getPermission();
             if (permission != null && !sender.hasPermission(permission))
-                sender.sendMessage(_("command_permdenied"));
+                sender.sendMessage(translate("commandtranslatepermdenied"));
             else
                 try {
                     CommandArgs commandArgs = new CommandArgs(this, label, subCommand, args);
@@ -89,11 +89,11 @@ public class BaseCommand implements CommandExecutor {
                 } catch (CommandException e) {
                     sender.sendMessage(e.getLocalizedMessage());
                 } catch (Throwable t) {
-                    sender.sendMessage(_("command_internalerror"));
+                    sender.sendMessage(translate("commandtranslateinternalerror"));
                     t.printStackTrace(System.err);
                 }
         } else
-            sender.sendMessage(_("command_notfound"));
+            sender.sendMessage(translate("commandtranslatenotfound"));
 
         return true;
     }
@@ -239,11 +239,11 @@ public class BaseCommand implements CommandExecutor {
             SubCommand command = getCommand(commandName);
             if (command != null) {
                 sender.sendMessage("/" + args.getBaseLabel() + " " + args.getString(0) + " " + command.getUsage());
-                sender.sendMessage("    " + _(command.getName() + "_description"));
+                sender.sendMessage("    " + translate(command.getName() + "translatedescription"));
             } else
-                sender.sendMessage(_("help_cmdnotfound", args.getString(0)));
+                sender.sendMessage(translate("helptranslatecmdnotfound", args.getString(0)));
         } else {
-            sender.sendMessage(_("help_listofcommands"));
+            sender.sendMessage(translate("helptranslatelistofcommands"));
             sender.sendMessage(" ");
 
             List<SubCommand> subCommands = new ArrayList<SubCommand>(args.getBaseCommand().getAllSubCommands());
@@ -253,7 +253,7 @@ public class BaseCommand implements CommandExecutor {
                 if (command.getPermission() != null && !sender.hasPermission(command.getPermission()))
                     continue;
                 sender.sendMessage("/" + args.getBaseLabel() + " " + command.getName() + " " + command.getUsage());
-                sender.sendMessage("    " + _(command.getName() + "_description"));
+                sender.sendMessage("    " + translate(command.getName() + "translatedescription"));
                 sender.sendMessage(" ");
             }
         }
@@ -261,7 +261,7 @@ public class BaseCommand implements CommandExecutor {
 
     @Command(name = "version")
     private void versionCommand(CommandSender sender, CommandArgs args) {
-        sender.sendMessage(_("version_pluginversion", plugin.getDescription().getVersion()));
+        sender.sendMessage(translate("versiontranslatepluginversion", plugin.getDescription().getVersion()));
         sender.sendMessage(" ");
     }
 
@@ -270,7 +270,7 @@ public class BaseCommand implements CommandExecutor {
     private void reloadCommand(CommandSender sender, CommandArgs args) {
         pm.disablePlugin(plugin);
         pm.enablePlugin(plugin);
-        sender.sendMessage(_("reload_completed"));
+        sender.sendMessage(translate("reloadtranslatecompleted"));
     }
 
     @Command(name = "language", usage = "[language]")
@@ -283,11 +283,11 @@ public class BaseCommand implements CommandExecutor {
                 plugin.setTranslation(tranlation);
                 plugin.getConfig().set("language", language);
                 plugin.saveConfig();
-                sender.sendMessage(_("language_changed", _("language_" + tranlation.getLanguage())));
+                sender.sendMessage(translate("languagetranslatechanged", translate("languagetranslate" + tranlation.getLanguage())));
             } else
-                sender.sendMessage(_("language_failed", language));
+                sender.sendMessage(translate("languagetranslatefailed", language));
         } else
-            sender.sendMessage(_("language_current", _("language_" + plugin.getTranslation().getLanguage())));
+            sender.sendMessage(translate("languagetranslatecurrent", translate("languagetranslate" + plugin.getTranslation().getLanguage())));
     }
 
     // @Command

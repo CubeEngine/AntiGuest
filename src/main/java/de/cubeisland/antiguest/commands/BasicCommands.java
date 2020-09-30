@@ -1,6 +1,6 @@
 package de.cubeisland.antiguest.commands;
 
-import static de.cubeisland.antiguest.AntiGuest._;
+import static de.cubeisland.antiguest.AntiGuest.translate;
 
 import java.util.Set;
 
@@ -38,15 +38,15 @@ public class BasicCommands {
                 mgr.disablePrevention(prevention);
                 prevention.reloadConfig();
                 mgr.enablePrevention(prevention);
-                sender.sendMessage(_("preventionReloaded", prevention.getName()));
+                sender.sendMessage(translate("preventionReloaded", prevention.getName()));
             } else
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(translate("preventionNotFound"));
         } else {
             final PluginManager pm = plugin.getServer().getPluginManager();
             pm.disablePlugin(plugin);
             pm.enablePlugin(plugin);
 
-            sender.sendMessage(_("reloaded", plugin.getName()));
+            sender.sendMessage(translate("reloaded", plugin.getName()));
         }
     }
 
@@ -61,15 +61,15 @@ public class BasicCommands {
             for (Prevention prevention : mgr.getPreventions())
                 prevention.resetConfig();
 
-            sender.sendMessage(_("configsResetted"));
+            sender.sendMessage(translate("configsResetted"));
         } else {
             resetRequest.add(sender);
-            sender.sendMessage(_("resetRequested"));
+            sender.sendMessage(translate("resetRequested"));
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                broadcastResetNotice(_("playerRequestedReset", player.getName()), player, args);
+                broadcastResetNotice(translate("playerRequestedReset", player.getName()), player, args);
             } else
-                broadcastResetNotice(_("consoleRequestedReset"), null, args);
+                broadcastResetNotice(translate("consoleRequestedReset"), null, args);
         }
     }
 

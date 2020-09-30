@@ -15,6 +15,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
 import de.cubeisland.antiguest.prevention.Punishment;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class CommandPunishment implements Punishment {
     private final CommandSender sender = new CommandPunishmentSender();
@@ -40,12 +41,26 @@ public class CommandPunishment implements Punishment {
     }
 
     private static final class CommandPunishmentSender implements CommandSender {
+        
+        private final Spigot spigot = new Spigot() {
+            @Override
+            public void sendMessage(BaseComponent component) {
+                throw new UnsupportedOperationException("Cannot send a message to this plugin.");
+            }
+            
+            @Override
+            public void sendMessage(BaseComponent... components) {
+                throw new UnsupportedOperationException("Cannot send a message to this plugin.");
+            }
+        };
         @Override
         public void sendMessage(String message) {
+            throw new UnsupportedOperationException("Cannot send a message to this plugin.");
         }
 
         @Override
         public void sendMessage(String[] messages) {
+            throw new UnsupportedOperationException("Cannot send a message to this plugin.");
         }
 
         @Override
@@ -118,6 +133,11 @@ public class CommandPunishment implements Punishment {
 
         @Override
         public void setOp(boolean value) {
+        }
+
+        @Override
+        public Spigot spigot() {
+            return spigot;
         }
     }
 }

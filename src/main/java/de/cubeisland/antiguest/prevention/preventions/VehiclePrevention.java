@@ -104,11 +104,11 @@ public class VehiclePrevention extends Prevention {
     private static boolean isMinecart(Material material) {
         switch (material) {
             case MINECART:
-            case POWERED_MINECART:
-            case STORAGE_MINECART:
-            case EXPLOSIVE_MINECART:
+            case FURNACE_MINECART:
+            case CHEST_MINECART:
+            case TNT_MINECART:
             case HOPPER_MINECART:
-            case COMMAND_MINECART:
+            case COMMAND_BLOCK_MINECART:
                 return true;
             default:
                 return false;
@@ -117,7 +117,7 @@ public class VehiclePrevention extends Prevention {
 
     private static boolean isRail(Material material) {
         switch (material) {
-            case RAILS:
+            case RAIL:
             case POWERED_RAIL:
             case DETECTOR_RAIL:
             case ACTIVATOR_RAIL:
@@ -129,7 +129,11 @@ public class VehiclePrevention extends Prevention {
 
     private static boolean isBoat(Material material) {
         switch (material) {
-            case BOAT:
+            case SPRUCE_BOAT:
+            case BIRCH_BOAT:
+            case JUNGLE_BOAT:
+            case ACACIA_BOAT:
+            case DARK_OAK_BOAT:
                 return true;
             default:
                 return false;
@@ -144,7 +148,7 @@ public class VehiclePrevention extends Prevention {
             final Material clicked = event.getClickedBlock().getType();
             event.getClickedBlock().getState();
             final Player player = event.getPlayer();
-            final Material inHand = player.getItemInHand().getType();
+            final Material inHand = player.getInventory().getItemInMainHand().getType();
             if (isRail(clicked)) {
                 if (isMinecart(inHand))
                     checkAndPrevent(event, player);

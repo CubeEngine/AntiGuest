@@ -16,6 +16,7 @@ public class DropitemPunishment implements Punishment {
         return "dropitem";
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void punish(Player player, ConfigurationSection config) {
         player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand()).setPickupDelay(config.getInt("pickupDelay", 4) * 20);

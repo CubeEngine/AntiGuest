@@ -1,10 +1,22 @@
 package de.cubeisland.antiguest.prevention.preventions;
 
-import static org.bukkit.Material.FENCE_GATE;
+import static org.bukkit.Material.ACACIA_DOOR;
+import static org.bukkit.Material.ACACIA_FENCE_GATE;
+import static org.bukkit.Material.BIRCH_DOOR;
+import static org.bukkit.Material.BIRCH_FENCE_GATE;
+import static org.bukkit.Material.CRIMSON_DOOR;
+import static org.bukkit.Material.CRIMSON_FENCE_GATE;
+import static org.bukkit.Material.DARK_OAK_DOOR;
+import static org.bukkit.Material.DARK_OAK_FENCE_GATE;
 import static org.bukkit.Material.IRON_DOOR;
-import static org.bukkit.Material.IRON_DOOR_BLOCK;
-import static org.bukkit.Material.TRAP_DOOR;
-import static org.bukkit.Material.WOODEN_DOOR;
+import static org.bukkit.Material.JUNGLE_DOOR;
+import static org.bukkit.Material.JUNGLE_FENCE_GATE;
+import static org.bukkit.Material.OAK_DOOR;
+import static org.bukkit.Material.OAK_FENCE_GATE;
+import static org.bukkit.Material.SPRUCE_DOOR;
+import static org.bukkit.Material.SPRUCE_FENCE_GATE;
+import static org.bukkit.Material.WARPED_DOOR;
+import static org.bukkit.Material.WARPED_FENCE_GATE;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -25,7 +37,7 @@ import de.cubeisland.antiguest.prevention.PreventionPlugin;
  * @author Phillip Schichtel
  */
 public class DoorPrevention extends FilteredItemPrevention {
-    private static final EnumSet<Material> DOORS = EnumSet.of(WOODEN_DOOR, IRON_DOOR, IRON_DOOR_BLOCK, TRAP_DOOR, FENCE_GATE);
+    private static final EnumSet<Material> DOORS = EnumSet.of(IRON_DOOR, OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR, CRIMSON_DOOR, WARPED_DOOR, ACACIA_FENCE_GATE, BIRCH_FENCE_GATE, CRIMSON_FENCE_GATE, DARK_OAK_FENCE_GATE, JUNGLE_FENCE_GATE, OAK_FENCE_GATE, SPRUCE_FENCE_GATE, WARPED_FENCE_GATE);
 
     public DoorPrevention(PreventionPlugin plugin) {
         super("door", plugin);

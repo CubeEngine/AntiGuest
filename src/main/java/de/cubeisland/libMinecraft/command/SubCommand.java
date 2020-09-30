@@ -13,7 +13,7 @@ import org.bukkit.permissions.Permission;
  * @author Phillip Schichtel
  */
 public class SubCommand {
-    public static final Comparator COMPARATOR = new SubCommandComparator();
+    public static final Comparator<SubCommand> COMPARATOR = new SubCommandComparator();
     private final Object commandContainer;
     private final Method method;
 
