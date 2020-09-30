@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -47,6 +48,16 @@ public class CommandPunishment implements Punishment
 
     private static final class CommandPunishmentSender implements CommandSender
     {
+        private final Spigot spigot = new Spigot() {
+            @Override
+            public void sendMessage(BaseComponent component) {
+            }
+
+            @Override
+            public void sendMessage(BaseComponent... components) {
+            }
+        };
+
         public void sendMessage(String message)
         {
         }
@@ -125,6 +136,11 @@ public class CommandPunishment implements Punishment
 
         public void setOp(boolean value)
         {
+        }
+
+        @Override
+        public Spigot spigot() {
+            return spigot;
         }
     }
 }

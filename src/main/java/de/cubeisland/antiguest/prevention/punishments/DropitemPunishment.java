@@ -19,7 +19,7 @@ public class DropitemPunishment implements Punishment
 
     public void punish(Player player, ConfigurationSection config)
     {
-        player.getWorld().dropItemNaturally(player.getLocation(), player.getItemInHand())
+        player.getWorld().dropItemNaturally(player.getLocation(), player.getInventory().getItemInMainHand())
               .setPickupDelay(config.getInt("pickupDelay", 4) * 20);
         player.getInventory().clear(player.getInventory().getHeldItemSlot());
     }

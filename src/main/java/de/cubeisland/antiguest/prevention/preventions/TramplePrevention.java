@@ -25,7 +25,7 @@ public class TramplePrevention extends Prevention
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void interact(PlayerInteractEvent event)
     {
-        if (event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.SOIL)
+        if (event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.FARMLAND)
         {
             if (checkAndPrevent(event, event.getPlayer()))
             {

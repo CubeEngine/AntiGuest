@@ -185,12 +185,10 @@ public class PreventionManagementCommands
         {
             sender.sendMessage(_("activePreventions"));
             sender.sendMessage("");
-            int i = 0;
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
             {
                 if (prevention.isEnabled())
                 {
-                    ++i;
                     sender.sendMessage(" - " + ChatColor.BRIGHT_GREEN + prevention.getName());
                 }
             }

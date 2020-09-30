@@ -46,9 +46,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.10.2-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.3-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
@@ -144,8 +144,8 @@
                 <version>2.4</version>
                 <configuration>
                     <showDeprecation>true</showDeprecation>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>

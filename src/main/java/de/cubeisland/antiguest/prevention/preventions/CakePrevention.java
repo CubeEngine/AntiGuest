@@ -26,7 +26,7 @@ public class CakePrevention extends Prevention
     {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
-            if (event.getClickedBlock().getType() == Material.CAKE_BLOCK)
+            if (event.getClickedBlock().getType() == Material.CAKE)
             {
                 checkAndPrevent(event, event.getPlayer());
             }
