@@ -3,6 +3,7 @@ package de.cubeisland.antiguest.prevention.punishments;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
@@ -37,7 +38,6 @@ public class CommandPunishment implements Punishment
             {
                 continue;
             }
-            command = String.valueOf(command);
             if (command.contains("%s"))
             {
                 command = String.format(command, player.getName());
@@ -63,6 +63,16 @@ public class CommandPunishment implements Punishment
         }
 
         public void sendMessage(String[] messages)
+        {
+        }
+
+        @Override
+        public void sendMessage(UUID uuid, String s)
+        {
+        }
+
+        @Override
+        public void sendMessage(UUID uuid, String[] strings)
         {
         }
 

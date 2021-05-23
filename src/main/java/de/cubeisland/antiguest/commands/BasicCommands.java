@@ -14,7 +14,7 @@ import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
 import gnu.trove.set.hash.THashSet;
 
-import static de.cubeisland.antiguest.AntiGuest._;
+import static de.cubeisland.antiguest.AntiGuest.t;
 
 /**
  * @author CodeInfection
@@ -43,11 +43,11 @@ public class BasicCommands
                 mgr.disablePrevention(prevention);
                 prevention.reloadConfig();
                 mgr.enablePrevention(prevention);
-                sender.sendMessage(_("preventionReloaded", prevention.getName()));
+                sender.sendMessage(t("preventionReloaded", prevention.getName()));
             }
             else
             {
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
@@ -56,7 +56,7 @@ public class BasicCommands
             pm.disablePlugin(plugin);
             pm.enablePlugin(plugin);
 
-            sender.sendMessage(_("reloaded", plugin.getName()));
+            sender.sendMessage(t("reloaded", plugin.getName()));
         }
     }
 
@@ -75,20 +75,20 @@ public class BasicCommands
                 prevention.resetConfig();
             }
 
-            sender.sendMessage(_("configsResetted"));
+            sender.sendMessage(t("configsResetted"));
         }
         else
         {
             resetRequest.add(sender);
-            sender.sendMessage(_("resetRequested"));
+            sender.sendMessage(t("resetRequested"));
             if (sender instanceof Player)
             {
                 Player player = (Player)sender;
-                this.broadcastResetNotice(_("playerRequestedReset", player.getName()), player, args);
+                this.broadcastResetNotice(t("playerRequestedReset", player.getName()), player, args);
             }
             else
             {
-                this.broadcastResetNotice(_("consoleRequestedReset"), null, args);
+                this.broadcastResetNotice(t("consoleRequestedReset"), null, args);
             }
         }
     }

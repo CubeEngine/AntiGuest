@@ -10,7 +10,7 @@ import de.cubeisland.libMinecraft.command.Command;
 import de.cubeisland.libMinecraft.command.CommandArgs;
 import de.cubeisland.libMinecraft.command.RequiresPermission;
 
-import static de.cubeisland.antiguest.AntiGuest._;
+import static de.cubeisland.antiguest.AntiGuest.t;
 
 /**
  * @author CodeInfection
@@ -43,7 +43,7 @@ public class PreventionManagementCommands
                     }
                 }
 
-                sender.sendMessage(_("preventionsEnabled"));
+                sender.sendMessage(t("preventionsEnabled"));
             }
             else
             {
@@ -54,7 +54,7 @@ public class PreventionManagementCommands
                     {
                         if (PreventionManager.getInstance().enablePrevention(prevention))
                         {
-                            sender.sendMessage(_("preventionEnabled"));
+                            sender.sendMessage(t("preventionEnabled"));
                             if (!temporary)
                             {
                                 prevention.getConfig().set("enable", true);
@@ -63,23 +63,23 @@ public class PreventionManagementCommands
                         }
                         else
                         {
-                            sender.sendMessage(_("somethingFailed"));
+                            sender.sendMessage(t("somethingFailed"));
                         }
                     }
                     else
                     {
-                        sender.sendMessage(_("alreadyEnabled"));
+                        sender.sendMessage(t("alreadyEnabled"));
                     }
                 }
                 else
                 {
-                    sender.sendMessage(_("preventionNotFound"));
+                    sender.sendMessage(t("preventionNotFound"));
                 }
             }
         }
         else
         {
-            sender.sendMessage(_("noPrevention"));
+            sender.sendMessage(t("noPrevention"));
         }
     }
 
@@ -102,7 +102,7 @@ public class PreventionManagementCommands
                     }
                 }
 
-                sender.sendMessage(_("preventionsDisabled"));
+                sender.sendMessage(t("preventionsDisabled"));
             }
             else
             {
@@ -112,7 +112,7 @@ public class PreventionManagementCommands
                     if (prevention.isEnabled())
                     {
                         PreventionManager.getInstance().disablePrevention(prevention);
-                        sender.sendMessage(_("preventionDisabled"));
+                        sender.sendMessage(t("preventionDisabled"));
                         if (!temporary)
                         {
                             prevention.getConfig().set("enable", false);
@@ -121,18 +121,18 @@ public class PreventionManagementCommands
                     }
                     else
                     {
-                        sender.sendMessage(_("alreadyDisabled"));
+                        sender.sendMessage(t("alreadyDisabled"));
                     }
                 }
                 else
                 {
-                    sender.sendMessage(_("preventionNotFound"));
+                    sender.sendMessage(t("preventionNotFound"));
                 }
             }
         }
         else
         {
-            sender.sendMessage(_("noPrevention"));
+            sender.sendMessage(t("noPrevention"));
         }
     }
 
@@ -147,21 +147,21 @@ public class PreventionManagementCommands
             {
                 if (prevention.isEnabled())
                 {
-                    sender.sendMessage(_("enabled"));
+                    sender.sendMessage(t("enabled"));
                 }
                 else
                 {
-                    sender.sendMessage(_("disabled"));
+                    sender.sendMessage(t("disabled"));
                 }
             }
             else
             {
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(_("noPrevention"));
+            sender.sendMessage(t("noPrevention"));
         }
     }
 
@@ -171,7 +171,7 @@ public class PreventionManagementCommands
     {
         if (args.hasFlag("a"))
         {
-            sender.sendMessage(_("registeredPreventions"));
+            sender.sendMessage(t("registeredPreventions"));
             sender.sendMessage("");
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
             {
@@ -183,7 +183,7 @@ public class PreventionManagementCommands
         }
         else
         {
-            sender.sendMessage(_("activePreventions"));
+            sender.sendMessage(t("activePreventions"));
             sender.sendMessage("");
             for (Prevention prevention : PreventionManager.getInstance().getPreventions())
             {
@@ -214,8 +214,8 @@ public class PreventionManagementCommands
         }
         else
         {
-            sender.sendMessage(_("tooFewArguments"));
-            sender.sendMessage(_("see", args.getBaseLabel() + " help"));
+            sender.sendMessage(t("tooFewArguments"));
+            sender.sendMessage(t("see", args.getBaseLabel() + " help"));
             return;
         }
 
@@ -227,33 +227,33 @@ public class PreventionManagementCommands
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(_("you_ableToPass"));
+                        sender.sendMessage(t("you_ableToPass"));
                     }
                     else
                     {
-                        sender.sendMessage(_("other_ableToPass"));
+                        sender.sendMessage(t("other_ableToPass"));
                     }
                 }
                 else
                 {
                     if (sender == player)
                     {
-                        sender.sendMessage(_("you_unableToPass"));
+                        sender.sendMessage(t("you_unableToPass"));
                     }
                     else
                     {
-                        sender.sendMessage(_("other_unableToPass"));
+                        sender.sendMessage(t("other_unableToPass"));
                     }
                 }
             }
             else
             {
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(_("playerNotFound"));
+            sender.sendMessage(t("playerNotFound"));
         }
     }
 
@@ -271,16 +271,16 @@ public class PreventionManagementCommands
                 prevention.getConfig().set("message", message);
                 prevention.saveConfig();
 
-                sender.sendMessage(_("messageSet"));
+                sender.sendMessage(t("messageSet"));
             }
             else
             {
-                sender.sendMessage(_("preventionNotFound"));
+                sender.sendMessage(t("preventionNotFound"));
             }
         }
         else
         {
-            sender.sendMessage(_("tooFewArguments"));
+            sender.sendMessage(t("tooFewArguments"));
         }
     }
 }
