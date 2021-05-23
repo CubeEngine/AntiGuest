@@ -108,7 +108,7 @@
 
     <build>
         <finalName>AntiGuest</finalName>
-        <defaultGoal>clean install</defaultGoal>
+        <defaultGoal>clean package</defaultGoal>
         <resources>
             <resource>
                 <targetPath>.</targetPath>
